@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 3</title>
+    <g id="StaFiHub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="StaFi-rDOT-Copy-16" transform="translate(-533.000000, -514.000000)">
+            <g id="Group-3" transform="translate(533.000000, 514.000000)">
+                <path d="M18,36 C27.9411255,36 36,27.9411255 36,18 C36,15.3054589 33.2,12.5054589 27.6,9.6 C25.1328759,3.2 21.9328759,0 18,0 C8.0588745,0 0,8.0588745 0,18 C0,27.9411255 8.0588745,36 18,36 Z" id="Oval-2" fill="#FFFFFF"></path>
+                <g id="Group-2" transform="translate(18.646447, 19.853553) rotate(-135.000000) translate(-18.646447, -19.853553) translate(12.646447, 10.853553)" fill="#23292F">
+                    <polygon id="Rectangle-5" points="4 0 8 0 8 12 4 12"></polygon>
+                    <polygon id="Triangle-Copy" points="0 10 12 10 6 18"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

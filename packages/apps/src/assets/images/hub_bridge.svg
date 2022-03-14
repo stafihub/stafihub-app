@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1138px" height="99px" viewBox="0 0 1138 99" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Rectangle 15</title>
+    <defs>
+        <linearGradient x1="0%" y1="74.6134549%" x2="100%" y2="74.613452%" id="linearGradient-1">
+            <stop stop-color="#6758FF" offset="0%"></stop>
+            <stop stop-color="#6758FF" offset="50.3975293%"></stop>
+            <stop stop-color="#FF7FA7" offset="52.3950424%"></stop>
+            <stop stop-color="#FF7FA7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="StaFiHub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M0,39.2777913 C189.666667,13.0925971 379.333333,0 569,0 C758.666667,0 948.333333,13.0925971 1138,39.2777913 L1138,99 C948.333333,66 758.666667,49.5 569,49.5 C379.333333,49.5 189.666667,66 0,99 L0,39.2777913 Z" id="Rectangle-15" fill="url(#linearGradient-1)"></path>
+    </g>
+</svg>

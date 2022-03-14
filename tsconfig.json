@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,9 +14,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@stafihub/react-components": ["./packages/react-components"],
+      "@stafihub/apps-config": ["./packages/apps-config"],
+      "@stafihub/types": ["./packages/types"],
+      "@stafihub/apps-util": ["./packages/apps-util"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

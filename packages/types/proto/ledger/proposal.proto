@@ -1,0 +1,65 @@
+syntax = "proto3";
+package stafihub.stafihub.ledger;
+
+import "gogoproto/gogo.proto";
+import "ledger/ledger.proto";
+
+option go_package = "github.com/stafihub/stafihub/x/ledger/types";
+
+message SetChainEraProposal {
+    string proposer = 1;
+    string denom = 2;
+    uint32 era = 3;
+    string propId = 4;
+}
+
+message BondReportProposal {
+    string proposer = 1;
+    string denom = 2;
+    string shotId = 3;
+    BondAction action = 4;
+    string propId = 5;
+}
+
+message BondAndReportActiveProposal {
+  string proposer = 1;
+  string denom = 2;
+  string shotId = 3;
+  BondAction action = 4;
+  string staked = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string unstaked = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string propId = 7;
+}
+
+message ActiveReportProposal {
+  string proposer = 1;
+  string denom = 2;
+  string shotId = 3;
+  string staked = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string unstaked = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string propId = 6;
+}
+
+message WithdrawReportProposal {
+    string proposer = 1;
+    string denom = 2;
+    string shotId = 3;
+    string propId = 4;
+}
+
+message TransferReportProposal {
+    string proposer = 1;
+    string denom = 2;
+    string shotId = 3;
+    string propId = 4;
+}
+
+message ExecuteBondProposal {
+    string proposer = 1;
+    string denom = 2;
+    string bonder = 3;
+    string pool = 4;
+    string txhash = 7;
+    string amount = 8 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+    string propId = 9;
+}

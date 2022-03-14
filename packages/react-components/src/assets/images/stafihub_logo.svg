@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="46px" viewBox="0 0 128 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <defs>
+        <filter x="-90.3%" y="-133.1%" width="280.6%" height="366.2%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="4.89130435" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="StaFiHub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="StaFi-rDOT-Copy-11" transform="translate(-6.000000, -14.000000)">
+            <g id="编组" transform="translate(18.000000, 22.000000)">
+                <text id="Powered-by-StaFi" font-family="Helvetica" font-size="8" font-weight="normal" letter-spacing="0.0321428552" fill="#B6B6B6">
+                    <tspan x="2" y="36">Powered by StaFi</tspan>
+                </text>
+                <text id="StaFiHub" font-family="ComicSansMS, Comic Sans MS" font-size="20" font-weight="normal" letter-spacing="0.214285657" fill="#FFFFFF">
+                    <tspan x="25" y="22">StaFiHub</tspan>
+                </text>
+                <g id="Group-12" transform="translate(0.000000, 5.000000)">
+                    <g id="Group-6">
+                        <g id="Group-10" transform="translate(0.000000, 0.059487)">
+                            <ellipse id="Oval-20" stroke="#979797" stroke-width="0.5625" fill="#FFFFFF" transform="translate(11.500000, 7.516326) rotate(-7.000000) translate(-11.500000, -7.516326) " cx="11.5" cy="7.51632563" rx="10.4817708" ry="5.05544084"></ellipse>
+                            <ellipse id="Oval-20-Copy" fill="#000002" transform="translate(11.491508, 7.528682) rotate(-7.000000) translate(-11.491508, -7.528682) " cx="11.4915083" cy="7.52868199" rx="9.84437285" ry="4.24690483"></ellipse>
+                        </g>
+                        <g id="Group-13" transform="translate(6.000000, 9.000000)">
+                            <path d="M6.00118533,9.24781913 C8.9638232,9.24781913 11.4734735,5.72199451 12.3297376,0.852588409 C12.3494175,0.740672793 12.2404258,0.873789964 12.0355427,0.987717401 C11.6811912,1.18475833 11.0087697,1.52770952 9.9942077,1.91026281 C8.60625975,2.43360594 6.61480503,2.96220269 5.9352703,3.10907466 C5.2314649,3.2611924 3.7959663,3.40058796 2.55725396,3.47798234 C1.82739541,3.52358368 1.28254374,3.60014123 0.878926963,3.5740486 C0.597527326,3.55585694 0.314001125,3.37488067 0.382305535,3.5740486 C1.55522658,6.99415348 3.62090963,9.24781913 6.00118533,9.24781913 Z" id="Oval-19" fill="#6758FF" transform="translate(6.352010, 5.029069) rotate(4.000000) translate(-6.352010, -5.029069) "></path>
+                            <path d="M7.87225119,7.20560413 C9.54293413,7.20560413 10.7363374,5.35860756 10.7363374,5.0185828 C10.7363374,4.67855805 9.54293413,5.85167206 7.87225119,5.85167206 C6.20156824,5.85167206 4.53578768,5.5116473 4.53578768,5.85167206 C4.53578768,6.06608947 5.38080511,6.70631062 6.41253373,6.96182415 C7.01692817,7.11150591 7.2550901,7.20560413 7.87225119,7.20560413 Z" id="Oval-24" fill="#FF7FA7" transform="translate(7.636063, 6.081175) rotate(-12.000000) translate(-7.636063, -6.081175) "></path>
+                        </g>
+                    </g>
+                    <path d="M11.8825472,10.6088354 C16.1407554,10.6088354 20.24,14.1019873 20.24,6.28014077 C20.24,-1.54170573 15.5282511,4.43136045 11.2700429,4.43136045 C7.01183471,4.43136045 3.68,1.97925837 3.68,9.80110487 C3.68,17.6229514 7.624339,10.6088354 11.8825472,10.6088354 Z" id="Oval-23-Copy-2" stroke="#979797" stroke-width="0.5625" fill="#FFD5E2" opacity="0.101811594" filter="url(#filter-1)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

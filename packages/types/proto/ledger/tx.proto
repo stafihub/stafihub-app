@@ -1,0 +1,198 @@
+syntax = "proto3";
+package stafihub.stafihub.ledger;
+
+import "gogoproto/gogo.proto";
+import "ledger/ledger.proto";
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/stafihub/stafihub/x/ledger/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc SetEraUnbondLimit(MsgSetEraUnbondLimit) returns (MsgSetEraUnbondLimitResponse);
+  rpc SetPoolDetail(MsgSetPoolDetail) returns (MsgSetPoolDetailResponse);
+  rpc SetLeastBond(MsgSetLeastBond) returns (MsgSetLeastBondResponse);
+  rpc ClearCurrentEraSnapShots(MsgClearCurrentEraSnapShots) returns (MsgClearCurrentEraSnapShotsResponse);
+  rpc SetStakingRewardCommission(MsgSetStakingRewardCommission) returns (MsgSetStakingRewardCommissionResponse);
+  rpc SetProtocolFeeReceiver(MsgSetProtocolFeeReceiver) returns (MsgSetProtocolFeeReceiverResponse);
+  rpc SetUnbondRelayFee(MsgSetUnbondRelayFee) returns (MsgSetUnbondRelayFeeResponse);
+  rpc LiquidityUnbond(MsgLiquidityUnbond) returns (MsgLiquidityUnbondResponse);
+  rpc SetUnbondCommission(MsgSetUnbondCommission) returns (MsgSetUnbondCommissionResponse);
+  rpc SubmitSignature(MsgSubmitSignature) returns (MsgSubmitSignatureResponse);
+  rpc SetRParams(MsgSetRParams) returns (MsgSetRParamsResponse);
+  rpc SetRelayFeeReceiver(MsgSetRelayFeeReceiver) returns (MsgSetRelayFeeReceiverResponse);
+  rpc SetRelayGasPrice(MsgSetRelayGasPrice) returns (MsgSetRelayGasPriceResponse);
+  rpc SetEraSeconds(MsgSetEraSeconds) returns (MsgSetEraSecondsResponse);
+  rpc RmBondedPool(MsgRmBondedPool) returns (MsgRmBondedPoolResponse);
+  rpc MigrateInit(MsgMigrateInit) returns (MsgMigrateInitResponse);
+  rpc MigrateUnbondings(MsgMigrateUnbondings) returns (MsgMigrateUnbondingsResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgSetEraUnbondLimit {
+  string creator = 1;
+  string denom = 2;
+  uint32 limit = 3;
+}
+
+message MsgSetEraUnbondLimitResponse {
+}
+
+message MsgSetPoolDetail {
+  string creator = 1;
+  string denom = 2;
+  string pool = 3;
+  repeated string subAccounts = 4;
+  uint32 threshold = 5;
+}
+
+message MsgSetPoolDetailResponse {
+}
+
+message MsgSetLeastBond {
+  string creator = 1;
+  string denom = 2;
+  string leastBond = 3;
+}
+
+message MsgSetLeastBondResponse {
+}
+
+message MsgClearCurrentEraSnapShots {
+  string creator = 1;
+  string denom = 2;
+}
+
+message MsgClearCurrentEraSnapShotsResponse {
+}
+
+message MsgSetStakingRewardCommission {
+  string creator = 1;
+  string denom = 2;
+  string commission = 3 [(gogoproto.customtype) = "github.com/stafihub/stafihub/utils.Dec", (gogoproto.nullable) = false];
+}
+
+message MsgSetStakingRewardCommissionResponse {
+}
+
+message MsgSetProtocolFeeReceiver {
+  string creator = 1;
+  string receiver = 2;
+}
+
+message MsgSetProtocolFeeReceiverResponse {
+}
+
+message MsgSetUnbondRelayFee {
+  string creator = 1;
+  string denom = 2;
+  string value = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+}
+
+message MsgSetUnbondRelayFeeResponse {
+}
+
+message MsgLiquidityUnbond {
+  string creator = 1;
+  string pool = 2;
+  string value = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+  string recipient = 4;
+}
+
+message MsgLiquidityUnbondResponse {
+}
+
+message MsgSetUnbondCommission {
+  string creator = 1;
+  string denom = 2;
+  string commission = 3 [(gogoproto.customtype) = "github.com/stafihub/stafihub/utils.Dec", (gogoproto.nullable) = false];
+}
+
+message MsgSetUnbondCommissionResponse {
+}
+
+message MsgSubmitSignature {
+  string creator = 1;
+  string denom = 2;
+  uint32 era = 3;
+  string pool = 4;
+  OriginalTxType txType = 5;
+  string propId = 6;
+  string signature = 7;
+}
+
+message MsgSubmitSignatureResponse {
+}
+
+message MsgSetRParams {
+  string creator = 1;
+  string denom = 2;
+  string gasPrice = 3;
+  string eraSeconds = 4;
+  string offset = 5;
+  uint32 bondingDuration = 6;
+  string leastBond = 7;
+  repeated string validators = 8;
+}
+
+message MsgSetRParamsResponse {
+}
+
+message MsgSetRelayFeeReceiver {
+  string creator = 1;
+  string denom = 2;
+  string receiver = 3;
+}
+
+message MsgSetRelayFeeReceiverResponse {
+}
+
+message MsgSetRelayGasPrice {
+  string creator = 1;
+  string denom = 2;
+  string gasPrice = 3;
+}
+
+message MsgSetRelayGasPriceResponse {
+}
+
+message MsgSetEraSeconds {
+  string creator = 1;
+  string denom = 2;
+  string eraSeconds = 3;
+  uint32 bondingDuration = 4;
+  string offset = 5;
+}
+
+message MsgSetEraSecondsResponse {
+}
+
+message MsgRmBondedPool {
+  string creator = 1;
+  string denom = 2;
+  string address = 3;
+}
+
+message MsgRmBondedPoolResponse {
+}
+
+message MsgMigrateInit {
+  string creator = 1;
+  string denom = 2;
+  string totalSupply = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string exchangeRate = 4 [(gogoproto.customtype) = "github.com/stafihub/stafihub/utils.Dec", (gogoproto.nullable) = false];
+}
+
+message MsgMigrateInitResponse {
+}
+
+message MsgMigrateUnbondings {
+  string creator = 1;
+  string denom = 2;
+  repeated PoolUnbond poolUnbonds = 3;
+}
+
+message MsgMigrateUnbondingsResponse {
+}
+
+// this line is used by starport scaffolding # proto/tx/message

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 2</title>
+    <g id="StaFiHub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="StaFi-rDOT-Copy-11" transform="translate(-28.000000, -110.000000)">
+            <g id="编组-2" transform="translate(28.000000, 110.000000)">
+                <ellipse id="Oval-5-Copy" fill="#FFFFFF" cx="17.8651479" cy="18" rx="17.8651479" ry="18"></ellipse>
+                <path d="M6,13.3847656 L6,7.7421875 C6.03515643,5.91405336 6.94920979,5 8.7421875,5 L11.3789062,5 L11.3789062,6.21289062 L9.32226562,6.21289062 C8.37304213,6.21289062 7.88085955,6.68749525 7.84570312,7.63671875 L7.84570312,13.3847656 L6,13.3847656 Z" id="r" fill="#6758FF"></path>
+                <rect id="Rectangle-33" fill="#23292F" x="14" y="9" width="8" height="18" rx="4"></rect>
+                <path d="M17.5,9 L18.5,9 C20.4329966,9 22,10.5670034 22,12.5 L22,16 L22,16 L14,20 L14,12.5 C14,10.5670034 15.5670034,9 17.5,9 Z" id="Rectangle-33-Copy" fill="#3C3C34"></path>
+            </g>
+        </g>
+    </g>
+</svg>

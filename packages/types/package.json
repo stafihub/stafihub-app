@@ -1,0 +1,34 @@
+{
+  "name": "@stafihub/types",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@cosmjs/proto-signing": "0.27.1",
+    "@cosmjs/stargate": "0.27.1",
+    "@cosmjs/tendermint-rpc": "0.27.1",
+    "@stafihub/apps-config": "workspace:0.1.0",
+    "protobufjs": "6.11.2",
+    "ts-proto": "1.88.0",
+    "long": "4.0.0"
+  },
+  "scripts": {
+    "build-proto": "./ts-proto.sh"
+  },
+  "eslintConfig": {
+    "extends": []
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

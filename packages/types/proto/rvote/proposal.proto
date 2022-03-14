@@ -1,0 +1,30 @@
+syntax = "proto3";
+package stafihub.stafihub.rvote;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/stafihub/stafihub/x/rvote/types";
+option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.stringer_all)         = false;
+option (gogoproto.goproto_getters_all)  = false;
+
+message Proposal {
+  option (gogoproto.equal) = true;
+
+  google.protobuf.Any content = 1 [(cosmos_proto.accepts_interface) = "Content"];
+  ProposalStatus status = 2 [(gogoproto.moretags) = "yaml:\"prop_status\""];
+  repeated string voted = 3 [(gogoproto.moretags) = "yaml:\"voted\""];
+  int64 startBlock = 4 [(gogoproto.moretags) = "yaml:\"start_block\""];
+  int64 expireBlock = 5 [(gogoproto.moretags) = "yaml:\"expire_block\""];
+}
+
+// ProposalStatus enumerates the valid statuses of a proposal.
+enum ProposalStatus {
+  option (gogoproto.goproto_enum_prefix) = false;
+
+  PROPOSAL_STATUS_INITIATED = 0 [(gogoproto.enumvalue_customname) = "StatusInitiated"];
+  PROPOSAL_STATUS_APPROVED = 1 [(gogoproto.enumvalue_customname) = "StatusApproved"];
+  PROPOSAL_STATUS_EXPIRED = 2 [(gogoproto.enumvalue_customname) = "StatusExpired"];
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@stafihub/apps-wallet",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@cosmjs/encoding": "0.27.1",
+    "@cosmjs/launchpad": "0.27.1",
+    "@cosmjs/math": "0.27.1",
+    "@cosmjs/proto-signing": "0.27.1",
+    "@cosmjs/stargate": "0.27.1",
+    "@cosmjs/tendermint-rpc": "0.27.1",
+    "@stafihub/apps-config": "workspace:0.1.0",
+    "@stafihub/types": "workspace:0.1.0",
+    "buffer": "^6.0.3"
+  },
+  "eslintConfig": {
+    "extends": []
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 2 Copy 50</title>
+    <g id="StaFiHub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="StaFi-rDOT-Copy-11" transform="translate(-436.000000, -155.000000)">
+            <g id="Group-2-Copy-50" transform="translate(436.000000, 155.000000)">
+                <ellipse id="Oval-5-Copy-2" fill="#FFFFFF" cx="12.9026068" cy="13" rx="12.9026068" ry="13"></ellipse>
+                <g id="Group-25" transform="translate(8.029412, 4.588235)" fill="#23292F">
+                    <polygon id="Rectangle-14" points="4.77941176 0 9.55882353 8.68534483 4.77941176 11.8529412 0 8.78752535"></polygon>
+                    <polygon id="Rectangle-14-Copy" points="4.97058824 0 4.97058824 6.64173428 4.97058824 11.8529412 0 8.78752535"></polygon>
+                    <polygon id="Rectangle-18" points="4.77941176 6.88235294 9.55882353 8.88970588 4.77941176 11.8529412 0 8.98529412"></polygon>
+                    <polygon id="Rectangle-18-Copy" points="4.97058824 6.88235294 4.97058824 8.88970588 4.97058824 11.8529412 0 8.98529412"></polygon>
+                    <polygon id="Rectangle-28" points="0 9.55882353 4.77941176 12.5857843 9.55882353 9.55882353 4.77941176 16.8235294"></polygon>
+                    <polygon id="Rectangle-28-Copy" points="0 9.55882353 4.97058824 12.5857843 4.97058824 16.8235294"></polygon>
+                </g>
+                <path d="M4.33333333,9.30566406 L4.33333333,5.23046875 C4.35872409,3.91014965 5.01887373,3.25 6.31380208,3.25 L8.21809896,3.25 L8.21809896,4.12597656 L6.7327474,4.12597656 C6.04719709,4.12597656 5.6917319,4.46874657 5.66634115,5.15429688 L5.66634115,9.30566406 L4.33333333,9.30566406 Z" id="r" fill="#00F3AB"></path>
+            </g>
+        </g>
+    </g>
+</svg>

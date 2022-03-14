@@ -1,0 +1,34 @@
+module.exports = {
+  content: ["../../packages/*/src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    colors: {
+      primary: "#6758FF",
+      secondary: "#FF7FA7",
+      white: "#ffffff",
+      transparent: "#00000000",
+      divider: "#3f3f3f",
+      "input-border": "#bfbfbf",
+      placdholder: "#4f4f4f",
+      black: {
+        700: "#151515",
+        900: "#000002",
+      },
+      text: {
+        gray1: "#D1D1D1",
+        gray2: "#818181",
+        gray3: "#7B7B7B",
+        gray4: "#C4C4C4",
+        gray5: "#D5D5D5",
+        gray6: "#D9D9D9",
+        black1: "#23292F",
+      },
+    },
+    extend: {
+      spacing: {
+        "full-screen": "1280px",
+        "card-container-width": "683px",
+      },
+    },
+  },
+  plugins: [],
+};

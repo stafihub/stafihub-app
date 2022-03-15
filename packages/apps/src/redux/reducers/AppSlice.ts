@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CosmosNetworkParams } from "@stafihub/apps-config";
 import {
   connectAtomjs,
   getKeplrAccount,
   queryAccountBalance,
 } from "@stafihub/apps-wallet";
 import { KeplrAccount } from "@stafihub/types";
+import * as _ from "lodash";
 import { saveNetworkAllowedFlag } from "../../utils/storage";
 import { AppThunk } from "../store";
-import * as _ from "lodash";
-import { cloneNode } from "@babel/types";
 
 type AccountMap = { [key: string]: KeplrAccount | undefined };
 
@@ -71,6 +69,10 @@ export const connectKeplr =
       console.log("enableResult", enableResult);
       const accountResult = await getKeplrAccount(network);
 
+      if (!accountResult) {
+        return;
+      }
+
       const account: KeplrAccount = {
         name: accountResult.name,
         bech32Address: accountResult.bech32Address,
@@ -100,12 +102,14 @@ export const connectKeplrChains =
           const enableResult = await connectAtomjs(network);
           console.log("enableResult", enableResult);
           const accountResult = await getKeplrAccount(network);
+          if (!accountResult) {
+            return null;
+          }
 
           const account: KeplrAccount = {
             name: accountResult.name,
             bech32Address: accountResult.bech32Address,
           };
-          console.log("account", account);
 
           const balance = await queryAccountBalance(
             network,

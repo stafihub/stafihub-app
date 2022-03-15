@@ -34,7 +34,7 @@ function App() {
             <Route path="redeem" element={<StakeRedeem />} />
           </Route>
 
-          <Route path="/" element={<Navigate replace to="/rAsset" />} />
+          <Route path="/" element={<Navigate replace to="/rToken" />} />
         </Route>
 
         <Route path="*" element={<Navigate replace to="/" />} />

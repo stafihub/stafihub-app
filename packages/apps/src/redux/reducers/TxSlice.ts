@@ -76,14 +76,16 @@ export const unbond =
         return;
       }
       const success = await sendLiquidityUnbondTx(
+        inputAmount,
         chainAccount.bech32Address,
         stafiHubAccount.bech32Address,
-        inputAmount,
         poolAddress
       );
       dispatch(updateTokenBalance(getState().app.currentNetwork));
       callback && callback(success);
-    } catch {}
+    } catch (err: unknown) {
+      console.log("sendLiquidityUnbondTx err", err);
+    }
   };
 
 export default txSlice.reducer;

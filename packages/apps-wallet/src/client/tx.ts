@@ -81,6 +81,8 @@ export async function sendLiquidityUnbondTx(
     return false;
   }
 
+  console.log(chainAddress, stafiHubAddress, poolAddress);
+
   // if (true) {
   //   const decoded = decodeTxRaw(
   //     fromBase64(

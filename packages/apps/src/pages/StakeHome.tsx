@@ -1,35 +1,83 @@
-import { Button, CustomInput, FormatterText } from "@stafihub/react-components";
+import { getCosmosNetwork, STAFIHUB_NETWORK } from "@stafihub/apps-config";
 import {
-  sendStakeTx,
-  queryPoolInfo,
-  queryrTokenBalance,
-} from "@stafihub/apps-wallet";
-import { useParams } from "react-router-dom";
+  Button,
+  CustomInput,
+  CustomNumberInput,
+  FormatterText,
+} from "@stafihub/react-components";
+import { atomicToHuman } from "@stafihub/apps-util";
+import { useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
-import { useEffect, useState } from "react";
 import { usePoolInfo } from "../hooks";
-import { RTokenDenom } from "@stafihub/apps-config";
+import { useChainAccount } from "../hooks/useAppSlice";
+import { useChainInfo } from "../hooks/useChainInfo";
+import { connectKeplr } from "../redux/reducers/AppSlice";
+import { stake } from "../redux/reducers/TxSlice";
 
 export const StakeHome = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [stafiHubAccount] = useChainAccount(STAFIHUB_NETWORK);
+  const [chainAccount] = useChainAccount(getCosmosNetwork());
+  const chain = useChainInfo(getCosmosNetwork());
   const params = useParams();
   const tokenName = params.tokenName;
-  const { poolAddress } = usePoolInfo(`ur${tokenName}` as RTokenDenom);
+  const { poolAddress, exchangeRate } = usePoolInfo(`ur${tokenName}`);
+  const [inputAmount, setInputAmount] = useState("");
+  const [stafiHubAddress, setStafiHubAddress] = useState("");
+
+  const buttonDisabled = useMemo(() => {
+    return Boolean(!poolAddress || !stafiHubAddress || !inputAmount);
+  }, [poolAddress, stafiHubAddress, inputAmount]);
+
+  const transferrableAmount = useMemo(() => {
+    if (!chainAccount || !chainAccount.balance) {
+      return "--";
+    }
+    return atomicToHuman(chainAccount?.balance?.amount);
+  }, [chainAccount]);
+
+  const willGetAmount = useMemo(() => {
+    if (isNaN(Number(inputAmount)) || isNaN(Number(exchangeRate))) {
+      return "--";
+    }
+    return Number(inputAmount) / Number(exchangeRate);
+  }, [inputAmount, exchangeRate]);
 
   const clickStake = async () => {
-    if (!poolAddress) {
+    if (!poolAddress || !stafiHubAddress) {
       return;
     }
-    await sendStakeTx(poolAddress);
+    if (!chainAccount) {
+      dispatch(connectKeplr(getCosmosNetwork()));
+    }
+    dispatch(
+      stake(inputAmount, stafiHubAddress, poolAddress, (success) => {
+        if (success) {
+          navigate(`/stake/${tokenName}/status`);
+        }
+      })
+    );
+  };
+
+  const setConnectedStafiHubAddress = () => {
+    if (!stafiHubAccount) {
+      dispatch(connectKeplr(STAFIHUB_NETWORK));
+      return;
+    }
+    setStafiHubAddress(stafiHubAccount.bech32Address);
   };
 
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
       <div className="text-white font-bold text-[30px]">
-        Stake {tokenName?.toUpperCase()}
+        Stake u{tokenName?.toUpperCase()}
       </div>
 
       <div className="mt-[12px] text-text-gray4 text-[14px]">
-        23.344 ATOM is staked in the contracts
+        23.344 u{tokenName?.toUpperCase()} is staked in the contracts
       </div>
 
       <div className="mt-[10px] mr-[35px] h-[0.5px] bg-divider" />
@@ -37,11 +85,27 @@ export const StakeHome = () => {
       <div className="mt-10 flex flex-col">
         <div className="border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
           <div className="ml-5">
-            <CustomInput placeholder="STAKE AMOUNT" />
+            <CustomNumberInput
+              placeholder="STAKE AMOUNT"
+              value={inputAmount}
+              handleValueChange={setInputAmount}
+            />
           </div>
 
           <div className="flex items-center">
-            <div className="text-primary text-[16px] cursor-pointer">Max</div>
+            <div
+              className="text-primary text-[16px] cursor-pointer"
+              onClick={() => {
+                if (
+                  !isNaN(Number(transferrableAmount)) &&
+                  Number(transferrableAmount) > 0
+                ) {
+                  setInputAmount(transferrableAmount);
+                }
+              }}
+            >
+              Max
+            </div>
 
             <img
               src={ATOM}
@@ -52,16 +116,20 @@ export const StakeHome = () => {
         </div>
 
         <div className="mt-[10px] text-white text-[14px]">
-          Transferable: 123.342
+          Transferable:{" "}
+          <FormatterText
+            value={transferrableAmount}
+            decimals={chain.decimals}
+          />
         </div>
       </div>
 
       <div className="mt-12 font-bold text-text-gray5 text-[14px]">
-        You will get rATOM
+        You will get ur{tokenName?.toUpperCase()}
       </div>
 
       <div className="mt-[2px] font-bold text-primary text-[30px]">
-        <FormatterText value="100000.23" decimals={6} />
+        <FormatterText value={willGetAmount} decimals={6} />
       </div>
 
       <div className="mt-6 flex items-end">
@@ -107,11 +175,19 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-[10px] border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
-        <div className="ml-5">
-          <CustomInput placeholder="FIS..." />
+        <div className="ml-5 flex-1">
+          <CustomInput
+            fontSize={14}
+            placeholder="stafi..."
+            value={stafiHubAddress}
+            handleValueChange={setStafiHubAddress}
+          />
         </div>
 
-        <div className="mr-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center">
+        <div
+          className="mr-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
+          onClick={setConnectedStafiHubAddress}
+        >
           Connected Address
         </div>
       </div>
@@ -122,7 +198,9 @@ export const StakeHome = () => {
       </div>
 
       <div className="flex justify-end mt-[30px] mr-[57px]">
-        <Button onClick={clickStake}>Stake</Button>
+        <Button onClick={clickStake} disabled={buttonDisabled}>
+          Stake
+        </Button>
       </div>
     </div>
   );

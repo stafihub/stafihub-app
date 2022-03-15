@@ -1,1 +1,0 @@
-export { MsgSetInflationBase } from "./tx";

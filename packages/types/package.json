@@ -9,9 +9,9 @@
     "@cosmjs/stargate": "0.27.1",
     "@cosmjs/tendermint-rpc": "0.27.1",
     "@stafihub/apps-config": "workspace:0.1.0",
+    "long": "4.0.0",
     "protobufjs": "6.11.2",
-    "ts-proto": "1.88.0",
-    "long": "4.0.0"
+    "ts-proto": "1.88.0"
   },
   "scripts": {
     "build-proto": "./ts-proto.sh"
@@ -30,5 +30,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/webpack-env": "^1.16.3"
   }
 }

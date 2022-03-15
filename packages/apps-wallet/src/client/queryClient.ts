@@ -1,13 +1,13 @@
 import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { QueryClientImpl, MsgClientImpl } from "@stafihub/types";
-import { cosmosConfig, CosmosNetwork } from "@stafihub/apps-config";
+import { QueryClientImpl } from "@stafihub/types";
+import { chains } from "@stafihub/apps-config";
 
-export async function createQueryService(network: CosmosNetwork) {
+export async function createQueryService(network: string) {
   // Inside an async function...
   // The Tendermint client knows how to talk to the Tendermint RPC endpoint
   const tendermintClient = await Tendermint34Client.connect(
-    cosmosConfig[network].rpc
+    chains[network].rpc
   );
 
   // The generic Stargate query client knows how to use the Tendermint client to submit unverified ABCI queries
@@ -25,18 +25,4 @@ export async function createQueryService(network: CosmosNetwork) {
   //   const queryResult = await queryService.GetLeastBond({
   //     foo: "bar",
   //   });
-}
-
-export async function createMsgService() {
-  const tendermintClient = await Tendermint34Client.connect(
-    cosmosConfig.stafiHub.rpc
-  );
-
-  const queryClient = new QueryClient(tendermintClient);
-
-  const rpcClient = createProtobufRpcClient(queryClient);
-
-  const msgService = new MsgClientImpl(rpcClient);
-
-  return msgService;
 }

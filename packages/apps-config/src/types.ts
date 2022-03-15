@@ -1,5 +1,16 @@
 export type Environment = "dev" | "production";
 
-export type CosmosNetwork = "cosmosHub" | "stafiHub" | "terra" | "iris";
+export const STAFIHUB_NETWORK = "stafiHub";
 
-export type RTokenDenom = "urfis" | "urluna" | "uriris";
+export type NetworkConfig = { [key: string]: CosmosNetworkParams };
+
+export interface CosmosNetworkParams {
+  chainId: string;
+  chainName: string;
+  rpc: string;
+  restEndpoint: string;
+  denom: string;
+  coinDenom: string;
+  decimals: number;
+  bech32Config: any;
+}

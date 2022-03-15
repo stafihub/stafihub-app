@@ -1,6 +1,9 @@
 import { CustomInput, Button } from "@stafihub/react-components";
+import { useState } from "react";
 
 export const StakeRecovery = () => {
+  const [txHash, setTxHash] = useState("");
+
   return (
     <div className="pt-[34px] pl-[33px] pr-[80px] pb-[20px]">
       <div className="font-bold text-[24px] text-white text-center">
@@ -33,7 +36,12 @@ export const StakeRecovery = () => {
 
       <div className="mt-[7px] h-[34px] border-solid border-[1px] rounded-[5px] border-input-border flex items-center">
         <div className="ml-[13px]">
-          <CustomInput placeholder="" fontSize={12} />
+          <CustomInput
+            placeholder=""
+            fontSize={12}
+            value={txHash}
+            handleValueChange={setTxHash}
+          />
         </div>
       </div>
 

@@ -1,17 +1,25 @@
-import { Modal, Box } from "@mui/material";
+import { Box, Modal } from "@mui/material";
+import { chains, STAFIHUB_NETWORK } from "@stafihub/apps-config";
 import { Button } from "@stafihub/react-components";
-import { liquidityUnbond } from "@stafihub/apps-wallet";
-import { useParams } from "react-router-dom";
-import iconArrowRight from "../assets/images/icon_arrow_right.svg";
+import * as _ from "lodash";
+import { useMemo } from "react";
+import { useAccounts, useIsFork } from "../hooks/useAppSlice";
+import { AccountItem } from "./AccountItem";
 
 interface UnbondModalProps {
   visible: boolean;
   onClose: () => void;
 }
 
-export const UnbondModal = (props: UnbondModalProps) => {
-  const params = useParams();
-  const tokenName = params.tokenName;
+export const AccountModal = (props: UnbondModalProps) => {
+  const [accounts] = useAccounts();
+  const [isFork] = useIsFork();
+
+  const { stafiHubChain, restChainsArr } = useMemo(() => {
+    const stafiHubChain = chains[STAFIHUB_NETWORK];
+    const restChainsArr = _.values(_.omit(chains, [STAFIHUB_NETWORK]));
+    return { stafiHubChain, restChainsArr };
+  }, []);
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>
@@ -32,40 +40,27 @@ export const UnbondModal = (props: UnbondModalProps) => {
           outline: "none",
         }}
       >
-        <div className="text-white font-bold text-[30px]">Wallet connected</div>
-
-        <div className="flex items-center">
-          <img src={iconArrowRight} className="w-[9px] h-[16px]" alt="arrow" />
-
-          <div className="ml-1 text-primary text-[16px] font-bold">
-            CosmosHub
-          </div>
-        </div>
-        <div className="mt-[25px] text-text-gray4 text-[20px]">
-          —Commission: 233.424 ur{tokenName?.toUpperCase()}
+        <div className="mb-2 text-white font-bold text-[30px]">
+          Wallet connected
         </div>
 
-        <div className="mt-[10px] text-text-gray4 text-[20px]">
-          —Relay Fee: 3 FIS
+        <div className="h-96 max-h-96 overflow-auto">
+          <AccountItem
+            chain={stafiHubChain}
+            chainAccount={accounts[STAFIHUB_NETWORK]}
+          />
+
+          {restChainsArr.map((chainItem) => (
+            <AccountItem
+              key={chainItem.chainId}
+              chain={chainItem}
+              chainAccount={accounts[chainItem.chainName]}
+            />
+          ))}
         </div>
 
-        <div className="mt-[40px] text-text-gray4 text-[20px]">
-          —Period: around 14 days
-        </div>
-
-        <div className="mt-[55px] text-white font-bold text-[20px]">
-          You will get 293.22 u{tokenName?.toUpperCase()}
-        </div>
-
-        <div className="mt-[22px] self-end flex items-center">
-          <div
-            className="mr-[30px] text-white font-bold text-[16px] cursor-pointer"
-            onClick={props.onClose}
-          >
-            Cancel
-          </div>
-
-          <Button onClick={() => liquidityUnbond()}>Unbond</Button>
+        <div className="mt-7 flex justify-end">
+          <Button onClick={props.onClose}>Confirm</Button>
         </div>
       </Box>
     </Modal>

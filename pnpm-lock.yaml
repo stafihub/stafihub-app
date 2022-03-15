@@ -56,10 +56,12 @@ importers:
       '@stafihub/apps-wallet': workspace:0.1.0
       '@stafihub/react-components': workspace:0.1.0
       '@stafihub/types': workspace:^0.1.0
+      '@types/lodash': ^4.14.180
       autoprefixer: ^10.4.2
       classnames: ^2.3.1
       craco-alias: ^3.0.1
       crypto-browserify: ^3.12.0
+      lodash: ^4.17.21
       postcss: ^8.4.6
       react-redux: ^7.2.6
       react-router-dom: '6'
@@ -81,6 +83,7 @@ importers:
       '@stafihub/types': link:../types
       classnames: 2.3.1
       crypto-browserify: 3.12.0
+      lodash: 4.17.21
       react-redux: 7.2.6_react-dom@17.0.2+react@17.0.2
       react-router-dom: 6.2.2_react-dom@17.0.2+react@17.0.2
       react-scripts: 5.0.0_e58c21c986e1a3e18698119f3602b0dc
@@ -90,6 +93,7 @@ importers:
       '@babel/plugin-syntax-flow': 7.16.7_@babel+core@7.17.5
       '@babel/plugin-transform-react-jsx': 7.17.3_@babel+core@7.17.5
       '@craco/craco': 6.4.3_8d09e381cced3cda2f43205f9b288cdc
+      '@types/lodash': 4.14.180
       autoprefixer: 10.4.2_postcss@8.4.8
       craco-alias: 3.0.1
       postcss: 8.4.8
@@ -164,6 +168,7 @@ importers:
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
       '@stafihub/apps-config': workspace:0.1.0
+      '@types/webpack-env': ^1.16.3
       long: 4.0.0
       protobufjs: 6.11.2
       ts-proto: 1.88.0
@@ -175,6 +180,8 @@ importers:
       long: 4.0.0
       protobufjs: 6.11.2
       ts-proto: 1.88.0
+    devDependencies:
+      '@types/webpack-env': 1.16.3
 
 packages:
 
@@ -2266,8 +2273,8 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.17.2
-      '@emotion/react': 11.8.1_00d6772dea80510e818fd171caaa025a
-      '@emotion/styled': 11.8.1_35774467555e9088dcc222da78297fe2
+      '@emotion/react': 11.8.1_bf389bc9d9c898d23b26c0366b4e1ca7
+      '@emotion/styled': 11.8.1_00afbc8fe3341c00e85b022a17add4c4
       '@mui/base': 5.0.0-alpha.71_f456dfc349ace84b0ea11d9e6e4ef3ab
       '@mui/system': 5.5.0_f2e892485d1af2525ad3fbc8e0168c2d
       '@mui/types': 7.1.2_@types+react@17.0.40
@@ -2316,8 +2323,8 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.2
       '@emotion/cache': 11.7.1
-      '@emotion/react': 11.8.1_00d6772dea80510e818fd171caaa025a
-      '@emotion/styled': 11.8.1_35774467555e9088dcc222da78297fe2
+      '@emotion/react': 11.8.1_bf389bc9d9c898d23b26c0366b4e1ca7
+      '@emotion/styled': 11.8.1_00afbc8fe3341c00e85b022a17add4c4
       prop-types: 15.8.1
       react: 17.0.2
     dev: false
@@ -2339,8 +2346,8 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.17.2
-      '@emotion/react': 11.8.1_00d6772dea80510e818fd171caaa025a
-      '@emotion/styled': 11.8.1_35774467555e9088dcc222da78297fe2
+      '@emotion/react': 11.8.1_bf389bc9d9c898d23b26c0366b4e1ca7
+      '@emotion/styled': 11.8.1_00afbc8fe3341c00e85b022a17add4c4
       '@mui/private-theming': 5.4.4_00d6772dea80510e818fd171caaa025a
       '@mui/styled-engine': 5.4.4_08a40c758e6456be63daae44ab99bf23
       '@mui/types': 7.1.2_@types+react@17.0.40
@@ -2925,6 +2932,10 @@ packages:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
     dev: false
 
+  /@types/lodash/4.14.180:
+    resolution: {integrity: sha512-XOKXa1KIxtNXgASAnwj7cnttJxS4fksBRywK/9LzRV5YxrF80BXZIGeQSuoESQ/VkUj30Ae0+YcuHc15wJCB2g==}
+    dev: true
+
   /@types/long/4.0.1:
     resolution: {integrity: sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==}
     dev: false
@@ -3052,6 +3063,10 @@ packages:
   /@types/trusted-types/2.0.2:
     resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
     dev: false
+
+  /@types/webpack-env/1.16.3:
+    resolution: {integrity: sha512-9gtOPPkfyNoEqCQgx4qJKkuNm/x0R2hKR7fdl7zvTJyHnIisuE/LfvXOsYWL0o3qq6uiBnKZNNNzi3l0y/X+xw==}
+    dev: true
 
   /@types/ws/8.5.2:
     resolution: {integrity: sha512-VXI82ykONr5tacHEojnErTQk+KQSoYbW1NB6iz6wUwrNd+BqfkfggQNoNdCqhJSzbNumShPERbM+Pc5zpfhlbw==}

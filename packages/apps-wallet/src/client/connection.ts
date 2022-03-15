@@ -1,40 +1,35 @@
 import { SigningStargateClient } from "@cosmjs/stargate";
-import { cosmosConfig, getEnv, getCosmosNetwork } from "@stafihub/apps-config";
-import type { CosmosNetwork } from "@stafihub/apps-config";
+import { chains } from "@stafihub/apps-config";
 
 declare const window: any;
 
-export async function connectAtomjs(network: CosmosNetwork) {
+export async function connectAtomjs(network: string) {
   if (!window.getOfflineSigner || !window.keplr) {
     // message.error("Please install Keplr extension");
     return;
   }
 
-  if (network === "cosmosHub") {
-    const enableResult = await window.keplr.enable("cosmos");
-    console.log("enableResult", enableResult);
-  } else {
-    await innerConnectKeplr(network);
-  }
+  const enableResult = await innerConnectKeplr(network);
+  return enableResult;
 }
 
-async function innerConnectKeplr(network: CosmosNetwork) {
+async function innerConnectKeplr(network: string) {
   if (window.keplr.experimentalSuggestChain) {
     let parameter = {
       // Chain-id of the Cosmos SDK chain.
-      chainId: cosmosConfig[network].chainId,
+      chainId: chains[network].chainId,
       // The name of the chain to be displayed to the user.
-      chainName: cosmosConfig[network].chainName,
+      chainName: chains[network].chainName,
       // RPC endpoint of the chain.
-      rpc: cosmosConfig[network].rpc,
+      rpc: chains[network].rpc,
       // REST endpoint of the chain.
-      rest: cosmosConfig[network].restEndpoint,
+      rest: chains[network].restEndpoint,
       // Staking coin information
       stakeCurrency: {
         // Coin denomination to be displayed to the user.
-        coinDenom: cosmosConfig[network].coinDenom,
+        coinDenom: chains[network].coinDenom,
         // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-        coinMinimalDenom: cosmosConfig[network].denom,
+        coinMinimalDenom: chains[network].denom,
         // # of decimal points to convert minimal denomination to user-facing denomination.
         coinDecimals: 6,
       },
@@ -48,14 +43,14 @@ async function innerConnectKeplr(network: CosmosNetwork) {
         coinType: 118,
       },
       // Bech32 configuration to show the address to user.
-      bech32Config: cosmosConfig[network].bech32Config,
+      bech32Config: chains[network].bech32Config,
       // List of all coin/tokens used in this chain.
       currencies: [
         {
           // Coin denomination to be displayed to the user.
-          coinDenom: cosmosConfig[network].coinDenom,
+          coinDenom: chains[network].coinDenom,
           // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-          coinMinimalDenom: cosmosConfig[network].denom,
+          coinMinimalDenom: chains[network].denom,
           // # of decimal points to convert minimal denomination to user-facing denomination.
           coinDecimals: 6,
         },
@@ -64,9 +59,9 @@ async function innerConnectKeplr(network: CosmosNetwork) {
       feeCurrencies: [
         {
           // Coin denomination to be displayed to the user.
-          coinDenom: cosmosConfig[network].coinDenom,
+          coinDenom: chains[network].coinDenom,
           // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-          coinMinimalDenom: cosmosConfig[network].denom,
+          coinMinimalDenom: chains[network].denom,
           // # of decimal points to convert minimal denomination to user-facing denomination.
           coinDecimals: 6,
         },
@@ -103,30 +98,31 @@ async function innerConnectKeplr(network: CosmosNetwork) {
     console.error("Please use the recent version of keplr extension");
   }
 
-  const enableResult = await window.keplr.enable(cosmosConfig[network].chainId);
+  const enableResult = await window.keplr.enable(chains[network].chainId);
   console.log("enableResult", enableResult);
+  return enableResult;
 }
 
-export async function createCosmosClient(network: CosmosNetwork) {
+export async function createCosmosClient(network: string) {
   if (!window.getOfflineSigner) {
     return null;
   }
 
-  const offlineSigner = window.getOfflineSigner(cosmosConfig[network].chainId);
+  const offlineSigner = window.getOfflineSigner(chains[network].chainId);
   const cosmosClient = SigningStargateClient.connectWithSigner(
-    cosmosConfig[network].rpc,
+    chains[network].rpc,
     offlineSigner
   );
   return cosmosClient;
 }
 
-export async function getKeplrAccount(network: CosmosNetwork) {
+export async function getKeplrAccount(network: string) {
   if (!window.keplr) {
     return;
   }
   if (network === "cosmosHub") {
     return await window.keplr.getKey("cosmos");
   } else {
-    return await window.keplr.getKey(cosmosConfig[network].chainId);
+    return await window.keplr.getKey(chains[network].chainId);
   }
 }

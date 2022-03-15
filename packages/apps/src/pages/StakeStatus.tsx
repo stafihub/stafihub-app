@@ -4,15 +4,14 @@ import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
 import iconDown from "../assets/images/icon_down.png";
 import { usePoolInfo, useRTokenBalance } from "../hooks";
 import { useParams, useNavigate } from "react-router-dom";
-import { RTokenDenom } from "@stafihub/apps-config";
 import { useMemo } from "react";
 
 export const StakeStatus = () => {
   const navigate = useNavigate();
   const params = useParams();
   const tokenName = params.tokenName;
-  const { rTokenBalance } = useRTokenBalance(`ur${tokenName}` as RTokenDenom);
-  const { exchangeRate } = usePoolInfo(`ur${tokenName}` as RTokenDenom);
+  const { rTokenBalance } = useRTokenBalance(`ur${tokenName}`);
+  const { exchangeRate } = usePoolInfo(`ur${tokenName}`);
 
   const stakedAmount = useMemo(() => {
     if (isNaN(Number(exchangeRate)) || isNaN(Number(rTokenBalance))) {

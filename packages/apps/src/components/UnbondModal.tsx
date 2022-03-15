@@ -1,16 +1,24 @@
-import { Modal, Box } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import { Button } from "@stafihub/react-components";
-import { liquidityUnbond, sendStafiHubTokens } from "@stafihub/apps-wallet";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { usePoolInfo } from "../hooks";
+import { unbond } from "../redux/reducers/TxSlice";
 
 interface UnbondModalProps {
   visible: boolean;
   onClose: () => void;
+  inputAmount: string;
+  receiveAddress: string;
+  willGetAmount: string;
 }
 
 export const UnbondModal = (props: UnbondModalProps) => {
+  const dispatch = useDispatch();
+
   const params = useParams();
   const tokenName = params.tokenName;
+  const { poolAddress } = usePoolInfo(`ur${tokenName}`);
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>
@@ -32,11 +40,11 @@ export const UnbondModal = (props: UnbondModalProps) => {
         }}
       >
         <div className="text-white font-bold text-[30px]">
-          Unbond 234.22 ur{tokenName?.toUpperCase()}
+          Unbond {props.inputAmount} ur{tokenName?.toUpperCase()}
         </div>
 
         <div className="mt-[25px] text-text-gray4 text-[20px]">
-          —Commission: 233.424 ur{tokenName?.toUpperCase()}
+          —Commission: 1 ur{tokenName?.toUpperCase()}
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[20px]">
@@ -48,7 +56,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">
-          You will get 293.22 u{tokenName?.toUpperCase()}
+          You will get {props.willGetAmount} u{tokenName?.toUpperCase()}
         </div>
 
         <div className="mt-[22px] self-end flex items-center">
@@ -61,10 +69,13 @@ export const UnbondModal = (props: UnbondModalProps) => {
 
           <Button
             onClick={() => {
-              // sendStafiHubTokens(
-              //   "stafi15325ydd07uhlxksd7mc9w9pwq7fd8avyx2xkav"
-              // );
-              liquidityUnbond();
+              dispatch(
+                unbond(props.inputAmount, poolAddress, (success) => {
+                  if (success) {
+                    props.onClose();
+                  }
+                })
+              );
             }}
           >
             Unbond

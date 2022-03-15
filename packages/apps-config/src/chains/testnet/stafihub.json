@@ -1,0 +1,17 @@
+{
+  "chainName": "stafiHub",
+  "chainId": "stafihub-testnet-1",
+  "rpc": "https://test-rpc1.stafihub.io",
+  "restEndpoint": "https://test-rest-rpc1.stafihub.io",
+  "denom": "ufis",
+  "coinDenom": "ufis",
+  "decimals": 6,
+  "bech32Config": {
+    "bech32PrefixAccAddr": "stafi",
+    "bech32PrefixAccPub": "stafipub",
+    "bech32PrefixValAddr": "stafivaloper",
+    "bech32PrefixValPub": "stafivaloperpub",
+    "bech32PrefixConsAddr": "stafivalcons",
+    "bech32PrefixConsPub": "stafivalconspub"
+  }
+}

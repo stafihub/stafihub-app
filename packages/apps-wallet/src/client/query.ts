@@ -2,13 +2,13 @@ import type {
   PoolInfo,
   QueryBondedPoolsByDenomResponse,
   QueryGetPoolDetailResponse,
+  KeplrAccountBalance,
 } from "@stafihub/types";
-import { getCosmosNetwork } from "@stafihub/apps-config";
+import { getCosmosNetwork, chains } from "@stafihub/apps-config";
 import { createCosmosClient, createQueryService } from ".";
 
 export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
-  const network = "stafiHub";
-  const queryService = await createQueryService(network);
+  const queryService = await createQueryService("stafiHub");
 
   const results = await Promise.all([
     queryService.BondedPoolsByDenom({
@@ -53,6 +53,30 @@ export async function queryPoolDetail(
   return result;
 }
 
+export async function queryAccountBalance(
+  network: string,
+  address: string
+): Promise<KeplrAccountBalance> {
+  const client = await createCosmosClient(network);
+  if (!client) {
+    return {
+      denom: chains[network].coinDenom,
+      amount: "--",
+    };
+  }
+
+  try {
+    const result = await client.getBalance(address, chains[network].coinDenom);
+    console.log("account balance result", result);
+    return result;
+  } catch {
+    return {
+      denom: chains[network].coinDenom,
+      amount: "--",
+    };
+  }
+}
+
 export async function queryrTokenBalance(tokenDenom: string): Promise<string> {
   const client = await createCosmosClient("stafiHub");
   if (!client) {
@@ -64,6 +88,6 @@ export async function queryrTokenBalance(tokenDenom: string): Promise<string> {
     // "terra15lne70yk254s0pm2da6g59r82cjymzjq3r2v5x",
     tokenDenom
   );
-  console.log("balance result", result);
+  console.log("rToken balance result", result);
   return result.amount;
 }

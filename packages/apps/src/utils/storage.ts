@@ -1,0 +1,25 @@
+export const STORAGE_KEPLR_WALLET_ALLOWED = "keplr_network_allowed_";
+
+export function saveNetworkAllowedFlag(network: string) {
+  saveStorage(getNetworkAllowedKey(network), "1");
+}
+
+export function isNetworkAllowed(network: string) {
+  return getStorage(getNetworkAllowedKey(network));
+}
+
+function getNetworkAllowedKey(network: string) {
+  return STORAGE_KEPLR_WALLET_ALLOWED + network;
+}
+
+export function saveStorage(key: string, value: string) {
+  localStorage.setItem(key, value);
+}
+
+export function getStorage(key: string): string | null {
+  return localStorage.getItem(key);
+}
+
+export function removeStorage(key: string) {
+  localStorage.removeItem(key);
+}

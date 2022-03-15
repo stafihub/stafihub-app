@@ -4,38 +4,49 @@ import {
   defaultRegistryTypes as defaultStargateTypes,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { cosmosConfig, getCosmosNetwork } from "@stafihub/apps-config";
+import {
+  getCosmosNetwork,
+  chains,
+  STAFIHUB_NETWORK,
+} from "@stafihub/apps-config";
 import { MsgLiquidityUnbond } from "@stafihub/types";
-import { createMsgService } from ".";
 import { createCosmosClient } from "./connection";
 import { decodeTxRaw } from "@cosmjs/proto-signing";
 import { fromBase64, toHex } from "@cosmjs/encoding";
 import { SigningCosmosClient } from "@cosmjs/launchpad";
-import { TxRaw } from "@stafihub/types";
+import { atomicToHuman, humanToAtomic } from "@stafihub/apps-util";
 
 declare const window: any;
 
-export async function sendStakeTx(poolAddress: string) {
+export async function sendStakeTx(
+  accountAddress: string,
+  stafiHubAddress: string,
+  inputAmount: string,
+  poolAddress: string
+): Promise<boolean> {
   const network = getCosmosNetwork();
 
   const client = await createCosmosClient(network);
   const fee = {
     amount: [
       {
-        denom: cosmosConfig[network].denom,
+        denom: chains[network].denom,
         amount: "5000",
       },
     ],
     gas: "200000",
   };
   const sendTokens = await client?.sendTokens(
-    "iaa15lne70yk254s0pm2da6g59r82cjymzjqz9sa5h",
+    accountAddress,
     poolAddress,
-    coins(1000000, cosmosConfig[network].denom),
+    coins(
+      humanToAtomic(inputAmount, chains[network].decimals),
+      chains[network].denom
+    ),
     fee,
-    "1:stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7"
+    `1:${stafiHubAddress}`
   );
-  // const success = sendTokens?.code === 0;
+  return sendTokens?.code === 0;
 }
 
 export async function sendStafiHubTokens(targetAddress: string) {
@@ -45,7 +56,7 @@ export async function sendStafiHubTokens(targetAddress: string) {
   const fee = {
     amount: [
       {
-        denom: cosmosConfig[network].denom,
+        denom: chains[network].denom,
         amount: "5000",
       },
     ],
@@ -54,15 +65,20 @@ export async function sendStafiHubTokens(targetAddress: string) {
   const sendTokens = await client?.sendTokens(
     "stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7",
     targetAddress,
-    coins(1000000, cosmosConfig[network].denom),
+    coins(1000000, chains[network].denom),
     fee
   );
   // const success = sendTokens?.code === 0;
 }
 
-export async function liquidityUnbond() {
+export async function sendLiquidityUnbondTx(
+  inputAmount: string,
+  chainAddress: string,
+  stafiHubAddress: string,
+  poolAddress: string
+) {
   if (!window.getOfflineSigner) {
-    return;
+    return false;
   }
 
   // if (true) {
@@ -91,28 +107,34 @@ export async function liquidityUnbond() {
     "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
     MsgLiquidityUnbond
   );
-  const stafiHubNetwork = "stafiHub";
 
   const offlineSigner = window.getOfflineSigner(
-    cosmosConfig[stafiHubNetwork].chainId
+    chains[STAFIHUB_NETWORK].chainId
   );
 
   const client = await SigningStargateClient.connectWithSigner(
-    cosmosConfig[stafiHubNetwork].rpc,
+    chains[STAFIHUB_NETWORK].rpc,
     offlineSigner,
     { registry: myRegistry }
   );
 
-  const myAddress = "stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7";
   const message = {
     typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
     value: MsgLiquidityUnbond.fromPartial({
-      creator: "stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7",
-      pool: "iaa15nplt4wf696d05lffgpjksf9v2ylf0s5vzzm3l",
+      creator: stafiHubAddress,
+      pool: poolAddress,
       value: "1uriris",
-      recipient: "iaa15lne70yk254s0pm2da6g59r82cjymzjqz9sa5h",
+      recipient: chainAddress,
     }),
   };
+  // const sendTokenMessage = {
+  //   typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+  //   value: {
+  //     fromAddress: "stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7",
+  //     toAddress: "stafi15325ydd07uhlxksd7mc9w9pwq7fd8avyx2xkav",
+  //     amount: coins(1000000, "ufis"),
+  //   },
+  // };
 
   console.log("message", message);
 
@@ -137,19 +159,19 @@ export async function liquidityUnbond() {
   //   return;
   // }
 
-  // const response = await client.signAndBroadcast(
+  const response = await client.signAndBroadcast(
+    stafiHubAddress,
+    [message],
+    fee,
+    "use your power wisely"
+  );
+
+  // const txRaw = await client.sign(
   //   myAddress,
   //   [message],
   //   fee,
   //   "use your power wisely"
   // );
-
-  const txRaw = await client.sign(
-    myAddress,
-    [message],
-    fee,
-    "use your power wisely"
-  );
 
   // console.log("response", JSON.stringify(txRaw));
   // console.log("response bodyBytes", toHex(txRaw.bodyBytes));
@@ -159,11 +181,13 @@ export async function liquidityUnbond() {
   // const arr = stringToUint(JSON.stringify(txRaw));
   // console.log("txRaw Hex", toHex(arr));
 
-  const encoded = TxRaw.encode(txRaw);
+  // const encoded = TxRaw.encode(txRaw);
   // console.log("txRaw encode", toHex(encoded.finish()));
-  console.log("txRaw encode decode", decodeTxRaw(encoded.finish()));
+  // console.log("txRaw encode decode", decodeTxRaw(encoded.finish()));
 
   // client.broadcastTx(encoded.finish());
+
+  return response.code === 0;
 }
 
 function stringToUint(str: string) {

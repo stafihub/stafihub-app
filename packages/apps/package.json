@@ -16,6 +16,7 @@
     "@stafihub/types": "workspace:^0.1.0",
     "classnames": "^2.3.1",
     "crypto-browserify": "^3.12.0",
+    "lodash": "^4.17.21",
     "react-redux": "^7.2.6",
     "react-router-dom": "6",
     "react-scripts": "5.0.0",
@@ -26,6 +27,7 @@
     "@babel/plugin-syntax-flow": "^7.16.7",
     "@babel/plugin-transform-react-jsx": "^7.17.3",
     "@craco/craco": "^6.4.3",
+    "@types/lodash": "^4.14.180",
     "autoprefixer": "^10.4.2",
     "craco-alias": "^3.0.1",
     "postcss": "^8.4.6",
@@ -33,7 +35,7 @@
     "webpack": "^5.69.1"
   },
   "scripts": {
-    "start": "PORT=3020 craco start",
+    "start": "PORT=3021 craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",

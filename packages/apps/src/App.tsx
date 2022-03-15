@@ -1,24 +1,21 @@
 import React from "react";
-import { MainLayout } from "./layout/MainLayout";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useInit } from "./hooks/useInit";
+import { MainLayout } from "./layout/MainLayout";
+import { StakeLayout } from "./layout/StakeLayout";
 import { RAsset } from "./pages/RAsset";
 import { RTokenHome } from "./pages/RTokenHome";
-import { StakeLayout } from "./layout/StakeLayout";
 import { StakeHome } from "./pages/StakeHome";
-import { StakeStatus } from "./pages/StakeStatus";
 import { StakeRecovery } from "./pages/StakeRecovery";
-import { StakeReward } from "./pages/StakeReward";
-import { useDispatch } from "react-redux";
-import { setCurrentNetwork } from "./redux/reducers/AppSlice";
-import { cosmosConfig } from "@stafihub/apps-config";
 import { StakeRedeem } from "./pages/StakeRedeem";
+import { StakeReward } from "./pages/StakeReward";
+import { StakeStatus } from "./pages/StakeStatus";
 
 function App() {
-  const dispatch = useDispatch();
-  dispatch(setCurrentNetwork(cosmosConfig.terra));
+  useInit();
 
   return (
-    <div className="flex leading-none justify-center">
+    <div className="flex justify-center">
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route path="/rAsset" element={<RAsset />} />

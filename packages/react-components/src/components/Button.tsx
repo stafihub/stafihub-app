@@ -15,7 +15,7 @@ export const Button = (props: ButtonProps) => {
         { "opacity-50 cursor-default": props.disabled },
         { "h-[30px] px-[11px] text-[12px]": props.size === "small" },
         {
-          "h-[42px] px-[33px] text-[16px]":
+          "h-[42px] px-[24px] text-[16px]":
             props.size === "middle" || !props.size,
         },
         { "rounded-full": !props.type || props.type === "rounded" },

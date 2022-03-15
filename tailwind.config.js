@@ -7,6 +7,9 @@ module.exports = {
       white: "#ffffff",
       transparent: "#00000000",
       divider: "#3f3f3f",
+      border: {
+        main: "#979797",
+      },
       "input-border": "#bfbfbf",
       placdholder: "#4f4f4f",
       black: {

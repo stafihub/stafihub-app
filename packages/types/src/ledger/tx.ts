@@ -1,12 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import {
-  OriginalTxType,
-  PoolUnbond,
-  originalTxTypeFromJSON,
-  originalTxTypeToJSON,
-} from "../ledger/ledger";
+import { OriginalTxType, PoolUnbond, originalTxTypeFromJSON, originalTxTypeToJSON } from "../ledger/ledger";
 
 export const protobufPackage = "stafihub.stafihub.ledger";
 
@@ -145,7 +140,11 @@ export interface MsgRmBondedPoolResponse {}
 export interface MsgMigrateInit {
   creator: string;
   denom: string;
+  pool: string;
   totalSupply: string;
+  active: string;
+  bond: string;
+  unbond: string;
   exchangeRate: string;
 }
 
@@ -162,10 +161,7 @@ export interface MsgMigrateUnbondingsResponse {}
 const baseMsgSetEraUnbondLimit: object = { creator: "", denom: "", limit: 0 };
 
 export const MsgSetEraUnbondLimit = {
-  encode(
-    message: MsgSetEraUnbondLimit,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetEraUnbondLimit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -178,10 +174,7 @@ export const MsgSetEraUnbondLimit = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetEraUnbondLimit {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetEraUnbondLimit {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSetEraUnbondLimit } as MsgSetEraUnbondLimit;
@@ -207,18 +200,9 @@ export const MsgSetEraUnbondLimit = {
 
   fromJSON(object: any): MsgSetEraUnbondLimit {
     const message = { ...baseMsgSetEraUnbondLimit } as MsgSetEraUnbondLimit;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.limit =
-      object.limit !== undefined && object.limit !== null
-        ? Number(object.limit)
-        : 0;
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.limit = object.limit !== undefined && object.limit !== null ? Number(object.limit) : 0;
     return message;
   },
 
@@ -230,7 +214,7 @@ export const MsgSetEraUnbondLimit = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetEraUnbondLimit>): MsgSetEraUnbondLimit {
+  fromPartial<I extends Exact<DeepPartial<MsgSetEraUnbondLimit>, I>>(object: I): MsgSetEraUnbondLimit {
     const message = { ...baseMsgSetEraUnbondLimit } as MsgSetEraUnbondLimit;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -242,22 +226,14 @@ export const MsgSetEraUnbondLimit = {
 const baseMsgSetEraUnbondLimitResponse: object = {};
 
 export const MsgSetEraUnbondLimitResponse = {
-  encode(
-    _: MsgSetEraUnbondLimitResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetEraUnbondLimitResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetEraUnbondLimitResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetEraUnbondLimitResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetEraUnbondLimitResponse,
-    } as MsgSetEraUnbondLimitResponse;
+    const message = { ...baseMsgSetEraUnbondLimitResponse } as MsgSetEraUnbondLimitResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -270,9 +246,7 @@ export const MsgSetEraUnbondLimitResponse = {
   },
 
   fromJSON(_: any): MsgSetEraUnbondLimitResponse {
-    const message = {
-      ...baseMsgSetEraUnbondLimitResponse,
-    } as MsgSetEraUnbondLimitResponse;
+    const message = { ...baseMsgSetEraUnbondLimitResponse } as MsgSetEraUnbondLimitResponse;
     return message;
   },
 
@@ -281,29 +255,18 @@ export const MsgSetEraUnbondLimitResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetEraUnbondLimitResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgSetEraUnbondLimitResponse>, I>>(
+    _: I,
   ): MsgSetEraUnbondLimitResponse {
-    const message = {
-      ...baseMsgSetEraUnbondLimitResponse,
-    } as MsgSetEraUnbondLimitResponse;
+    const message = { ...baseMsgSetEraUnbondLimitResponse } as MsgSetEraUnbondLimitResponse;
     return message;
   },
 };
 
-const baseMsgSetPoolDetail: object = {
-  creator: "",
-  denom: "",
-  pool: "",
-  subAccounts: "",
-  threshold: 0,
-};
+const baseMsgSetPoolDetail: object = { creator: "", denom: "", pool: "", subAccounts: "", threshold: 0 };
 
 export const MsgSetPoolDetail = {
-  encode(
-    message: MsgSetPoolDetail,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetPoolDetail, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -355,23 +318,12 @@ export const MsgSetPoolDetail = {
 
   fromJSON(object: any): MsgSetPoolDetail {
     const message = { ...baseMsgSetPoolDetail } as MsgSetPoolDetail;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
     message.subAccounts = (object.subAccounts ?? []).map((e: any) => String(e));
     message.threshold =
-      object.threshold !== undefined && object.threshold !== null
-        ? Number(object.threshold)
-        : 0;
+      object.threshold !== undefined && object.threshold !== null ? Number(object.threshold) : 0;
     return message;
   },
 
@@ -389,12 +341,12 @@ export const MsgSetPoolDetail = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetPoolDetail>): MsgSetPoolDetail {
+  fromPartial<I extends Exact<DeepPartial<MsgSetPoolDetail>, I>>(object: I): MsgSetPoolDetail {
     const message = { ...baseMsgSetPoolDetail } as MsgSetPoolDetail;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
-    message.subAccounts = (object.subAccounts ?? []).map((e) => e);
+    message.subAccounts = object.subAccounts?.map((e) => e) || [];
     message.threshold = object.threshold ?? 0;
     return message;
   },
@@ -403,22 +355,14 @@ export const MsgSetPoolDetail = {
 const baseMsgSetPoolDetailResponse: object = {};
 
 export const MsgSetPoolDetailResponse = {
-  encode(
-    _: MsgSetPoolDetailResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetPoolDetailResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetPoolDetailResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetPoolDetailResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetPoolDetailResponse,
-    } as MsgSetPoolDetailResponse;
+    const message = { ...baseMsgSetPoolDetailResponse } as MsgSetPoolDetailResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -431,9 +375,7 @@ export const MsgSetPoolDetailResponse = {
   },
 
   fromJSON(_: any): MsgSetPoolDetailResponse {
-    const message = {
-      ...baseMsgSetPoolDetailResponse,
-    } as MsgSetPoolDetailResponse;
+    const message = { ...baseMsgSetPoolDetailResponse } as MsgSetPoolDetailResponse;
     return message;
   },
 
@@ -442,12 +384,8 @@ export const MsgSetPoolDetailResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetPoolDetailResponse>
-  ): MsgSetPoolDetailResponse {
-    const message = {
-      ...baseMsgSetPoolDetailResponse,
-    } as MsgSetPoolDetailResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgSetPoolDetailResponse>, I>>(_: I): MsgSetPoolDetailResponse {
+    const message = { ...baseMsgSetPoolDetailResponse } as MsgSetPoolDetailResponse;
     return message;
   },
 };
@@ -455,10 +393,7 @@ export const MsgSetPoolDetailResponse = {
 const baseMsgSetLeastBond: object = { creator: "", denom: "", leastBond: "" };
 
 export const MsgSetLeastBond = {
-  encode(
-    message: MsgSetLeastBond,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetLeastBond, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -497,18 +432,10 @@ export const MsgSetLeastBond = {
 
   fromJSON(object: any): MsgSetLeastBond {
     const message = { ...baseMsgSetLeastBond } as MsgSetLeastBond;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.leastBond =
-      object.leastBond !== undefined && object.leastBond !== null
-        ? String(object.leastBond)
-        : "";
+      object.leastBond !== undefined && object.leastBond !== null ? String(object.leastBond) : "";
     return message;
   },
 
@@ -520,7 +447,7 @@ export const MsgSetLeastBond = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetLeastBond>): MsgSetLeastBond {
+  fromPartial<I extends Exact<DeepPartial<MsgSetLeastBond>, I>>(object: I): MsgSetLeastBond {
     const message = { ...baseMsgSetLeastBond } as MsgSetLeastBond;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -532,22 +459,14 @@ export const MsgSetLeastBond = {
 const baseMsgSetLeastBondResponse: object = {};
 
 export const MsgSetLeastBondResponse = {
-  encode(
-    _: MsgSetLeastBondResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetLeastBondResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetLeastBondResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetLeastBondResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetLeastBondResponse,
-    } as MsgSetLeastBondResponse;
+    const message = { ...baseMsgSetLeastBondResponse } as MsgSetLeastBondResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -560,9 +479,7 @@ export const MsgSetLeastBondResponse = {
   },
 
   fromJSON(_: any): MsgSetLeastBondResponse {
-    const message = {
-      ...baseMsgSetLeastBondResponse,
-    } as MsgSetLeastBondResponse;
+    const message = { ...baseMsgSetLeastBondResponse } as MsgSetLeastBondResponse;
     return message;
   },
 
@@ -571,12 +488,8 @@ export const MsgSetLeastBondResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetLeastBondResponse>
-  ): MsgSetLeastBondResponse {
-    const message = {
-      ...baseMsgSetLeastBondResponse,
-    } as MsgSetLeastBondResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgSetLeastBondResponse>, I>>(_: I): MsgSetLeastBondResponse {
+    const message = { ...baseMsgSetLeastBondResponse } as MsgSetLeastBondResponse;
     return message;
   },
 };
@@ -584,10 +497,7 @@ export const MsgSetLeastBondResponse = {
 const baseMsgClearCurrentEraSnapShots: object = { creator: "", denom: "" };
 
 export const MsgClearCurrentEraSnapShots = {
-  encode(
-    message: MsgClearCurrentEraSnapShots,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgClearCurrentEraSnapShots, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -597,15 +507,10 @@ export const MsgClearCurrentEraSnapShots = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgClearCurrentEraSnapShots {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClearCurrentEraSnapShots {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgClearCurrentEraSnapShots,
-    } as MsgClearCurrentEraSnapShots;
+    const message = { ...baseMsgClearCurrentEraSnapShots } as MsgClearCurrentEraSnapShots;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -624,17 +529,9 @@ export const MsgClearCurrentEraSnapShots = {
   },
 
   fromJSON(object: any): MsgClearCurrentEraSnapShots {
-    const message = {
-      ...baseMsgClearCurrentEraSnapShots,
-    } as MsgClearCurrentEraSnapShots;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    const message = { ...baseMsgClearCurrentEraSnapShots } as MsgClearCurrentEraSnapShots;
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     return message;
   },
 
@@ -645,12 +542,10 @@ export const MsgClearCurrentEraSnapShots = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<MsgClearCurrentEraSnapShots>
+  fromPartial<I extends Exact<DeepPartial<MsgClearCurrentEraSnapShots>, I>>(
+    object: I,
   ): MsgClearCurrentEraSnapShots {
-    const message = {
-      ...baseMsgClearCurrentEraSnapShots,
-    } as MsgClearCurrentEraSnapShots;
+    const message = { ...baseMsgClearCurrentEraSnapShots } as MsgClearCurrentEraSnapShots;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
     return message;
@@ -660,22 +555,14 @@ export const MsgClearCurrentEraSnapShots = {
 const baseMsgClearCurrentEraSnapShotsResponse: object = {};
 
 export const MsgClearCurrentEraSnapShotsResponse = {
-  encode(
-    _: MsgClearCurrentEraSnapShotsResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgClearCurrentEraSnapShotsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgClearCurrentEraSnapShotsResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClearCurrentEraSnapShotsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgClearCurrentEraSnapShotsResponse,
-    } as MsgClearCurrentEraSnapShotsResponse;
+    const message = { ...baseMsgClearCurrentEraSnapShotsResponse } as MsgClearCurrentEraSnapShotsResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -688,9 +575,7 @@ export const MsgClearCurrentEraSnapShotsResponse = {
   },
 
   fromJSON(_: any): MsgClearCurrentEraSnapShotsResponse {
-    const message = {
-      ...baseMsgClearCurrentEraSnapShotsResponse,
-    } as MsgClearCurrentEraSnapShotsResponse;
+    const message = { ...baseMsgClearCurrentEraSnapShotsResponse } as MsgClearCurrentEraSnapShotsResponse;
     return message;
   },
 
@@ -699,27 +584,18 @@ export const MsgClearCurrentEraSnapShotsResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgClearCurrentEraSnapShotsResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgClearCurrentEraSnapShotsResponse>, I>>(
+    _: I,
   ): MsgClearCurrentEraSnapShotsResponse {
-    const message = {
-      ...baseMsgClearCurrentEraSnapShotsResponse,
-    } as MsgClearCurrentEraSnapShotsResponse;
+    const message = { ...baseMsgClearCurrentEraSnapShotsResponse } as MsgClearCurrentEraSnapShotsResponse;
     return message;
   },
 };
 
-const baseMsgSetStakingRewardCommission: object = {
-  creator: "",
-  denom: "",
-  commission: "",
-};
+const baseMsgSetStakingRewardCommission: object = { creator: "", denom: "", commission: "" };
 
 export const MsgSetStakingRewardCommission = {
-  encode(
-    message: MsgSetStakingRewardCommission,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetStakingRewardCommission, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -732,15 +608,10 @@ export const MsgSetStakingRewardCommission = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetStakingRewardCommission {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetStakingRewardCommission {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetStakingRewardCommission,
-    } as MsgSetStakingRewardCommission;
+    const message = { ...baseMsgSetStakingRewardCommission } as MsgSetStakingRewardCommission;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -762,21 +633,11 @@ export const MsgSetStakingRewardCommission = {
   },
 
   fromJSON(object: any): MsgSetStakingRewardCommission {
-    const message = {
-      ...baseMsgSetStakingRewardCommission,
-    } as MsgSetStakingRewardCommission;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    const message = { ...baseMsgSetStakingRewardCommission } as MsgSetStakingRewardCommission;
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.commission =
-      object.commission !== undefined && object.commission !== null
-        ? String(object.commission)
-        : "";
+      object.commission !== undefined && object.commission !== null ? String(object.commission) : "";
     return message;
   },
 
@@ -788,12 +649,10 @@ export const MsgSetStakingRewardCommission = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<MsgSetStakingRewardCommission>
+  fromPartial<I extends Exact<DeepPartial<MsgSetStakingRewardCommission>, I>>(
+    object: I,
   ): MsgSetStakingRewardCommission {
-    const message = {
-      ...baseMsgSetStakingRewardCommission,
-    } as MsgSetStakingRewardCommission;
+    const message = { ...baseMsgSetStakingRewardCommission } as MsgSetStakingRewardCommission;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
     message.commission = object.commission ?? "";
@@ -804,22 +663,14 @@ export const MsgSetStakingRewardCommission = {
 const baseMsgSetStakingRewardCommissionResponse: object = {};
 
 export const MsgSetStakingRewardCommissionResponse = {
-  encode(
-    _: MsgSetStakingRewardCommissionResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetStakingRewardCommissionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetStakingRewardCommissionResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetStakingRewardCommissionResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetStakingRewardCommissionResponse,
-    } as MsgSetStakingRewardCommissionResponse;
+    const message = { ...baseMsgSetStakingRewardCommissionResponse } as MsgSetStakingRewardCommissionResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -832,9 +683,7 @@ export const MsgSetStakingRewardCommissionResponse = {
   },
 
   fromJSON(_: any): MsgSetStakingRewardCommissionResponse {
-    const message = {
-      ...baseMsgSetStakingRewardCommissionResponse,
-    } as MsgSetStakingRewardCommissionResponse;
+    const message = { ...baseMsgSetStakingRewardCommissionResponse } as MsgSetStakingRewardCommissionResponse;
     return message;
   },
 
@@ -843,12 +692,10 @@ export const MsgSetStakingRewardCommissionResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetStakingRewardCommissionResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgSetStakingRewardCommissionResponse>, I>>(
+    _: I,
   ): MsgSetStakingRewardCommissionResponse {
-    const message = {
-      ...baseMsgSetStakingRewardCommissionResponse,
-    } as MsgSetStakingRewardCommissionResponse;
+    const message = { ...baseMsgSetStakingRewardCommissionResponse } as MsgSetStakingRewardCommissionResponse;
     return message;
   },
 };
@@ -856,10 +703,7 @@ export const MsgSetStakingRewardCommissionResponse = {
 const baseMsgSetProtocolFeeReceiver: object = { creator: "", receiver: "" };
 
 export const MsgSetProtocolFeeReceiver = {
-  encode(
-    message: MsgSetProtocolFeeReceiver,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetProtocolFeeReceiver, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -869,15 +713,10 @@ export const MsgSetProtocolFeeReceiver = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetProtocolFeeReceiver {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetProtocolFeeReceiver {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetProtocolFeeReceiver,
-    } as MsgSetProtocolFeeReceiver;
+    const message = { ...baseMsgSetProtocolFeeReceiver } as MsgSetProtocolFeeReceiver;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -896,17 +735,10 @@ export const MsgSetProtocolFeeReceiver = {
   },
 
   fromJSON(object: any): MsgSetProtocolFeeReceiver {
-    const message = {
-      ...baseMsgSetProtocolFeeReceiver,
-    } as MsgSetProtocolFeeReceiver;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
+    const message = { ...baseMsgSetProtocolFeeReceiver } as MsgSetProtocolFeeReceiver;
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
     message.receiver =
-      object.receiver !== undefined && object.receiver !== null
-        ? String(object.receiver)
-        : "";
+      object.receiver !== undefined && object.receiver !== null ? String(object.receiver) : "";
     return message;
   },
 
@@ -917,12 +749,10 @@ export const MsgSetProtocolFeeReceiver = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<MsgSetProtocolFeeReceiver>
+  fromPartial<I extends Exact<DeepPartial<MsgSetProtocolFeeReceiver>, I>>(
+    object: I,
   ): MsgSetProtocolFeeReceiver {
-    const message = {
-      ...baseMsgSetProtocolFeeReceiver,
-    } as MsgSetProtocolFeeReceiver;
+    const message = { ...baseMsgSetProtocolFeeReceiver } as MsgSetProtocolFeeReceiver;
     message.creator = object.creator ?? "";
     message.receiver = object.receiver ?? "";
     return message;
@@ -932,22 +762,14 @@ export const MsgSetProtocolFeeReceiver = {
 const baseMsgSetProtocolFeeReceiverResponse: object = {};
 
 export const MsgSetProtocolFeeReceiverResponse = {
-  encode(
-    _: MsgSetProtocolFeeReceiverResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetProtocolFeeReceiverResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetProtocolFeeReceiverResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetProtocolFeeReceiverResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetProtocolFeeReceiverResponse,
-    } as MsgSetProtocolFeeReceiverResponse;
+    const message = { ...baseMsgSetProtocolFeeReceiverResponse } as MsgSetProtocolFeeReceiverResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -960,9 +782,7 @@ export const MsgSetProtocolFeeReceiverResponse = {
   },
 
   fromJSON(_: any): MsgSetProtocolFeeReceiverResponse {
-    const message = {
-      ...baseMsgSetProtocolFeeReceiverResponse,
-    } as MsgSetProtocolFeeReceiverResponse;
+    const message = { ...baseMsgSetProtocolFeeReceiverResponse } as MsgSetProtocolFeeReceiverResponse;
     return message;
   },
 
@@ -971,12 +791,10 @@ export const MsgSetProtocolFeeReceiverResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetProtocolFeeReceiverResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgSetProtocolFeeReceiverResponse>, I>>(
+    _: I,
   ): MsgSetProtocolFeeReceiverResponse {
-    const message = {
-      ...baseMsgSetProtocolFeeReceiverResponse,
-    } as MsgSetProtocolFeeReceiverResponse;
+    const message = { ...baseMsgSetProtocolFeeReceiverResponse } as MsgSetProtocolFeeReceiverResponse;
     return message;
   },
 };
@@ -984,10 +802,7 @@ export const MsgSetProtocolFeeReceiverResponse = {
 const baseMsgSetUnbondRelayFee: object = { creator: "", denom: "", value: "" };
 
 export const MsgSetUnbondRelayFee = {
-  encode(
-    message: MsgSetUnbondRelayFee,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetUnbondRelayFee, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -1000,10 +815,7 @@ export const MsgSetUnbondRelayFee = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetUnbondRelayFee {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetUnbondRelayFee {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSetUnbondRelayFee } as MsgSetUnbondRelayFee;
@@ -1029,18 +841,9 @@ export const MsgSetUnbondRelayFee = {
 
   fromJSON(object: any): MsgSetUnbondRelayFee {
     const message = { ...baseMsgSetUnbondRelayFee } as MsgSetUnbondRelayFee;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.value = object.value !== undefined && object.value !== null ? String(object.value) : "";
     return message;
   },
 
@@ -1052,7 +855,7 @@ export const MsgSetUnbondRelayFee = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetUnbondRelayFee>): MsgSetUnbondRelayFee {
+  fromPartial<I extends Exact<DeepPartial<MsgSetUnbondRelayFee>, I>>(object: I): MsgSetUnbondRelayFee {
     const message = { ...baseMsgSetUnbondRelayFee } as MsgSetUnbondRelayFee;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -1064,22 +867,14 @@ export const MsgSetUnbondRelayFee = {
 const baseMsgSetUnbondRelayFeeResponse: object = {};
 
 export const MsgSetUnbondRelayFeeResponse = {
-  encode(
-    _: MsgSetUnbondRelayFeeResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetUnbondRelayFeeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetUnbondRelayFeeResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetUnbondRelayFeeResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetUnbondRelayFeeResponse,
-    } as MsgSetUnbondRelayFeeResponse;
+    const message = { ...baseMsgSetUnbondRelayFeeResponse } as MsgSetUnbondRelayFeeResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1092,9 +887,7 @@ export const MsgSetUnbondRelayFeeResponse = {
   },
 
   fromJSON(_: any): MsgSetUnbondRelayFeeResponse {
-    const message = {
-      ...baseMsgSetUnbondRelayFeeResponse,
-    } as MsgSetUnbondRelayFeeResponse;
+    const message = { ...baseMsgSetUnbondRelayFeeResponse } as MsgSetUnbondRelayFeeResponse;
     return message;
   },
 
@@ -1103,28 +896,18 @@ export const MsgSetUnbondRelayFeeResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetUnbondRelayFeeResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgSetUnbondRelayFeeResponse>, I>>(
+    _: I,
   ): MsgSetUnbondRelayFeeResponse {
-    const message = {
-      ...baseMsgSetUnbondRelayFeeResponse,
-    } as MsgSetUnbondRelayFeeResponse;
+    const message = { ...baseMsgSetUnbondRelayFeeResponse } as MsgSetUnbondRelayFeeResponse;
     return message;
   },
 };
 
-const baseMsgLiquidityUnbond: object = {
-  creator: "",
-  pool: "",
-  value: "",
-  recipient: "",
-};
+const baseMsgLiquidityUnbond: object = { creator: "", pool: "", value: "", recipient: "" };
 
 export const MsgLiquidityUnbond = {
-  encode(
-    message: MsgLiquidityUnbond,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgLiquidityUnbond, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -1169,22 +952,11 @@ export const MsgLiquidityUnbond = {
 
   fromJSON(object: any): MsgLiquidityUnbond {
     const message = { ...baseMsgLiquidityUnbond } as MsgLiquidityUnbond;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
+    message.value = object.value !== undefined && object.value !== null ? String(object.value) : "";
     message.recipient =
-      object.recipient !== undefined && object.recipient !== null
-        ? String(object.recipient)
-        : "";
+      object.recipient !== undefined && object.recipient !== null ? String(object.recipient) : "";
     return message;
   },
 
@@ -1197,7 +969,7 @@ export const MsgLiquidityUnbond = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgLiquidityUnbond>): MsgLiquidityUnbond {
+  fromPartial<I extends Exact<DeepPartial<MsgLiquidityUnbond>, I>>(object: I): MsgLiquidityUnbond {
     const message = { ...baseMsgLiquidityUnbond } as MsgLiquidityUnbond;
     message.creator = object.creator ?? "";
     message.pool = object.pool ?? "";
@@ -1210,22 +982,14 @@ export const MsgLiquidityUnbond = {
 const baseMsgLiquidityUnbondResponse: object = {};
 
 export const MsgLiquidityUnbondResponse = {
-  encode(
-    _: MsgLiquidityUnbondResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgLiquidityUnbondResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgLiquidityUnbondResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgLiquidityUnbondResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgLiquidityUnbondResponse,
-    } as MsgLiquidityUnbondResponse;
+    const message = { ...baseMsgLiquidityUnbondResponse } as MsgLiquidityUnbondResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1238,9 +1002,7 @@ export const MsgLiquidityUnbondResponse = {
   },
 
   fromJSON(_: any): MsgLiquidityUnbondResponse {
-    const message = {
-      ...baseMsgLiquidityUnbondResponse,
-    } as MsgLiquidityUnbondResponse;
+    const message = { ...baseMsgLiquidityUnbondResponse } as MsgLiquidityUnbondResponse;
     return message;
   },
 
@@ -1249,27 +1011,16 @@ export const MsgLiquidityUnbondResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgLiquidityUnbondResponse>
-  ): MsgLiquidityUnbondResponse {
-    const message = {
-      ...baseMsgLiquidityUnbondResponse,
-    } as MsgLiquidityUnbondResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgLiquidityUnbondResponse>, I>>(_: I): MsgLiquidityUnbondResponse {
+    const message = { ...baseMsgLiquidityUnbondResponse } as MsgLiquidityUnbondResponse;
     return message;
   },
 };
 
-const baseMsgSetUnbondCommission: object = {
-  creator: "",
-  denom: "",
-  commission: "",
-};
+const baseMsgSetUnbondCommission: object = { creator: "", denom: "", commission: "" };
 
 export const MsgSetUnbondCommission = {
-  encode(
-    message: MsgSetUnbondCommission,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetUnbondCommission, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -1282,10 +1033,7 @@ export const MsgSetUnbondCommission = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetUnbondCommission {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetUnbondCommission {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSetUnbondCommission } as MsgSetUnbondCommission;
@@ -1311,18 +1059,10 @@ export const MsgSetUnbondCommission = {
 
   fromJSON(object: any): MsgSetUnbondCommission {
     const message = { ...baseMsgSetUnbondCommission } as MsgSetUnbondCommission;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.commission =
-      object.commission !== undefined && object.commission !== null
-        ? String(object.commission)
-        : "";
+      object.commission !== undefined && object.commission !== null ? String(object.commission) : "";
     return message;
   },
 
@@ -1334,9 +1074,7 @@ export const MsgSetUnbondCommission = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<MsgSetUnbondCommission>
-  ): MsgSetUnbondCommission {
+  fromPartial<I extends Exact<DeepPartial<MsgSetUnbondCommission>, I>>(object: I): MsgSetUnbondCommission {
     const message = { ...baseMsgSetUnbondCommission } as MsgSetUnbondCommission;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -1348,22 +1086,14 @@ export const MsgSetUnbondCommission = {
 const baseMsgSetUnbondCommissionResponse: object = {};
 
 export const MsgSetUnbondCommissionResponse = {
-  encode(
-    _: MsgSetUnbondCommissionResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetUnbondCommissionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetUnbondCommissionResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetUnbondCommissionResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetUnbondCommissionResponse,
-    } as MsgSetUnbondCommissionResponse;
+    const message = { ...baseMsgSetUnbondCommissionResponse } as MsgSetUnbondCommissionResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1376,9 +1106,7 @@ export const MsgSetUnbondCommissionResponse = {
   },
 
   fromJSON(_: any): MsgSetUnbondCommissionResponse {
-    const message = {
-      ...baseMsgSetUnbondCommissionResponse,
-    } as MsgSetUnbondCommissionResponse;
+    const message = { ...baseMsgSetUnbondCommissionResponse } as MsgSetUnbondCommissionResponse;
     return message;
   },
 
@@ -1387,12 +1115,10 @@ export const MsgSetUnbondCommissionResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetUnbondCommissionResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgSetUnbondCommissionResponse>, I>>(
+    _: I,
   ): MsgSetUnbondCommissionResponse {
-    const message = {
-      ...baseMsgSetUnbondCommissionResponse,
-    } as MsgSetUnbondCommissionResponse;
+    const message = { ...baseMsgSetUnbondCommissionResponse } as MsgSetUnbondCommissionResponse;
     return message;
   },
 };
@@ -1408,10 +1134,7 @@ const baseMsgSubmitSignature: object = {
 };
 
 export const MsgSubmitSignature = {
-  encode(
-    message: MsgSubmitSignature,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSubmitSignature, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -1474,32 +1197,15 @@ export const MsgSubmitSignature = {
 
   fromJSON(object: any): MsgSubmitSignature {
     const message = { ...baseMsgSubmitSignature } as MsgSubmitSignature;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
     message.txType =
-      object.txType !== undefined && object.txType !== null
-        ? originalTxTypeFromJSON(object.txType)
-        : 0;
-    message.propId =
-      object.propId !== undefined && object.propId !== null
-        ? String(object.propId)
-        : "";
+      object.txType !== undefined && object.txType !== null ? originalTxTypeFromJSON(object.txType) : 0;
+    message.propId = object.propId !== undefined && object.propId !== null ? String(object.propId) : "";
     message.signature =
-      object.signature !== undefined && object.signature !== null
-        ? String(object.signature)
-        : "";
+      object.signature !== undefined && object.signature !== null ? String(object.signature) : "";
     return message;
   },
 
@@ -1509,14 +1215,13 @@ export const MsgSubmitSignature = {
     message.denom !== undefined && (obj.denom = message.denom);
     message.era !== undefined && (obj.era = message.era);
     message.pool !== undefined && (obj.pool = message.pool);
-    message.txType !== undefined &&
-      (obj.txType = originalTxTypeToJSON(message.txType));
+    message.txType !== undefined && (obj.txType = originalTxTypeToJSON(message.txType));
     message.propId !== undefined && (obj.propId = message.propId);
     message.signature !== undefined && (obj.signature = message.signature);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSubmitSignature>): MsgSubmitSignature {
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitSignature>, I>>(object: I): MsgSubmitSignature {
     const message = { ...baseMsgSubmitSignature } as MsgSubmitSignature;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -1532,22 +1237,14 @@ export const MsgSubmitSignature = {
 const baseMsgSubmitSignatureResponse: object = {};
 
 export const MsgSubmitSignatureResponse = {
-  encode(
-    _: MsgSubmitSignatureResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSubmitSignatureResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSubmitSignatureResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSubmitSignatureResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSubmitSignatureResponse,
-    } as MsgSubmitSignatureResponse;
+    const message = { ...baseMsgSubmitSignatureResponse } as MsgSubmitSignatureResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1560,9 +1257,7 @@ export const MsgSubmitSignatureResponse = {
   },
 
   fromJSON(_: any): MsgSubmitSignatureResponse {
-    const message = {
-      ...baseMsgSubmitSignatureResponse,
-    } as MsgSubmitSignatureResponse;
+    const message = { ...baseMsgSubmitSignatureResponse } as MsgSubmitSignatureResponse;
     return message;
   },
 
@@ -1571,12 +1266,8 @@ export const MsgSubmitSignatureResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSubmitSignatureResponse>
-  ): MsgSubmitSignatureResponse {
-    const message = {
-      ...baseMsgSubmitSignatureResponse,
-    } as MsgSubmitSignatureResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgSubmitSignatureResponse>, I>>(_: I): MsgSubmitSignatureResponse {
+    const message = { ...baseMsgSubmitSignatureResponse } as MsgSubmitSignatureResponse;
     return message;
   },
 };
@@ -1593,10 +1284,7 @@ const baseMsgSetRParams: object = {
 };
 
 export const MsgSetRParams = {
-  encode(
-    message: MsgSetRParams,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetRParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -1666,34 +1354,19 @@ export const MsgSetRParams = {
 
   fromJSON(object: any): MsgSetRParams {
     const message = { ...baseMsgSetRParams } as MsgSetRParams;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.gasPrice =
-      object.gasPrice !== undefined && object.gasPrice !== null
-        ? String(object.gasPrice)
-        : "";
+      object.gasPrice !== undefined && object.gasPrice !== null ? String(object.gasPrice) : "";
     message.eraSeconds =
-      object.eraSeconds !== undefined && object.eraSeconds !== null
-        ? String(object.eraSeconds)
-        : "";
-    message.offset =
-      object.offset !== undefined && object.offset !== null
-        ? String(object.offset)
-        : "";
+      object.eraSeconds !== undefined && object.eraSeconds !== null ? String(object.eraSeconds) : "";
+    message.offset = object.offset !== undefined && object.offset !== null ? String(object.offset) : "";
     message.bondingDuration =
       object.bondingDuration !== undefined && object.bondingDuration !== null
         ? Number(object.bondingDuration)
         : 0;
     message.leastBond =
-      object.leastBond !== undefined && object.leastBond !== null
-        ? String(object.leastBond)
-        : "";
+      object.leastBond !== undefined && object.leastBond !== null ? String(object.leastBond) : "";
     message.validators = (object.validators ?? []).map((e: any) => String(e));
     return message;
   },
@@ -1705,8 +1378,7 @@ export const MsgSetRParams = {
     message.gasPrice !== undefined && (obj.gasPrice = message.gasPrice);
     message.eraSeconds !== undefined && (obj.eraSeconds = message.eraSeconds);
     message.offset !== undefined && (obj.offset = message.offset);
-    message.bondingDuration !== undefined &&
-      (obj.bondingDuration = message.bondingDuration);
+    message.bondingDuration !== undefined && (obj.bondingDuration = message.bondingDuration);
     message.leastBond !== undefined && (obj.leastBond = message.leastBond);
     if (message.validators) {
       obj.validators = message.validators.map((e) => e);
@@ -1716,7 +1388,7 @@ export const MsgSetRParams = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetRParams>): MsgSetRParams {
+  fromPartial<I extends Exact<DeepPartial<MsgSetRParams>, I>>(object: I): MsgSetRParams {
     const message = { ...baseMsgSetRParams } as MsgSetRParams;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -1725,7 +1397,7 @@ export const MsgSetRParams = {
     message.offset = object.offset ?? "";
     message.bondingDuration = object.bondingDuration ?? 0;
     message.leastBond = object.leastBond ?? "";
-    message.validators = (object.validators ?? []).map((e) => e);
+    message.validators = object.validators?.map((e) => e) || [];
     return message;
   },
 };
@@ -1733,17 +1405,11 @@ export const MsgSetRParams = {
 const baseMsgSetRParamsResponse: object = {};
 
 export const MsgSetRParamsResponse = {
-  encode(
-    _: MsgSetRParamsResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetRParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetRParamsResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetRParamsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSetRParamsResponse } as MsgSetRParamsResponse;
@@ -1768,23 +1434,16 @@ export const MsgSetRParamsResponse = {
     return obj;
   },
 
-  fromPartial(_: DeepPartial<MsgSetRParamsResponse>): MsgSetRParamsResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgSetRParamsResponse>, I>>(_: I): MsgSetRParamsResponse {
     const message = { ...baseMsgSetRParamsResponse } as MsgSetRParamsResponse;
     return message;
   },
 };
 
-const baseMsgSetRelayFeeReceiver: object = {
-  creator: "",
-  denom: "",
-  receiver: "",
-};
+const baseMsgSetRelayFeeReceiver: object = { creator: "", denom: "", receiver: "" };
 
 export const MsgSetRelayFeeReceiver = {
-  encode(
-    message: MsgSetRelayFeeReceiver,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetRelayFeeReceiver, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -1797,10 +1456,7 @@ export const MsgSetRelayFeeReceiver = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetRelayFeeReceiver {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetRelayFeeReceiver {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgSetRelayFeeReceiver } as MsgSetRelayFeeReceiver;
@@ -1826,18 +1482,10 @@ export const MsgSetRelayFeeReceiver = {
 
   fromJSON(object: any): MsgSetRelayFeeReceiver {
     const message = { ...baseMsgSetRelayFeeReceiver } as MsgSetRelayFeeReceiver;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.receiver =
-      object.receiver !== undefined && object.receiver !== null
-        ? String(object.receiver)
-        : "";
+      object.receiver !== undefined && object.receiver !== null ? String(object.receiver) : "";
     return message;
   },
 
@@ -1849,9 +1497,7 @@ export const MsgSetRelayFeeReceiver = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<MsgSetRelayFeeReceiver>
-  ): MsgSetRelayFeeReceiver {
+  fromPartial<I extends Exact<DeepPartial<MsgSetRelayFeeReceiver>, I>>(object: I): MsgSetRelayFeeReceiver {
     const message = { ...baseMsgSetRelayFeeReceiver } as MsgSetRelayFeeReceiver;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -1863,22 +1509,14 @@ export const MsgSetRelayFeeReceiver = {
 const baseMsgSetRelayFeeReceiverResponse: object = {};
 
 export const MsgSetRelayFeeReceiverResponse = {
-  encode(
-    _: MsgSetRelayFeeReceiverResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetRelayFeeReceiverResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetRelayFeeReceiverResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetRelayFeeReceiverResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetRelayFeeReceiverResponse,
-    } as MsgSetRelayFeeReceiverResponse;
+    const message = { ...baseMsgSetRelayFeeReceiverResponse } as MsgSetRelayFeeReceiverResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1891,9 +1529,7 @@ export const MsgSetRelayFeeReceiverResponse = {
   },
 
   fromJSON(_: any): MsgSetRelayFeeReceiverResponse {
-    const message = {
-      ...baseMsgSetRelayFeeReceiverResponse,
-    } as MsgSetRelayFeeReceiverResponse;
+    const message = { ...baseMsgSetRelayFeeReceiverResponse } as MsgSetRelayFeeReceiverResponse;
     return message;
   },
 
@@ -1902,27 +1538,18 @@ export const MsgSetRelayFeeReceiverResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetRelayFeeReceiverResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgSetRelayFeeReceiverResponse>, I>>(
+    _: I,
   ): MsgSetRelayFeeReceiverResponse {
-    const message = {
-      ...baseMsgSetRelayFeeReceiverResponse,
-    } as MsgSetRelayFeeReceiverResponse;
+    const message = { ...baseMsgSetRelayFeeReceiverResponse } as MsgSetRelayFeeReceiverResponse;
     return message;
   },
 };
 
-const baseMsgSetRelayGasPrice: object = {
-  creator: "",
-  denom: "",
-  gasPrice: "",
-};
+const baseMsgSetRelayGasPrice: object = { creator: "", denom: "", gasPrice: "" };
 
 export const MsgSetRelayGasPrice = {
-  encode(
-    message: MsgSetRelayGasPrice,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetRelayGasPrice, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -1961,18 +1588,10 @@ export const MsgSetRelayGasPrice = {
 
   fromJSON(object: any): MsgSetRelayGasPrice {
     const message = { ...baseMsgSetRelayGasPrice } as MsgSetRelayGasPrice;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.gasPrice =
-      object.gasPrice !== undefined && object.gasPrice !== null
-        ? String(object.gasPrice)
-        : "";
+      object.gasPrice !== undefined && object.gasPrice !== null ? String(object.gasPrice) : "";
     return message;
   },
 
@@ -1984,7 +1603,7 @@ export const MsgSetRelayGasPrice = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetRelayGasPrice>): MsgSetRelayGasPrice {
+  fromPartial<I extends Exact<DeepPartial<MsgSetRelayGasPrice>, I>>(object: I): MsgSetRelayGasPrice {
     const message = { ...baseMsgSetRelayGasPrice } as MsgSetRelayGasPrice;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -1996,22 +1615,14 @@ export const MsgSetRelayGasPrice = {
 const baseMsgSetRelayGasPriceResponse: object = {};
 
 export const MsgSetRelayGasPriceResponse = {
-  encode(
-    _: MsgSetRelayGasPriceResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetRelayGasPriceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetRelayGasPriceResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetRelayGasPriceResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetRelayGasPriceResponse,
-    } as MsgSetRelayGasPriceResponse;
+    const message = { ...baseMsgSetRelayGasPriceResponse } as MsgSetRelayGasPriceResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2024,9 +1635,7 @@ export const MsgSetRelayGasPriceResponse = {
   },
 
   fromJSON(_: any): MsgSetRelayGasPriceResponse {
-    const message = {
-      ...baseMsgSetRelayGasPriceResponse,
-    } as MsgSetRelayGasPriceResponse;
+    const message = { ...baseMsgSetRelayGasPriceResponse } as MsgSetRelayGasPriceResponse;
     return message;
   },
 
@@ -2035,12 +1644,10 @@ export const MsgSetRelayGasPriceResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetRelayGasPriceResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgSetRelayGasPriceResponse>, I>>(
+    _: I,
   ): MsgSetRelayGasPriceResponse {
-    const message = {
-      ...baseMsgSetRelayGasPriceResponse,
-    } as MsgSetRelayGasPriceResponse;
+    const message = { ...baseMsgSetRelayGasPriceResponse } as MsgSetRelayGasPriceResponse;
     return message;
   },
 };
@@ -2054,10 +1661,7 @@ const baseMsgSetEraSeconds: object = {
 };
 
 export const MsgSetEraSeconds = {
-  encode(
-    message: MsgSetEraSeconds,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgSetEraSeconds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -2108,26 +1712,15 @@ export const MsgSetEraSeconds = {
 
   fromJSON(object: any): MsgSetEraSeconds {
     const message = { ...baseMsgSetEraSeconds } as MsgSetEraSeconds;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.eraSeconds =
-      object.eraSeconds !== undefined && object.eraSeconds !== null
-        ? String(object.eraSeconds)
-        : "";
+      object.eraSeconds !== undefined && object.eraSeconds !== null ? String(object.eraSeconds) : "";
     message.bondingDuration =
       object.bondingDuration !== undefined && object.bondingDuration !== null
         ? Number(object.bondingDuration)
         : 0;
-    message.offset =
-      object.offset !== undefined && object.offset !== null
-        ? String(object.offset)
-        : "";
+    message.offset = object.offset !== undefined && object.offset !== null ? String(object.offset) : "";
     return message;
   },
 
@@ -2136,13 +1729,12 @@ export const MsgSetEraSeconds = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.denom !== undefined && (obj.denom = message.denom);
     message.eraSeconds !== undefined && (obj.eraSeconds = message.eraSeconds);
-    message.bondingDuration !== undefined &&
-      (obj.bondingDuration = message.bondingDuration);
+    message.bondingDuration !== undefined && (obj.bondingDuration = message.bondingDuration);
     message.offset !== undefined && (obj.offset = message.offset);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetEraSeconds>): MsgSetEraSeconds {
+  fromPartial<I extends Exact<DeepPartial<MsgSetEraSeconds>, I>>(object: I): MsgSetEraSeconds {
     const message = { ...baseMsgSetEraSeconds } as MsgSetEraSeconds;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -2156,22 +1748,14 @@ export const MsgSetEraSeconds = {
 const baseMsgSetEraSecondsResponse: object = {};
 
 export const MsgSetEraSecondsResponse = {
-  encode(
-    _: MsgSetEraSecondsResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgSetEraSecondsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgSetEraSecondsResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetEraSecondsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgSetEraSecondsResponse,
-    } as MsgSetEraSecondsResponse;
+    const message = { ...baseMsgSetEraSecondsResponse } as MsgSetEraSecondsResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2184,9 +1768,7 @@ export const MsgSetEraSecondsResponse = {
   },
 
   fromJSON(_: any): MsgSetEraSecondsResponse {
-    const message = {
-      ...baseMsgSetEraSecondsResponse,
-    } as MsgSetEraSecondsResponse;
+    const message = { ...baseMsgSetEraSecondsResponse } as MsgSetEraSecondsResponse;
     return message;
   },
 
@@ -2195,12 +1777,8 @@ export const MsgSetEraSecondsResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgSetEraSecondsResponse>
-  ): MsgSetEraSecondsResponse {
-    const message = {
-      ...baseMsgSetEraSecondsResponse,
-    } as MsgSetEraSecondsResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgSetEraSecondsResponse>, I>>(_: I): MsgSetEraSecondsResponse {
+    const message = { ...baseMsgSetEraSecondsResponse } as MsgSetEraSecondsResponse;
     return message;
   },
 };
@@ -2208,10 +1786,7 @@ export const MsgSetEraSecondsResponse = {
 const baseMsgRmBondedPool: object = { creator: "", denom: "", address: "" };
 
 export const MsgRmBondedPool = {
-  encode(
-    message: MsgRmBondedPool,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgRmBondedPool, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -2250,18 +1825,9 @@ export const MsgRmBondedPool = {
 
   fromJSON(object: any): MsgRmBondedPool {
     const message = { ...baseMsgRmBondedPool } as MsgRmBondedPool;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.address =
-      object.address !== undefined && object.address !== null
-        ? String(object.address)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.address = object.address !== undefined && object.address !== null ? String(object.address) : "";
     return message;
   },
 
@@ -2273,7 +1839,7 @@ export const MsgRmBondedPool = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgRmBondedPool>): MsgRmBondedPool {
+  fromPartial<I extends Exact<DeepPartial<MsgRmBondedPool>, I>>(object: I): MsgRmBondedPool {
     const message = { ...baseMsgRmBondedPool } as MsgRmBondedPool;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
@@ -2285,22 +1851,14 @@ export const MsgRmBondedPool = {
 const baseMsgRmBondedPoolResponse: object = {};
 
 export const MsgRmBondedPoolResponse = {
-  encode(
-    _: MsgRmBondedPoolResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgRmBondedPoolResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgRmBondedPoolResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRmBondedPoolResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgRmBondedPoolResponse,
-    } as MsgRmBondedPoolResponse;
+    const message = { ...baseMsgRmBondedPoolResponse } as MsgRmBondedPoolResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2313,9 +1871,7 @@ export const MsgRmBondedPoolResponse = {
   },
 
   fromJSON(_: any): MsgRmBondedPoolResponse {
-    const message = {
-      ...baseMsgRmBondedPoolResponse,
-    } as MsgRmBondedPoolResponse;
+    const message = { ...baseMsgRmBondedPoolResponse } as MsgRmBondedPoolResponse;
     return message;
   },
 
@@ -2324,12 +1880,8 @@ export const MsgRmBondedPoolResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgRmBondedPoolResponse>
-  ): MsgRmBondedPoolResponse {
-    const message = {
-      ...baseMsgRmBondedPoolResponse,
-    } as MsgRmBondedPoolResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgRmBondedPoolResponse>, I>>(_: I): MsgRmBondedPoolResponse {
+    const message = { ...baseMsgRmBondedPoolResponse } as MsgRmBondedPoolResponse;
     return message;
   },
 };
@@ -2337,26 +1889,39 @@ export const MsgRmBondedPoolResponse = {
 const baseMsgMigrateInit: object = {
   creator: "",
   denom: "",
+  pool: "",
   totalSupply: "",
+  active: "",
+  bond: "",
+  unbond: "",
   exchangeRate: "",
 };
 
 export const MsgMigrateInit = {
-  encode(
-    message: MsgMigrateInit,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgMigrateInit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     if (message.denom !== "") {
       writer.uint32(18).string(message.denom);
     }
+    if (message.pool !== "") {
+      writer.uint32(26).string(message.pool);
+    }
     if (message.totalSupply !== "") {
-      writer.uint32(26).string(message.totalSupply);
+      writer.uint32(34).string(message.totalSupply);
+    }
+    if (message.active !== "") {
+      writer.uint32(42).string(message.active);
+    }
+    if (message.bond !== "") {
+      writer.uint32(50).string(message.bond);
+    }
+    if (message.unbond !== "") {
+      writer.uint32(58).string(message.unbond);
     }
     if (message.exchangeRate !== "") {
-      writer.uint32(34).string(message.exchangeRate);
+      writer.uint32(66).string(message.exchangeRate);
     }
     return writer;
   },
@@ -2375,9 +1940,21 @@ export const MsgMigrateInit = {
           message.denom = reader.string();
           break;
         case 3:
-          message.totalSupply = reader.string();
+          message.pool = reader.string();
           break;
         case 4:
+          message.totalSupply = reader.string();
+          break;
+        case 5:
+          message.active = reader.string();
+          break;
+        case 6:
+          message.bond = reader.string();
+          break;
+        case 7:
+          message.unbond = reader.string();
+          break;
+        case 8:
           message.exchangeRate = reader.string();
           break;
         default:
@@ -2390,22 +1967,16 @@ export const MsgMigrateInit = {
 
   fromJSON(object: any): MsgMigrateInit {
     const message = { ...baseMsgMigrateInit } as MsgMigrateInit;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
     message.totalSupply =
-      object.totalSupply !== undefined && object.totalSupply !== null
-        ? String(object.totalSupply)
-        : "";
+      object.totalSupply !== undefined && object.totalSupply !== null ? String(object.totalSupply) : "";
+    message.active = object.active !== undefined && object.active !== null ? String(object.active) : "";
+    message.bond = object.bond !== undefined && object.bond !== null ? String(object.bond) : "";
+    message.unbond = object.unbond !== undefined && object.unbond !== null ? String(object.unbond) : "";
     message.exchangeRate =
-      object.exchangeRate !== undefined && object.exchangeRate !== null
-        ? String(object.exchangeRate)
-        : "";
+      object.exchangeRate !== undefined && object.exchangeRate !== null ? String(object.exchangeRate) : "";
     return message;
   },
 
@@ -2413,18 +1984,24 @@ export const MsgMigrateInit = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.denom !== undefined && (obj.denom = message.denom);
-    message.totalSupply !== undefined &&
-      (obj.totalSupply = message.totalSupply);
-    message.exchangeRate !== undefined &&
-      (obj.exchangeRate = message.exchangeRate);
+    message.pool !== undefined && (obj.pool = message.pool);
+    message.totalSupply !== undefined && (obj.totalSupply = message.totalSupply);
+    message.active !== undefined && (obj.active = message.active);
+    message.bond !== undefined && (obj.bond = message.bond);
+    message.unbond !== undefined && (obj.unbond = message.unbond);
+    message.exchangeRate !== undefined && (obj.exchangeRate = message.exchangeRate);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgMigrateInit>): MsgMigrateInit {
+  fromPartial<I extends Exact<DeepPartial<MsgMigrateInit>, I>>(object: I): MsgMigrateInit {
     const message = { ...baseMsgMigrateInit } as MsgMigrateInit;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
+    message.pool = object.pool ?? "";
     message.totalSupply = object.totalSupply ?? "";
+    message.active = object.active ?? "";
+    message.bond = object.bond ?? "";
+    message.unbond = object.unbond ?? "";
     message.exchangeRate = object.exchangeRate ?? "";
     return message;
   },
@@ -2433,17 +2010,11 @@ export const MsgMigrateInit = {
 const baseMsgMigrateInitResponse: object = {};
 
 export const MsgMigrateInitResponse = {
-  encode(
-    _: MsgMigrateInitResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgMigrateInitResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgMigrateInitResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgMigrateInitResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMigrateInitResponse } as MsgMigrateInitResponse;
@@ -2468,7 +2039,7 @@ export const MsgMigrateInitResponse = {
     return obj;
   },
 
-  fromPartial(_: DeepPartial<MsgMigrateInitResponse>): MsgMigrateInitResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgMigrateInitResponse>, I>>(_: I): MsgMigrateInitResponse {
     const message = { ...baseMsgMigrateInitResponse } as MsgMigrateInitResponse;
     return message;
   },
@@ -2477,10 +2048,7 @@ export const MsgMigrateInitResponse = {
 const baseMsgMigrateUnbondings: object = { creator: "", denom: "" };
 
 export const MsgMigrateUnbondings = {
-  encode(
-    message: MsgMigrateUnbondings,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MsgMigrateUnbondings, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -2493,10 +2061,7 @@ export const MsgMigrateUnbondings = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgMigrateUnbondings {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgMigrateUnbondings {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMigrateUnbondings } as MsgMigrateUnbondings;
@@ -2523,17 +2088,9 @@ export const MsgMigrateUnbondings = {
 
   fromJSON(object: any): MsgMigrateUnbondings {
     const message = { ...baseMsgMigrateUnbondings } as MsgMigrateUnbondings;
-    message.creator =
-      object.creator !== undefined && object.creator !== null
-        ? String(object.creator)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.poolUnbonds = (object.poolUnbonds ?? []).map((e: any) =>
-      PoolUnbond.fromJSON(e)
-    );
+    message.creator = object.creator !== undefined && object.creator !== null ? String(object.creator) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.poolUnbonds = (object.poolUnbonds ?? []).map((e: any) => PoolUnbond.fromJSON(e));
     return message;
   },
 
@@ -2542,22 +2099,18 @@ export const MsgMigrateUnbondings = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.denom !== undefined && (obj.denom = message.denom);
     if (message.poolUnbonds) {
-      obj.poolUnbonds = message.poolUnbonds.map((e) =>
-        e ? PoolUnbond.toJSON(e) : undefined
-      );
+      obj.poolUnbonds = message.poolUnbonds.map((e) => (e ? PoolUnbond.toJSON(e) : undefined));
     } else {
       obj.poolUnbonds = [];
     }
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgMigrateUnbondings>): MsgMigrateUnbondings {
+  fromPartial<I extends Exact<DeepPartial<MsgMigrateUnbondings>, I>>(object: I): MsgMigrateUnbondings {
     const message = { ...baseMsgMigrateUnbondings } as MsgMigrateUnbondings;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
-    message.poolUnbonds = (object.poolUnbonds ?? []).map((e) =>
-      PoolUnbond.fromPartial(e)
-    );
+    message.poolUnbonds = object.poolUnbonds?.map((e) => PoolUnbond.fromPartial(e)) || [];
     return message;
   },
 };
@@ -2565,22 +2118,14 @@ export const MsgMigrateUnbondings = {
 const baseMsgMigrateUnbondingsResponse: object = {};
 
 export const MsgMigrateUnbondingsResponse = {
-  encode(
-    _: MsgMigrateUnbondingsResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(_: MsgMigrateUnbondingsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): MsgMigrateUnbondingsResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgMigrateUnbondingsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgMigrateUnbondingsResponse,
-    } as MsgMigrateUnbondingsResponse;
+    const message = { ...baseMsgMigrateUnbondingsResponse } as MsgMigrateUnbondingsResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2593,9 +2138,7 @@ export const MsgMigrateUnbondingsResponse = {
   },
 
   fromJSON(_: any): MsgMigrateUnbondingsResponse {
-    const message = {
-      ...baseMsgMigrateUnbondingsResponse,
-    } as MsgMigrateUnbondingsResponse;
+    const message = { ...baseMsgMigrateUnbondingsResponse } as MsgMigrateUnbondingsResponse;
     return message;
   },
 
@@ -2604,58 +2147,38 @@ export const MsgMigrateUnbondingsResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgMigrateUnbondingsResponse>
+  fromPartial<I extends Exact<DeepPartial<MsgMigrateUnbondingsResponse>, I>>(
+    _: I,
   ): MsgMigrateUnbondingsResponse {
-    const message = {
-      ...baseMsgMigrateUnbondingsResponse,
-    } as MsgMigrateUnbondingsResponse;
+    const message = { ...baseMsgMigrateUnbondingsResponse } as MsgMigrateUnbondingsResponse;
     return message;
   },
 };
 
 /** Msg defines the Msg service. */
 export interface Msg {
-  SetEraUnbondLimit(
-    request: MsgSetEraUnbondLimit
-  ): Promise<MsgSetEraUnbondLimitResponse>;
+  SetEraUnbondLimit(request: MsgSetEraUnbondLimit): Promise<MsgSetEraUnbondLimitResponse>;
   SetPoolDetail(request: MsgSetPoolDetail): Promise<MsgSetPoolDetailResponse>;
   SetLeastBond(request: MsgSetLeastBond): Promise<MsgSetLeastBondResponse>;
   ClearCurrentEraSnapShots(
-    request: MsgClearCurrentEraSnapShots
+    request: MsgClearCurrentEraSnapShots,
   ): Promise<MsgClearCurrentEraSnapShotsResponse>;
   SetStakingRewardCommission(
-    request: MsgSetStakingRewardCommission
+    request: MsgSetStakingRewardCommission,
   ): Promise<MsgSetStakingRewardCommissionResponse>;
-  SetProtocolFeeReceiver(
-    request: MsgSetProtocolFeeReceiver
-  ): Promise<MsgSetProtocolFeeReceiverResponse>;
-  SetUnbondRelayFee(
-    request: MsgSetUnbondRelayFee
-  ): Promise<MsgSetUnbondRelayFeeResponse>;
-  LiquidityUnbond(
-    request: MsgLiquidityUnbond
-  ): Promise<MsgLiquidityUnbondResponse>;
-  SetUnbondCommission(
-    request: MsgSetUnbondCommission
-  ): Promise<MsgSetUnbondCommissionResponse>;
-  SubmitSignature(
-    request: MsgSubmitSignature
-  ): Promise<MsgSubmitSignatureResponse>;
+  SetProtocolFeeReceiver(request: MsgSetProtocolFeeReceiver): Promise<MsgSetProtocolFeeReceiverResponse>;
+  SetUnbondRelayFee(request: MsgSetUnbondRelayFee): Promise<MsgSetUnbondRelayFeeResponse>;
+  LiquidityUnbond(request: MsgLiquidityUnbond): Promise<MsgLiquidityUnbondResponse>;
+  SetUnbondCommission(request: MsgSetUnbondCommission): Promise<MsgSetUnbondCommissionResponse>;
+  SubmitSignature(request: MsgSubmitSignature): Promise<MsgSubmitSignatureResponse>;
   SetRParams(request: MsgSetRParams): Promise<MsgSetRParamsResponse>;
-  SetRelayFeeReceiver(
-    request: MsgSetRelayFeeReceiver
-  ): Promise<MsgSetRelayFeeReceiverResponse>;
-  SetRelayGasPrice(
-    request: MsgSetRelayGasPrice
-  ): Promise<MsgSetRelayGasPriceResponse>;
+  SetRelayFeeReceiver(request: MsgSetRelayFeeReceiver): Promise<MsgSetRelayFeeReceiverResponse>;
+  SetRelayGasPrice(request: MsgSetRelayGasPrice): Promise<MsgSetRelayGasPriceResponse>;
   SetEraSeconds(request: MsgSetEraSeconds): Promise<MsgSetEraSecondsResponse>;
   RmBondedPool(request: MsgRmBondedPool): Promise<MsgRmBondedPoolResponse>;
   MigrateInit(request: MsgMigrateInit): Promise<MsgMigrateInitResponse>;
   /** this line is used by starport scaffolding # proto/tx/rpc */
-  MigrateUnbondings(
-    request: MsgMigrateUnbondings
-  ): Promise<MsgMigrateUnbondingsResponse>;
+  MigrateUnbondings(request: MsgMigrateUnbondings): Promise<MsgMigrateUnbondingsResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -2666,8 +2189,7 @@ export class MsgClientImpl implements Msg {
     this.SetPoolDetail = this.SetPoolDetail.bind(this);
     this.SetLeastBond = this.SetLeastBond.bind(this);
     this.ClearCurrentEraSnapShots = this.ClearCurrentEraSnapShots.bind(this);
-    this.SetStakingRewardCommission =
-      this.SetStakingRewardCommission.bind(this);
+    this.SetStakingRewardCommission = this.SetStakingRewardCommission.bind(this);
     this.SetProtocolFeeReceiver = this.SetProtocolFeeReceiver.bind(this);
     this.SetUnbondRelayFee = this.SetUnbondRelayFee.bind(this);
     this.LiquidityUnbond = this.LiquidityUnbond.bind(this);
@@ -2681,249 +2203,119 @@ export class MsgClientImpl implements Msg {
     this.MigrateInit = this.MigrateInit.bind(this);
     this.MigrateUnbondings = this.MigrateUnbondings.bind(this);
   }
-  SetEraUnbondLimit(
-    request: MsgSetEraUnbondLimit
-  ): Promise<MsgSetEraUnbondLimitResponse> {
+  SetEraUnbondLimit(request: MsgSetEraUnbondLimit): Promise<MsgSetEraUnbondLimitResponse> {
     const data = MsgSetEraUnbondLimit.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetEraUnbondLimit",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetEraUnbondLimitResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetEraUnbondLimit", data);
+    return promise.then((data) => MsgSetEraUnbondLimitResponse.decode(new _m0.Reader(data)));
   }
 
   SetPoolDetail(request: MsgSetPoolDetail): Promise<MsgSetPoolDetailResponse> {
     const data = MsgSetPoolDetail.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetPoolDetail",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetPoolDetailResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetPoolDetail", data);
+    return promise.then((data) => MsgSetPoolDetailResponse.decode(new _m0.Reader(data)));
   }
 
   SetLeastBond(request: MsgSetLeastBond): Promise<MsgSetLeastBondResponse> {
     const data = MsgSetLeastBond.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetLeastBond",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetLeastBondResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetLeastBond", data);
+    return promise.then((data) => MsgSetLeastBondResponse.decode(new _m0.Reader(data)));
   }
 
   ClearCurrentEraSnapShots(
-    request: MsgClearCurrentEraSnapShots
+    request: MsgClearCurrentEraSnapShots,
   ): Promise<MsgClearCurrentEraSnapShotsResponse> {
     const data = MsgClearCurrentEraSnapShots.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "ClearCurrentEraSnapShots",
-      data
-    );
-    return promise.then((data) =>
-      MsgClearCurrentEraSnapShotsResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "ClearCurrentEraSnapShots", data);
+    return promise.then((data) => MsgClearCurrentEraSnapShotsResponse.decode(new _m0.Reader(data)));
   }
 
   SetStakingRewardCommission(
-    request: MsgSetStakingRewardCommission
+    request: MsgSetStakingRewardCommission,
   ): Promise<MsgSetStakingRewardCommissionResponse> {
     const data = MsgSetStakingRewardCommission.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetStakingRewardCommission",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetStakingRewardCommissionResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetStakingRewardCommission", data);
+    return promise.then((data) => MsgSetStakingRewardCommissionResponse.decode(new _m0.Reader(data)));
   }
 
-  SetProtocolFeeReceiver(
-    request: MsgSetProtocolFeeReceiver
-  ): Promise<MsgSetProtocolFeeReceiverResponse> {
+  SetProtocolFeeReceiver(request: MsgSetProtocolFeeReceiver): Promise<MsgSetProtocolFeeReceiverResponse> {
     const data = MsgSetProtocolFeeReceiver.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetProtocolFeeReceiver",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetProtocolFeeReceiverResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetProtocolFeeReceiver", data);
+    return promise.then((data) => MsgSetProtocolFeeReceiverResponse.decode(new _m0.Reader(data)));
   }
 
-  SetUnbondRelayFee(
-    request: MsgSetUnbondRelayFee
-  ): Promise<MsgSetUnbondRelayFeeResponse> {
+  SetUnbondRelayFee(request: MsgSetUnbondRelayFee): Promise<MsgSetUnbondRelayFeeResponse> {
     const data = MsgSetUnbondRelayFee.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetUnbondRelayFee",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetUnbondRelayFeeResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetUnbondRelayFee", data);
+    return promise.then((data) => MsgSetUnbondRelayFeeResponse.decode(new _m0.Reader(data)));
   }
 
-  LiquidityUnbond(
-    request: MsgLiquidityUnbond
-  ): Promise<MsgLiquidityUnbondResponse> {
+  LiquidityUnbond(request: MsgLiquidityUnbond): Promise<MsgLiquidityUnbondResponse> {
     const data = MsgLiquidityUnbond.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "LiquidityUnbond",
-      data
-    );
-    return promise.then((data) =>
-      MsgLiquidityUnbondResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "LiquidityUnbond", data);
+    return promise.then((data) => MsgLiquidityUnbondResponse.decode(new _m0.Reader(data)));
   }
 
-  SetUnbondCommission(
-    request: MsgSetUnbondCommission
-  ): Promise<MsgSetUnbondCommissionResponse> {
+  SetUnbondCommission(request: MsgSetUnbondCommission): Promise<MsgSetUnbondCommissionResponse> {
     const data = MsgSetUnbondCommission.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetUnbondCommission",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetUnbondCommissionResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetUnbondCommission", data);
+    return promise.then((data) => MsgSetUnbondCommissionResponse.decode(new _m0.Reader(data)));
   }
 
-  SubmitSignature(
-    request: MsgSubmitSignature
-  ): Promise<MsgSubmitSignatureResponse> {
+  SubmitSignature(request: MsgSubmitSignature): Promise<MsgSubmitSignatureResponse> {
     const data = MsgSubmitSignature.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SubmitSignature",
-      data
-    );
-    return promise.then((data) =>
-      MsgSubmitSignatureResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SubmitSignature", data);
+    return promise.then((data) => MsgSubmitSignatureResponse.decode(new _m0.Reader(data)));
   }
 
   SetRParams(request: MsgSetRParams): Promise<MsgSetRParamsResponse> {
     const data = MsgSetRParams.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetRParams",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetRParamsResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetRParams", data);
+    return promise.then((data) => MsgSetRParamsResponse.decode(new _m0.Reader(data)));
   }
 
-  SetRelayFeeReceiver(
-    request: MsgSetRelayFeeReceiver
-  ): Promise<MsgSetRelayFeeReceiverResponse> {
+  SetRelayFeeReceiver(request: MsgSetRelayFeeReceiver): Promise<MsgSetRelayFeeReceiverResponse> {
     const data = MsgSetRelayFeeReceiver.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetRelayFeeReceiver",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetRelayFeeReceiverResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetRelayFeeReceiver", data);
+    return promise.then((data) => MsgSetRelayFeeReceiverResponse.decode(new _m0.Reader(data)));
   }
 
-  SetRelayGasPrice(
-    request: MsgSetRelayGasPrice
-  ): Promise<MsgSetRelayGasPriceResponse> {
+  SetRelayGasPrice(request: MsgSetRelayGasPrice): Promise<MsgSetRelayGasPriceResponse> {
     const data = MsgSetRelayGasPrice.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetRelayGasPrice",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetRelayGasPriceResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetRelayGasPrice", data);
+    return promise.then((data) => MsgSetRelayGasPriceResponse.decode(new _m0.Reader(data)));
   }
 
   SetEraSeconds(request: MsgSetEraSeconds): Promise<MsgSetEraSecondsResponse> {
     const data = MsgSetEraSeconds.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "SetEraSeconds",
-      data
-    );
-    return promise.then((data) =>
-      MsgSetEraSecondsResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "SetEraSeconds", data);
+    return promise.then((data) => MsgSetEraSecondsResponse.decode(new _m0.Reader(data)));
   }
 
   RmBondedPool(request: MsgRmBondedPool): Promise<MsgRmBondedPoolResponse> {
     const data = MsgRmBondedPool.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "RmBondedPool",
-      data
-    );
-    return promise.then((data) =>
-      MsgRmBondedPoolResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "RmBondedPool", data);
+    return promise.then((data) => MsgRmBondedPoolResponse.decode(new _m0.Reader(data)));
   }
 
   MigrateInit(request: MsgMigrateInit): Promise<MsgMigrateInitResponse> {
     const data = MsgMigrateInit.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "MigrateInit",
-      data
-    );
-    return promise.then((data) =>
-      MsgMigrateInitResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "MigrateInit", data);
+    return promise.then((data) => MsgMigrateInitResponse.decode(new _m0.Reader(data)));
   }
 
-  MigrateUnbondings(
-    request: MsgMigrateUnbondings
-  ): Promise<MsgMigrateUnbondingsResponse> {
+  MigrateUnbondings(request: MsgMigrateUnbondings): Promise<MsgMigrateUnbondingsResponse> {
     const data = MsgMigrateUnbondings.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Msg",
-      "MigrateUnbondings",
-      data
-    );
-    return promise.then((data) =>
-      MsgMigrateUnbondingsResponse.decode(new _m0.Reader(data))
-    );
+    const promise = this.rpc.request("stafihub.stafihub.ledger.Msg", "MigrateUnbondings", data);
+    return promise.then((data) => MsgMigrateUnbondingsResponse.decode(new _m0.Reader(data)));
   }
 }
 
 interface Rpc {
-  request(
-    service: string,
-    method: string,
-    data: Uint8Array
-  ): Promise<Uint8Array>;
+  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
 }
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Long
@@ -2935,6 +2327,11 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

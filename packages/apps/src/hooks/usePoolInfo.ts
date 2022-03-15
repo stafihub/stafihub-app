@@ -1,9 +1,8 @@
-import { RTokenDenom } from "@stafihub/apps-config";
 import { queryPoolInfo } from "@stafihub/apps-wallet";
 import { useEffect, useState } from "react";
 import { atomicToHuman } from "@stafihub/apps-util";
 
-export function usePoolInfo(denom: RTokenDenom) {
+export function usePoolInfo(denom: string) {
   const [poolAddress, setPoolAddress] = useState("--");
   const [exchangeRate, setExchangeRate] = useState("--");
 

@@ -3,13 +3,13 @@ export interface PoolInfo {
   exchangeRate?: string;
 }
 
-export interface CosmosNetworkParams {
-  chainId: string;
-  chainName: string;
-  rpc: string;
-  restEndpoint: string;
+export interface KeplrAccount {
+  name: string;
+  bech32Address: string;
+  balance?: KeplrAccountBalance;
+}
+
+export interface KeplrAccountBalance {
   denom: string;
-  coinDenom: string;
-  decimals: number;
-  bech32Config: any;
+  amount: string;
 }

@@ -292,10 +292,7 @@ export interface RParams {
 const baseChainEra: object = { denom: "", era: 0 };
 
 export const ChainEra = {
-  encode(
-    message: ChainEra,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ChainEra, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -328,12 +325,8 @@ export const ChainEra = {
 
   fromJSON(object: any): ChainEra {
     const message = { ...baseChainEra } as ChainEra;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
     return message;
   },
 
@@ -344,7 +337,7 @@ export const ChainEra = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<ChainEra>): ChainEra {
+  fromPartial<I extends Exact<DeepPartial<ChainEra>, I>>(object: I): ChainEra {
     const message = { ...baseChainEra } as ChainEra;
     message.denom = object.denom ?? "";
     message.era = object.era ?? 0;
@@ -389,10 +382,7 @@ export const Pool = {
 
   fromJSON(object: any): Pool {
     const message = { ...basePool } as Pool;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.addrs = (object.addrs ?? []).map((e: any) => String(e));
     return message;
   },
@@ -408,10 +398,10 @@ export const Pool = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Pool>): Pool {
+  fromPartial<I extends Exact<DeepPartial<Pool>, I>>(object: I): Pool {
     const message = { ...basePool } as Pool;
     message.denom = object.denom ?? "";
-    message.addrs = (object.addrs ?? []).map((e) => e);
+    message.addrs = object.addrs?.map((e) => e) || [];
     return message;
   },
 };
@@ -419,10 +409,7 @@ export const Pool = {
 const baseTotalExpectedActive: object = { denom: "", era: "", amount: "" };
 
 export const TotalExpectedActive = {
-  encode(
-    message: TotalExpectedActive,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: TotalExpectedActive, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -461,16 +448,9 @@ export const TotalExpectedActive = {
 
   fromJSON(object: any): TotalExpectedActive {
     const message = { ...baseTotalExpectedActive } as TotalExpectedActive;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? String(object.era) : "";
-    message.amount =
-      object.amount !== undefined && object.amount !== null
-        ? String(object.amount)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.era = object.era !== undefined && object.era !== null ? String(object.era) : "";
+    message.amount = object.amount !== undefined && object.amount !== null ? String(object.amount) : "";
     return message;
   },
 
@@ -482,7 +462,7 @@ export const TotalExpectedActive = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<TotalExpectedActive>): TotalExpectedActive {
+  fromPartial<I extends Exact<DeepPartial<TotalExpectedActive>, I>>(object: I): TotalExpectedActive {
     const message = { ...baseTotalExpectedActive } as TotalExpectedActive;
     message.denom = object.denom ?? "";
     message.era = object.era ?? "";
@@ -494,10 +474,7 @@ export const TotalExpectedActive = {
 const baseBondPipeline: object = { denom: "", pool: "" };
 
 export const BondPipeline = {
-  encode(
-    message: BondPipeline,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: BondPipeline, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -536,18 +513,10 @@ export const BondPipeline = {
 
   fromJSON(object: any): BondPipeline {
     const message = { ...baseBondPipeline } as BondPipeline;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
     message.chunk =
-      object.chunk !== undefined && object.chunk !== null
-        ? LinkChunk.fromJSON(object.chunk)
-        : undefined;
+      object.chunk !== undefined && object.chunk !== null ? LinkChunk.fromJSON(object.chunk) : undefined;
     return message;
   },
 
@@ -555,19 +524,16 @@ export const BondPipeline = {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
     message.pool !== undefined && (obj.pool = message.pool);
-    message.chunk !== undefined &&
-      (obj.chunk = message.chunk ? LinkChunk.toJSON(message.chunk) : undefined);
+    message.chunk !== undefined && (obj.chunk = message.chunk ? LinkChunk.toJSON(message.chunk) : undefined);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<BondPipeline>): BondPipeline {
+  fromPartial<I extends Exact<DeepPartial<BondPipeline>, I>>(object: I): BondPipeline {
     const message = { ...baseBondPipeline } as BondPipeline;
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
     message.chunk =
-      object.chunk !== undefined && object.chunk !== null
-        ? LinkChunk.fromPartial(object.chunk)
-        : undefined;
+      object.chunk !== undefined && object.chunk !== null ? LinkChunk.fromPartial(object.chunk) : undefined;
     return message;
   },
 };
@@ -575,10 +541,7 @@ export const BondPipeline = {
 const baseEraSnapshot: object = { denom: "", shotIds: "" };
 
 export const EraSnapshot = {
-  encode(
-    message: EraSnapshot,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EraSnapshot, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -612,10 +575,7 @@ export const EraSnapshot = {
 
   fromJSON(object: any): EraSnapshot {
     const message = { ...baseEraSnapshot } as EraSnapshot;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.shotIds = (object.shotIds ?? []).map((e: any) => String(e));
     return message;
   },
@@ -631,10 +591,10 @@ export const EraSnapshot = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<EraSnapshot>): EraSnapshot {
+  fromPartial<I extends Exact<DeepPartial<EraSnapshot>, I>>(object: I): EraSnapshot {
     const message = { ...baseEraSnapshot } as EraSnapshot;
     message.denom = object.denom ?? "";
-    message.shotIds = (object.shotIds ?? []).map((e) => e);
+    message.shotIds = object.shotIds?.map((e) => e) || [];
     return message;
   },
 };
@@ -642,10 +602,7 @@ export const EraSnapshot = {
 const basePoolUnbond: object = { denom: "", pool: "", era: 0 };
 
 export const PoolUnbond = {
-  encode(
-    message: PoolUnbond,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PoolUnbond, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -691,19 +648,10 @@ export const PoolUnbond = {
 
   fromJSON(object: any): PoolUnbond {
     const message = { ...basePoolUnbond } as PoolUnbond;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
-    message.unbondings = (object.unbondings ?? []).map((e: any) =>
-      Unbonding.fromJSON(e)
-    );
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
+    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.unbondings = (object.unbondings ?? []).map((e: any) => Unbonding.fromJSON(e));
     return message;
   },
 
@@ -713,23 +661,19 @@ export const PoolUnbond = {
     message.pool !== undefined && (obj.pool = message.pool);
     message.era !== undefined && (obj.era = message.era);
     if (message.unbondings) {
-      obj.unbondings = message.unbondings.map((e) =>
-        e ? Unbonding.toJSON(e) : undefined
-      );
+      obj.unbondings = message.unbondings.map((e) => (e ? Unbonding.toJSON(e) : undefined));
     } else {
       obj.unbondings = [];
     }
     return obj;
   },
 
-  fromPartial(object: DeepPartial<PoolUnbond>): PoolUnbond {
+  fromPartial<I extends Exact<DeepPartial<PoolUnbond>, I>>(object: I): PoolUnbond {
     const message = { ...basePoolUnbond } as PoolUnbond;
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
     message.era = object.era ?? 0;
-    message.unbondings = (object.unbondings ?? []).map((e) =>
-      Unbonding.fromPartial(e)
-    );
+    message.unbondings = object.unbondings?.map((e) => Unbonding.fromPartial(e)) || [];
     return message;
   },
 };
@@ -737,10 +681,7 @@ export const PoolUnbond = {
 const baseEraUnbondLimit: object = { denom: "", limit: 0 };
 
 export const EraUnbondLimit = {
-  encode(
-    message: EraUnbondLimit,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EraUnbondLimit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -773,14 +714,8 @@ export const EraUnbondLimit = {
 
   fromJSON(object: any): EraUnbondLimit {
     const message = { ...baseEraUnbondLimit } as EraUnbondLimit;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.limit =
-      object.limit !== undefined && object.limit !== null
-        ? Number(object.limit)
-        : 0;
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.limit = object.limit !== undefined && object.limit !== null ? Number(object.limit) : 0;
     return message;
   },
 
@@ -791,7 +726,7 @@ export const EraUnbondLimit = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<EraUnbondLimit>): EraUnbondLimit {
+  fromPartial<I extends Exact<DeepPartial<EraUnbondLimit>, I>>(object: I): EraUnbondLimit {
     const message = { ...baseEraUnbondLimit } as EraUnbondLimit;
     message.denom = object.denom ?? "";
     message.limit = object.limit ?? 0;
@@ -799,18 +734,10 @@ export const EraUnbondLimit = {
   },
 };
 
-const basePoolDetail: object = {
-  denom: "",
-  pool: "",
-  subAccounts: "",
-  threshold: 0,
-};
+const basePoolDetail: object = { denom: "", pool: "", subAccounts: "", threshold: 0 };
 
 export const PoolDetail = {
-  encode(
-    message: PoolDetail,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: PoolDetail, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -856,19 +783,11 @@ export const PoolDetail = {
 
   fromJSON(object: any): PoolDetail {
     const message = { ...basePoolDetail } as PoolDetail;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
     message.subAccounts = (object.subAccounts ?? []).map((e: any) => String(e));
     message.threshold =
-      object.threshold !== undefined && object.threshold !== null
-        ? Number(object.threshold)
-        : 0;
+      object.threshold !== undefined && object.threshold !== null ? Number(object.threshold) : 0;
     return message;
   },
 
@@ -885,11 +804,11 @@ export const PoolDetail = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<PoolDetail>): PoolDetail {
+  fromPartial<I extends Exact<DeepPartial<PoolDetail>, I>>(object: I): PoolDetail {
     const message = { ...basePoolDetail } as PoolDetail;
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
-    message.subAccounts = (object.subAccounts ?? []).map((e) => e);
+    message.subAccounts = object.subAccounts?.map((e) => e) || [];
     message.threshold = object.threshold ?? 0;
     return message;
   },
@@ -898,10 +817,7 @@ export const PoolDetail = {
 const baseLinkChunk: object = { bond: "", unbond: "", active: "" };
 
 export const LinkChunk = {
-  encode(
-    message: LinkChunk,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: LinkChunk, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.bond !== "") {
       writer.uint32(10).string(message.bond);
     }
@@ -940,18 +856,9 @@ export const LinkChunk = {
 
   fromJSON(object: any): LinkChunk {
     const message = { ...baseLinkChunk } as LinkChunk;
-    message.bond =
-      object.bond !== undefined && object.bond !== null
-        ? String(object.bond)
-        : "";
-    message.unbond =
-      object.unbond !== undefined && object.unbond !== null
-        ? String(object.unbond)
-        : "";
-    message.active =
-      object.active !== undefined && object.active !== null
-        ? String(object.active)
-        : "";
+    message.bond = object.bond !== undefined && object.bond !== null ? String(object.bond) : "";
+    message.unbond = object.unbond !== undefined && object.unbond !== null ? String(object.unbond) : "";
+    message.active = object.active !== undefined && object.active !== null ? String(object.active) : "";
     return message;
   },
 
@@ -963,7 +870,7 @@ export const LinkChunk = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<LinkChunk>): LinkChunk {
+  fromPartial<I extends Exact<DeepPartial<LinkChunk>, I>>(object: I): LinkChunk {
     const message = { ...baseLinkChunk } as LinkChunk;
     message.bond = object.bond ?? "";
     message.unbond = object.unbond ?? "";
@@ -972,19 +879,10 @@ export const LinkChunk = {
   },
 };
 
-const baseBondSnapshot: object = {
-  denom: "",
-  pool: "",
-  era: 0,
-  lastVoter: "",
-  bondState: 0,
-};
+const baseBondSnapshot: object = { denom: "", pool: "", era: 0, lastVoter: "", bondState: 0 };
 
 export const BondSnapshot = {
-  encode(
-    message: BondSnapshot,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: BondSnapshot, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1041,24 +939,13 @@ export const BondSnapshot = {
 
   fromJSON(object: any): BondSnapshot {
     const message = { ...baseBondSnapshot } as BondSnapshot;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
+    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
     message.chunk =
-      object.chunk !== undefined && object.chunk !== null
-        ? LinkChunk.fromJSON(object.chunk)
-        : undefined;
+      object.chunk !== undefined && object.chunk !== null ? LinkChunk.fromJSON(object.chunk) : undefined;
     message.lastVoter =
-      object.lastVoter !== undefined && object.lastVoter !== null
-        ? String(object.lastVoter)
-        : "";
+      object.lastVoter !== undefined && object.lastVoter !== null ? String(object.lastVoter) : "";
     message.bondState =
       object.bondState !== undefined && object.bondState !== null
         ? poolBondStateFromJSON(object.bondState)
@@ -1071,23 +958,19 @@ export const BondSnapshot = {
     message.denom !== undefined && (obj.denom = message.denom);
     message.pool !== undefined && (obj.pool = message.pool);
     message.era !== undefined && (obj.era = message.era);
-    message.chunk !== undefined &&
-      (obj.chunk = message.chunk ? LinkChunk.toJSON(message.chunk) : undefined);
+    message.chunk !== undefined && (obj.chunk = message.chunk ? LinkChunk.toJSON(message.chunk) : undefined);
     message.lastVoter !== undefined && (obj.lastVoter = message.lastVoter);
-    message.bondState !== undefined &&
-      (obj.bondState = poolBondStateToJSON(message.bondState));
+    message.bondState !== undefined && (obj.bondState = poolBondStateToJSON(message.bondState));
     return obj;
   },
 
-  fromPartial(object: DeepPartial<BondSnapshot>): BondSnapshot {
+  fromPartial<I extends Exact<DeepPartial<BondSnapshot>, I>>(object: I): BondSnapshot {
     const message = { ...baseBondSnapshot } as BondSnapshot;
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
     message.era = object.era ?? 0;
     message.chunk =
-      object.chunk !== undefined && object.chunk !== null
-        ? LinkChunk.fromPartial(object.chunk)
-        : undefined;
+      object.chunk !== undefined && object.chunk !== null ? LinkChunk.fromPartial(object.chunk) : undefined;
     message.lastVoter = object.lastVoter ?? "";
     message.bondState = object.bondState ?? 0;
     return message;
@@ -1097,10 +980,7 @@ export const BondSnapshot = {
 const baseExchangeRate: object = { denom: "", value: "" };
 
 export const ExchangeRate = {
-  encode(
-    message: ExchangeRate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ExchangeRate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1133,14 +1013,8 @@ export const ExchangeRate = {
 
   fromJSON(object: any): ExchangeRate {
     const message = { ...baseExchangeRate } as ExchangeRate;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.value = object.value !== undefined && object.value !== null ? String(object.value) : "";
     return message;
   },
 
@@ -1151,7 +1025,7 @@ export const ExchangeRate = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<ExchangeRate>): ExchangeRate {
+  fromPartial<I extends Exact<DeepPartial<ExchangeRate>, I>>(object: I): ExchangeRate {
     const message = { ...baseExchangeRate } as ExchangeRate;
     message.denom = object.denom ?? "";
     message.value = object.value ?? "";
@@ -1162,10 +1036,7 @@ export const ExchangeRate = {
 const baseTotalProtocolFee: object = { denom: "", value: "" };
 
 export const TotalProtocolFee = {
-  encode(
-    message: TotalProtocolFee,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: TotalProtocolFee, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1198,14 +1069,8 @@ export const TotalProtocolFee = {
 
   fromJSON(object: any): TotalProtocolFee {
     const message = { ...baseTotalProtocolFee } as TotalProtocolFee;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.value = object.value !== undefined && object.value !== null ? String(object.value) : "";
     return message;
   },
 
@@ -1216,7 +1081,7 @@ export const TotalProtocolFee = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<TotalProtocolFee>): TotalProtocolFee {
+  fromPartial<I extends Exact<DeepPartial<TotalProtocolFee>, I>>(object: I): TotalProtocolFee {
     const message = { ...baseTotalProtocolFee } as TotalProtocolFee;
     message.denom = object.denom ?? "";
     message.value = object.value ?? "";
@@ -1227,10 +1092,7 @@ export const TotalProtocolFee = {
 const baseEraExchangeRate: object = { denom: "", era: 0, value: "" };
 
 export const EraExchangeRate = {
-  encode(
-    message: EraExchangeRate,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EraExchangeRate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1269,16 +1131,9 @@ export const EraExchangeRate = {
 
   fromJSON(object: any): EraExchangeRate {
     const message = { ...baseEraExchangeRate } as EraExchangeRate;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.value = object.value !== undefined && object.value !== null ? String(object.value) : "";
     return message;
   },
 
@@ -1290,7 +1145,7 @@ export const EraExchangeRate = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<EraExchangeRate>): EraExchangeRate {
+  fromPartial<I extends Exact<DeepPartial<EraExchangeRate>, I>>(object: I): EraExchangeRate {
     const message = { ...baseEraExchangeRate } as EraExchangeRate;
     message.denom = object.denom ?? "";
     message.era = object.era ?? 0;
@@ -1302,10 +1157,7 @@ export const EraExchangeRate = {
 const baseUnbondRelayFee: object = { denom: "", value: "" };
 
 export const UnbondRelayFee = {
-  encode(
-    message: UnbondRelayFee,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UnbondRelayFee, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1338,14 +1190,8 @@ export const UnbondRelayFee = {
 
   fromJSON(object: any): UnbondRelayFee {
     const message = { ...baseUnbondRelayFee } as UnbondRelayFee;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.value = object.value !== undefined && object.value !== null ? String(object.value) : "";
     return message;
   },
 
@@ -1356,7 +1202,7 @@ export const UnbondRelayFee = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<UnbondRelayFee>): UnbondRelayFee {
+  fromPartial<I extends Exact<DeepPartial<UnbondRelayFee>, I>>(object: I): UnbondRelayFee {
     const message = { ...baseUnbondRelayFee } as UnbondRelayFee;
     message.denom = object.denom ?? "";
     message.value = object.value ?? "";
@@ -1367,10 +1213,7 @@ export const UnbondRelayFee = {
 const baseUnbonding: object = { unbonder: "", amount: "", recipient: "" };
 
 export const Unbonding = {
-  encode(
-    message: Unbonding,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Unbonding, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.unbonder !== "") {
       writer.uint32(10).string(message.unbonder);
     }
@@ -1410,17 +1253,10 @@ export const Unbonding = {
   fromJSON(object: any): Unbonding {
     const message = { ...baseUnbonding } as Unbonding;
     message.unbonder =
-      object.unbonder !== undefined && object.unbonder !== null
-        ? String(object.unbonder)
-        : "";
-    message.amount =
-      object.amount !== undefined && object.amount !== null
-        ? String(object.amount)
-        : "";
+      object.unbonder !== undefined && object.unbonder !== null ? String(object.unbonder) : "";
+    message.amount = object.amount !== undefined && object.amount !== null ? String(object.amount) : "";
     message.recipient =
-      object.recipient !== undefined && object.recipient !== null
-        ? String(object.recipient)
-        : "";
+      object.recipient !== undefined && object.recipient !== null ? String(object.recipient) : "";
     return message;
   },
 
@@ -1432,7 +1268,7 @@ export const Unbonding = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Unbonding>): Unbonding {
+  fromPartial<I extends Exact<DeepPartial<Unbonding>, I>>(object: I): Unbonding {
     const message = { ...baseUnbonding } as Unbonding;
     message.unbonder = object.unbonder ?? "";
     message.amount = object.amount ?? "";
@@ -1441,18 +1277,10 @@ export const Unbonding = {
   },
 };
 
-const baseUserUnlockChunk: object = {
-  pool: "",
-  unlockEra: 0,
-  value: "",
-  recipient: "",
-};
+const baseUserUnlockChunk: object = { pool: "", unlockEra: 0, value: "", recipient: "" };
 
 export const UserUnlockChunk = {
-  encode(
-    message: UserUnlockChunk,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: UserUnlockChunk, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.pool !== "") {
       writer.uint32(10).string(message.pool);
     }
@@ -1497,22 +1325,12 @@ export const UserUnlockChunk = {
 
   fromJSON(object: any): UserUnlockChunk {
     const message = { ...baseUserUnlockChunk } as UserUnlockChunk;
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
     message.unlockEra =
-      object.unlockEra !== undefined && object.unlockEra !== null
-        ? Number(object.unlockEra)
-        : 0;
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+      object.unlockEra !== undefined && object.unlockEra !== null ? Number(object.unlockEra) : 0;
+    message.value = object.value !== undefined && object.value !== null ? String(object.value) : "";
     message.recipient =
-      object.recipient !== undefined && object.recipient !== null
-        ? String(object.recipient)
-        : "";
+      object.recipient !== undefined && object.recipient !== null ? String(object.recipient) : "";
     return message;
   },
 
@@ -1525,7 +1343,7 @@ export const UserUnlockChunk = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<UserUnlockChunk>): UserUnlockChunk {
+  fromPartial<I extends Exact<DeepPartial<UserUnlockChunk>, I>>(object: I): UserUnlockChunk {
     const message = { ...baseUserUnlockChunk } as UserUnlockChunk;
     message.pool = object.pool ?? "";
     message.unlockEra = object.unlockEra ?? 0;
@@ -1538,10 +1356,7 @@ export const UserUnlockChunk = {
 const baseAccountUnbond: object = { unbonder: "", denom: "" };
 
 export const AccountUnbond = {
-  encode(
-    message: AccountUnbond,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AccountUnbond, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.unbonder !== "") {
       writer.uint32(10).string(message.unbonder);
     }
@@ -1582,16 +1397,9 @@ export const AccountUnbond = {
   fromJSON(object: any): AccountUnbond {
     const message = { ...baseAccountUnbond } as AccountUnbond;
     message.unbonder =
-      object.unbonder !== undefined && object.unbonder !== null
-        ? String(object.unbonder)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.chunks = (object.chunks ?? []).map((e: any) =>
-      UserUnlockChunk.fromJSON(e)
-    );
+      object.unbonder !== undefined && object.unbonder !== null ? String(object.unbonder) : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.chunks = (object.chunks ?? []).map((e: any) => UserUnlockChunk.fromJSON(e));
     return message;
   },
 
@@ -1600,39 +1408,26 @@ export const AccountUnbond = {
     message.unbonder !== undefined && (obj.unbonder = message.unbonder);
     message.denom !== undefined && (obj.denom = message.denom);
     if (message.chunks) {
-      obj.chunks = message.chunks.map((e) =>
-        e ? UserUnlockChunk.toJSON(e) : undefined
-      );
+      obj.chunks = message.chunks.map((e) => (e ? UserUnlockChunk.toJSON(e) : undefined));
     } else {
       obj.chunks = [];
     }
     return obj;
   },
 
-  fromPartial(object: DeepPartial<AccountUnbond>): AccountUnbond {
+  fromPartial<I extends Exact<DeepPartial<AccountUnbond>, I>>(object: I): AccountUnbond {
     const message = { ...baseAccountUnbond } as AccountUnbond;
     message.unbonder = object.unbonder ?? "";
     message.denom = object.denom ?? "";
-    message.chunks = (object.chunks ?? []).map((e) =>
-      UserUnlockChunk.fromPartial(e)
-    );
+    message.chunks = object.chunks?.map((e) => UserUnlockChunk.fromPartial(e)) || [];
     return message;
   },
 };
 
-const baseBondRecord: object = {
-  denom: "",
-  bonder: "",
-  pool: "",
-  txhash: "",
-  amount: "",
-};
+const baseBondRecord: object = { denom: "", bonder: "", pool: "", txhash: "", amount: "" };
 
 export const BondRecord = {
-  encode(
-    message: BondRecord,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: BondRecord, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1683,26 +1478,11 @@ export const BondRecord = {
 
   fromJSON(object: any): BondRecord {
     const message = { ...baseBondRecord } as BondRecord;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.bonder =
-      object.bonder !== undefined && object.bonder !== null
-        ? String(object.bonder)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
-    message.txhash =
-      object.txhash !== undefined && object.txhash !== null
-        ? String(object.txhash)
-        : "";
-    message.amount =
-      object.amount !== undefined && object.amount !== null
-        ? String(object.amount)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.bonder = object.bonder !== undefined && object.bonder !== null ? String(object.bonder) : "";
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
+    message.txhash = object.txhash !== undefined && object.txhash !== null ? String(object.txhash) : "";
+    message.amount = object.amount !== undefined && object.amount !== null ? String(object.amount) : "";
     return message;
   },
 
@@ -1716,7 +1496,7 @@ export const BondRecord = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<BondRecord>): BondRecord {
+  fromPartial<I extends Exact<DeepPartial<BondRecord>, I>>(object: I): BondRecord {
     const message = { ...baseBondRecord } as BondRecord;
     message.denom = object.denom ?? "";
     message.bonder = object.bonder ?? "";
@@ -1727,20 +1507,10 @@ export const BondRecord = {
   },
 };
 
-const baseSignature: object = {
-  denom: "",
-  era: 0,
-  pool: "",
-  txType: 0,
-  propId: "",
-  sigs: "",
-};
+const baseSignature: object = { denom: "", era: 0, pool: "", txType: 0, propId: "", sigs: "" };
 
 export const Signature = {
-  encode(
-    message: Signature,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Signature, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1798,24 +1568,12 @@ export const Signature = {
 
   fromJSON(object: any): Signature {
     const message = { ...baseSignature } as Signature;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
     message.txType =
-      object.txType !== undefined && object.txType !== null
-        ? originalTxTypeFromJSON(object.txType)
-        : 0;
-    message.propId =
-      object.propId !== undefined && object.propId !== null
-        ? String(object.propId)
-        : "";
+      object.txType !== undefined && object.txType !== null ? originalTxTypeFromJSON(object.txType) : 0;
+    message.propId = object.propId !== undefined && object.propId !== null ? String(object.propId) : "";
     message.sigs = (object.sigs ?? []).map((e: any) => String(e));
     return message;
   },
@@ -1825,8 +1583,7 @@ export const Signature = {
     message.denom !== undefined && (obj.denom = message.denom);
     message.era !== undefined && (obj.era = message.era);
     message.pool !== undefined && (obj.pool = message.pool);
-    message.txType !== undefined &&
-      (obj.txType = originalTxTypeToJSON(message.txType));
+    message.txType !== undefined && (obj.txType = originalTxTypeToJSON(message.txType));
     message.propId !== undefined && (obj.propId = message.propId);
     if (message.sigs) {
       obj.sigs = message.sigs.map((e) => e);
@@ -1836,14 +1593,14 @@ export const Signature = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Signature>): Signature {
+  fromPartial<I extends Exact<DeepPartial<Signature>, I>>(object: I): Signature {
     const message = { ...baseSignature } as Signature;
     message.denom = object.denom ?? "";
     message.era = object.era ?? 0;
     message.pool = object.pool ?? "";
     message.txType = object.txType ?? 0;
     message.propId = object.propId ?? "";
-    message.sigs = (object.sigs ?? []).map((e) => e);
+    message.sigs = object.sigs?.map((e) => e) || [];
     return message;
   },
 };
@@ -1859,10 +1616,7 @@ const baseRParams: object = {
 };
 
 export const RParams = {
-  encode(
-    message: RParams,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: RParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1926,30 +1680,18 @@ export const RParams = {
 
   fromJSON(object: any): RParams {
     const message = { ...baseRParams } as RParams;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
+    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
     message.gasPrice =
-      object.gasPrice !== undefined && object.gasPrice !== null
-        ? String(object.gasPrice)
-        : "";
+      object.gasPrice !== undefined && object.gasPrice !== null ? String(object.gasPrice) : "";
     message.eraSeconds =
-      object.eraSeconds !== undefined && object.eraSeconds !== null
-        ? String(object.eraSeconds)
-        : "";
-    message.offset =
-      object.offset !== undefined && object.offset !== null
-        ? String(object.offset)
-        : "";
+      object.eraSeconds !== undefined && object.eraSeconds !== null ? String(object.eraSeconds) : "";
+    message.offset = object.offset !== undefined && object.offset !== null ? String(object.offset) : "";
     message.bondingDuration =
       object.bondingDuration !== undefined && object.bondingDuration !== null
         ? Number(object.bondingDuration)
         : 0;
     message.leastBond =
-      object.leastBond !== undefined && object.leastBond !== null
-        ? String(object.leastBond)
-        : "";
+      object.leastBond !== undefined && object.leastBond !== null ? String(object.leastBond) : "";
     message.validators = (object.validators ?? []).map((e: any) => String(e));
     return message;
   },
@@ -1960,8 +1702,7 @@ export const RParams = {
     message.gasPrice !== undefined && (obj.gasPrice = message.gasPrice);
     message.eraSeconds !== undefined && (obj.eraSeconds = message.eraSeconds);
     message.offset !== undefined && (obj.offset = message.offset);
-    message.bondingDuration !== undefined &&
-      (obj.bondingDuration = message.bondingDuration);
+    message.bondingDuration !== undefined && (obj.bondingDuration = message.bondingDuration);
     message.leastBond !== undefined && (obj.leastBond = message.leastBond);
     if (message.validators) {
       obj.validators = message.validators.map((e) => e);
@@ -1971,7 +1712,7 @@ export const RParams = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<RParams>): RParams {
+  fromPartial<I extends Exact<DeepPartial<RParams>, I>>(object: I): RParams {
     const message = { ...baseRParams } as RParams;
     message.denom = object.denom ?? "";
     message.gasPrice = object.gasPrice ?? "";
@@ -1979,19 +1720,13 @@ export const RParams = {
     message.offset = object.offset ?? "";
     message.bondingDuration = object.bondingDuration ?? 0;
     message.leastBond = object.leastBond ?? "";
-    message.validators = (object.validators ?? []).map((e) => e);
+    message.validators = object.validators?.map((e) => e) || [];
     return message;
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Long
@@ -2003,6 +1738,11 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

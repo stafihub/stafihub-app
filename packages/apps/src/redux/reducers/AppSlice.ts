@@ -1,89 +1,159 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CosmosNetworkParams } from "@stafihub/types";
+import { CosmosNetworkParams } from "@stafihub/apps-config";
+import {
+  connectAtomjs,
+  getKeplrAccount,
+  queryAccountBalance,
+} from "@stafihub/apps-wallet";
+import { KeplrAccount } from "@stafihub/types";
+import { saveNetworkAllowedFlag } from "../../utils/storage";
+import { AppThunk } from "../store";
+import * as _ from "lodash";
+import { cloneNode } from "@babel/types";
+
+type AccountMap = { [key: string]: KeplrAccount | undefined };
 
 export interface AppState {
-  currentNetwork: CosmosNetworkParams | null;
+  isFork: boolean;
+  currentNetwork: string;
+  accounts: AccountMap;
 }
 
 const initialState: AppState = {
-  currentNetwork: null,
+  isFork: false,
+  currentNetwork: "stafiHub",
+  accounts: {},
 };
 
 export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setCurrentNetwork: (state, action: PayloadAction<CosmosNetworkParams>) => {
+    setIsFork: (state, action: PayloadAction<boolean>) => {
+      state.isFork = action.payload;
+    },
+    setCurrentNetwork: (state, action: PayloadAction<string>) => {
       state.currentNetwork = action.payload;
+    },
+    setAccounts: (state, action: PayloadAction<AccountMap>) => {
+      state.accounts = action.payload;
     },
   },
 });
 
-export const { setCurrentNetwork } = appSlice.actions;
+export const { setIsFork, setCurrentNetwork, setAccounts } = appSlice.actions;
 
-/**
-// export const connectPolkadotJs =
-//   (api: ApiPromise | null, showSelectAccountModal: boolean = false): AppThunk =>
-//   async (dispatch, getState) => {
-//     if (!api) {
-//       return;
-//     }
+export const updateAccounts =
+  (network: string, account: KeplrAccount): AppThunk =>
+  async (dispatch, getState) => {
+    const newAccounts = {
+      ...getState().app.accounts,
+      [network]: account,
+    };
+    dispatch(setAccounts(newAccounts));
+  };
 
-//     try {
-//       const extensions = await web3Enable(WEB3_ENABLE_NAME);
-//       if (extensions.length === 0) {
-//         // no extension installed, or the user did not accept the authorization
-//         // in this case we should inform the use and give a link to the extension
-//         return;
-//       }
+export const updateMultiAccounts =
+  (accountMap: AccountMap): AppThunk =>
+  async (dispatch, getState) => {
+    const newAccounts = {
+      ...getState().app.accounts,
+      ...accountMap,
+    };
+    dispatch(setAccounts(newAccounts));
+  };
 
-//       const newAccounts = await web3Accounts();
-//       const accounts: InjectedAccountWithMeta[] = newAccounts?.map(
-//         ({ address, ...other }) => ({
-//           ...other,
-//           address: convertToSS58(address, 20),
-//         })
-//       );
+export const connectKeplr =
+  (network: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const enableResult = await connectAtomjs(network);
+      console.log("enableResult", enableResult);
+      const accountResult = await getKeplrAccount(network);
 
-//       // Check local selected account.
-//       const savedStafiAddress = getStorage(STORAGE_KEY_STAFI_ADDRESS);
-//       let matchAccount = accounts.find((account) => {
-//         return account.address === savedStafiAddress;
-//       });
+      const account: KeplrAccount = {
+        name: accountResult.name,
+        bech32Address: accountResult.bech32Address,
+      };
+      console.log("account", account);
 
-//       // Use first account as default.
-//       if (!matchAccount) {
-//         if (accounts.length > 0) {
-//           matchAccount = accounts[0];
-//         }
-//       }
+      const balance = await queryAccountBalance(network, account.bech32Address);
+      account.balance = balance;
 
-//       if (matchAccount) {
-//         dispatch(updateStafiAddress(api, savedStafiAddress));
-//       }
+      dispatch(updateAccounts(network, account));
 
-//       for (let account of accounts) {
-//         const result: any = await api.query.system.account(account.address);
-//         if (result) {
-//           let fisFreeBalance = convertNumberToHuman(
-//             result.data.free.toString(),
-//             TokenSymbol.Fis
-//           );
-//           account.balance = fisFreeBalance.toString();
-//         }
-//       }
+      saveNetworkAllowedFlag(network);
+    } catch (err: unknown) {
+      console.log(`connect ${network} error`, err);
+    }
+  };
 
-//       dispatch(setAccounts(accounts));
+export const connectKeplrChains =
+  (networks: string[]): AppThunk =>
+  async (dispatch, getState) => {
+    if (_.isEmpty(networks)) {
+      return;
+    }
+    const requests = networks.map((network) => {
+      return (async () => {
+        try {
+          const enableResult = await connectAtomjs(network);
+          console.log("enableResult", enableResult);
+          const accountResult = await getKeplrAccount(network);
 
-//       if (showSelectAccountModal) {
-//         dispatch(setSelectAccountModalVisible(true));
-//       }
+          const account: KeplrAccount = {
+            name: accountResult.name,
+            bech32Address: accountResult.bech32Address,
+          };
+          console.log("account", account);
 
-//       saveStorage(STORAGE_KEY_WALLET_ALLOWED, "1");
-//     } catch (err: unknown) {
-//       console.log("connect extension error:", err);
-//     }
-//   };
-*/
+          const balance = await queryAccountBalance(
+            network,
+            account.bech32Address
+          );
+          account.balance = balance;
+
+          saveNetworkAllowedFlag(network);
+
+          return { network, account };
+        } catch (err: unknown) {
+          console.log(`connect ${network} error`, err);
+          return null;
+        }
+      })();
+    });
+
+    const results = await Promise.all(requests);
+
+    const accountsMap: AccountMap = {};
+    results.forEach((result) => {
+      if (result) {
+        accountsMap[result.network] = result.account;
+      }
+    });
+    dispatch(updateMultiAccounts(accountsMap));
+  };
+
+export const updateTokenBalance =
+  (network: string): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const account = getState().app.accounts[network];
+      console.log("account1", account);
+      if (!account) {
+        return;
+      }
+      const newAccount = { ...account };
+      const balance = await queryAccountBalance(
+        network,
+        newAccount.bech32Address
+      );
+      newAccount.balance = balance;
+
+      dispatch(updateAccounts(network, newAccount));
+    } catch (err: unknown) {
+      console.log(`updateTokenBalance ${network} error`, err);
+    }
+  };
 
 export default appSlice.reducer;

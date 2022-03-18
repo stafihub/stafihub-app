@@ -83,15 +83,18 @@ export async function queryAccountBalance(
   }
 }
 
-export async function queryrTokenBalance(tokenDenom: string): Promise<string> {
+export async function queryrTokenBalance(
+  stafiHubAddress: string,
+  tokenDenom: string
+): Promise<string> {
   const client = await createCosmosClient("stafiHub");
   if (!client) {
     return "--";
   }
 
   const result = await client.getBalance(
-    "stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7",
-    // "terra15lne70yk254s0pm2da6g59r82cjymzjq3r2v5x",
+    stafiHubAddress,
+    // "stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7",
     tokenDenom
   );
   console.log("rToken balance result", result);

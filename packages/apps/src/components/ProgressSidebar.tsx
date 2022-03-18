@@ -35,7 +35,7 @@ export const ProgressSidebar = () => {
       </div>
 
       {sidebarProgressProps.items?.map((item, index) => (
-        <div className="mt-9 self-stretch">
+        <div className="mt-9 self-stretch" key={item.name}>
           <div className="flex items-center">
             <div className="text-white text-[12px] w-4 h-4 rounded-full border-solid border-[0.5px] border-white flex items-center justify-center">
               {index + 1}

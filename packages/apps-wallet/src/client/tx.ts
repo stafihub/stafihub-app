@@ -44,6 +44,7 @@ export async function sendStakeTx(
     fee,
     `1:${stafiHubAddress}`
   );
+  console.log("txHash", sendTokens?.transactionHash);
   return sendTokens?.code === 0;
 }
 

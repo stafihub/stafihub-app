@@ -27,7 +27,7 @@ const initialState: AppState = {
   isFork: false,
   currentNetwork: "stafiHub",
   accounts: {},
-  isLoading: true,
+  isLoading: false,
   slippage: "1",
 };
 

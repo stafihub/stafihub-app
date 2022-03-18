@@ -12,7 +12,7 @@ interface UnbondModalProps {
 }
 
 export const AccountModal = (props: UnbondModalProps) => {
-  const [accounts] = useAccounts();
+  const accounts = useAccounts();
   const [isFork] = useIsFork();
 
   const { stafiHubChain, restChainsArr } = useMemo(() => {

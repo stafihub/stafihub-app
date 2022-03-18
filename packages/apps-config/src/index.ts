@@ -14,3 +14,19 @@ export function isFork(): boolean {
 export function getCosmosNetwork(): string {
   return "iris";
 }
+
+export function getDenomFromChainName(chainName: string | undefined): string {
+  if (!chainName) {
+    throw new Error("Invalid empty chainName");
+  }
+  return `u${chainName}`;
+}
+
+export function getRTokenDenomFromChainName(
+  chainName: string | undefined
+): string {
+  if (!chainName) {
+    throw new Error("Invalid empty chainName");
+  }
+  return `ur${chainName}`;
+}

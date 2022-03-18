@@ -19,8 +19,8 @@ import { stake } from "../redux/reducers/TxSlice";
 export const StakeHome = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [stafiHubAccount] = useChainAccount(STAFIHUB_NETWORK);
-  const [chainAccount] = useChainAccount(getCosmosNetwork());
+  const stafiHubAccount = useChainAccount(STAFIHUB_NETWORK);
+  const chainAccount = useChainAccount(getCosmosNetwork());
   const chain = useChainInfo(getCosmosNetwork());
   const params = useParams();
   const tokenName = params.tokenName;

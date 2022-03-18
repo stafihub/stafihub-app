@@ -3,9 +3,15 @@ import type {
   QueryBondedPoolsByDenomResponse,
   QueryGetPoolDetailResponse,
   KeplrAccountBalance,
+  QueryGetUnbondCommissionResponse,
 } from "@stafihub/types";
-import { getCosmosNetwork, chains } from "@stafihub/apps-config";
+import {
+  getCosmosNetwork,
+  chains,
+  STAFIHUB_NETWORK,
+} from "@stafihub/apps-config";
 import { createCosmosClient, createQueryService } from ".";
+import { QueryGetAccountUnbondResponse } from "@stafihub/types";
 
 export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
   const queryService = await createQueryService("stafiHub");
@@ -90,4 +96,38 @@ export async function queryrTokenBalance(tokenDenom: string): Promise<string> {
   );
   console.log("rToken balance result", result);
   return result.amount;
+}
+
+export async function queryAccountUnbond(
+  tokenDenom: string,
+  stafiHubAddress: string
+): Promise<QueryGetAccountUnbondResponse | null> {
+  try {
+    const queryService = await createQueryService(STAFIHUB_NETWORK);
+    const result = await queryService.GetAccountUnbond({
+      denom: tokenDenom,
+      unbonder: stafiHubAddress,
+    });
+    console.log("queryAccountUnbond result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryAccountUnbond err", err);
+  }
+  return null;
+}
+
+export async function queryUnbondCommission(
+  tokenDenom: string
+): Promise<QueryGetUnbondCommissionResponse | null> {
+  try {
+    const queryService = await createQueryService(STAFIHUB_NETWORK);
+    const result = await queryService.GetUnbondCommission({
+      denom: tokenDenom,
+    });
+    console.log("queryUnbondCommission result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryUnbondCommission err", err);
+  }
+  return null;
 }

@@ -223,17 +223,25 @@ export interface QueryRelayFeeReceiverResponse {
 const baseQueryGetExchangeRateRequest: object = { denom: "" };
 
 export const QueryGetExchangeRateRequest = {
-  encode(message: QueryGetExchangeRateRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetExchangeRateRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetExchangeRateRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetExchangeRateRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetExchangeRateRequest } as QueryGetExchangeRateRequest;
+    const message = {
+      ...baseQueryGetExchangeRateRequest,
+    } as QueryGetExchangeRateRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -249,8 +257,13 @@ export const QueryGetExchangeRateRequest = {
   },
 
   fromJSON(object: any): QueryGetExchangeRateRequest {
-    const message = { ...baseQueryGetExchangeRateRequest } as QueryGetExchangeRateRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryGetExchangeRateRequest,
+    } as QueryGetExchangeRateRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -260,10 +273,12 @@ export const QueryGetExchangeRateRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetExchangeRateRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetExchangeRateRequest>
   ): QueryGetExchangeRateRequest {
-    const message = { ...baseQueryGetExchangeRateRequest } as QueryGetExchangeRateRequest;
+    const message = {
+      ...baseQueryGetExchangeRateRequest,
+    } as QueryGetExchangeRateRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -272,17 +287,28 @@ export const QueryGetExchangeRateRequest = {
 const baseQueryGetExchangeRateResponse: object = {};
 
 export const QueryGetExchangeRateResponse = {
-  encode(message: QueryGetExchangeRateResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetExchangeRateResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.exchangeRate !== undefined) {
-      ExchangeRate.encode(message.exchangeRate, writer.uint32(10).fork()).ldelim();
+      ExchangeRate.encode(
+        message.exchangeRate,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetExchangeRateResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetExchangeRateResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetExchangeRateResponse } as QueryGetExchangeRateResponse;
+    const message = {
+      ...baseQueryGetExchangeRateResponse,
+    } as QueryGetExchangeRateResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -298,7 +324,9 @@ export const QueryGetExchangeRateResponse = {
   },
 
   fromJSON(object: any): QueryGetExchangeRateResponse {
-    const message = { ...baseQueryGetExchangeRateResponse } as QueryGetExchangeRateResponse;
+    const message = {
+      ...baseQueryGetExchangeRateResponse,
+    } as QueryGetExchangeRateResponse;
     message.exchangeRate =
       object.exchangeRate !== undefined && object.exchangeRate !== null
         ? ExchangeRate.fromJSON(object.exchangeRate)
@@ -309,14 +337,18 @@ export const QueryGetExchangeRateResponse = {
   toJSON(message: QueryGetExchangeRateResponse): unknown {
     const obj: any = {};
     message.exchangeRate !== undefined &&
-      (obj.exchangeRate = message.exchangeRate ? ExchangeRate.toJSON(message.exchangeRate) : undefined);
+      (obj.exchangeRate = message.exchangeRate
+        ? ExchangeRate.toJSON(message.exchangeRate)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetExchangeRateResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetExchangeRateResponse>
   ): QueryGetExchangeRateResponse {
-    const message = { ...baseQueryGetExchangeRateResponse } as QueryGetExchangeRateResponse;
+    const message = {
+      ...baseQueryGetExchangeRateResponse,
+    } as QueryGetExchangeRateResponse;
     message.exchangeRate =
       object.exchangeRate !== undefined && object.exchangeRate !== null
         ? ExchangeRate.fromPartial(object.exchangeRate)
@@ -328,14 +360,22 @@ export const QueryGetExchangeRateResponse = {
 const baseQueryExchangeRateAllRequest: object = {};
 
 export const QueryExchangeRateAllRequest = {
-  encode(_: QueryExchangeRateAllRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: QueryExchangeRateAllRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryExchangeRateAllRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryExchangeRateAllRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryExchangeRateAllRequest } as QueryExchangeRateAllRequest;
+    const message = {
+      ...baseQueryExchangeRateAllRequest,
+    } as QueryExchangeRateAllRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -348,7 +388,9 @@ export const QueryExchangeRateAllRequest = {
   },
 
   fromJSON(_: any): QueryExchangeRateAllRequest {
-    const message = { ...baseQueryExchangeRateAllRequest } as QueryExchangeRateAllRequest;
+    const message = {
+      ...baseQueryExchangeRateAllRequest,
+    } as QueryExchangeRateAllRequest;
     return message;
   },
 
@@ -357,10 +399,12 @@ export const QueryExchangeRateAllRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryExchangeRateAllRequest>, I>>(
-    _: I,
+  fromPartial(
+    _: DeepPartial<QueryExchangeRateAllRequest>
   ): QueryExchangeRateAllRequest {
-    const message = { ...baseQueryExchangeRateAllRequest } as QueryExchangeRateAllRequest;
+    const message = {
+      ...baseQueryExchangeRateAllRequest,
+    } as QueryExchangeRateAllRequest;
     return message;
   },
 };
@@ -368,23 +412,33 @@ export const QueryExchangeRateAllRequest = {
 const baseQueryExchangeRateAllResponse: object = {};
 
 export const QueryExchangeRateAllResponse = {
-  encode(message: QueryExchangeRateAllResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryExchangeRateAllResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.exchangeRates) {
       ExchangeRate.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryExchangeRateAllResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryExchangeRateAllResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryExchangeRateAllResponse } as QueryExchangeRateAllResponse;
+    const message = {
+      ...baseQueryExchangeRateAllResponse,
+    } as QueryExchangeRateAllResponse;
     message.exchangeRates = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.exchangeRates.push(ExchangeRate.decode(reader, reader.uint32()));
+          message.exchangeRates.push(
+            ExchangeRate.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -395,26 +449,36 @@ export const QueryExchangeRateAllResponse = {
   },
 
   fromJSON(object: any): QueryExchangeRateAllResponse {
-    const message = { ...baseQueryExchangeRateAllResponse } as QueryExchangeRateAllResponse;
-    message.exchangeRates = (object.exchangeRates ?? []).map((e: any) => ExchangeRate.fromJSON(e));
+    const message = {
+      ...baseQueryExchangeRateAllResponse,
+    } as QueryExchangeRateAllResponse;
+    message.exchangeRates = (object.exchangeRates ?? []).map((e: any) =>
+      ExchangeRate.fromJSON(e)
+    );
     return message;
   },
 
   toJSON(message: QueryExchangeRateAllResponse): unknown {
     const obj: any = {};
     if (message.exchangeRates) {
-      obj.exchangeRates = message.exchangeRates.map((e) => (e ? ExchangeRate.toJSON(e) : undefined));
+      obj.exchangeRates = message.exchangeRates.map((e) =>
+        e ? ExchangeRate.toJSON(e) : undefined
+      );
     } else {
       obj.exchangeRates = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryExchangeRateAllResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryExchangeRateAllResponse>
   ): QueryExchangeRateAllResponse {
-    const message = { ...baseQueryExchangeRateAllResponse } as QueryExchangeRateAllResponse;
-    message.exchangeRates = object.exchangeRates?.map((e) => ExchangeRate.fromPartial(e)) || [];
+    const message = {
+      ...baseQueryExchangeRateAllResponse,
+    } as QueryExchangeRateAllResponse;
+    message.exchangeRates = (object.exchangeRates ?? []).map((e) =>
+      ExchangeRate.fromPartial(e)
+    );
     return message;
   },
 };
@@ -422,7 +486,10 @@ export const QueryExchangeRateAllResponse = {
 const baseQueryGetEraExchangeRateRequest: object = { denom: "", era: 0 };
 
 export const QueryGetEraExchangeRateRequest = {
-  encode(message: QueryGetEraExchangeRateRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetEraExchangeRateRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -432,10 +499,15 @@ export const QueryGetEraExchangeRateRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetEraExchangeRateRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetEraExchangeRateRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetEraExchangeRateRequest } as QueryGetEraExchangeRateRequest;
+    const message = {
+      ...baseQueryGetEraExchangeRateRequest,
+    } as QueryGetEraExchangeRateRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -454,9 +526,15 @@ export const QueryGetEraExchangeRateRequest = {
   },
 
   fromJSON(object: any): QueryGetEraExchangeRateRequest {
-    const message = { ...baseQueryGetEraExchangeRateRequest } as QueryGetEraExchangeRateRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    const message = {
+      ...baseQueryGetEraExchangeRateRequest,
+    } as QueryGetEraExchangeRateRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.era =
+      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
     return message;
   },
 
@@ -467,10 +545,12 @@ export const QueryGetEraExchangeRateRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetEraExchangeRateRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetEraExchangeRateRequest>
   ): QueryGetEraExchangeRateRequest {
-    const message = { ...baseQueryGetEraExchangeRateRequest } as QueryGetEraExchangeRateRequest;
+    const message = {
+      ...baseQueryGetEraExchangeRateRequest,
+    } as QueryGetEraExchangeRateRequest;
     message.denom = object.denom ?? "";
     message.era = object.era ?? 0;
     return message;
@@ -480,22 +560,36 @@ export const QueryGetEraExchangeRateRequest = {
 const baseQueryGetEraExchangeRateResponse: object = {};
 
 export const QueryGetEraExchangeRateResponse = {
-  encode(message: QueryGetEraExchangeRateResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetEraExchangeRateResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.eraExchangeRate !== undefined) {
-      EraExchangeRate.encode(message.eraExchangeRate, writer.uint32(10).fork()).ldelim();
+      EraExchangeRate.encode(
+        message.eraExchangeRate,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetEraExchangeRateResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetEraExchangeRateResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetEraExchangeRateResponse } as QueryGetEraExchangeRateResponse;
+    const message = {
+      ...baseQueryGetEraExchangeRateResponse,
+    } as QueryGetEraExchangeRateResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.eraExchangeRate = EraExchangeRate.decode(reader, reader.uint32());
+          message.eraExchangeRate = EraExchangeRate.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -506,7 +600,9 @@ export const QueryGetEraExchangeRateResponse = {
   },
 
   fromJSON(object: any): QueryGetEraExchangeRateResponse {
-    const message = { ...baseQueryGetEraExchangeRateResponse } as QueryGetEraExchangeRateResponse;
+    const message = {
+      ...baseQueryGetEraExchangeRateResponse,
+    } as QueryGetEraExchangeRateResponse;
     message.eraExchangeRate =
       object.eraExchangeRate !== undefined && object.eraExchangeRate !== null
         ? EraExchangeRate.fromJSON(object.eraExchangeRate)
@@ -523,10 +619,12 @@ export const QueryGetEraExchangeRateResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetEraExchangeRateResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetEraExchangeRateResponse>
   ): QueryGetEraExchangeRateResponse {
-    const message = { ...baseQueryGetEraExchangeRateResponse } as QueryGetEraExchangeRateResponse;
+    const message = {
+      ...baseQueryGetEraExchangeRateResponse,
+    } as QueryGetEraExchangeRateResponse;
     message.eraExchangeRate =
       object.eraExchangeRate !== undefined && object.eraExchangeRate !== null
         ? EraExchangeRate.fromPartial(object.eraExchangeRate)
@@ -538,17 +636,25 @@ export const QueryGetEraExchangeRateResponse = {
 const baseQueryEraExchangeRatesByDenomRequest: object = { denom: "" };
 
 export const QueryEraExchangeRatesByDenomRequest = {
-  encode(message: QueryEraExchangeRatesByDenomRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryEraExchangeRatesByDenomRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEraExchangeRatesByDenomRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryEraExchangeRatesByDenomRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryEraExchangeRatesByDenomRequest } as QueryEraExchangeRatesByDenomRequest;
+    const message = {
+      ...baseQueryEraExchangeRatesByDenomRequest,
+    } as QueryEraExchangeRatesByDenomRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -564,8 +670,13 @@ export const QueryEraExchangeRatesByDenomRequest = {
   },
 
   fromJSON(object: any): QueryEraExchangeRatesByDenomRequest {
-    const message = { ...baseQueryEraExchangeRatesByDenomRequest } as QueryEraExchangeRatesByDenomRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryEraExchangeRatesByDenomRequest,
+    } as QueryEraExchangeRatesByDenomRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -575,10 +686,12 @@ export const QueryEraExchangeRatesByDenomRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryEraExchangeRatesByDenomRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryEraExchangeRatesByDenomRequest>
   ): QueryEraExchangeRatesByDenomRequest {
-    const message = { ...baseQueryEraExchangeRatesByDenomRequest } as QueryEraExchangeRatesByDenomRequest;
+    const message = {
+      ...baseQueryEraExchangeRatesByDenomRequest,
+    } as QueryEraExchangeRatesByDenomRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -589,7 +702,7 @@ const baseQueryEraExchangeRatesByDenomResponse: object = {};
 export const QueryEraExchangeRatesByDenomResponse = {
   encode(
     message: QueryEraExchangeRatesByDenomResponse,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     for (const v of message.eraExchangeRates) {
       EraExchangeRate.encode(v!, writer.uint32(10).fork()).ldelim();
@@ -597,16 +710,23 @@ export const QueryEraExchangeRatesByDenomResponse = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEraExchangeRatesByDenomResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryEraExchangeRatesByDenomResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryEraExchangeRatesByDenomResponse } as QueryEraExchangeRatesByDenomResponse;
+    const message = {
+      ...baseQueryEraExchangeRatesByDenomResponse,
+    } as QueryEraExchangeRatesByDenomResponse;
     message.eraExchangeRates = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.eraExchangeRates.push(EraExchangeRate.decode(reader, reader.uint32()));
+          message.eraExchangeRates.push(
+            EraExchangeRate.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -617,26 +737,36 @@ export const QueryEraExchangeRatesByDenomResponse = {
   },
 
   fromJSON(object: any): QueryEraExchangeRatesByDenomResponse {
-    const message = { ...baseQueryEraExchangeRatesByDenomResponse } as QueryEraExchangeRatesByDenomResponse;
-    message.eraExchangeRates = (object.eraExchangeRates ?? []).map((e: any) => EraExchangeRate.fromJSON(e));
+    const message = {
+      ...baseQueryEraExchangeRatesByDenomResponse,
+    } as QueryEraExchangeRatesByDenomResponse;
+    message.eraExchangeRates = (object.eraExchangeRates ?? []).map((e: any) =>
+      EraExchangeRate.fromJSON(e)
+    );
     return message;
   },
 
   toJSON(message: QueryEraExchangeRatesByDenomResponse): unknown {
     const obj: any = {};
     if (message.eraExchangeRates) {
-      obj.eraExchangeRates = message.eraExchangeRates.map((e) => (e ? EraExchangeRate.toJSON(e) : undefined));
+      obj.eraExchangeRates = message.eraExchangeRates.map((e) =>
+        e ? EraExchangeRate.toJSON(e) : undefined
+      );
     } else {
       obj.eraExchangeRates = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryEraExchangeRatesByDenomResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryEraExchangeRatesByDenomResponse>
   ): QueryEraExchangeRatesByDenomResponse {
-    const message = { ...baseQueryEraExchangeRatesByDenomResponse } as QueryEraExchangeRatesByDenomResponse;
-    message.eraExchangeRates = object.eraExchangeRates?.map((e) => EraExchangeRate.fromPartial(e)) || [];
+    const message = {
+      ...baseQueryEraExchangeRatesByDenomResponse,
+    } as QueryEraExchangeRatesByDenomResponse;
+    message.eraExchangeRates = (object.eraExchangeRates ?? []).map((e) =>
+      EraExchangeRate.fromPartial(e)
+    );
     return message;
   },
 };
@@ -644,17 +774,25 @@ export const QueryEraExchangeRatesByDenomResponse = {
 const baseQueryBondedPoolsByDenomRequest: object = { denom: "" };
 
 export const QueryBondedPoolsByDenomRequest = {
-  encode(message: QueryBondedPoolsByDenomRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryBondedPoolsByDenomRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBondedPoolsByDenomRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryBondedPoolsByDenomRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryBondedPoolsByDenomRequest } as QueryBondedPoolsByDenomRequest;
+    const message = {
+      ...baseQueryBondedPoolsByDenomRequest,
+    } as QueryBondedPoolsByDenomRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -670,8 +808,13 @@ export const QueryBondedPoolsByDenomRequest = {
   },
 
   fromJSON(object: any): QueryBondedPoolsByDenomRequest {
-    const message = { ...baseQueryBondedPoolsByDenomRequest } as QueryBondedPoolsByDenomRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryBondedPoolsByDenomRequest,
+    } as QueryBondedPoolsByDenomRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -681,10 +824,12 @@ export const QueryBondedPoolsByDenomRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBondedPoolsByDenomRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryBondedPoolsByDenomRequest>
   ): QueryBondedPoolsByDenomRequest {
-    const message = { ...baseQueryBondedPoolsByDenomRequest } as QueryBondedPoolsByDenomRequest;
+    const message = {
+      ...baseQueryBondedPoolsByDenomRequest,
+    } as QueryBondedPoolsByDenomRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -693,17 +838,25 @@ export const QueryBondedPoolsByDenomRequest = {
 const baseQueryBondedPoolsByDenomResponse: object = { addrs: "" };
 
 export const QueryBondedPoolsByDenomResponse = {
-  encode(message: QueryBondedPoolsByDenomResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryBondedPoolsByDenomResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.addrs) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBondedPoolsByDenomResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryBondedPoolsByDenomResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryBondedPoolsByDenomResponse } as QueryBondedPoolsByDenomResponse;
+    const message = {
+      ...baseQueryBondedPoolsByDenomResponse,
+    } as QueryBondedPoolsByDenomResponse;
     message.addrs = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -720,7 +873,9 @@ export const QueryBondedPoolsByDenomResponse = {
   },
 
   fromJSON(object: any): QueryBondedPoolsByDenomResponse {
-    const message = { ...baseQueryBondedPoolsByDenomResponse } as QueryBondedPoolsByDenomResponse;
+    const message = {
+      ...baseQueryBondedPoolsByDenomResponse,
+    } as QueryBondedPoolsByDenomResponse;
     message.addrs = (object.addrs ?? []).map((e: any) => String(e));
     return message;
   },
@@ -735,11 +890,13 @@ export const QueryBondedPoolsByDenomResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBondedPoolsByDenomResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryBondedPoolsByDenomResponse>
   ): QueryBondedPoolsByDenomResponse {
-    const message = { ...baseQueryBondedPoolsByDenomResponse } as QueryBondedPoolsByDenomResponse;
-    message.addrs = object.addrs?.map((e) => e) || [];
+    const message = {
+      ...baseQueryBondedPoolsByDenomResponse,
+    } as QueryBondedPoolsByDenomResponse;
+    message.addrs = (object.addrs ?? []).map((e) => e);
     return message;
   },
 };
@@ -747,7 +904,10 @@ export const QueryBondedPoolsByDenomResponse = {
 const baseQueryGetPoolDetailRequest: object = { denom: "", pool: "" };
 
 export const QueryGetPoolDetailRequest = {
-  encode(message: QueryGetPoolDetailRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetPoolDetailRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -757,10 +917,15 @@ export const QueryGetPoolDetailRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPoolDetailRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetPoolDetailRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetPoolDetailRequest } as QueryGetPoolDetailRequest;
+    const message = {
+      ...baseQueryGetPoolDetailRequest,
+    } as QueryGetPoolDetailRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -779,9 +944,17 @@ export const QueryGetPoolDetailRequest = {
   },
 
   fromJSON(object: any): QueryGetPoolDetailRequest {
-    const message = { ...baseQueryGetPoolDetailRequest } as QueryGetPoolDetailRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
+    const message = {
+      ...baseQueryGetPoolDetailRequest,
+    } as QueryGetPoolDetailRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.pool =
+      object.pool !== undefined && object.pool !== null
+        ? String(object.pool)
+        : "";
     return message;
   },
 
@@ -792,10 +965,12 @@ export const QueryGetPoolDetailRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetPoolDetailRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetPoolDetailRequest>
   ): QueryGetPoolDetailRequest {
-    const message = { ...baseQueryGetPoolDetailRequest } as QueryGetPoolDetailRequest;
+    const message = {
+      ...baseQueryGetPoolDetailRequest,
+    } as QueryGetPoolDetailRequest;
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
     return message;
@@ -805,17 +980,25 @@ export const QueryGetPoolDetailRequest = {
 const baseQueryGetPoolDetailResponse: object = {};
 
 export const QueryGetPoolDetailResponse = {
-  encode(message: QueryGetPoolDetailResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetPoolDetailResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.detail !== undefined) {
       PoolDetail.encode(message.detail, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPoolDetailResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetPoolDetailResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetPoolDetailResponse } as QueryGetPoolDetailResponse;
+    const message = {
+      ...baseQueryGetPoolDetailResponse,
+    } as QueryGetPoolDetailResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -831,23 +1014,31 @@ export const QueryGetPoolDetailResponse = {
   },
 
   fromJSON(object: any): QueryGetPoolDetailResponse {
-    const message = { ...baseQueryGetPoolDetailResponse } as QueryGetPoolDetailResponse;
+    const message = {
+      ...baseQueryGetPoolDetailResponse,
+    } as QueryGetPoolDetailResponse;
     message.detail =
-      object.detail !== undefined && object.detail !== null ? PoolDetail.fromJSON(object.detail) : undefined;
+      object.detail !== undefined && object.detail !== null
+        ? PoolDetail.fromJSON(object.detail)
+        : undefined;
     return message;
   },
 
   toJSON(message: QueryGetPoolDetailResponse): unknown {
     const obj: any = {};
     message.detail !== undefined &&
-      (obj.detail = message.detail ? PoolDetail.toJSON(message.detail) : undefined);
+      (obj.detail = message.detail
+        ? PoolDetail.toJSON(message.detail)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetPoolDetailResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetPoolDetailResponse>
   ): QueryGetPoolDetailResponse {
-    const message = { ...baseQueryGetPoolDetailResponse } as QueryGetPoolDetailResponse;
+    const message = {
+      ...baseQueryGetPoolDetailResponse,
+    } as QueryGetPoolDetailResponse;
     message.detail =
       object.detail !== undefined && object.detail !== null
         ? PoolDetail.fromPartial(object.detail)
@@ -859,17 +1050,25 @@ export const QueryGetPoolDetailResponse = {
 const baseQueryGetChainEraRequest: object = { denom: "" };
 
 export const QueryGetChainEraRequest = {
-  encode(message: QueryGetChainEraRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetChainEraRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetChainEraRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetChainEraRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetChainEraRequest } as QueryGetChainEraRequest;
+    const message = {
+      ...baseQueryGetChainEraRequest,
+    } as QueryGetChainEraRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -885,8 +1084,13 @@ export const QueryGetChainEraRequest = {
   },
 
   fromJSON(object: any): QueryGetChainEraRequest {
-    const message = { ...baseQueryGetChainEraRequest } as QueryGetChainEraRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryGetChainEraRequest,
+    } as QueryGetChainEraRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -896,8 +1100,12 @@ export const QueryGetChainEraRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetChainEraRequest>, I>>(object: I): QueryGetChainEraRequest {
-    const message = { ...baseQueryGetChainEraRequest } as QueryGetChainEraRequest;
+  fromPartial(
+    object: DeepPartial<QueryGetChainEraRequest>
+  ): QueryGetChainEraRequest {
+    const message = {
+      ...baseQueryGetChainEraRequest,
+    } as QueryGetChainEraRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -906,17 +1114,25 @@ export const QueryGetChainEraRequest = {
 const baseQueryGetChainEraResponse: object = { era: 0 };
 
 export const QueryGetChainEraResponse = {
-  encode(message: QueryGetChainEraResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetChainEraResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.era !== 0) {
       writer.uint32(8).uint32(message.era);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetChainEraResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetChainEraResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetChainEraResponse } as QueryGetChainEraResponse;
+    const message = {
+      ...baseQueryGetChainEraResponse,
+    } as QueryGetChainEraResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -932,8 +1148,11 @@ export const QueryGetChainEraResponse = {
   },
 
   fromJSON(object: any): QueryGetChainEraResponse {
-    const message = { ...baseQueryGetChainEraResponse } as QueryGetChainEraResponse;
-    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    const message = {
+      ...baseQueryGetChainEraResponse,
+    } as QueryGetChainEraResponse;
+    message.era =
+      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
     return message;
   },
 
@@ -943,10 +1162,12 @@ export const QueryGetChainEraResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetChainEraResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetChainEraResponse>
   ): QueryGetChainEraResponse {
-    const message = { ...baseQueryGetChainEraResponse } as QueryGetChainEraResponse;
+    const message = {
+      ...baseQueryGetChainEraResponse,
+    } as QueryGetChainEraResponse;
     message.era = object.era ?? 0;
     return message;
   },
@@ -955,17 +1176,25 @@ export const QueryGetChainEraResponse = {
 const baseQueryGetCurrentEraSnapshotRequest: object = { denom: "" };
 
 export const QueryGetCurrentEraSnapshotRequest = {
-  encode(message: QueryGetCurrentEraSnapshotRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetCurrentEraSnapshotRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetCurrentEraSnapshotRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetCurrentEraSnapshotRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetCurrentEraSnapshotRequest } as QueryGetCurrentEraSnapshotRequest;
+    const message = {
+      ...baseQueryGetCurrentEraSnapshotRequest,
+    } as QueryGetCurrentEraSnapshotRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -981,8 +1210,13 @@ export const QueryGetCurrentEraSnapshotRequest = {
   },
 
   fromJSON(object: any): QueryGetCurrentEraSnapshotRequest {
-    const message = { ...baseQueryGetCurrentEraSnapshotRequest } as QueryGetCurrentEraSnapshotRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryGetCurrentEraSnapshotRequest,
+    } as QueryGetCurrentEraSnapshotRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -992,10 +1226,12 @@ export const QueryGetCurrentEraSnapshotRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetCurrentEraSnapshotRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetCurrentEraSnapshotRequest>
   ): QueryGetCurrentEraSnapshotRequest {
-    const message = { ...baseQueryGetCurrentEraSnapshotRequest } as QueryGetCurrentEraSnapshotRequest;
+    const message = {
+      ...baseQueryGetCurrentEraSnapshotRequest,
+    } as QueryGetCurrentEraSnapshotRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -1004,17 +1240,25 @@ export const QueryGetCurrentEraSnapshotRequest = {
 const baseQueryGetCurrentEraSnapshotResponse: object = { shotIds: "" };
 
 export const QueryGetCurrentEraSnapshotResponse = {
-  encode(message: QueryGetCurrentEraSnapshotResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetCurrentEraSnapshotResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.shotIds) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetCurrentEraSnapshotResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetCurrentEraSnapshotResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetCurrentEraSnapshotResponse } as QueryGetCurrentEraSnapshotResponse;
+    const message = {
+      ...baseQueryGetCurrentEraSnapshotResponse,
+    } as QueryGetCurrentEraSnapshotResponse;
     message.shotIds = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1031,7 +1275,9 @@ export const QueryGetCurrentEraSnapshotResponse = {
   },
 
   fromJSON(object: any): QueryGetCurrentEraSnapshotResponse {
-    const message = { ...baseQueryGetCurrentEraSnapshotResponse } as QueryGetCurrentEraSnapshotResponse;
+    const message = {
+      ...baseQueryGetCurrentEraSnapshotResponse,
+    } as QueryGetCurrentEraSnapshotResponse;
     message.shotIds = (object.shotIds ?? []).map((e: any) => String(e));
     return message;
   },
@@ -1046,11 +1292,13 @@ export const QueryGetCurrentEraSnapshotResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetCurrentEraSnapshotResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetCurrentEraSnapshotResponse>
   ): QueryGetCurrentEraSnapshotResponse {
-    const message = { ...baseQueryGetCurrentEraSnapshotResponse } as QueryGetCurrentEraSnapshotResponse;
-    message.shotIds = object.shotIds?.map((e) => e) || [];
+    const message = {
+      ...baseQueryGetCurrentEraSnapshotResponse,
+    } as QueryGetCurrentEraSnapshotResponse;
+    message.shotIds = (object.shotIds ?? []).map((e) => e);
     return message;
   },
 };
@@ -1058,14 +1306,22 @@ export const QueryGetCurrentEraSnapshotResponse = {
 const baseQueryGetProtocolFeeReceiverRequest: object = {};
 
 export const QueryGetProtocolFeeReceiverRequest = {
-  encode(_: QueryGetProtocolFeeReceiverRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: QueryGetProtocolFeeReceiverRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetProtocolFeeReceiverRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetProtocolFeeReceiverRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetProtocolFeeReceiverRequest } as QueryGetProtocolFeeReceiverRequest;
+    const message = {
+      ...baseQueryGetProtocolFeeReceiverRequest,
+    } as QueryGetProtocolFeeReceiverRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1078,7 +1334,9 @@ export const QueryGetProtocolFeeReceiverRequest = {
   },
 
   fromJSON(_: any): QueryGetProtocolFeeReceiverRequest {
-    const message = { ...baseQueryGetProtocolFeeReceiverRequest } as QueryGetProtocolFeeReceiverRequest;
+    const message = {
+      ...baseQueryGetProtocolFeeReceiverRequest,
+    } as QueryGetProtocolFeeReceiverRequest;
     return message;
   },
 
@@ -1087,10 +1345,12 @@ export const QueryGetProtocolFeeReceiverRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetProtocolFeeReceiverRequest>, I>>(
-    _: I,
+  fromPartial(
+    _: DeepPartial<QueryGetProtocolFeeReceiverRequest>
   ): QueryGetProtocolFeeReceiverRequest {
-    const message = { ...baseQueryGetProtocolFeeReceiverRequest } as QueryGetProtocolFeeReceiverRequest;
+    const message = {
+      ...baseQueryGetProtocolFeeReceiverRequest,
+    } as QueryGetProtocolFeeReceiverRequest;
     return message;
   },
 };
@@ -1098,17 +1358,25 @@ export const QueryGetProtocolFeeReceiverRequest = {
 const baseQueryGetProtocolFeeReceiverResponse: object = { receiver: "" };
 
 export const QueryGetProtocolFeeReceiverResponse = {
-  encode(message: QueryGetProtocolFeeReceiverResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetProtocolFeeReceiverResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.receiver !== "") {
       writer.uint32(10).string(message.receiver);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetProtocolFeeReceiverResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetProtocolFeeReceiverResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetProtocolFeeReceiverResponse } as QueryGetProtocolFeeReceiverResponse;
+    const message = {
+      ...baseQueryGetProtocolFeeReceiverResponse,
+    } as QueryGetProtocolFeeReceiverResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1124,9 +1392,13 @@ export const QueryGetProtocolFeeReceiverResponse = {
   },
 
   fromJSON(object: any): QueryGetProtocolFeeReceiverResponse {
-    const message = { ...baseQueryGetProtocolFeeReceiverResponse } as QueryGetProtocolFeeReceiverResponse;
+    const message = {
+      ...baseQueryGetProtocolFeeReceiverResponse,
+    } as QueryGetProtocolFeeReceiverResponse;
     message.receiver =
-      object.receiver !== undefined && object.receiver !== null ? String(object.receiver) : "";
+      object.receiver !== undefined && object.receiver !== null
+        ? String(object.receiver)
+        : "";
     return message;
   },
 
@@ -1136,10 +1408,12 @@ export const QueryGetProtocolFeeReceiverResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetProtocolFeeReceiverResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetProtocolFeeReceiverResponse>
   ): QueryGetProtocolFeeReceiverResponse {
-    const message = { ...baseQueryGetProtocolFeeReceiverResponse } as QueryGetProtocolFeeReceiverResponse;
+    const message = {
+      ...baseQueryGetProtocolFeeReceiverResponse,
+    } as QueryGetProtocolFeeReceiverResponse;
     message.receiver = object.receiver ?? "";
     return message;
   },
@@ -1150,7 +1424,7 @@ const baseQueryGetStakingRewardCommissionRequest: object = { denom: "" };
 export const QueryGetStakingRewardCommissionRequest = {
   encode(
     message: QueryGetStakingRewardCommissionRequest,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
@@ -1158,7 +1432,10 @@ export const QueryGetStakingRewardCommissionRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetStakingRewardCommissionRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetStakingRewardCommissionRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
@@ -1182,7 +1459,10 @@ export const QueryGetStakingRewardCommissionRequest = {
     const message = {
       ...baseQueryGetStakingRewardCommissionRequest,
     } as QueryGetStakingRewardCommissionRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -1192,8 +1472,8 @@ export const QueryGetStakingRewardCommissionRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetStakingRewardCommissionRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetStakingRewardCommissionRequest>
   ): QueryGetStakingRewardCommissionRequest {
     const message = {
       ...baseQueryGetStakingRewardCommissionRequest,
@@ -1208,7 +1488,7 @@ const baseQueryGetStakingRewardCommissionResponse: object = { commission: "" };
 export const QueryGetStakingRewardCommissionResponse = {
   encode(
     message: QueryGetStakingRewardCommissionResponse,
-    writer: _m0.Writer = _m0.Writer.create(),
+    writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.commission !== "") {
       writer.uint32(10).string(message.commission);
@@ -1216,7 +1496,10 @@ export const QueryGetStakingRewardCommissionResponse = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetStakingRewardCommissionResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetStakingRewardCommissionResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
@@ -1241,7 +1524,9 @@ export const QueryGetStakingRewardCommissionResponse = {
       ...baseQueryGetStakingRewardCommissionResponse,
     } as QueryGetStakingRewardCommissionResponse;
     message.commission =
-      object.commission !== undefined && object.commission !== null ? String(object.commission) : "";
+      object.commission !== undefined && object.commission !== null
+        ? String(object.commission)
+        : "";
     return message;
   },
 
@@ -1251,8 +1536,8 @@ export const QueryGetStakingRewardCommissionResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetStakingRewardCommissionResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetStakingRewardCommissionResponse>
   ): QueryGetStakingRewardCommissionResponse {
     const message = {
       ...baseQueryGetStakingRewardCommissionResponse,
@@ -1265,17 +1550,25 @@ export const QueryGetStakingRewardCommissionResponse = {
 const baseQueryGetUnbondRelayFeeRequest: object = { denom: "" };
 
 export const QueryGetUnbondRelayFeeRequest = {
-  encode(message: QueryGetUnbondRelayFeeRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetUnbondRelayFeeRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUnbondRelayFeeRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetUnbondRelayFeeRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetUnbondRelayFeeRequest } as QueryGetUnbondRelayFeeRequest;
+    const message = {
+      ...baseQueryGetUnbondRelayFeeRequest,
+    } as QueryGetUnbondRelayFeeRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1291,8 +1584,13 @@ export const QueryGetUnbondRelayFeeRequest = {
   },
 
   fromJSON(object: any): QueryGetUnbondRelayFeeRequest {
-    const message = { ...baseQueryGetUnbondRelayFeeRequest } as QueryGetUnbondRelayFeeRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryGetUnbondRelayFeeRequest,
+    } as QueryGetUnbondRelayFeeRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -1302,10 +1600,12 @@ export const QueryGetUnbondRelayFeeRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetUnbondRelayFeeRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetUnbondRelayFeeRequest>
   ): QueryGetUnbondRelayFeeRequest {
-    const message = { ...baseQueryGetUnbondRelayFeeRequest } as QueryGetUnbondRelayFeeRequest;
+    const message = {
+      ...baseQueryGetUnbondRelayFeeRequest,
+    } as QueryGetUnbondRelayFeeRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -1314,17 +1614,25 @@ export const QueryGetUnbondRelayFeeRequest = {
 const baseQueryGetUnbondRelayFeeResponse: object = {};
 
 export const QueryGetUnbondRelayFeeResponse = {
-  encode(message: QueryGetUnbondRelayFeeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetUnbondRelayFeeResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.fee !== undefined) {
       UnbondRelayFee.encode(message.fee, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUnbondRelayFeeResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetUnbondRelayFeeResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetUnbondRelayFeeResponse } as QueryGetUnbondRelayFeeResponse;
+    const message = {
+      ...baseQueryGetUnbondRelayFeeResponse,
+    } as QueryGetUnbondRelayFeeResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1340,24 +1648,33 @@ export const QueryGetUnbondRelayFeeResponse = {
   },
 
   fromJSON(object: any): QueryGetUnbondRelayFeeResponse {
-    const message = { ...baseQueryGetUnbondRelayFeeResponse } as QueryGetUnbondRelayFeeResponse;
+    const message = {
+      ...baseQueryGetUnbondRelayFeeResponse,
+    } as QueryGetUnbondRelayFeeResponse;
     message.fee =
-      object.fee !== undefined && object.fee !== null ? UnbondRelayFee.fromJSON(object.fee) : undefined;
+      object.fee !== undefined && object.fee !== null
+        ? UnbondRelayFee.fromJSON(object.fee)
+        : undefined;
     return message;
   },
 
   toJSON(message: QueryGetUnbondRelayFeeResponse): unknown {
     const obj: any = {};
-    message.fee !== undefined && (obj.fee = message.fee ? UnbondRelayFee.toJSON(message.fee) : undefined);
+    message.fee !== undefined &&
+      (obj.fee = message.fee ? UnbondRelayFee.toJSON(message.fee) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetUnbondRelayFeeResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetUnbondRelayFeeResponse>
   ): QueryGetUnbondRelayFeeResponse {
-    const message = { ...baseQueryGetUnbondRelayFeeResponse } as QueryGetUnbondRelayFeeResponse;
+    const message = {
+      ...baseQueryGetUnbondRelayFeeResponse,
+    } as QueryGetUnbondRelayFeeResponse;
     message.fee =
-      object.fee !== undefined && object.fee !== null ? UnbondRelayFee.fromPartial(object.fee) : undefined;
+      object.fee !== undefined && object.fee !== null
+        ? UnbondRelayFee.fromPartial(object.fee)
+        : undefined;
     return message;
   },
 };
@@ -1365,17 +1682,25 @@ export const QueryGetUnbondRelayFeeResponse = {
 const baseQueryGetUnbondCommissionRequest: object = { denom: "" };
 
 export const QueryGetUnbondCommissionRequest = {
-  encode(message: QueryGetUnbondCommissionRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetUnbondCommissionRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUnbondCommissionRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetUnbondCommissionRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetUnbondCommissionRequest } as QueryGetUnbondCommissionRequest;
+    const message = {
+      ...baseQueryGetUnbondCommissionRequest,
+    } as QueryGetUnbondCommissionRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1391,8 +1716,13 @@ export const QueryGetUnbondCommissionRequest = {
   },
 
   fromJSON(object: any): QueryGetUnbondCommissionRequest {
-    const message = { ...baseQueryGetUnbondCommissionRequest } as QueryGetUnbondCommissionRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryGetUnbondCommissionRequest,
+    } as QueryGetUnbondCommissionRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -1402,10 +1732,12 @@ export const QueryGetUnbondCommissionRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetUnbondCommissionRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetUnbondCommissionRequest>
   ): QueryGetUnbondCommissionRequest {
-    const message = { ...baseQueryGetUnbondCommissionRequest } as QueryGetUnbondCommissionRequest;
+    const message = {
+      ...baseQueryGetUnbondCommissionRequest,
+    } as QueryGetUnbondCommissionRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -1414,17 +1746,25 @@ export const QueryGetUnbondCommissionRequest = {
 const baseQueryGetUnbondCommissionResponse: object = { commission: "" };
 
 export const QueryGetUnbondCommissionResponse = {
-  encode(message: QueryGetUnbondCommissionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetUnbondCommissionResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.commission !== "") {
       writer.uint32(10).string(message.commission);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUnbondCommissionResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetUnbondCommissionResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetUnbondCommissionResponse } as QueryGetUnbondCommissionResponse;
+    const message = {
+      ...baseQueryGetUnbondCommissionResponse,
+    } as QueryGetUnbondCommissionResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1440,9 +1780,13 @@ export const QueryGetUnbondCommissionResponse = {
   },
 
   fromJSON(object: any): QueryGetUnbondCommissionResponse {
-    const message = { ...baseQueryGetUnbondCommissionResponse } as QueryGetUnbondCommissionResponse;
+    const message = {
+      ...baseQueryGetUnbondCommissionResponse,
+    } as QueryGetUnbondCommissionResponse;
     message.commission =
-      object.commission !== undefined && object.commission !== null ? String(object.commission) : "";
+      object.commission !== undefined && object.commission !== null
+        ? String(object.commission)
+        : "";
     return message;
   },
 
@@ -1452,10 +1796,12 @@ export const QueryGetUnbondCommissionResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetUnbondCommissionResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetUnbondCommissionResponse>
   ): QueryGetUnbondCommissionResponse {
-    const message = { ...baseQueryGetUnbondCommissionResponse } as QueryGetUnbondCommissionResponse;
+    const message = {
+      ...baseQueryGetUnbondCommissionResponse,
+    } as QueryGetUnbondCommissionResponse;
     message.commission = object.commission ?? "";
     return message;
   },
@@ -1464,17 +1810,25 @@ export const QueryGetUnbondCommissionResponse = {
 const baseQueryGetEraUnbondLimitRequest: object = { denom: "" };
 
 export const QueryGetEraUnbondLimitRequest = {
-  encode(message: QueryGetEraUnbondLimitRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetEraUnbondLimitRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetEraUnbondLimitRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetEraUnbondLimitRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetEraUnbondLimitRequest } as QueryGetEraUnbondLimitRequest;
+    const message = {
+      ...baseQueryGetEraUnbondLimitRequest,
+    } as QueryGetEraUnbondLimitRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1490,8 +1844,13 @@ export const QueryGetEraUnbondLimitRequest = {
   },
 
   fromJSON(object: any): QueryGetEraUnbondLimitRequest {
-    const message = { ...baseQueryGetEraUnbondLimitRequest } as QueryGetEraUnbondLimitRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryGetEraUnbondLimitRequest,
+    } as QueryGetEraUnbondLimitRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -1501,10 +1860,12 @@ export const QueryGetEraUnbondLimitRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetEraUnbondLimitRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetEraUnbondLimitRequest>
   ): QueryGetEraUnbondLimitRequest {
-    const message = { ...baseQueryGetEraUnbondLimitRequest } as QueryGetEraUnbondLimitRequest;
+    const message = {
+      ...baseQueryGetEraUnbondLimitRequest,
+    } as QueryGetEraUnbondLimitRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -1513,17 +1874,25 @@ export const QueryGetEraUnbondLimitRequest = {
 const baseQueryGetEraUnbondLimitResponse: object = { limit: 0 };
 
 export const QueryGetEraUnbondLimitResponse = {
-  encode(message: QueryGetEraUnbondLimitResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetEraUnbondLimitResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.limit !== 0) {
       writer.uint32(8).uint32(message.limit);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetEraUnbondLimitResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetEraUnbondLimitResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetEraUnbondLimitResponse } as QueryGetEraUnbondLimitResponse;
+    const message = {
+      ...baseQueryGetEraUnbondLimitResponse,
+    } as QueryGetEraUnbondLimitResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1539,8 +1908,13 @@ export const QueryGetEraUnbondLimitResponse = {
   },
 
   fromJSON(object: any): QueryGetEraUnbondLimitResponse {
-    const message = { ...baseQueryGetEraUnbondLimitResponse } as QueryGetEraUnbondLimitResponse;
-    message.limit = object.limit !== undefined && object.limit !== null ? Number(object.limit) : 0;
+    const message = {
+      ...baseQueryGetEraUnbondLimitResponse,
+    } as QueryGetEraUnbondLimitResponse;
+    message.limit =
+      object.limit !== undefined && object.limit !== null
+        ? Number(object.limit)
+        : 0;
     return message;
   },
 
@@ -1550,10 +1924,12 @@ export const QueryGetEraUnbondLimitResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetEraUnbondLimitResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetEraUnbondLimitResponse>
   ): QueryGetEraUnbondLimitResponse {
-    const message = { ...baseQueryGetEraUnbondLimitResponse } as QueryGetEraUnbondLimitResponse;
+    const message = {
+      ...baseQueryGetEraUnbondLimitResponse,
+    } as QueryGetEraUnbondLimitResponse;
     message.limit = object.limit ?? 0;
     return message;
   },
@@ -1562,7 +1938,10 @@ export const QueryGetEraUnbondLimitResponse = {
 const baseQueryGetBondPipelineRequest: object = { denom: "", pool: "" };
 
 export const QueryGetBondPipelineRequest = {
-  encode(message: QueryGetBondPipelineRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetBondPipelineRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1572,10 +1951,15 @@ export const QueryGetBondPipelineRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetBondPipelineRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetBondPipelineRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetBondPipelineRequest } as QueryGetBondPipelineRequest;
+    const message = {
+      ...baseQueryGetBondPipelineRequest,
+    } as QueryGetBondPipelineRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1594,9 +1978,17 @@ export const QueryGetBondPipelineRequest = {
   },
 
   fromJSON(object: any): QueryGetBondPipelineRequest {
-    const message = { ...baseQueryGetBondPipelineRequest } as QueryGetBondPipelineRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
+    const message = {
+      ...baseQueryGetBondPipelineRequest,
+    } as QueryGetBondPipelineRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.pool =
+      object.pool !== undefined && object.pool !== null
+        ? String(object.pool)
+        : "";
     return message;
   },
 
@@ -1607,10 +1999,12 @@ export const QueryGetBondPipelineRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetBondPipelineRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetBondPipelineRequest>
   ): QueryGetBondPipelineRequest {
-    const message = { ...baseQueryGetBondPipelineRequest } as QueryGetBondPipelineRequest;
+    const message = {
+      ...baseQueryGetBondPipelineRequest,
+    } as QueryGetBondPipelineRequest;
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
     return message;
@@ -1620,17 +2014,25 @@ export const QueryGetBondPipelineRequest = {
 const baseQueryGetBondPipelineResponse: object = {};
 
 export const QueryGetBondPipelineResponse = {
-  encode(message: QueryGetBondPipelineResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetBondPipelineResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.pipeline !== undefined) {
       BondPipeline.encode(message.pipeline, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetBondPipelineResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetBondPipelineResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetBondPipelineResponse } as QueryGetBondPipelineResponse;
+    const message = {
+      ...baseQueryGetBondPipelineResponse,
+    } as QueryGetBondPipelineResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1646,7 +2048,9 @@ export const QueryGetBondPipelineResponse = {
   },
 
   fromJSON(object: any): QueryGetBondPipelineResponse {
-    const message = { ...baseQueryGetBondPipelineResponse } as QueryGetBondPipelineResponse;
+    const message = {
+      ...baseQueryGetBondPipelineResponse,
+    } as QueryGetBondPipelineResponse;
     message.pipeline =
       object.pipeline !== undefined && object.pipeline !== null
         ? BondPipeline.fromJSON(object.pipeline)
@@ -1657,14 +2061,18 @@ export const QueryGetBondPipelineResponse = {
   toJSON(message: QueryGetBondPipelineResponse): unknown {
     const obj: any = {};
     message.pipeline !== undefined &&
-      (obj.pipeline = message.pipeline ? BondPipeline.toJSON(message.pipeline) : undefined);
+      (obj.pipeline = message.pipeline
+        ? BondPipeline.toJSON(message.pipeline)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetBondPipelineResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetBondPipelineResponse>
   ): QueryGetBondPipelineResponse {
-    const message = { ...baseQueryGetBondPipelineResponse } as QueryGetBondPipelineResponse;
+    const message = {
+      ...baseQueryGetBondPipelineResponse,
+    } as QueryGetBondPipelineResponse;
     message.pipeline =
       object.pipeline !== undefined && object.pipeline !== null
         ? BondPipeline.fromPartial(object.pipeline)
@@ -1676,7 +2084,10 @@ export const QueryGetBondPipelineResponse = {
 const baseQueryGetEraSnapshotRequest: object = { denom: "", era: 0 };
 
 export const QueryGetEraSnapshotRequest = {
-  encode(message: QueryGetEraSnapshotRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetEraSnapshotRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1686,10 +2097,15 @@ export const QueryGetEraSnapshotRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetEraSnapshotRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetEraSnapshotRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetEraSnapshotRequest } as QueryGetEraSnapshotRequest;
+    const message = {
+      ...baseQueryGetEraSnapshotRequest,
+    } as QueryGetEraSnapshotRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1708,9 +2124,15 @@ export const QueryGetEraSnapshotRequest = {
   },
 
   fromJSON(object: any): QueryGetEraSnapshotRequest {
-    const message = { ...baseQueryGetEraSnapshotRequest } as QueryGetEraSnapshotRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    const message = {
+      ...baseQueryGetEraSnapshotRequest,
+    } as QueryGetEraSnapshotRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.era =
+      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
     return message;
   },
 
@@ -1721,10 +2143,12 @@ export const QueryGetEraSnapshotRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetEraSnapshotRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetEraSnapshotRequest>
   ): QueryGetEraSnapshotRequest {
-    const message = { ...baseQueryGetEraSnapshotRequest } as QueryGetEraSnapshotRequest;
+    const message = {
+      ...baseQueryGetEraSnapshotRequest,
+    } as QueryGetEraSnapshotRequest;
     message.denom = object.denom ?? "";
     message.era = object.era ?? 0;
     return message;
@@ -1734,17 +2158,25 @@ export const QueryGetEraSnapshotRequest = {
 const baseQueryGetEraSnapshotResponse: object = { shotIds: "" };
 
 export const QueryGetEraSnapshotResponse = {
-  encode(message: QueryGetEraSnapshotResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetEraSnapshotResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.shotIds) {
       writer.uint32(10).string(v!);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetEraSnapshotResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetEraSnapshotResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetEraSnapshotResponse } as QueryGetEraSnapshotResponse;
+    const message = {
+      ...baseQueryGetEraSnapshotResponse,
+    } as QueryGetEraSnapshotResponse;
     message.shotIds = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1761,7 +2193,9 @@ export const QueryGetEraSnapshotResponse = {
   },
 
   fromJSON(object: any): QueryGetEraSnapshotResponse {
-    const message = { ...baseQueryGetEraSnapshotResponse } as QueryGetEraSnapshotResponse;
+    const message = {
+      ...baseQueryGetEraSnapshotResponse,
+    } as QueryGetEraSnapshotResponse;
     message.shotIds = (object.shotIds ?? []).map((e: any) => String(e));
     return message;
   },
@@ -1776,11 +2210,13 @@ export const QueryGetEraSnapshotResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetEraSnapshotResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetEraSnapshotResponse>
   ): QueryGetEraSnapshotResponse {
-    const message = { ...baseQueryGetEraSnapshotResponse } as QueryGetEraSnapshotResponse;
-    message.shotIds = object.shotIds?.map((e) => e) || [];
+    const message = {
+      ...baseQueryGetEraSnapshotResponse,
+    } as QueryGetEraSnapshotResponse;
+    message.shotIds = (object.shotIds ?? []).map((e) => e);
     return message;
   },
 };
@@ -1788,17 +2224,25 @@ export const QueryGetEraSnapshotResponse = {
 const baseQueryGetSnapshotRequest: object = { shotId: "" };
 
 export const QueryGetSnapshotRequest = {
-  encode(message: QueryGetSnapshotRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetSnapshotRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.shotId !== "") {
       writer.uint32(10).string(message.shotId);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetSnapshotRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetSnapshotRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetSnapshotRequest } as QueryGetSnapshotRequest;
+    const message = {
+      ...baseQueryGetSnapshotRequest,
+    } as QueryGetSnapshotRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1814,8 +2258,13 @@ export const QueryGetSnapshotRequest = {
   },
 
   fromJSON(object: any): QueryGetSnapshotRequest {
-    const message = { ...baseQueryGetSnapshotRequest } as QueryGetSnapshotRequest;
-    message.shotId = object.shotId !== undefined && object.shotId !== null ? String(object.shotId) : "";
+    const message = {
+      ...baseQueryGetSnapshotRequest,
+    } as QueryGetSnapshotRequest;
+    message.shotId =
+      object.shotId !== undefined && object.shotId !== null
+        ? String(object.shotId)
+        : "";
     return message;
   },
 
@@ -1825,8 +2274,12 @@ export const QueryGetSnapshotRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetSnapshotRequest>, I>>(object: I): QueryGetSnapshotRequest {
-    const message = { ...baseQueryGetSnapshotRequest } as QueryGetSnapshotRequest;
+  fromPartial(
+    object: DeepPartial<QueryGetSnapshotRequest>
+  ): QueryGetSnapshotRequest {
+    const message = {
+      ...baseQueryGetSnapshotRequest,
+    } as QueryGetSnapshotRequest;
     message.shotId = object.shotId ?? "";
     return message;
   },
@@ -1835,17 +2288,25 @@ export const QueryGetSnapshotRequest = {
 const baseQueryGetSnapshotResponse: object = {};
 
 export const QueryGetSnapshotResponse = {
-  encode(message: QueryGetSnapshotResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetSnapshotResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.shot !== undefined) {
       BondSnapshot.encode(message.shot, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetSnapshotResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetSnapshotResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetSnapshotResponse } as QueryGetSnapshotResponse;
+    const message = {
+      ...baseQueryGetSnapshotResponse,
+    } as QueryGetSnapshotResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1861,24 +2322,33 @@ export const QueryGetSnapshotResponse = {
   },
 
   fromJSON(object: any): QueryGetSnapshotResponse {
-    const message = { ...baseQueryGetSnapshotResponse } as QueryGetSnapshotResponse;
+    const message = {
+      ...baseQueryGetSnapshotResponse,
+    } as QueryGetSnapshotResponse;
     message.shot =
-      object.shot !== undefined && object.shot !== null ? BondSnapshot.fromJSON(object.shot) : undefined;
+      object.shot !== undefined && object.shot !== null
+        ? BondSnapshot.fromJSON(object.shot)
+        : undefined;
     return message;
   },
 
   toJSON(message: QueryGetSnapshotResponse): unknown {
     const obj: any = {};
-    message.shot !== undefined && (obj.shot = message.shot ? BondSnapshot.toJSON(message.shot) : undefined);
+    message.shot !== undefined &&
+      (obj.shot = message.shot ? BondSnapshot.toJSON(message.shot) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetSnapshotResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetSnapshotResponse>
   ): QueryGetSnapshotResponse {
-    const message = { ...baseQueryGetSnapshotResponse } as QueryGetSnapshotResponse;
+    const message = {
+      ...baseQueryGetSnapshotResponse,
+    } as QueryGetSnapshotResponse;
     message.shot =
-      object.shot !== undefined && object.shot !== null ? BondSnapshot.fromPartial(object.shot) : undefined;
+      object.shot !== undefined && object.shot !== null
+        ? BondSnapshot.fromPartial(object.shot)
+        : undefined;
     return message;
   },
 };
@@ -1886,7 +2356,10 @@ export const QueryGetSnapshotResponse = {
 const baseQueryGetTotalExpectedActiveRequest: object = { denom: "", era: 0 };
 
 export const QueryGetTotalExpectedActiveRequest = {
-  encode(message: QueryGetTotalExpectedActiveRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetTotalExpectedActiveRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -1896,10 +2369,15 @@ export const QueryGetTotalExpectedActiveRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetTotalExpectedActiveRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetTotalExpectedActiveRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetTotalExpectedActiveRequest } as QueryGetTotalExpectedActiveRequest;
+    const message = {
+      ...baseQueryGetTotalExpectedActiveRequest,
+    } as QueryGetTotalExpectedActiveRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1918,9 +2396,15 @@ export const QueryGetTotalExpectedActiveRequest = {
   },
 
   fromJSON(object: any): QueryGetTotalExpectedActiveRequest {
-    const message = { ...baseQueryGetTotalExpectedActiveRequest } as QueryGetTotalExpectedActiveRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    const message = {
+      ...baseQueryGetTotalExpectedActiveRequest,
+    } as QueryGetTotalExpectedActiveRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.era =
+      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
     return message;
   },
 
@@ -1931,10 +2415,12 @@ export const QueryGetTotalExpectedActiveRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetTotalExpectedActiveRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetTotalExpectedActiveRequest>
   ): QueryGetTotalExpectedActiveRequest {
-    const message = { ...baseQueryGetTotalExpectedActiveRequest } as QueryGetTotalExpectedActiveRequest;
+    const message = {
+      ...baseQueryGetTotalExpectedActiveRequest,
+    } as QueryGetTotalExpectedActiveRequest;
     message.denom = object.denom ?? "";
     message.era = object.era ?? 0;
     return message;
@@ -1944,17 +2430,25 @@ export const QueryGetTotalExpectedActiveRequest = {
 const baseQueryGetTotalExpectedActiveResponse: object = { active: "" };
 
 export const QueryGetTotalExpectedActiveResponse = {
-  encode(message: QueryGetTotalExpectedActiveResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetTotalExpectedActiveResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.active !== "") {
       writer.uint32(10).string(message.active);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetTotalExpectedActiveResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetTotalExpectedActiveResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetTotalExpectedActiveResponse } as QueryGetTotalExpectedActiveResponse;
+    const message = {
+      ...baseQueryGetTotalExpectedActiveResponse,
+    } as QueryGetTotalExpectedActiveResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1970,8 +2464,13 @@ export const QueryGetTotalExpectedActiveResponse = {
   },
 
   fromJSON(object: any): QueryGetTotalExpectedActiveResponse {
-    const message = { ...baseQueryGetTotalExpectedActiveResponse } as QueryGetTotalExpectedActiveResponse;
-    message.active = object.active !== undefined && object.active !== null ? String(object.active) : "";
+    const message = {
+      ...baseQueryGetTotalExpectedActiveResponse,
+    } as QueryGetTotalExpectedActiveResponse;
+    message.active =
+      object.active !== undefined && object.active !== null
+        ? String(object.active)
+        : "";
     return message;
   },
 
@@ -1981,10 +2480,12 @@ export const QueryGetTotalExpectedActiveResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetTotalExpectedActiveResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetTotalExpectedActiveResponse>
   ): QueryGetTotalExpectedActiveResponse {
-    const message = { ...baseQueryGetTotalExpectedActiveResponse } as QueryGetTotalExpectedActiveResponse;
+    const message = {
+      ...baseQueryGetTotalExpectedActiveResponse,
+    } as QueryGetTotalExpectedActiveResponse;
     message.active = object.active ?? "";
     return message;
   },
@@ -1993,7 +2494,10 @@ export const QueryGetTotalExpectedActiveResponse = {
 const baseQueryGetPoolUnbondRequest: object = { denom: "", pool: "", era: 0 };
 
 export const QueryGetPoolUnbondRequest = {
-  encode(message: QueryGetPoolUnbondRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetPoolUnbondRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -2006,10 +2510,15 @@ export const QueryGetPoolUnbondRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPoolUnbondRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetPoolUnbondRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetPoolUnbondRequest } as QueryGetPoolUnbondRequest;
+    const message = {
+      ...baseQueryGetPoolUnbondRequest,
+    } as QueryGetPoolUnbondRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2031,10 +2540,19 @@ export const QueryGetPoolUnbondRequest = {
   },
 
   fromJSON(object: any): QueryGetPoolUnbondRequest {
-    const message = { ...baseQueryGetPoolUnbondRequest } as QueryGetPoolUnbondRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
-    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    const message = {
+      ...baseQueryGetPoolUnbondRequest,
+    } as QueryGetPoolUnbondRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.pool =
+      object.pool !== undefined && object.pool !== null
+        ? String(object.pool)
+        : "";
+    message.era =
+      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
     return message;
   },
 
@@ -2046,10 +2564,12 @@ export const QueryGetPoolUnbondRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetPoolUnbondRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetPoolUnbondRequest>
   ): QueryGetPoolUnbondRequest {
-    const message = { ...baseQueryGetPoolUnbondRequest } as QueryGetPoolUnbondRequest;
+    const message = {
+      ...baseQueryGetPoolUnbondRequest,
+    } as QueryGetPoolUnbondRequest;
     message.denom = object.denom ?? "";
     message.pool = object.pool ?? "";
     message.era = object.era ?? 0;
@@ -2060,17 +2580,25 @@ export const QueryGetPoolUnbondRequest = {
 const baseQueryGetPoolUnbondResponse: object = {};
 
 export const QueryGetPoolUnbondResponse = {
-  encode(message: QueryGetPoolUnbondResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetPoolUnbondResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.unbond !== undefined) {
       PoolUnbond.encode(message.unbond, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPoolUnbondResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetPoolUnbondResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetPoolUnbondResponse } as QueryGetPoolUnbondResponse;
+    const message = {
+      ...baseQueryGetPoolUnbondResponse,
+    } as QueryGetPoolUnbondResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2086,23 +2614,31 @@ export const QueryGetPoolUnbondResponse = {
   },
 
   fromJSON(object: any): QueryGetPoolUnbondResponse {
-    const message = { ...baseQueryGetPoolUnbondResponse } as QueryGetPoolUnbondResponse;
+    const message = {
+      ...baseQueryGetPoolUnbondResponse,
+    } as QueryGetPoolUnbondResponse;
     message.unbond =
-      object.unbond !== undefined && object.unbond !== null ? PoolUnbond.fromJSON(object.unbond) : undefined;
+      object.unbond !== undefined && object.unbond !== null
+        ? PoolUnbond.fromJSON(object.unbond)
+        : undefined;
     return message;
   },
 
   toJSON(message: QueryGetPoolUnbondResponse): unknown {
     const obj: any = {};
     message.unbond !== undefined &&
-      (obj.unbond = message.unbond ? PoolUnbond.toJSON(message.unbond) : undefined);
+      (obj.unbond = message.unbond
+        ? PoolUnbond.toJSON(message.unbond)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetPoolUnbondResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetPoolUnbondResponse>
   ): QueryGetPoolUnbondResponse {
-    const message = { ...baseQueryGetPoolUnbondResponse } as QueryGetPoolUnbondResponse;
+    const message = {
+      ...baseQueryGetPoolUnbondResponse,
+    } as QueryGetPoolUnbondResponse;
     message.unbond =
       object.unbond !== undefined && object.unbond !== null
         ? PoolUnbond.fromPartial(object.unbond)
@@ -2114,7 +2650,10 @@ export const QueryGetPoolUnbondResponse = {
 const baseQueryGetAccountUnbondRequest: object = { denom: "", unbonder: "" };
 
 export const QueryGetAccountUnbondRequest = {
-  encode(message: QueryGetAccountUnbondRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetAccountUnbondRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -2124,10 +2663,15 @@ export const QueryGetAccountUnbondRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetAccountUnbondRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetAccountUnbondRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetAccountUnbondRequest } as QueryGetAccountUnbondRequest;
+    const message = {
+      ...baseQueryGetAccountUnbondRequest,
+    } as QueryGetAccountUnbondRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2146,10 +2690,17 @@ export const QueryGetAccountUnbondRequest = {
   },
 
   fromJSON(object: any): QueryGetAccountUnbondRequest {
-    const message = { ...baseQueryGetAccountUnbondRequest } as QueryGetAccountUnbondRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryGetAccountUnbondRequest,
+    } as QueryGetAccountUnbondRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     message.unbonder =
-      object.unbonder !== undefined && object.unbonder !== null ? String(object.unbonder) : "";
+      object.unbonder !== undefined && object.unbonder !== null
+        ? String(object.unbonder)
+        : "";
     return message;
   },
 
@@ -2160,10 +2711,12 @@ export const QueryGetAccountUnbondRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetAccountUnbondRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetAccountUnbondRequest>
   ): QueryGetAccountUnbondRequest {
-    const message = { ...baseQueryGetAccountUnbondRequest } as QueryGetAccountUnbondRequest;
+    const message = {
+      ...baseQueryGetAccountUnbondRequest,
+    } as QueryGetAccountUnbondRequest;
     message.denom = object.denom ?? "";
     message.unbonder = object.unbonder ?? "";
     return message;
@@ -2173,17 +2726,25 @@ export const QueryGetAccountUnbondRequest = {
 const baseQueryGetAccountUnbondResponse: object = {};
 
 export const QueryGetAccountUnbondResponse = {
-  encode(message: QueryGetAccountUnbondResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetAccountUnbondResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.unbond !== undefined) {
       AccountUnbond.encode(message.unbond, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetAccountUnbondResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetAccountUnbondResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetAccountUnbondResponse } as QueryGetAccountUnbondResponse;
+    const message = {
+      ...baseQueryGetAccountUnbondResponse,
+    } as QueryGetAccountUnbondResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2199,7 +2760,9 @@ export const QueryGetAccountUnbondResponse = {
   },
 
   fromJSON(object: any): QueryGetAccountUnbondResponse {
-    const message = { ...baseQueryGetAccountUnbondResponse } as QueryGetAccountUnbondResponse;
+    const message = {
+      ...baseQueryGetAccountUnbondResponse,
+    } as QueryGetAccountUnbondResponse;
     message.unbond =
       object.unbond !== undefined && object.unbond !== null
         ? AccountUnbond.fromJSON(object.unbond)
@@ -2210,14 +2773,18 @@ export const QueryGetAccountUnbondResponse = {
   toJSON(message: QueryGetAccountUnbondResponse): unknown {
     const obj: any = {};
     message.unbond !== undefined &&
-      (obj.unbond = message.unbond ? AccountUnbond.toJSON(message.unbond) : undefined);
+      (obj.unbond = message.unbond
+        ? AccountUnbond.toJSON(message.unbond)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetAccountUnbondResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetAccountUnbondResponse>
   ): QueryGetAccountUnbondResponse {
-    const message = { ...baseQueryGetAccountUnbondResponse } as QueryGetAccountUnbondResponse;
+    const message = {
+      ...baseQueryGetAccountUnbondResponse,
+    } as QueryGetAccountUnbondResponse;
     message.unbond =
       object.unbond !== undefined && object.unbond !== null
         ? AccountUnbond.fromPartial(object.unbond)
@@ -2229,7 +2796,10 @@ export const QueryGetAccountUnbondResponse = {
 const baseQueryGetBondRecordRequest: object = { denom: "", txhash: "" };
 
 export const QueryGetBondRecordRequest = {
-  encode(message: QueryGetBondRecordRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetBondRecordRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -2239,10 +2809,15 @@ export const QueryGetBondRecordRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetBondRecordRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetBondRecordRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetBondRecordRequest } as QueryGetBondRecordRequest;
+    const message = {
+      ...baseQueryGetBondRecordRequest,
+    } as QueryGetBondRecordRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2261,9 +2836,17 @@ export const QueryGetBondRecordRequest = {
   },
 
   fromJSON(object: any): QueryGetBondRecordRequest {
-    const message = { ...baseQueryGetBondRecordRequest } as QueryGetBondRecordRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.txhash = object.txhash !== undefined && object.txhash !== null ? String(object.txhash) : "";
+    const message = {
+      ...baseQueryGetBondRecordRequest,
+    } as QueryGetBondRecordRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.txhash =
+      object.txhash !== undefined && object.txhash !== null
+        ? String(object.txhash)
+        : "";
     return message;
   },
 
@@ -2274,10 +2857,12 @@ export const QueryGetBondRecordRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetBondRecordRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetBondRecordRequest>
   ): QueryGetBondRecordRequest {
-    const message = { ...baseQueryGetBondRecordRequest } as QueryGetBondRecordRequest;
+    const message = {
+      ...baseQueryGetBondRecordRequest,
+    } as QueryGetBondRecordRequest;
     message.denom = object.denom ?? "";
     message.txhash = object.txhash ?? "";
     return message;
@@ -2287,17 +2872,25 @@ export const QueryGetBondRecordRequest = {
 const baseQueryGetBondRecordResponse: object = {};
 
 export const QueryGetBondRecordResponse = {
-  encode(message: QueryGetBondRecordResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetBondRecordResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.bondRecord !== undefined) {
       BondRecord.encode(message.bondRecord, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetBondRecordResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetBondRecordResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetBondRecordResponse } as QueryGetBondRecordResponse;
+    const message = {
+      ...baseQueryGetBondRecordResponse,
+    } as QueryGetBondRecordResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2313,7 +2906,9 @@ export const QueryGetBondRecordResponse = {
   },
 
   fromJSON(object: any): QueryGetBondRecordResponse {
-    const message = { ...baseQueryGetBondRecordResponse } as QueryGetBondRecordResponse;
+    const message = {
+      ...baseQueryGetBondRecordResponse,
+    } as QueryGetBondRecordResponse;
     message.bondRecord =
       object.bondRecord !== undefined && object.bondRecord !== null
         ? BondRecord.fromJSON(object.bondRecord)
@@ -2324,14 +2919,18 @@ export const QueryGetBondRecordResponse = {
   toJSON(message: QueryGetBondRecordResponse): unknown {
     const obj: any = {};
     message.bondRecord !== undefined &&
-      (obj.bondRecord = message.bondRecord ? BondRecord.toJSON(message.bondRecord) : undefined);
+      (obj.bondRecord = message.bondRecord
+        ? BondRecord.toJSON(message.bondRecord)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetBondRecordResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetBondRecordResponse>
   ): QueryGetBondRecordResponse {
-    const message = { ...baseQueryGetBondRecordResponse } as QueryGetBondRecordResponse;
+    const message = {
+      ...baseQueryGetBondRecordResponse,
+    } as QueryGetBondRecordResponse;
     message.bondRecord =
       object.bondRecord !== undefined && object.bondRecord !== null
         ? BondRecord.fromPartial(object.bondRecord)
@@ -2340,10 +2939,19 @@ export const QueryGetBondRecordResponse = {
   },
 };
 
-const baseQueryGetSignatureRequest: object = { denom: "", era: 0, pool: "", txType: 0, propId: "" };
+const baseQueryGetSignatureRequest: object = {
+  denom: "",
+  era: 0,
+  pool: "",
+  txType: 0,
+  propId: "",
+};
 
 export const QueryGetSignatureRequest = {
-  encode(message: QueryGetSignatureRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetSignatureRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -2362,10 +2970,15 @@ export const QueryGetSignatureRequest = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetSignatureRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetSignatureRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetSignatureRequest } as QueryGetSignatureRequest;
+    const message = {
+      ...baseQueryGetSignatureRequest,
+    } as QueryGetSignatureRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2393,13 +3006,27 @@ export const QueryGetSignatureRequest = {
   },
 
   fromJSON(object: any): QueryGetSignatureRequest {
-    const message = { ...baseQueryGetSignatureRequest } as QueryGetSignatureRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
-    message.era = object.era !== undefined && object.era !== null ? Number(object.era) : 0;
-    message.pool = object.pool !== undefined && object.pool !== null ? String(object.pool) : "";
+    const message = {
+      ...baseQueryGetSignatureRequest,
+    } as QueryGetSignatureRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.era =
+      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.pool =
+      object.pool !== undefined && object.pool !== null
+        ? String(object.pool)
+        : "";
     message.txType =
-      object.txType !== undefined && object.txType !== null ? originalTxTypeFromJSON(object.txType) : 0;
-    message.propId = object.propId !== undefined && object.propId !== null ? String(object.propId) : "";
+      object.txType !== undefined && object.txType !== null
+        ? originalTxTypeFromJSON(object.txType)
+        : 0;
+    message.propId =
+      object.propId !== undefined && object.propId !== null
+        ? String(object.propId)
+        : "";
     return message;
   },
 
@@ -2408,15 +3035,18 @@ export const QueryGetSignatureRequest = {
     message.denom !== undefined && (obj.denom = message.denom);
     message.era !== undefined && (obj.era = message.era);
     message.pool !== undefined && (obj.pool = message.pool);
-    message.txType !== undefined && (obj.txType = originalTxTypeToJSON(message.txType));
+    message.txType !== undefined &&
+      (obj.txType = originalTxTypeToJSON(message.txType));
     message.propId !== undefined && (obj.propId = message.propId);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetSignatureRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetSignatureRequest>
   ): QueryGetSignatureRequest {
-    const message = { ...baseQueryGetSignatureRequest } as QueryGetSignatureRequest;
+    const message = {
+      ...baseQueryGetSignatureRequest,
+    } as QueryGetSignatureRequest;
     message.denom = object.denom ?? "";
     message.era = object.era ?? 0;
     message.pool = object.pool ?? "";
@@ -2429,17 +3059,25 @@ export const QueryGetSignatureRequest = {
 const baseQueryGetSignatureResponse: object = {};
 
 export const QueryGetSignatureResponse = {
-  encode(message: QueryGetSignatureResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetSignatureResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.signature !== undefined) {
       Signature.encode(message.signature, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetSignatureResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetSignatureResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetSignatureResponse } as QueryGetSignatureResponse;
+    const message = {
+      ...baseQueryGetSignatureResponse,
+    } as QueryGetSignatureResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2455,7 +3093,9 @@ export const QueryGetSignatureResponse = {
   },
 
   fromJSON(object: any): QueryGetSignatureResponse {
-    const message = { ...baseQueryGetSignatureResponse } as QueryGetSignatureResponse;
+    const message = {
+      ...baseQueryGetSignatureResponse,
+    } as QueryGetSignatureResponse;
     message.signature =
       object.signature !== undefined && object.signature !== null
         ? Signature.fromJSON(object.signature)
@@ -2466,14 +3106,18 @@ export const QueryGetSignatureResponse = {
   toJSON(message: QueryGetSignatureResponse): unknown {
     const obj: any = {};
     message.signature !== undefined &&
-      (obj.signature = message.signature ? Signature.toJSON(message.signature) : undefined);
+      (obj.signature = message.signature
+        ? Signature.toJSON(message.signature)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetSignatureResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryGetSignatureResponse>
   ): QueryGetSignatureResponse {
-    const message = { ...baseQueryGetSignatureResponse } as QueryGetSignatureResponse;
+    const message = {
+      ...baseQueryGetSignatureResponse,
+    } as QueryGetSignatureResponse;
     message.signature =
       object.signature !== undefined && object.signature !== null
         ? Signature.fromPartial(object.signature)
@@ -2485,14 +3129,20 @@ export const QueryGetSignatureResponse = {
 const baseQueryGetRParamsRequest: object = { denom: "" };
 
 export const QueryGetRParamsRequest = {
-  encode(message: QueryGetRParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetRParamsRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetRParamsRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetRParamsRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQueryGetRParamsRequest } as QueryGetRParamsRequest;
@@ -2512,7 +3162,10 @@ export const QueryGetRParamsRequest = {
 
   fromJSON(object: any): QueryGetRParamsRequest {
     const message = { ...baseQueryGetRParamsRequest } as QueryGetRParamsRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -2522,7 +3175,9 @@ export const QueryGetRParamsRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetRParamsRequest>, I>>(object: I): QueryGetRParamsRequest {
+  fromPartial(
+    object: DeepPartial<QueryGetRParamsRequest>
+  ): QueryGetRParamsRequest {
     const message = { ...baseQueryGetRParamsRequest } as QueryGetRParamsRequest;
     message.denom = object.denom ?? "";
     return message;
@@ -2532,17 +3187,25 @@ export const QueryGetRParamsRequest = {
 const baseQueryGetRParamsResponse: object = {};
 
 export const QueryGetRParamsResponse = {
-  encode(message: QueryGetRParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryGetRParamsResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.rParams !== undefined) {
       RParams.encode(message.rParams, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetRParamsResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryGetRParamsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryGetRParamsResponse } as QueryGetRParamsResponse;
+    const message = {
+      ...baseQueryGetRParamsResponse,
+    } as QueryGetRParamsResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2558,21 +3221,31 @@ export const QueryGetRParamsResponse = {
   },
 
   fromJSON(object: any): QueryGetRParamsResponse {
-    const message = { ...baseQueryGetRParamsResponse } as QueryGetRParamsResponse;
+    const message = {
+      ...baseQueryGetRParamsResponse,
+    } as QueryGetRParamsResponse;
     message.rParams =
-      object.rParams !== undefined && object.rParams !== null ? RParams.fromJSON(object.rParams) : undefined;
+      object.rParams !== undefined && object.rParams !== null
+        ? RParams.fromJSON(object.rParams)
+        : undefined;
     return message;
   },
 
   toJSON(message: QueryGetRParamsResponse): unknown {
     const obj: any = {};
     message.rParams !== undefined &&
-      (obj.rParams = message.rParams ? RParams.toJSON(message.rParams) : undefined);
+      (obj.rParams = message.rParams
+        ? RParams.toJSON(message.rParams)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryGetRParamsResponse>, I>>(object: I): QueryGetRParamsResponse {
-    const message = { ...baseQueryGetRParamsResponse } as QueryGetRParamsResponse;
+  fromPartial(
+    object: DeepPartial<QueryGetRParamsResponse>
+  ): QueryGetRParamsResponse {
+    const message = {
+      ...baseQueryGetRParamsResponse,
+    } as QueryGetRParamsResponse;
     message.rParams =
       object.rParams !== undefined && object.rParams !== null
         ? RParams.fromPartial(object.rParams)
@@ -2584,14 +3257,22 @@ export const QueryGetRParamsResponse = {
 const baseQueryTotalProtocolFeeRequest: object = {};
 
 export const QueryTotalProtocolFeeRequest = {
-  encode(_: QueryTotalProtocolFeeRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: QueryTotalProtocolFeeRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryTotalProtocolFeeRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryTotalProtocolFeeRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryTotalProtocolFeeRequest } as QueryTotalProtocolFeeRequest;
+    const message = {
+      ...baseQueryTotalProtocolFeeRequest,
+    } as QueryTotalProtocolFeeRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2604,7 +3285,9 @@ export const QueryTotalProtocolFeeRequest = {
   },
 
   fromJSON(_: any): QueryTotalProtocolFeeRequest {
-    const message = { ...baseQueryTotalProtocolFeeRequest } as QueryTotalProtocolFeeRequest;
+    const message = {
+      ...baseQueryTotalProtocolFeeRequest,
+    } as QueryTotalProtocolFeeRequest;
     return message;
   },
 
@@ -2613,10 +3296,12 @@ export const QueryTotalProtocolFeeRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryTotalProtocolFeeRequest>, I>>(
-    _: I,
+  fromPartial(
+    _: DeepPartial<QueryTotalProtocolFeeRequest>
   ): QueryTotalProtocolFeeRequest {
-    const message = { ...baseQueryTotalProtocolFeeRequest } as QueryTotalProtocolFeeRequest;
+    const message = {
+      ...baseQueryTotalProtocolFeeRequest,
+    } as QueryTotalProtocolFeeRequest;
     return message;
   },
 };
@@ -2624,23 +3309,33 @@ export const QueryTotalProtocolFeeRequest = {
 const baseQueryTotalProtocolFeeResponse: object = {};
 
 export const QueryTotalProtocolFeeResponse = {
-  encode(message: QueryTotalProtocolFeeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryTotalProtocolFeeResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.totalProtocolFeeList) {
       TotalProtocolFee.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryTotalProtocolFeeResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryTotalProtocolFeeResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryTotalProtocolFeeResponse } as QueryTotalProtocolFeeResponse;
+    const message = {
+      ...baseQueryTotalProtocolFeeResponse,
+    } as QueryTotalProtocolFeeResponse;
     message.totalProtocolFeeList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.totalProtocolFeeList.push(TotalProtocolFee.decode(reader, reader.uint32()));
+          message.totalProtocolFeeList.push(
+            TotalProtocolFee.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -2651,9 +3346,11 @@ export const QueryTotalProtocolFeeResponse = {
   },
 
   fromJSON(object: any): QueryTotalProtocolFeeResponse {
-    const message = { ...baseQueryTotalProtocolFeeResponse } as QueryTotalProtocolFeeResponse;
-    message.totalProtocolFeeList = (object.totalProtocolFeeList ?? []).map((e: any) =>
-      TotalProtocolFee.fromJSON(e),
+    const message = {
+      ...baseQueryTotalProtocolFeeResponse,
+    } as QueryTotalProtocolFeeResponse;
+    message.totalProtocolFeeList = (object.totalProtocolFeeList ?? []).map(
+      (e: any) => TotalProtocolFee.fromJSON(e)
     );
     return message;
   },
@@ -2662,7 +3359,7 @@ export const QueryTotalProtocolFeeResponse = {
     const obj: any = {};
     if (message.totalProtocolFeeList) {
       obj.totalProtocolFeeList = message.totalProtocolFeeList.map((e) =>
-        e ? TotalProtocolFee.toJSON(e) : undefined,
+        e ? TotalProtocolFee.toJSON(e) : undefined
       );
     } else {
       obj.totalProtocolFeeList = [];
@@ -2670,12 +3367,15 @@ export const QueryTotalProtocolFeeResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryTotalProtocolFeeResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryTotalProtocolFeeResponse>
   ): QueryTotalProtocolFeeResponse {
-    const message = { ...baseQueryTotalProtocolFeeResponse } as QueryTotalProtocolFeeResponse;
-    message.totalProtocolFeeList =
-      object.totalProtocolFeeList?.map((e) => TotalProtocolFee.fromPartial(e)) || [];
+    const message = {
+      ...baseQueryTotalProtocolFeeResponse,
+    } as QueryTotalProtocolFeeResponse;
+    message.totalProtocolFeeList = (object.totalProtocolFeeList ?? []).map(
+      (e) => TotalProtocolFee.fromPartial(e)
+    );
     return message;
   },
 };
@@ -2683,17 +3383,25 @@ export const QueryTotalProtocolFeeResponse = {
 const baseQueryRelayFeeReceiverRequest: object = { denom: "" };
 
 export const QueryRelayFeeReceiverRequest = {
-  encode(message: QueryRelayFeeReceiverRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryRelayFeeReceiverRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryRelayFeeReceiverRequest {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryRelayFeeReceiverRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryRelayFeeReceiverRequest } as QueryRelayFeeReceiverRequest;
+    const message = {
+      ...baseQueryRelayFeeReceiverRequest,
+    } as QueryRelayFeeReceiverRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2709,8 +3417,13 @@ export const QueryRelayFeeReceiverRequest = {
   },
 
   fromJSON(object: any): QueryRelayFeeReceiverRequest {
-    const message = { ...baseQueryRelayFeeReceiverRequest } as QueryRelayFeeReceiverRequest;
-    message.denom = object.denom !== undefined && object.denom !== null ? String(object.denom) : "";
+    const message = {
+      ...baseQueryRelayFeeReceiverRequest,
+    } as QueryRelayFeeReceiverRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
     return message;
   },
 
@@ -2720,10 +3433,12 @@ export const QueryRelayFeeReceiverRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryRelayFeeReceiverRequest>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryRelayFeeReceiverRequest>
   ): QueryRelayFeeReceiverRequest {
-    const message = { ...baseQueryRelayFeeReceiverRequest } as QueryRelayFeeReceiverRequest;
+    const message = {
+      ...baseQueryRelayFeeReceiverRequest,
+    } as QueryRelayFeeReceiverRequest;
     message.denom = object.denom ?? "";
     return message;
   },
@@ -2732,17 +3447,25 @@ export const QueryRelayFeeReceiverRequest = {
 const baseQueryRelayFeeReceiverResponse: object = { receiver: "" };
 
 export const QueryRelayFeeReceiverResponse = {
-  encode(message: QueryRelayFeeReceiverResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryRelayFeeReceiverResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.receiver !== "") {
       writer.uint32(10).string(message.receiver);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryRelayFeeReceiverResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryRelayFeeReceiverResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryRelayFeeReceiverResponse } as QueryRelayFeeReceiverResponse;
+    const message = {
+      ...baseQueryRelayFeeReceiverResponse,
+    } as QueryRelayFeeReceiverResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2758,9 +3481,13 @@ export const QueryRelayFeeReceiverResponse = {
   },
 
   fromJSON(object: any): QueryRelayFeeReceiverResponse {
-    const message = { ...baseQueryRelayFeeReceiverResponse } as QueryRelayFeeReceiverResponse;
+    const message = {
+      ...baseQueryRelayFeeReceiverResponse,
+    } as QueryRelayFeeReceiverResponse;
     message.receiver =
-      object.receiver !== undefined && object.receiver !== null ? String(object.receiver) : "";
+      object.receiver !== undefined && object.receiver !== null
+        ? String(object.receiver)
+        : "";
     return message;
   },
 
@@ -2770,10 +3497,12 @@ export const QueryRelayFeeReceiverResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryRelayFeeReceiverResponse>, I>>(
-    object: I,
+  fromPartial(
+    object: DeepPartial<QueryRelayFeeReceiverResponse>
   ): QueryRelayFeeReceiverResponse {
-    const message = { ...baseQueryRelayFeeReceiverResponse } as QueryRelayFeeReceiverResponse;
+    const message = {
+      ...baseQueryRelayFeeReceiverResponse,
+    } as QueryRelayFeeReceiverResponse;
     message.receiver = object.receiver ?? "";
     return message;
   },
@@ -2782,63 +3511,99 @@ export const QueryRelayFeeReceiverResponse = {
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Queries a list of getExchangeRate items. */
-  GetExchangeRate(request: QueryGetExchangeRateRequest): Promise<QueryGetExchangeRateResponse>;
+  GetExchangeRate(
+    request: QueryGetExchangeRateRequest
+  ): Promise<QueryGetExchangeRateResponse>;
   /** Queries a list of exchangeRateAll items. */
-  ExchangeRateAll(request: QueryExchangeRateAllRequest): Promise<QueryExchangeRateAllResponse>;
+  ExchangeRateAll(
+    request: QueryExchangeRateAllRequest
+  ): Promise<QueryExchangeRateAllResponse>;
   /** Queries a list of getEraExchangeRate items. */
-  GetEraExchangeRate(request: QueryGetEraExchangeRateRequest): Promise<QueryGetEraExchangeRateResponse>;
+  GetEraExchangeRate(
+    request: QueryGetEraExchangeRateRequest
+  ): Promise<QueryGetEraExchangeRateResponse>;
   /** Queries a list of eraExchangeRatesByDenom items. */
   EraExchangeRatesByDenom(
-    request: QueryEraExchangeRatesByDenomRequest,
+    request: QueryEraExchangeRatesByDenomRequest
   ): Promise<QueryEraExchangeRatesByDenomResponse>;
   /** Queries a list of bondedPoolsByDenom items. */
-  BondedPoolsByDenom(request: QueryBondedPoolsByDenomRequest): Promise<QueryBondedPoolsByDenomResponse>;
+  BondedPoolsByDenom(
+    request: QueryBondedPoolsByDenomRequest
+  ): Promise<QueryBondedPoolsByDenomResponse>;
   /** Queries a list of getPoolDetail items. */
-  GetPoolDetail(request: QueryGetPoolDetailRequest): Promise<QueryGetPoolDetailResponse>;
+  GetPoolDetail(
+    request: QueryGetPoolDetailRequest
+  ): Promise<QueryGetPoolDetailResponse>;
   /** Queries a list of getChainEra items. */
-  GetChainEra(request: QueryGetChainEraRequest): Promise<QueryGetChainEraResponse>;
+  GetChainEra(
+    request: QueryGetChainEraRequest
+  ): Promise<QueryGetChainEraResponse>;
   /** Queries a list of getCurrentEraSnapshot items. */
   GetCurrentEraSnapshot(
-    request: QueryGetCurrentEraSnapshotRequest,
+    request: QueryGetCurrentEraSnapshotRequest
   ): Promise<QueryGetCurrentEraSnapshotResponse>;
   /** Queries a list of getReceiver items. */
   GetProtocolFeeReceiver(
-    request: QueryGetProtocolFeeReceiverRequest,
+    request: QueryGetProtocolFeeReceiverRequest
   ): Promise<QueryGetProtocolFeeReceiverResponse>;
   /** Queries a list of getCommission items. */
   GetStakingRewardCommission(
-    request: QueryGetStakingRewardCommissionRequest,
+    request: QueryGetStakingRewardCommissionRequest
   ): Promise<QueryGetStakingRewardCommissionResponse>;
   /** Queries a list of getUnbondFee items. */
-  GetUnbondRelayFee(request: QueryGetUnbondRelayFeeRequest): Promise<QueryGetUnbondRelayFeeResponse>;
+  GetUnbondRelayFee(
+    request: QueryGetUnbondRelayFeeRequest
+  ): Promise<QueryGetUnbondRelayFeeResponse>;
   /** Queries a list of getUnbondCommission items. */
-  GetUnbondCommission(request: QueryGetUnbondCommissionRequest): Promise<QueryGetUnbondCommissionResponse>;
+  GetUnbondCommission(
+    request: QueryGetUnbondCommissionRequest
+  ): Promise<QueryGetUnbondCommissionResponse>;
   /** Queries a list of getEraUnbondLimit items. */
-  GetEraUnbondLimit(request: QueryGetEraUnbondLimitRequest): Promise<QueryGetEraUnbondLimitResponse>;
+  GetEraUnbondLimit(
+    request: QueryGetEraUnbondLimitRequest
+  ): Promise<QueryGetEraUnbondLimitResponse>;
   /** Queries a list of getBondPipeline items. */
-  GetBondPipeline(request: QueryGetBondPipelineRequest): Promise<QueryGetBondPipelineResponse>;
+  GetBondPipeline(
+    request: QueryGetBondPipelineRequest
+  ): Promise<QueryGetBondPipelineResponse>;
   /** Queries a list of getEraSnapshot items. */
-  GetEraSnapshot(request: QueryGetEraSnapshotRequest): Promise<QueryGetEraSnapshotResponse>;
+  GetEraSnapshot(
+    request: QueryGetEraSnapshotRequest
+  ): Promise<QueryGetEraSnapshotResponse>;
   /** Queries a list of getSnapshot items. */
-  GetSnapshot(request: QueryGetSnapshotRequest): Promise<QueryGetSnapshotResponse>;
+  GetSnapshot(
+    request: QueryGetSnapshotRequest
+  ): Promise<QueryGetSnapshotResponse>;
   /** Queries a list of getTotalExpectedActive items. */
   GetTotalExpectedActive(
-    request: QueryGetTotalExpectedActiveRequest,
+    request: QueryGetTotalExpectedActiveRequest
   ): Promise<QueryGetTotalExpectedActiveResponse>;
   /** Queries a list of getPoolUnbond items. */
-  GetPoolUnbond(request: QueryGetPoolUnbondRequest): Promise<QueryGetPoolUnbondResponse>;
+  GetPoolUnbond(
+    request: QueryGetPoolUnbondRequest
+  ): Promise<QueryGetPoolUnbondResponse>;
   /** Queries a list of getAccountUnbond items. */
-  GetAccountUnbond(request: QueryGetAccountUnbondRequest): Promise<QueryGetAccountUnbondResponse>;
+  GetAccountUnbond(
+    request: QueryGetAccountUnbondRequest
+  ): Promise<QueryGetAccountUnbondResponse>;
   /** Queries a list of getBondRecord items. */
-  GetBondRecord(request: QueryGetBondRecordRequest): Promise<QueryGetBondRecordResponse>;
+  GetBondRecord(
+    request: QueryGetBondRecordRequest
+  ): Promise<QueryGetBondRecordResponse>;
   /** Queries a list of getSignature items. */
-  GetSignature(request: QueryGetSignatureRequest): Promise<QueryGetSignatureResponse>;
+  GetSignature(
+    request: QueryGetSignatureRequest
+  ): Promise<QueryGetSignatureResponse>;
   /** Queries a list of GetRParams items. */
   GetRParams(request: QueryGetRParamsRequest): Promise<QueryGetRParamsResponse>;
   /** Queries a list of TotalFeeList items. */
-  TotalProtocolFee(request: QueryTotalProtocolFeeRequest): Promise<QueryTotalProtocolFeeResponse>;
+  TotalProtocolFee(
+    request: QueryTotalProtocolFeeRequest
+  ): Promise<QueryTotalProtocolFeeResponse>;
   /** Queries a list of RelayFeeReceiver items. */
-  RelayFeeReceiver(request: QueryRelayFeeReceiverRequest): Promise<QueryRelayFeeReceiverResponse>;
+  RelayFeeReceiver(
+    request: QueryRelayFeeReceiverRequest
+  ): Promise<QueryRelayFeeReceiverResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -2854,7 +3619,8 @@ export class QueryClientImpl implements Query {
     this.GetChainEra = this.GetChainEra.bind(this);
     this.GetCurrentEraSnapshot = this.GetCurrentEraSnapshot.bind(this);
     this.GetProtocolFeeReceiver = this.GetProtocolFeeReceiver.bind(this);
-    this.GetStakingRewardCommission = this.GetStakingRewardCommission.bind(this);
+    this.GetStakingRewardCommission =
+      this.GetStakingRewardCommission.bind(this);
     this.GetUnbondRelayFee = this.GetUnbondRelayFee.bind(this);
     this.GetUnbondCommission = this.GetUnbondCommission.bind(this);
     this.GetEraUnbondLimit = this.GetEraUnbondLimit.bind(this);
@@ -2870,167 +3636,360 @@ export class QueryClientImpl implements Query {
     this.TotalProtocolFee = this.TotalProtocolFee.bind(this);
     this.RelayFeeReceiver = this.RelayFeeReceiver.bind(this);
   }
-  GetExchangeRate(request: QueryGetExchangeRateRequest): Promise<QueryGetExchangeRateResponse> {
+  GetExchangeRate(
+    request: QueryGetExchangeRateRequest
+  ): Promise<QueryGetExchangeRateResponse> {
     const data = QueryGetExchangeRateRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetExchangeRate", data);
-    return promise.then((data) => QueryGetExchangeRateResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetExchangeRate",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetExchangeRateResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  ExchangeRateAll(request: QueryExchangeRateAllRequest): Promise<QueryExchangeRateAllResponse> {
+  ExchangeRateAll(
+    request: QueryExchangeRateAllRequest
+  ): Promise<QueryExchangeRateAllResponse> {
     const data = QueryExchangeRateAllRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "ExchangeRateAll", data);
-    return promise.then((data) => QueryExchangeRateAllResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "ExchangeRateAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryExchangeRateAllResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetEraExchangeRate(request: QueryGetEraExchangeRateRequest): Promise<QueryGetEraExchangeRateResponse> {
+  GetEraExchangeRate(
+    request: QueryGetEraExchangeRateRequest
+  ): Promise<QueryGetEraExchangeRateResponse> {
     const data = QueryGetEraExchangeRateRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetEraExchangeRate", data);
-    return promise.then((data) => QueryGetEraExchangeRateResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetEraExchangeRate",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetEraExchangeRateResponse.decode(new _m0.Reader(data))
+    );
   }
 
   EraExchangeRatesByDenom(
-    request: QueryEraExchangeRatesByDenomRequest,
+    request: QueryEraExchangeRatesByDenomRequest
   ): Promise<QueryEraExchangeRatesByDenomResponse> {
     const data = QueryEraExchangeRatesByDenomRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "EraExchangeRatesByDenom", data);
-    return promise.then((data) => QueryEraExchangeRatesByDenomResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "EraExchangeRatesByDenom",
+      data
+    );
+    return promise.then((data) =>
+      QueryEraExchangeRatesByDenomResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  BondedPoolsByDenom(request: QueryBondedPoolsByDenomRequest): Promise<QueryBondedPoolsByDenomResponse> {
+  BondedPoolsByDenom(
+    request: QueryBondedPoolsByDenomRequest
+  ): Promise<QueryBondedPoolsByDenomResponse> {
     const data = QueryBondedPoolsByDenomRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "BondedPoolsByDenom", data);
-    return promise.then((data) => QueryBondedPoolsByDenomResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "BondedPoolsByDenom",
+      data
+    );
+    return promise.then((data) =>
+      QueryBondedPoolsByDenomResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetPoolDetail(request: QueryGetPoolDetailRequest): Promise<QueryGetPoolDetailResponse> {
+  GetPoolDetail(
+    request: QueryGetPoolDetailRequest
+  ): Promise<QueryGetPoolDetailResponse> {
     const data = QueryGetPoolDetailRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetPoolDetail", data);
-    return promise.then((data) => QueryGetPoolDetailResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetPoolDetail",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetPoolDetailResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetChainEra(request: QueryGetChainEraRequest): Promise<QueryGetChainEraResponse> {
+  GetChainEra(
+    request: QueryGetChainEraRequest
+  ): Promise<QueryGetChainEraResponse> {
     const data = QueryGetChainEraRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetChainEra", data);
-    return promise.then((data) => QueryGetChainEraResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetChainEra",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetChainEraResponse.decode(new _m0.Reader(data))
+    );
   }
 
   GetCurrentEraSnapshot(
-    request: QueryGetCurrentEraSnapshotRequest,
+    request: QueryGetCurrentEraSnapshotRequest
   ): Promise<QueryGetCurrentEraSnapshotResponse> {
     const data = QueryGetCurrentEraSnapshotRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetCurrentEraSnapshot", data);
-    return promise.then((data) => QueryGetCurrentEraSnapshotResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetCurrentEraSnapshot",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetCurrentEraSnapshotResponse.decode(new _m0.Reader(data))
+    );
   }
 
   GetProtocolFeeReceiver(
-    request: QueryGetProtocolFeeReceiverRequest,
+    request: QueryGetProtocolFeeReceiverRequest
   ): Promise<QueryGetProtocolFeeReceiverResponse> {
     const data = QueryGetProtocolFeeReceiverRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetProtocolFeeReceiver", data);
-    return promise.then((data) => QueryGetProtocolFeeReceiverResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetProtocolFeeReceiver",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetProtocolFeeReceiverResponse.decode(new _m0.Reader(data))
+    );
   }
 
   GetStakingRewardCommission(
-    request: QueryGetStakingRewardCommissionRequest,
+    request: QueryGetStakingRewardCommissionRequest
   ): Promise<QueryGetStakingRewardCommissionResponse> {
-    const data = QueryGetStakingRewardCommissionRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetStakingRewardCommission", data);
-    return promise.then((data) => QueryGetStakingRewardCommissionResponse.decode(new _m0.Reader(data)));
+    const data =
+      QueryGetStakingRewardCommissionRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetStakingRewardCommission",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetStakingRewardCommissionResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetUnbondRelayFee(request: QueryGetUnbondRelayFeeRequest): Promise<QueryGetUnbondRelayFeeResponse> {
+  GetUnbondRelayFee(
+    request: QueryGetUnbondRelayFeeRequest
+  ): Promise<QueryGetUnbondRelayFeeResponse> {
     const data = QueryGetUnbondRelayFeeRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetUnbondRelayFee", data);
-    return promise.then((data) => QueryGetUnbondRelayFeeResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetUnbondRelayFee",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetUnbondRelayFeeResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetUnbondCommission(request: QueryGetUnbondCommissionRequest): Promise<QueryGetUnbondCommissionResponse> {
+  GetUnbondCommission(
+    request: QueryGetUnbondCommissionRequest
+  ): Promise<QueryGetUnbondCommissionResponse> {
     const data = QueryGetUnbondCommissionRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetUnbondCommission", data);
-    return promise.then((data) => QueryGetUnbondCommissionResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetUnbondCommission",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetUnbondCommissionResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetEraUnbondLimit(request: QueryGetEraUnbondLimitRequest): Promise<QueryGetEraUnbondLimitResponse> {
+  GetEraUnbondLimit(
+    request: QueryGetEraUnbondLimitRequest
+  ): Promise<QueryGetEraUnbondLimitResponse> {
     const data = QueryGetEraUnbondLimitRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetEraUnbondLimit", data);
-    return promise.then((data) => QueryGetEraUnbondLimitResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetEraUnbondLimit",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetEraUnbondLimitResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetBondPipeline(request: QueryGetBondPipelineRequest): Promise<QueryGetBondPipelineResponse> {
+  GetBondPipeline(
+    request: QueryGetBondPipelineRequest
+  ): Promise<QueryGetBondPipelineResponse> {
     const data = QueryGetBondPipelineRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetBondPipeline", data);
-    return promise.then((data) => QueryGetBondPipelineResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetBondPipeline",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetBondPipelineResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetEraSnapshot(request: QueryGetEraSnapshotRequest): Promise<QueryGetEraSnapshotResponse> {
+  GetEraSnapshot(
+    request: QueryGetEraSnapshotRequest
+  ): Promise<QueryGetEraSnapshotResponse> {
     const data = QueryGetEraSnapshotRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetEraSnapshot", data);
-    return promise.then((data) => QueryGetEraSnapshotResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetEraSnapshot",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetEraSnapshotResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetSnapshot(request: QueryGetSnapshotRequest): Promise<QueryGetSnapshotResponse> {
+  GetSnapshot(
+    request: QueryGetSnapshotRequest
+  ): Promise<QueryGetSnapshotResponse> {
     const data = QueryGetSnapshotRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetSnapshot", data);
-    return promise.then((data) => QueryGetSnapshotResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetSnapshot",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetSnapshotResponse.decode(new _m0.Reader(data))
+    );
   }
 
   GetTotalExpectedActive(
-    request: QueryGetTotalExpectedActiveRequest,
+    request: QueryGetTotalExpectedActiveRequest
   ): Promise<QueryGetTotalExpectedActiveResponse> {
     const data = QueryGetTotalExpectedActiveRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetTotalExpectedActive", data);
-    return promise.then((data) => QueryGetTotalExpectedActiveResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetTotalExpectedActive",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetTotalExpectedActiveResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetPoolUnbond(request: QueryGetPoolUnbondRequest): Promise<QueryGetPoolUnbondResponse> {
+  GetPoolUnbond(
+    request: QueryGetPoolUnbondRequest
+  ): Promise<QueryGetPoolUnbondResponse> {
     const data = QueryGetPoolUnbondRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetPoolUnbond", data);
-    return promise.then((data) => QueryGetPoolUnbondResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetPoolUnbond",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetPoolUnbondResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetAccountUnbond(request: QueryGetAccountUnbondRequest): Promise<QueryGetAccountUnbondResponse> {
+  GetAccountUnbond(
+    request: QueryGetAccountUnbondRequest
+  ): Promise<QueryGetAccountUnbondResponse> {
     const data = QueryGetAccountUnbondRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetAccountUnbond", data);
-    return promise.then((data) => QueryGetAccountUnbondResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetAccountUnbond",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetAccountUnbondResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetBondRecord(request: QueryGetBondRecordRequest): Promise<QueryGetBondRecordResponse> {
+  GetBondRecord(
+    request: QueryGetBondRecordRequest
+  ): Promise<QueryGetBondRecordResponse> {
     const data = QueryGetBondRecordRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetBondRecord", data);
-    return promise.then((data) => QueryGetBondRecordResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetBondRecord",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetBondRecordResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetSignature(request: QueryGetSignatureRequest): Promise<QueryGetSignatureResponse> {
+  GetSignature(
+    request: QueryGetSignatureRequest
+  ): Promise<QueryGetSignatureResponse> {
     const data = QueryGetSignatureRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetSignature", data);
-    return promise.then((data) => QueryGetSignatureResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetSignature",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetSignatureResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  GetRParams(request: QueryGetRParamsRequest): Promise<QueryGetRParamsResponse> {
+  GetRParams(
+    request: QueryGetRParamsRequest
+  ): Promise<QueryGetRParamsResponse> {
     const data = QueryGetRParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "GetRParams", data);
-    return promise.then((data) => QueryGetRParamsResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "GetRParams",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetRParamsResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  TotalProtocolFee(request: QueryTotalProtocolFeeRequest): Promise<QueryTotalProtocolFeeResponse> {
+  TotalProtocolFee(
+    request: QueryTotalProtocolFeeRequest
+  ): Promise<QueryTotalProtocolFeeResponse> {
     const data = QueryTotalProtocolFeeRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "TotalProtocolFee", data);
-    return promise.then((data) => QueryTotalProtocolFeeResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "TotalProtocolFee",
+      data
+    );
+    return promise.then((data) =>
+      QueryTotalProtocolFeeResponse.decode(new _m0.Reader(data))
+    );
   }
 
-  RelayFeeReceiver(request: QueryRelayFeeReceiverRequest): Promise<QueryRelayFeeReceiverResponse> {
+  RelayFeeReceiver(
+    request: QueryRelayFeeReceiverRequest
+  ): Promise<QueryRelayFeeReceiverResponse> {
     const data = QueryRelayFeeReceiverRequest.encode(request).finish();
-    const promise = this.rpc.request("stafihub.stafihub.ledger.Query", "RelayFeeReceiver", data);
-    return promise.then((data) => QueryRelayFeeReceiverResponse.decode(new _m0.Reader(data)));
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "RelayFeeReceiver",
+      data
+    );
+    return promise.then((data) =>
+      QueryRelayFeeReceiverResponse.decode(new _m0.Reader(data))
+    );
   }
 }
 
 interface Rpc {
-  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
+  request(
+    service: string,
+    method: string,
+    data: Uint8Array
+  ): Promise<Uint8Array>;
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
-
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Long
@@ -3042,11 +4001,6 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-
-type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

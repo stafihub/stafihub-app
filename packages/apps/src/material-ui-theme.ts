@@ -31,6 +31,7 @@ declare module "@mui/material/styles/createPalette" {
   interface PaletteOptions {
     darkButtonBg: PaletteOptions["primary"];
     darkBg: PaletteOptions["primary"];
+    white: PaletteOptions["primary"];
   }
 }
 
@@ -53,6 +54,12 @@ declare module "@mui/material/AppBar" {
   }
 }
 
+declare module "@mui/material/CircularProgress" {
+  interface CircularProgressPropsColorOverrides {
+    white: true;
+  }
+}
+
 export const theme = createTheme({
   palette: {
     primary: {
@@ -60,6 +67,9 @@ export const theme = createTheme({
     },
     secondary: {
       main: "#7c7c7c",
+    },
+    white: {
+      main: "#ffffff",
     },
     darkBg: {
       main: "#1D1930",
@@ -102,6 +112,22 @@ export const theme = createTheme({
         "-apple-system",
       ].join(","),
       fontWeight: "bold",
+    },
+  },
+  components: {
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          height: "17px",
+          borderRadius: "9px",
+        },
+        colorPrimary: {
+          backgroundColor: "#C4C4C4",
+        },
+        barColorPrimary: {
+          backgroundColor: "#6758FF",
+        },
+      },
     },
   },
 });

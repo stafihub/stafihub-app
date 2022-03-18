@@ -12,7 +12,7 @@ import { AccountModal } from "./AccountModal";
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const [accounts] = useAccounts();
+  const accounts = useAccounts();
   const [accountModalVisible, setAccountModalVisible] = useState(false);
 
   const renderAccount = () => {

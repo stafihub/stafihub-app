@@ -1,7 +1,8 @@
 import classNames from "classnames";
 
 interface CustomInputProps {
-  placeholder: string;
+  disabled?: boolean;
+  placeholder?: string;
   fontSize?: number;
   value: string;
   handleValueChange: (value: string) => void;
@@ -10,6 +11,7 @@ interface CustomInputProps {
 export const CustomNumberInput = (props: CustomInputProps) => {
   return (
     <input
+      disabled={props.disabled}
       className={classNames(
         "bg-transparent border-none outline-none text-white font-bold placeholder:text-placdholder",
         props.fontSize ? `text-[${props.fontSize}px]` : "text-[22px]"

@@ -26,3 +26,20 @@ export function humanToAtomic(
 
   return decimal.toString();
 }
+
+export function formatNumberToFixed(
+  num: string | number | undefined,
+  decimals: number = 6
+) {
+  if (num === undefined || num === "") {
+    return "--";
+  }
+  if (isNaN(Number(num))) {
+    return "--";
+  }
+  const newNum = (
+    Math.floor(Number(num) * Math.pow(10, decimals)) / Math.pow(10, decimals)
+  ).toFixed(decimals);
+
+  return newNum;
+}

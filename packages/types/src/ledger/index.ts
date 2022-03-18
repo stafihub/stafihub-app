@@ -4,5 +4,7 @@ export type {
   QueryBondedPoolsByDenomResponse,
   QueryGetExchangeRateResponse,
   QueryGetPoolDetailResponse,
+  QueryGetAccountUnbondResponse,
+  QueryGetUnbondCommissionResponse,
 } from "./query";
 export { MsgLiquidityUnbond, MsgClientImpl } from "./tx";

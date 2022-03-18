@@ -3,33 +3,38 @@ import { chains } from "@stafihub/apps-config";
 
 declare const window: any;
 
-export async function connectAtomjs(network: string) {
+function timeout(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function connectAtomjs(chainName: string) {
+  await timeout(500);
   if (!window.getOfflineSigner || !window.keplr) {
     // message.error("Please install Keplr extension");
     return;
   }
 
-  const enableResult = await innerConnectKeplr(network);
+  const enableResult = await innerConnectKeplr(chainName);
   return enableResult;
 }
 
-async function innerConnectKeplr(network: string) {
+async function innerConnectKeplr(chainName: string) {
   if (window.keplr.experimentalSuggestChain) {
     let parameter = {
       // Chain-id of the Cosmos SDK chain.
-      chainId: chains[network].chainId,
+      chainId: chains[chainName].chainId,
       // The name of the chain to be displayed to the user.
-      chainName: chains[network].chainName,
+      chainName: chains[chainName].chainName,
       // RPC endpoint of the chain.
-      rpc: chains[network].rpc,
+      rpc: chains[chainName].rpc,
       // REST endpoint of the chain.
-      rest: chains[network].restEndpoint,
+      rest: chains[chainName].restEndpoint,
       // Staking coin information
       stakeCurrency: {
         // Coin denomination to be displayed to the user.
-        coinDenom: chains[network].coinDenom,
+        coinDenom: chains[chainName].coinDenom,
         // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-        coinMinimalDenom: chains[network].denom,
+        coinMinimalDenom: chains[chainName].denom,
         // # of decimal points to convert minimal denomination to user-facing denomination.
         coinDecimals: 6,
       },
@@ -43,14 +48,14 @@ async function innerConnectKeplr(network: string) {
         coinType: 118,
       },
       // Bech32 configuration to show the address to user.
-      bech32Config: chains[network].bech32Config,
+      bech32Config: chains[chainName].bech32Config,
       // List of all coin/tokens used in this chain.
       currencies: [
         {
           // Coin denomination to be displayed to the user.
-          coinDenom: chains[network].coinDenom,
+          coinDenom: chains[chainName].coinDenom,
           // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-          coinMinimalDenom: chains[network].denom,
+          coinMinimalDenom: chains[chainName].denom,
           // # of decimal points to convert minimal denomination to user-facing denomination.
           coinDecimals: 6,
         },
@@ -59,9 +64,9 @@ async function innerConnectKeplr(network: string) {
       feeCurrencies: [
         {
           // Coin denomination to be displayed to the user.
-          coinDenom: chains[network].coinDenom,
+          coinDenom: chains[chainName].coinDenom,
           // Actual denom (i.e. uatom, uscrt) used by the blockchain.
-          coinMinimalDenom: chains[network].denom,
+          coinMinimalDenom: chains[chainName].denom,
           // # of decimal points to convert minimal denomination to user-facing denomination.
           coinDecimals: 6,
         },
@@ -98,12 +103,13 @@ async function innerConnectKeplr(network: string) {
     console.error("Please use the recent version of keplr extension");
   }
 
-  const enableResult = await window.keplr.enable(chains[network].chainId);
+  const enableResult = await window.keplr.enable(chains[chainName].chainId);
   console.log("enableResult", enableResult);
   return enableResult;
 }
 
 export async function createCosmosClient(network: string) {
+  await timeout(500);
   if (!window.getOfflineSigner) {
     return null;
   }
@@ -117,6 +123,7 @@ export async function createCosmosClient(network: string) {
 }
 
 export async function getKeplrAccount(network: string) {
+  await timeout(500);
   if (!window.keplr) {
     return;
   }

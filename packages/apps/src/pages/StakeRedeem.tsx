@@ -1,21 +1,50 @@
-import { Button, CustomInput } from "@stafihub/react-components";
-import { getCosmosNetwork } from "@stafihub/apps-config";
+import { Button, CustomNumberInput } from "@stafihub/react-components";
+import {
+  getCosmosNetwork,
+  getRTokenDenomFromChainName,
+} from "@stafihub/apps-config";
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
-import { UnbondModal } from "../components/UnbondModal";
+import { UnbondModal } from "../modals/UnbondModal";
 import { useChainAccount } from "../hooks/useAppSlice";
-import { usePoolInfo, useRTokenBalance } from "../hooks";
+import { usePoolInfo } from "../hooks";
+import { useUnbondCommission } from "../hooks/useUnbondCommission";
+import { formatNumberToFixed } from "@stafihub/apps-util";
+import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 
 export const StakeRedeem = () => {
   const params = useParams();
   const tokenName = params.tokenName;
-  const { rTokenBalance } = useRTokenBalance(`ur${tokenName}`);
-  const { exchangeRate } = usePoolInfo(`ur${tokenName}`);
+  const rTokenDenom = getRTokenDenomFromChainName(tokenName);
+  const { exchangeRate } = usePoolInfo(rTokenDenom);
+  const { unbondCommission } = useUnbondCommission(rTokenDenom);
+  const { stakeStatus } = useChainStakeStatus(rTokenDenom);
 
-  const [chainAccount] = useChainAccount(getCosmosNetwork());
+  const chainAccount = useChainAccount(getCosmosNetwork());
   const [unbondModalVisible, setUnbondModalVisible] = useState(false);
   const [inputAmount, setInputAmount] = useState("");
+
+  const redeemableAmount = useMemo(() => {
+    if (
+      isNaN(Number(unbondCommission)) ||
+      !stakeStatus ||
+      isNaN(Number(stakeStatus.rTokenBalance))
+    ) {
+      return "--";
+    }
+    return (
+      Number(stakeStatus.rTokenBalance) *
+      (1 - Number(unbondCommission))
+    ).toString();
+  }, [unbondCommission, stakeStatus]);
+
+  const commissionFee = useMemo(() => {
+    if (isNaN(Number(unbondCommission)) || isNaN(Number(inputAmount))) {
+      return "--";
+    }
+    return (Number(inputAmount) * Number(unbondCommission)).toString();
+  }, [unbondCommission, inputAmount]);
 
   const willGetAmount = useMemo(() => {
     if (isNaN(Number(inputAmount)) || isNaN(Number(exchangeRate))) {
@@ -24,20 +53,30 @@ export const StakeRedeem = () => {
     return (Number(inputAmount) * Number(exchangeRate)).toString();
   }, [inputAmount, exchangeRate]);
 
+  const buttonDisabled = useMemo(() => {
+    if (Number(inputAmount) <= 0) {
+      return true;
+    }
+    if (Number(inputAmount) > Number(redeemableAmount)) {
+      return true;
+    }
+    return false;
+  }, [redeemableAmount, inputAmount]);
+
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
       <div className="text-white font-bold text-[30px]">
-        Redeem u{tokenName?.toUpperCase()}
+        Redeem {tokenName?.toUpperCase()}
       </div>
 
       <div className="mt-10 text-white text-[20px]">
-        1. Unbond u{tokenName?.toUpperCase()}
+        1. Unbond {tokenName?.toUpperCase()}
       </div>
 
       <div className="mt-2 flex flex-col">
         <div className="border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
           <div className="ml-5">
-            <CustomInput
+            <CustomNumberInput
               placeholder="AMOUNT"
               value={inputAmount}
               handleValueChange={setInputAmount}
@@ -48,11 +87,12 @@ export const StakeRedeem = () => {
             <div
               className="text-primary text-[16px] cursor-pointer"
               onClick={() => {
+                console.log("redeemableAmount", redeemableAmount);
                 if (
-                  !isNaN(Number(rTokenBalance)) &&
-                  Number(rTokenBalance) > 0
+                  !isNaN(Number(redeemableAmount)) &&
+                  Number(redeemableAmount) > 0
                 ) {
-                  setInputAmount(rTokenBalance);
+                  setInputAmount(formatNumberToFixed(redeemableAmount));
                 }
               }}
             >
@@ -68,7 +108,8 @@ export const StakeRedeem = () => {
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[12px] self-end mr-[60px]">
-          ur{tokenName?.toUpperCase()} balance: {rTokenBalance}
+          r{tokenName?.toUpperCase()} balance:{" "}
+          {stakeStatus ? stakeStatus.rTokenBalance : "--"}
         </div>
       </div>
 
@@ -86,6 +127,7 @@ export const StakeRedeem = () => {
 
       <div className="flex justify-end mt-[130px] mr-[57px]">
         <Button
+          disabled={buttonDisabled}
           onClick={() => {
             setUnbondModalVisible(true);
           }}
@@ -97,9 +139,11 @@ export const StakeRedeem = () => {
       <UnbondModal
         visible={unbondModalVisible}
         onClose={() => setUnbondModalVisible(false)}
+        denom={stakeStatus?.rTokenDenom}
         inputAmount={inputAmount}
         receiveAddress={chainAccount?.bech32Address || ""}
-        willGetAmount={willGetAmount}
+        willGetAmount={formatNumberToFixed(willGetAmount)}
+        commissionFee={formatNumberToFixed(commissionFee)}
       />
     </div>
   );

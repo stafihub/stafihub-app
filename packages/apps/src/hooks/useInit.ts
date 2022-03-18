@@ -20,12 +20,10 @@ export function useInit() {
 
     const networks = _.keys(chains);
 
-    setTimeout(() => {
-      dispatch(
-        connectKeplrChains(
-          networks.filter((network) => isNetworkAllowed(network))
-        )
-      );
-    }, 1000);
+    dispatch(
+      connectKeplrChains(
+        networks.filter((network) => isNetworkAllowed(network))
+      )
+    );
   }, [dispatch]);
 }

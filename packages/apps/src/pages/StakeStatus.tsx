@@ -1,24 +1,56 @@
+import {
+  getRTokenDenomFromChainName,
+  STAFIHUB_NETWORK,
+} from "@stafihub/apps-config";
 import { Button, FormatterText } from "@stafihub/react-components";
-import ATOM from "../assets/images/ATOM.svg";
-import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
-import iconDown from "../assets/images/icon_down.png";
-import { usePoolInfo, useRTokenBalance } from "../hooks";
-import { useParams, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import ATOM from "../assets/images/ATOM.svg";
+import iconDown from "../assets/images/icon_down.png";
+import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
+import { usePoolInfo } from "../hooks";
+import { useAccountUnbond } from "../hooks/useAccountUnbond";
+import { useChainAccount } from "../hooks/useAppSlice";
+import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
+import { useUnbondCommission } from "../hooks/useUnbondCommission";
 
 export const StakeStatus = () => {
   const navigate = useNavigate();
   const params = useParams();
   const tokenName = params.tokenName;
-  const { rTokenBalance } = useRTokenBalance(`ur${tokenName}`);
-  const { exchangeRate } = usePoolInfo(`ur${tokenName}`);
+  const rTokenDenom = getRTokenDenomFromChainName(tokenName);
+  const stafiHubAccount = useChainAccount(STAFIHUB_NETWORK);
+
+  const { stakeStatus } = useChainStakeStatus(rTokenDenom);
+
+  const { exchangeRate } = usePoolInfo(rTokenDenom);
+  const { unbondingAmount } = useAccountUnbond(
+    rTokenDenom,
+    stafiHubAccount?.bech32Address
+  );
+  const { unbondCommission } = useUnbondCommission(rTokenDenom);
 
   const stakedAmount = useMemo(() => {
-    if (isNaN(Number(exchangeRate)) || isNaN(Number(rTokenBalance))) {
+    if (
+      !stakeStatus ||
+      isNaN(Number(exchangeRate)) ||
+      isNaN(Number(stakeStatus.rTokenBalance))
+    ) {
       return "--";
     }
-    return Number(rTokenBalance) * Number(exchangeRate);
-  }, [rTokenBalance, exchangeRate]);
+    return Number(stakeStatus.rTokenBalance) * Number(exchangeRate);
+  }, [exchangeRate, stakeStatus]);
+
+  const redeemableAmount = useMemo(() => {
+    if (
+      isNaN(Number(exchangeRate)) ||
+      !stakeStatus ||
+      isNaN(Number(stakeStatus.rTokenBalance))
+    ) {
+      return "--";
+    }
+    return Number(stakeStatus.rTokenBalance) * (1 - Number(unbondCommission));
+  }, [unbondCommission, exchangeRate, stakeStatus]);
 
   return (
     <div className="px-[52px] py-[42px]">
@@ -27,24 +59,25 @@ export const StakeStatus = () => {
           <img src={ATOM} className="w-[36px] h-[36px]" alt="token icon" />
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            ur{tokenName?.toUpperCase()}
+            r{tokenName?.toUpperCase()}
           </div>
         </div>
 
         <div className="ml-[10px] text-primary text-[30px] font-bold cursor-pointer">
-          <FormatterText value={rTokenBalance} />
+          <FormatterText value={stakeStatus?.rTokenBalance} decimals={6} />
         </div>
       </div>
 
       <div className="flex justify-end mt-[5px] text-text-gray4 text-[12px]">
-        Redeemable u{tokenName?.toUpperCase()} : 11.12
+        Redeemable r{tokenName?.toUpperCase()} :{" "}
+        <FormatterText value={redeemableAmount} decimals={6} />
       </div>
 
       <div className="mt-[50px] flex items-center">
         <div className="flex-grow-[1] flex justify-start pl-[15px]">
           <div className="flex flex-col items-center ">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
-              Staked u{tokenName?.toUpperCase()}
+              Staked {tokenName?.toUpperCase()}
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
@@ -58,11 +91,11 @@ export const StakeStatus = () => {
         <div className="flex-grow-[2]">
           <div className="flex flex-col items-center">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
-              Unbonding ATOM
+              Unbonding r{tokenName?.toUpperCase()}
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
-              11.12
+              <FormatterText value={unbondingAmount} />
             </div>
           </div>
         </div>
@@ -117,12 +150,12 @@ export const StakeStatus = () => {
           />
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            rATOM / ATOM
+            r{tokenName?.toUpperCase()} / {tokenName?.toUpperCase()}
           </div>
         </div>
 
         <div className="ml-[10px] text-primary text-[30px] font-bold cursor-pointer">
-          1.0323
+          <FormatterText value={exchangeRate} decimals={6} />
         </div>
       </div>
 

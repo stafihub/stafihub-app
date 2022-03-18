@@ -31,6 +31,19 @@ module.exports = {
         "full-screen": "1280px",
         "card-container-width": "683px",
       },
+      keyframes: {
+        siderbar_progress_show: {
+          from: {
+            right: "-253px",
+          },
+          to: {
+            right: "0px",
+          },
+        },
+      },
+      animation: {
+        siderbar_progress_show: "siderbar_progress_show 0.5s",
+      },
     },
   },
   plugins: [],

@@ -1,10 +1,12 @@
 import { Sidebar } from "@stafihub/react-components";
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
+import { ProgressSidebar } from "../components/ProgressSidebar";
+import { ProgressModal } from "../modals/ProgressModal";
 
 export const MainLayout = () => {
   return (
-    <div className="bg-black-900 h-screen flex w-full-screen">
+    <div className="bg-black-900 h-screen flex w-full-screen relative">
       <Sidebar />
 
       <div className="flex-1 flex flex-col">
@@ -14,6 +16,10 @@ export const MainLayout = () => {
           <Outlet />
         </div>
       </div>
+
+      <ProgressSidebar />
+
+      <ProgressModal />
     </div>
   );
 };

@@ -1,4 +1,5 @@
-export const STORAGE_KEPLR_WALLET_ALLOWED = "keplr_network_allowed_";
+export const STORAGE_KEPLR_WALLET_ALLOWED = "stafihub_keplr_network_allowed_";
+export const STORAGE_KEY_SLIPPAGE = "stafihub_slippage";
 
 export function saveNetworkAllowedFlag(network: string) {
   saveStorage(getNetworkAllowedKey(network), "1");

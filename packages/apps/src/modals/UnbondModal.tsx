@@ -3,18 +3,24 @@ import { Button } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { usePoolInfo } from "../hooks";
+import { useIsLoading } from "../hooks/useAppSlice";
+import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { unbond } from "../redux/reducers/TxSlice";
 
 interface UnbondModalProps {
+  denom: string | undefined;
   visible: boolean;
   onClose: () => void;
   inputAmount: string;
   receiveAddress: string;
   willGetAmount: string;
+  commissionFee: string;
 }
 
 export const UnbondModal = (props: UnbondModalProps) => {
   const dispatch = useDispatch();
+  const isLoading = useIsLoading();
+  const { updateStakeStatus } = useChainStakeStatus(props.denom || "");
 
   const params = useParams();
   const tokenName = params.tokenName;
@@ -44,7 +50,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[25px] text-text-gray4 text-[20px]">
-          —Commission: 1 ur{tokenName?.toUpperCase()}
+          —Commission: {props.commissionFee} r{tokenName?.toUpperCase()}
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[20px]">
@@ -68,11 +74,13 @@ export const UnbondModal = (props: UnbondModalProps) => {
           </div>
 
           <Button
+            loading={isLoading}
             onClick={() => {
               dispatch(
                 unbond(props.inputAmount, poolAddress, (success) => {
                   if (success) {
                     props.onClose();
+                    updateStakeStatus();
                   }
                 })
               );

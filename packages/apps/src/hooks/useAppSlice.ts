@@ -6,15 +6,18 @@ export function useAccounts() {
     return state.app.accounts;
   });
 
-  return [accounts];
+  return accounts;
 }
 
-export function useChainAccount(network: string) {
+export function useChainAccount(network: string | undefined) {
   const account = useSelector((state: RootState) => {
+    if (!network) {
+      return undefined;
+    }
     return state.app.accounts[network];
   });
 
-  return [account];
+  return account;
 }
 
 export function useIsFork() {
@@ -23,4 +26,20 @@ export function useIsFork() {
   });
 
   return [isFork];
+}
+
+export function useIsLoading() {
+  const isLoading = useSelector((state: RootState) => {
+    return state.app.isLoading;
+  });
+
+  return isLoading;
+}
+
+export function useSlippage() {
+  const slippage = useSelector((state: RootState) => {
+    return state.app.slippage;
+  });
+
+  return slippage;
 }

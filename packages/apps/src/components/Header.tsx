@@ -36,12 +36,14 @@ export const Header = () => {
           setAccountModalVisible(true);
         }}
       >
-        <div className="text-white font-bold text-[14px]">
+        <div className="text-white font-bold text-[14px] flex items-center">
           <FormatterText
             value={atomicToHuman(accounts[STAFIHUB_NETWORK]?.balance?.amount)}
             decimals={6}
           />
-          {} {accounts[STAFIHUB_NETWORK]?.balance?.denom}
+          <div className="ml-1 uppercase">
+            {accounts[STAFIHUB_NETWORK]?.balance?.denom?.slice(1)}
+          </div>
         </div>
 
         <div className="mt-[3px] text-text-gray1 font-bold text-[12px] scale-[0.8] origin-center">

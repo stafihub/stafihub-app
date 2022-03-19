@@ -60,7 +60,9 @@ export const AccountItem = (props: AccountItemProps) => {
                 decimals={6}
               />
 
-              <div className="ml-1">{props.chainAccount.balance?.denom}</div>
+              <div className="ml-1 uppercase">
+                {props.chainAccount.balance?.denom?.slice(1)}
+              </div>
             </div>
           </div>
         </div>

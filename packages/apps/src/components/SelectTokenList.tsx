@@ -85,7 +85,9 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
                     />
                   </Box>
 
-                  <div className="text-[16px] text-white">{item.symbol}</div>
+                  <div className="text-[16px] text-white uppercase">
+                    {item.symbol?.slice(1)}
+                  </div>
                 </Stack>
 
                 <div className="text-[16px] text-white font-bold">

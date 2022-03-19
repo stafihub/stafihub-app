@@ -39,6 +39,7 @@ export const SelectTokenInput = (props: SelectTokenInputProps) => {
           <CustomNumberInput
             disabled={props.disabled}
             value={props.value}
+            placeholder="0.0"
             handleValueChange={props.handleValueChange}
           />
         </Box>
@@ -67,7 +68,7 @@ export const SelectTokenInput = (props: SelectTokenInputProps) => {
             }}
           >
             {props.selectedToken ? (
-              <div className="text-white text-[18px]">
+              <div className="text-white text-[18px] uppercase">
                 {props.selectedToken.chainName}
               </div>
             ) : props.content ? (

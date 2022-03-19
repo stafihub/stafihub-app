@@ -195,12 +195,7 @@ export const FeeStation = (props: {}) => {
     }
 
     return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        padding="15px 20px 0"
-        width="340px"
-      >
+      <Box display="flex" flexDirection="column" padding="15px 20px 0">
         <div className="self-stretch flex items-center justify-between">
           <div className="text-white font-bold text-[18px]">Swap</div>
 
@@ -313,14 +308,6 @@ export const FeeStation = (props: {}) => {
           content={`${minReceive} FIS`}
           mt="4px"
         />
-
-        <DataCell
-          title="Fee"
-          content={`${fee} FIS`}
-          mt="4px"
-          showTooltip
-          tooltip="For each trade, a % fee is paid to liquidity providers."
-        />
       </Box>
     );
   }, [
@@ -348,8 +335,12 @@ export const FeeStation = (props: {}) => {
         using native ATOM and other Cosmos Eco tokens.
       </div>
 
-      <div className="mt-8 w-[340px] h-[444px] overflow-auto bg-black-700 rounded-lg border-solid border-[1px] border-[#31373e]">
+      <div className="mt-8 h-[444px] w-[340px] overflow-auto bg-black-700 rounded-lg border-solid border-[1px] border-[#31373e]">
         {renderContent()}
+      </div>
+
+      <div className="mt-8 text-text-gray5 text-[14px]">
+        Note: You can only swap up to {swapMaxLimit} FIS every transaction.
       </div>
     </Stack>
   );

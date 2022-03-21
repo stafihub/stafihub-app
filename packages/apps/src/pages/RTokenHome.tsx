@@ -4,9 +4,11 @@ import {
 } from "@stafihub/react-components";
 import bridgeImage from "../assets/images/hub_bridge.svg";
 import { useNavigate } from "react-router-dom";
+import { useRTokenList } from "../hooks/useRTokenList";
 
 export const RTokenHome = () => {
   const navigate = useNavigate();
+  const rTokenList = useRTokenList();
 
   return (
     <div className="flex flex-col items-center">
@@ -23,13 +25,15 @@ export const RTokenHome = () => {
 
         <StakeTokenTableHeader />
 
-        <StakeTokenItem
-          originTokenName="ETH"
-          derivativeTokenName="rETH"
-          onClickStake={() => {
-            navigate("/stake/iris");
-          }}
-        />
+        {rTokenList.map((rToken) => (
+          <StakeTokenItem
+            originTokenName={rToken.tokenName}
+            derivativeTokenName={rToken.rTokenName}
+            onClickStake={() => {
+              navigate(`/stake/${rToken.chainName}`);
+            }}
+          />
+        ))}
       </div>
     </div>
   );

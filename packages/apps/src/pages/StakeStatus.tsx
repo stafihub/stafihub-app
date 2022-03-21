@@ -1,5 +1,7 @@
 import {
-  getRTokenDenomFromChainName,
+  getRTokenDenom,
+  getRTokenDisplayName,
+  getTokenDisplayName,
   STAFIHUB_NETWORK,
 } from "@stafihub/apps-config";
 import { Button, FormatterText } from "@stafihub/react-components";
@@ -17,8 +19,8 @@ import { useUnbondCommission } from "../hooks/useUnbondCommission";
 export const StakeStatus = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const tokenName = params.tokenName;
-  const rTokenDenom = getRTokenDenomFromChainName(tokenName);
+  const chainName = params.chainName;
+  const rTokenDenom = getRTokenDenom(chainName);
   const stafiHubAccount = useChainAccount(STAFIHUB_NETWORK);
 
   const { stakeStatus } = useChainStakeStatus(rTokenDenom);
@@ -59,7 +61,7 @@ export const StakeStatus = () => {
           <img src={ATOM} className="w-[36px] h-[36px]" alt="token icon" />
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            r{tokenName?.toUpperCase()}
+            {getRTokenDisplayName(chainName)}
           </div>
         </div>
 
@@ -69,7 +71,7 @@ export const StakeStatus = () => {
       </div>
 
       <div className="flex justify-end mt-[5px] text-text-gray4 text-[12px]">
-        Redeemable r{tokenName?.toUpperCase()} :{" "}
+        Redeemable {getRTokenDisplayName(chainName)} :{" "}
         <FormatterText value={redeemableAmount} decimals={6} />
       </div>
 
@@ -77,7 +79,7 @@ export const StakeStatus = () => {
         <div className="flex-grow-[1] flex justify-start pl-[15px]">
           <div className="flex flex-col items-center ">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
-              Staked {tokenName?.toUpperCase()}
+              Staked {getTokenDisplayName(chainName)}
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
@@ -91,7 +93,7 @@ export const StakeStatus = () => {
         <div className="flex-grow-[2]">
           <div className="flex flex-col items-center">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
-              Unbonding r{tokenName?.toUpperCase()}
+              Unbonding {getRTokenDisplayName(chainName)}
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
@@ -119,7 +121,7 @@ export const StakeStatus = () => {
         <Button
           size="small"
           onClick={() => {
-            navigate(`/stake/${params.tokenName}/redeem`);
+            navigate(`/stake/${params.chainName}/redeem`);
           }}
         >
           Redeem
@@ -150,7 +152,7 @@ export const StakeStatus = () => {
           />
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            r{tokenName?.toUpperCase()} / {tokenName?.toUpperCase()}
+            {getRTokenDisplayName(chainName)} / {getTokenDisplayName(chainName)}
           </div>
         </div>
 

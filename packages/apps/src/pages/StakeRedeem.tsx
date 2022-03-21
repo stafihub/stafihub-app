@@ -1,7 +1,9 @@
 import { Button, CustomNumberInput } from "@stafihub/react-components";
 import {
   getCosmosNetwork,
-  getRTokenDenomFromChainName,
+  getRTokenDenom,
+  getRTokenDisplayName,
+  getTokenDisplayName,
 } from "@stafihub/apps-config";
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -15,8 +17,8 @@ import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 
 export const StakeRedeem = () => {
   const params = useParams();
-  const tokenName = params.tokenName;
-  const rTokenDenom = getRTokenDenomFromChainName(tokenName);
+  const chainName = params.chainName;
+  const rTokenDenom = getRTokenDenom(chainName);
   const { exchangeRate } = usePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(rTokenDenom);
@@ -66,11 +68,11 @@ export const StakeRedeem = () => {
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
       <div className="text-white font-bold text-[30px]">
-        Redeem {tokenName?.toUpperCase()}
+        Redeem {getTokenDisplayName(chainName)}
       </div>
 
       <div className="mt-10 text-white text-[20px]">
-        1. Unbond {tokenName?.toUpperCase()}
+        1. Unbond {getTokenDisplayName(chainName)}
       </div>
 
       <div className="mt-2 flex flex-col">
@@ -108,7 +110,7 @@ export const StakeRedeem = () => {
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[12px] self-end mr-[60px]">
-          r{tokenName?.toUpperCase()} balance:{" "}
+          {getRTokenDisplayName(chainName)} balance:{" "}
           {stakeStatus ? stakeStatus.rTokenBalance : "--"}
         </div>
       </div>

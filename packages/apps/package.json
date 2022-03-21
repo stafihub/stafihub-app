@@ -18,6 +18,8 @@
     "classnames": "^2.3.1",
     "crypto-browserify": "^3.12.0",
     "lodash": "^4.17.21",
+    "material-ui-popup-state": "^2.0.0",
+    "moment": "^2.29.1",
     "notistack": "^2.0.3",
     "react-loading": "^2.0.3",
     "react-redux": "^7.2.6",

@@ -1,4 +1,10 @@
-import { getCosmosNetwork, STAFIHUB_NETWORK } from "@stafihub/apps-config";
+import {
+  getCosmosNetwork,
+  getRTokenDenom,
+  getRTokenDisplayName,
+  getTokenDisplayName,
+  STAFIHUB_NETWORK,
+} from "@stafihub/apps-config";
 import {
   Button,
   CustomInput,
@@ -11,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
 import { usePoolInfo } from "../hooks";
-import { useChainAccount } from "../hooks/useAppSlice";
+import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { useChainInfo } from "../hooks/useChainInfo";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { stake } from "../redux/reducers/TxSlice";
@@ -19,12 +25,13 @@ import { stake } from "../redux/reducers/TxSlice";
 export const StakeHome = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoading = useIsLoading();
   const stafiHubAccount = useChainAccount(STAFIHUB_NETWORK);
   const chainAccount = useChainAccount(getCosmosNetwork());
   const chain = useChainInfo(getCosmosNetwork());
   const params = useParams();
-  const tokenName = params.tokenName;
-  const { poolAddress, exchangeRate } = usePoolInfo(`ur${tokenName}`);
+  const chainName = params.chainName;
+  const { poolAddress, exchangeRate } = usePoolInfo(getRTokenDenom(chainName));
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
 
@@ -56,7 +63,7 @@ export const StakeHome = () => {
     dispatch(
       stake(inputAmount, stafiHubAddress, poolAddress, (success) => {
         if (success) {
-          navigate(`/stake/${tokenName}/status`);
+          navigate(`/stake/${chainName}/status`);
         }
       })
     );
@@ -73,11 +80,11 @@ export const StakeHome = () => {
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
       <div className="text-white font-bold text-[30px]">
-        Stake u{tokenName?.toUpperCase()}
+        Stake {getTokenDisplayName(chainName)}
       </div>
 
       <div className="mt-[12px] text-text-gray4 text-[14px]">
-        23.344 u{tokenName?.toUpperCase()} is staked in the contracts
+        23.344 {getTokenDisplayName(chainName)} is staked in the contracts
       </div>
 
       <div className="mt-[10px] mr-[35px] h-[0.5px] bg-divider" />
@@ -125,7 +132,7 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-12 font-bold text-text-gray5 text-[14px]">
-        You will get ur{tokenName?.toUpperCase()}
+        You will get {getRTokenDisplayName(chainName)}
       </div>
 
       <div className="mt-[2px] font-bold text-primary text-[30px]">
@@ -198,7 +205,11 @@ export const StakeHome = () => {
       </div>
 
       <div className="flex justify-end mt-[30px] mr-[57px]">
-        <Button onClick={clickStake} disabled={buttonDisabled}>
+        <Button
+          onClick={clickStake}
+          disabled={buttonDisabled}
+          loading={isLoading}
+        >
           Stake
         </Button>
       </div>

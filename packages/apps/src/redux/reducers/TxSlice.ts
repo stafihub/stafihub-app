@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { STAFIHUB_NETWORK, STAFIHUB_DECIMALS } from "@stafihub/apps-config";
+import {
+  STAFIHUB_NETWORK,
+  STAFIHUB_DECIMALS,
+  getTokenDisplayName,
+  getExplorerUrl,
+} from "@stafihub/apps-config";
 import {
   sendLiquidityUnbondTx,
   sendStakeTx,
@@ -9,9 +14,11 @@ import { humanToAtomic } from "@stafihub/apps-util";
 import { FeeStationPool } from "@stafihub/types";
 import { AppThunk } from "../store";
 import {
+  addNotice,
   connectKeplr,
   setIsLoading,
   updateAllTokenBalance,
+  updateNotice,
   updateTokenBalance,
 } from "./AppSlice";
 import { timeout } from "../../utils/common";
@@ -93,61 +100,91 @@ export const stake =
   ): AppThunk =>
   async (dispatch, getState) => {
     try {
-      const chainAccount =
-        getState().app.accounts[getState().app.currentNetwork];
+      const chainName = getState().app.currentNetwork;
+      const chainAccount = getState().app.accounts[chainName];
       if (!chainAccount) {
         return;
       }
-      const success = await sendStakeTx(
+      dispatch(setIsLoading(true));
+      const txResponse = await sendStakeTx(
         inputAmount,
         chainAccount.bech32Address,
         stafiHubAddress,
         poolAddress
       );
-      dispatch(updateTokenBalance(getState().app.currentNetwork));
-      dispatch(
-        setSidebarProgressProps({
-          visible: true,
-          items: [{ name: "Staking", status: 0 }],
-        })
-      );
+      dispatch(setIsLoading(false));
 
-      await timeout(3000);
+      if (txResponse?.code === 0) {
+        dispatch(
+          addNotice(
+            txResponse.transactionHash,
+            "Stake",
+            {
+              transactionHash: txResponse.transactionHash,
+              address: chainAccount.bech32Address,
+            },
+            {
+              tokenName: getTokenDisplayName(chainName),
+              stakeAmount: inputAmount,
+            },
+            getExplorerUrl(chainName)
+          )
+        );
 
-      dispatch(
-        setSidebarProgressProps({
-          visible: true,
-          items: [
-            { name: "Staking", status: 1 },
-            { name: "Sending", status: 0 },
-          ],
-        })
-      );
+        dispatch(updateTokenBalance(getState().app.currentNetwork));
+        dispatch(
+          setSidebarProgressProps({
+            visible: true,
+            items: [{ name: "Staking", status: 0 }],
+          })
+        );
 
-      await timeout(3000);
+        await timeout(3000);
 
-      dispatch(
-        setSidebarProgressProps({
-          visible: true,
-          items: [
-            { name: "Staking", status: 1 },
-            { name: "Sending", status: 1 },
-          ],
-        })
-      );
+        dispatch(
+          setSidebarProgressProps({
+            visible: true,
+            items: [
+              { name: "Staking", status: 1 },
+              { name: "Sending", status: 0 },
+            ],
+          })
+        );
 
-      callback && callback(success);
-    } catch {}
+        await timeout(3000);
+
+        dispatch(
+          setSidebarProgressProps({
+            visible: true,
+            items: [
+              { name: "Staking", status: 1 },
+              { name: "Sending", status: 1 },
+            ],
+          })
+        );
+
+        dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+      }
+
+      callback && callback(txResponse?.code === 0);
+    } catch {
+    } finally {
+    }
   };
 
 export const unbond =
   (
+    chainName: string | undefined,
     inputAmount: string,
     poolAddress: string,
     callback?: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
     try {
+      if (!chainName) {
+        return;
+      }
+
       const stafiHubAccount = getState().app.accounts[STAFIHUB_NETWORK];
       if (!stafiHubAccount) {
         dispatch(connectKeplr(STAFIHUB_NETWORK));
@@ -162,17 +199,34 @@ export const unbond =
 
       dispatch(setIsLoading(true));
 
-      const success = await sendLiquidityUnbondTx(
+      const txResponse = await sendLiquidityUnbondTx(
+        chainName,
         humanToAtomic(inputAmount, STAFIHUB_DECIMALS),
         chainAccount.bech32Address,
         stafiHubAccount.bech32Address,
         poolAddress
       );
-      if (success) {
+      if (txResponse?.code === 0) {
         snackbarUtil.success("Unbond success");
+        dispatch(
+          addNotice(
+            txResponse.transactionHash,
+            "Unbond",
+            {
+              transactionHash: txResponse.transactionHash,
+              address: chainAccount.bech32Address,
+            },
+            {
+              rTokenName: getTokenDisplayName(chainName),
+              unstakeAmount: inputAmount,
+            },
+            getExplorerUrl(STAFIHUB_NETWORK),
+            "Confimed"
+          )
+        );
       }
       dispatch(updateTokenBalance(getState().app.currentNetwork));
-      callback && callback(success);
+      callback && callback(txResponse?.code === 0);
     } catch (err: unknown) {
       console.log("sendLiquidityUnbondTx err", err);
     } finally {
@@ -237,6 +291,23 @@ export const feeStationSwap =
         );
 
         if (txResponse?.code === 0) {
+          dispatch(
+            addNotice(
+              txResponse.transactionHash,
+              "Fee Station",
+              {
+                transactionHash: txResponse.transactionHash,
+                address: stafiHubAccount.bech32Address,
+              },
+              {
+                inputTokenName: poolInfo.chainName.toUpperCase(),
+                inputAmount: inAmount,
+                outputTokenName: "FIS",
+                outputAmount: outAmount,
+              },
+              getExplorerUrl(STAFIHUB_NETWORK)
+            )
+          );
           dispatch(setIsLoading(false));
           dispatch(
             setSwapProgressModalProps({
@@ -272,6 +343,7 @@ export const feeStationSwap =
                   })
                 );
                 success = true;
+                dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
                 break;
               } else if (getUuidResJson.data?.swapStatus === 3) {
                 dispatch(
@@ -280,6 +352,7 @@ export const feeStationSwap =
                   })
                 );
                 snackbarUtil.error("InAmountNotMatch");
+                dispatch(updateNotice(txResponse.transactionHash, "Error"));
               } else if (getUuidResJson.data?.swapStatus === 4) {
                 dispatch(
                   setSwapProgressModalProps({
@@ -287,6 +360,7 @@ export const feeStationSwap =
                   })
                 );
                 snackbarUtil.error("StafiAddressNotMatch");
+                dispatch(updateNotice(txResponse.transactionHash, "Error"));
               }
             }
 
@@ -314,6 +388,8 @@ export const feeStationSwap =
           dispatch(updateAllTokenBalance());
           callback && callback(success);
         }
+      } else {
+        snackbarUtil.error(postSwapInfoResJson.message);
       }
     } catch (err: unknown) {
       console.log("feeStationSwap err", err);

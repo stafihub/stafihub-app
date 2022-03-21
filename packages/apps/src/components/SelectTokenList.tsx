@@ -10,8 +10,6 @@ interface SelectTokenListProps {
 }
 
 export const SelectTokenList = (props: SelectTokenListProps) => {
-  // const handleClickToken = (token: TokenName) => {};
-
   return (
     <Box>
       <Stack direction="row" alignItems="center">

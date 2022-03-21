@@ -1,5 +1,10 @@
 import { Box, Modal } from "@mui/material";
 import { Button } from "@stafihub/react-components";
+import {
+  getRTokenDenom,
+  getRTokenDisplayName,
+  getTokenDisplayName,
+} from "@stafihub/apps-config/src";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { usePoolInfo } from "../hooks";
@@ -23,8 +28,8 @@ export const UnbondModal = (props: UnbondModalProps) => {
   const { updateStakeStatus } = useChainStakeStatus(props.denom || "");
 
   const params = useParams();
-  const tokenName = params.tokenName;
-  const { poolAddress } = usePoolInfo(`ur${tokenName}`);
+  const chainName = params.chainName;
+  const { poolAddress } = usePoolInfo(getRTokenDenom(chainName));
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>
@@ -46,11 +51,11 @@ export const UnbondModal = (props: UnbondModalProps) => {
         }}
       >
         <div className="text-white font-bold text-[30px]">
-          Unbond {props.inputAmount} ur{tokenName?.toUpperCase()}
+          Unbond {props.inputAmount} {getRTokenDisplayName(chainName)}
         </div>
 
         <div className="mt-[25px] text-text-gray4 text-[20px]">
-          —Commission: {props.commissionFee} r{tokenName?.toUpperCase()}
+          —Commission: {props.commissionFee} {getRTokenDisplayName(chainName)}
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[20px]">
@@ -62,7 +67,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">
-          You will get {props.willGetAmount} u{tokenName?.toUpperCase()}
+          You will get {props.willGetAmount} {getTokenDisplayName(chainName)}
         </div>
 
         <div className="mt-[22px] self-end flex items-center">
@@ -77,7 +82,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
             loading={isLoading}
             onClick={() => {
               dispatch(
-                unbond(props.inputAmount, poolAddress, (success) => {
+                unbond(chainName, props.inputAmount, poolAddress, (success) => {
                   if (success) {
                     props.onClose();
                     updateStakeStatus();

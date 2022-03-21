@@ -13,6 +13,13 @@ import {
   STORAGE_KEY_SLIPPAGE,
 } from "../../utils/storage";
 import { AppThunk } from "../store";
+import {
+  NoticeDataType,
+  NoticeStatus,
+  NoticeTxDetail,
+  NoticeType,
+} from "../../types/notice";
+import { addNoticeInternal, updateNoticeInternal } from "../../utils/notice";
 
 type AccountMap = { [key: string]: KeplrAccount | undefined };
 
@@ -22,6 +29,7 @@ export interface AppState {
   accounts: AccountMap;
   isLoading: boolean;
   slippage: string;
+  unreadNoticeFlag: boolean;
 }
 
 const initialState: AppState = {
@@ -30,6 +38,7 @@ const initialState: AppState = {
   accounts: {},
   isLoading: false,
   slippage: "1",
+  unreadNoticeFlag: false,
 };
 
 export const appSlice = createSlice({
@@ -52,6 +61,9 @@ export const appSlice = createSlice({
       saveStorage(STORAGE_KEY_SLIPPAGE, action.payload);
       state.slippage = action.payload;
     },
+    setUnreadNoticeFlag: (state, action: PayloadAction<boolean>) => {
+      state.unreadNoticeFlag = action.payload;
+    },
   },
 });
 
@@ -61,6 +73,7 @@ export const {
   setAccounts,
   setIsLoading,
   setSlippage,
+  setUnreadNoticeFlag,
 } = appSlice.actions;
 
 export const updateAccounts =
@@ -224,6 +237,33 @@ export const updateAllTokenBalance =
       }
     });
     dispatch(updateMultiAccounts(accountsMap));
+  };
+
+/**
+ * Add notice record.
+ */
+export const addNotice =
+  (
+    id: string,
+    type: NoticeType,
+    txDetail: NoticeTxDetail,
+    data: NoticeDataType,
+    explorerUrl: string,
+    status: NoticeStatus = "Pending"
+  ): AppThunk =>
+  async (dispatch, getState) => {
+    addNoticeInternal(id, type, txDetail, data, explorerUrl, status);
+    dispatch(setUnreadNoticeFlag(true));
+  };
+
+/**
+ * Update notice status.
+ */
+export const updateNotice =
+  (id: string, newStatus: NoticeStatus): AppThunk =>
+  async (dispatch, getState) => {
+    updateNoticeInternal(id, newStatus);
+    dispatch(setUnreadNoticeFlag(true));
   };
 
 export default appSlice.reducer;

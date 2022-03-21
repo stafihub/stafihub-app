@@ -43,3 +43,11 @@ export function useSlippage() {
 
   return slippage;
 }
+
+export function useUnreadNoticeFlag() {
+  const unreadNoticeFlag = useSelector((state: RootState) => {
+    return state.app.unreadNoticeFlag;
+  });
+
+  return unreadNoticeFlag;
+}

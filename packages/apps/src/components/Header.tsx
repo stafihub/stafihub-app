@@ -6,14 +6,27 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import iconNotice from "../assets/images/icon_notice.svg";
 import iconStatis from "../assets/images/icon_statis.svg";
-import { useAccounts } from "../hooks/useAppSlice";
+import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { AccountModal } from "./AccountModal";
+import { Popover } from "@mui/material";
+import {
+  bindPopover,
+  bindTrigger,
+  usePopupState,
+} from "material-ui-popup-state/hooks";
+import { NoticeList } from "./notice/NoticeList";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const accounts = useAccounts();
   const [accountModalVisible, setAccountModalVisible] = useState(false);
+  const unreadNoticeFlag = useUnreadNoticeFlag();
+
+  const noticePopupState = usePopupState({
+    variant: "popover",
+    popupId: "notice",
+  });
 
   const renderAccount = () => {
     if (_.isEmpty(accounts) || _.isEmpty(accounts[STAFIHUB_NETWORK])) {
@@ -55,11 +68,20 @@ export const Header = () => {
 
   return (
     <div className="flex justify-end pt-[20px] items-center h-[56px]">
-      <img
-        src={iconNotice}
-        alt="notice"
-        className="mr-3 w-[19px] h-[19px] cursor-pointer"
-      />
+      <div
+        className="mr-3 w-[20px] h-[20px] relative cursor-pointer"
+        {...bindTrigger(noticePopupState)}
+      >
+        <img
+          src={iconNotice}
+          alt="notice"
+          className="mr-3 w-full h-full cursor-pointer"
+        />
+
+        {unreadNoticeFlag && (
+          <div className="bg-secondary w-[6px] h-[6px] rounded-full absolute right-0 top-0" />
+        )}
+      </div>
 
       {renderAccount()}
 
@@ -73,6 +95,31 @@ export const Header = () => {
         visible={accountModalVisible}
         onClose={() => setAccountModalVisible(false)}
       />
+
+      {/* Notice */}
+      <Popover
+        {...bindPopover(noticePopupState)}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        sx={{
+          marginTop: "4px",
+          marginLeft: "30px",
+          "& .MuiTypography-root": {
+            padding: "0px",
+          },
+        }}
+      >
+        <NoticeList
+          isOpen={noticePopupState.isOpen}
+          onClose={noticePopupState.close}
+        />
+      </Popover>
     </div>
   );
 };

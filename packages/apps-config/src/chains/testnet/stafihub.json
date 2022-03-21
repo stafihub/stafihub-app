@@ -13,5 +13,6 @@
     "bech32PrefixValPub": "stafivaloperpub",
     "bech32PrefixConsAddr": "stafivalcons",
     "bech32PrefixConsPub": "stafivalconspub"
-  }
+  },
+  "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-hub-devnet"
 }

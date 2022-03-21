@@ -23,7 +23,12 @@ export const Button = (props: ButtonProps) => {
         { "rounded-full": !props.type || props.type === "rounded" },
         { "rounded-[2.4px]": props.type === "rectangle" }
       )}
-      onClick={props.onClick}
+      onClick={() => {
+        if (props.disabled || props.loading) {
+          return;
+        }
+        props.onClick && props.onClick();
+      }}
     >
       <div className="flex items-center">
         {props.loading && (

@@ -26,5 +26,5 @@ export function getTokenIcon(title: string): any | null {
     case "rMATIC":
       return rMATIC;
   }
-  return null;
+  return rETH;
 }

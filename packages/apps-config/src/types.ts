@@ -15,4 +15,5 @@ export interface CosmosNetworkParams {
   coinDenom: string;
   decimals: number;
   bech32Config: any;
+  explorerUrl: string;
 }

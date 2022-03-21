@@ -7,9 +7,8 @@ import {
 } from "@cosmjs/stargate";
 import {
   chains,
-  getCosmosNetwork,
   getRTokenDenom,
-  STAFIHUB_NETWORK,
+  getStafiHubChainId,
 } from "@stafihub/apps-config";
 import { humanToAtomic } from "@stafihub/apps-util";
 import { MsgLiquidityUnbond } from "@stafihub/types";
@@ -18,19 +17,18 @@ import { createCosmosClient } from "./connection";
 declare const window: any;
 
 export async function sendStakeTx(
+  chainId: string,
   inputAmount: string,
   accountAddress: string,
   stafiHubAddress: string,
   poolAddress: string
 ): Promise<DeliverTxResponse | undefined> {
   try {
-    const network = getCosmosNetwork();
-
-    const client = await createCosmosClient(network);
+    const client = await createCosmosClient(chainId);
     const fee = {
       amount: [
         {
-          denom: chains[network].denom,
+          denom: chains[chainId].denom,
           amount: "5000",
         },
       ],
@@ -40,8 +38,8 @@ export async function sendStakeTx(
       accountAddress,
       poolAddress,
       coins(
-        humanToAtomic(inputAmount, chains[network].decimals),
-        chains[network].denom
+        humanToAtomic(inputAmount, chains[chainId].decimals),
+        chains[chainId].denom
       ),
       fee,
       `1:${stafiHubAddress}`
@@ -54,20 +52,20 @@ export async function sendStakeTx(
 
 export async function sendChainTokens(
   amount: string,
-  chainName: string,
+  chainId: string,
   sender: string,
   targetAddress: string,
   memo: string
 ): Promise<DeliverTxResponse | undefined> {
-  if (!chains[chainName]) {
+  if (!chains[chainId]) {
     return;
   }
   try {
-    const client = await createCosmosClient(chainName);
+    const client = await createCosmosClient(chainId);
     const fee = {
       amount: [
         {
-          denom: chains[chainName].denom,
+          denom: chains[chainId].denom,
           amount: "5000",
         },
       ],
@@ -76,7 +74,7 @@ export async function sendChainTokens(
     const response = await client?.sendTokens(
       sender,
       targetAddress,
-      coins(amount, chains[chainName].denom),
+      coins(amount, chains[chainId].denom),
       fee,
       memo
     );
@@ -88,7 +86,7 @@ export async function sendChainTokens(
 }
 
 export async function sendLiquidityUnbondTx(
-  chainName: string,
+  chainId: string,
   inputAmount: string,
   chainAddress: string,
   stafiHubAddress: string,
@@ -106,11 +104,11 @@ export async function sendLiquidityUnbondTx(
     );
 
     const offlineSigner = window.getOfflineSigner(
-      chains[STAFIHUB_NETWORK].chainId
+      chains[getStafiHubChainId()].chainId
     );
 
     const client = await SigningStargateClient.connectWithSigner(
-      chains[STAFIHUB_NETWORK].rpc,
+      chains[getStafiHubChainId()].rpc,
       offlineSigner,
       { registry: myRegistry }
     );
@@ -121,7 +119,7 @@ export async function sendLiquidityUnbondTx(
         creator: stafiHubAddress,
         pool: poolAddress,
         value: {
-          denom: getRTokenDenom(chainName),
+          denom: getRTokenDenom(chainId),
           amount: inputAmount,
         },
         recipient: chainAddress,
@@ -131,7 +129,7 @@ export async function sendLiquidityUnbondTx(
     const fee = {
       amount: [
         {
-          denom: chains[STAFIHUB_NETWORK].denom,
+          denom: chains[getStafiHubChainId()].denom,
           amount: "2000",
         },
       ],

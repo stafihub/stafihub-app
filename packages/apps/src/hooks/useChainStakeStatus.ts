@@ -1,7 +1,7 @@
 import { atomicToHuman } from "@stafihub/apps-util";
 import { queryrTokenBalance } from "@stafihub/apps-wallet";
 import { ChainStakeStatus } from "@stafihub/types";
-import { STAFIHUB_NETWORK } from "@stafihub/apps-config";
+import { getStafiHubChainId } from "@stafihub/apps-config";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateChainStakeStatus } from "../redux/reducers/ChainSlice";
@@ -10,7 +10,7 @@ import { useChainAccount } from "./useAppSlice";
 
 export function useChainStakeStatus(denom: string) {
   const dispatch = useDispatch();
-  const stafiHubAccount = useChainAccount(STAFIHUB_NETWORK);
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
 
   const stakeStatusMap = useSelector((state: RootState) => {
     return state.chain.chainStakeStatusMap;

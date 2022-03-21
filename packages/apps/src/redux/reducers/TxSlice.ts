@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  STAFIHUB_NETWORK,
+  getStafiHubChainId,
   STAFIHUB_DECIMALS,
   getTokenDisplayName,
   getExplorerUrl,
@@ -93,6 +93,7 @@ export const { setSwapProgressModalProps, setSidebarProgressProps } =
 
 export const stake =
   (
+    chainId: string | undefined,
     inputAmount: string,
     stafiHubAddress: string,
     poolAddress: string,
@@ -100,13 +101,16 @@ export const stake =
   ): AppThunk =>
   async (dispatch, getState) => {
     try {
-      const chainName = getState().app.currentNetwork;
-      const chainAccount = getState().app.accounts[chainName];
+      if (!chainId) {
+        return;
+      }
+      const chainAccount = getState().app.accounts[chainId];
       if (!chainAccount) {
         return;
       }
       dispatch(setIsLoading(true));
       const txResponse = await sendStakeTx(
+        chainId,
         inputAmount,
         chainAccount.bech32Address,
         stafiHubAddress,
@@ -124,14 +128,14 @@ export const stake =
               address: chainAccount.bech32Address,
             },
             {
-              tokenName: getTokenDisplayName(chainName),
+              tokenName: getTokenDisplayName(chainId),
               stakeAmount: inputAmount,
             },
-            getExplorerUrl(chainName)
+            getExplorerUrl(chainId)
           )
         );
 
-        dispatch(updateTokenBalance(getState().app.currentNetwork));
+        dispatch(updateTokenBalance(chainId));
         dispatch(
           setSidebarProgressProps({
             visible: true,
@@ -174,25 +178,24 @@ export const stake =
 
 export const unbond =
   (
-    chainName: string | undefined,
+    chainId: string | undefined,
     inputAmount: string,
     poolAddress: string,
     callback?: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
     try {
-      if (!chainName) {
+      if (!chainId) {
         return;
       }
 
-      const stafiHubAccount = getState().app.accounts[STAFIHUB_NETWORK];
+      const stafiHubAccount = getState().app.accounts[getStafiHubChainId()];
       if (!stafiHubAccount) {
-        dispatch(connectKeplr(STAFIHUB_NETWORK));
+        dispatch(connectKeplr(getStafiHubChainId()));
         return;
       }
 
-      const chainAccount =
-        getState().app.accounts[getState().app.currentNetwork];
+      const chainAccount = getState().app.accounts[chainId];
       if (!chainAccount) {
         return;
       }
@@ -200,7 +203,7 @@ export const unbond =
       dispatch(setIsLoading(true));
 
       const txResponse = await sendLiquidityUnbondTx(
-        chainName,
+        chainId,
         humanToAtomic(inputAmount, STAFIHUB_DECIMALS),
         chainAccount.bech32Address,
         stafiHubAccount.bech32Address,
@@ -217,15 +220,15 @@ export const unbond =
               address: chainAccount.bech32Address,
             },
             {
-              rTokenName: getTokenDisplayName(chainName),
+              rTokenName: getTokenDisplayName(chainId),
               unstakeAmount: inputAmount,
             },
-            getExplorerUrl(STAFIHUB_NETWORK),
+            getExplorerUrl(getStafiHubChainId()),
             "Confimed"
           )
         );
       }
-      dispatch(updateTokenBalance(getState().app.currentNetwork));
+      dispatch(updateTokenBalance(chainId));
       callback && callback(txResponse?.code === 0);
     } catch (err: unknown) {
       console.log("sendLiquidityUnbondTx err", err);
@@ -245,16 +248,16 @@ export const feeStationSwap =
   async (dispatch, getState) => {
     try {
       let success = false;
-      const stafiHubAccount = getState().app.accounts[STAFIHUB_NETWORK];
-      const chainAccount = getState().app.accounts[poolInfo.chainName];
+      const stafiHubAccount = getState().app.accounts[getStafiHubChainId()];
+      const chainAccount = getState().app.accounts[poolInfo.chainId];
 
       if (!stafiHubAccount) {
-        dispatch(connectKeplr(STAFIHUB_NETWORK));
+        dispatch(connectKeplr(getStafiHubChainId()));
         return;
       }
 
       if (!chainAccount) {
-        dispatch(connectKeplr(poolInfo.chainName));
+        dispatch(connectKeplr(poolInfo.chainId));
         return;
       }
 
@@ -284,7 +287,7 @@ export const feeStationSwap =
 
         const txResponse = await sendChainTokens(
           humanToAtomic(inAmount, poolInfo.decimals),
-          poolInfo.chainName,
+          poolInfo.chainId,
           chainAccount.bech32Address,
           poolInfo.poolAddress,
           memo
@@ -300,12 +303,12 @@ export const feeStationSwap =
                 address: stafiHubAccount.bech32Address,
               },
               {
-                inputTokenName: poolInfo.chainName.toUpperCase(),
+                inputTokenName: getTokenDisplayName(poolInfo.chainId),
                 inputAmount: inAmount,
                 outputTokenName: "FIS",
                 outputAmount: outAmount,
               },
-              getExplorerUrl(STAFIHUB_NETWORK)
+              getExplorerUrl(getStafiHubChainId())
             )
           );
           dispatch(setIsLoading(false));

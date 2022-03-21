@@ -1,4 +1,3 @@
-import { STAFIHUB_NETWORK } from "./types";
 import { chains } from "./chains";
 
 export * from "./types";
@@ -9,50 +8,54 @@ export function isDev(): boolean {
 }
 
 export function isFork(): boolean {
-  return process.env.REACT_APP_NETWORK !== STAFIHUB_NETWORK;
+  return process.env.REACT_APP_CHAIN_ID !== getStafiHubChainId();
+}
+
+export function getStafiHubChainId(): string {
+  return "stafihub-testnet-1";
 }
 
 export function getCosmosNetwork(): string {
   return "iris";
 }
 
-export function getTokenDisplayName(chainName: string | undefined): string {
-  if (!chainName || !chains[chainName]) {
-    throw new Error(`Invalid chainName: ${chainName}`);
+export function getTokenDisplayName(chainId: string | undefined): string {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
   }
-  const chain = chains[chainName];
+  const chain = chains[chainId];
   return chain.denom.slice(1).toUpperCase();
 }
 
-export function getRTokenDisplayName(chainName: string | undefined): string {
-  if (!chainName || !chains[chainName]) {
-    throw new Error(`Invalid chainName: ${chainName}`);
+export function getRTokenDisplayName(chainId: string | undefined): string {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
   }
-  const chain = chains[chainName];
+  const chain = chains[chainId];
   return `r${chain.denom.slice(1).toUpperCase()}`;
 }
 
-export function getDenom(chainName: string | undefined): string {
-  if (!chainName || !chains[chainName]) {
-    throw new Error(`Invalid chainName: ${chainName}`);
+export function getDenom(chainId: string | undefined): string {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
   }
-  const chain = chains[chainName];
+  const chain = chains[chainId];
   return chain.denom;
 }
 
-export function getRTokenDenom(chainName: string | undefined): string {
-  if (!chainName || !chains[chainName]) {
-    throw new Error(`Invalid chainName: ${chainName}`);
+export function getRTokenDenom(chainId: string | undefined): string {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
   }
-  const chain = chains[chainName];
+  const chain = chains[chainId];
   return `ur${chain.denom.slice(1)}`;
 }
 
-export function getExplorerUrl(chainName: string | undefined) {
-  if (!chainName || !chains[chainName]) {
-    throw new Error(`Invalid chainName: ${chainName}`);
+export function getExplorerUrl(chainId: string | undefined) {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
   }
-  const chain = chains[chainName];
+  const chain = chains[chainId];
   return chain.explorerUrl;
 }
 

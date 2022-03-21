@@ -1,4 +1,4 @@
-import { STAFIHUB_NETWORK } from "@stafihub/apps-config";
+import { getStafiHubChainId } from "@stafihub/apps-config";
 import { getShortAddress, atomicToHuman } from "@stafihub/apps-util";
 import * as _ from "lodash";
 import { FormatterText } from "@stafihub/react-components";
@@ -17,6 +17,8 @@ import {
 } from "material-ui-popup-state/hooks";
 import { NoticeList } from "./notice/NoticeList";
 
+const STAFIHUB_CHAIN_ID = getStafiHubChainId();
+
 export const Header = () => {
   const dispatch = useDispatch();
   const accounts = useAccounts();
@@ -29,12 +31,12 @@ export const Header = () => {
   });
 
   const renderAccount = () => {
-    if (_.isEmpty(accounts) || _.isEmpty(accounts[STAFIHUB_NETWORK])) {
+    if (_.isEmpty(accounts) || _.isEmpty(accounts[STAFIHUB_CHAIN_ID])) {
       return (
         <div
           className="mr-3 h-[36px] bg-primary rounded-[3px] flex flex-col justify-center items-center px-2 cursor-pointer"
           onClick={() => {
-            dispatch(connectKeplr(STAFIHUB_NETWORK));
+            dispatch(connectKeplr(STAFIHUB_CHAIN_ID));
           }}
         >
           <div className="text-white font-bold text-[14px]">Connect Keplr</div>
@@ -51,16 +53,16 @@ export const Header = () => {
       >
         <div className="text-white font-bold text-[14px] flex items-center">
           <FormatterText
-            value={atomicToHuman(accounts[STAFIHUB_NETWORK]?.balance?.amount)}
+            value={atomicToHuman(accounts[STAFIHUB_CHAIN_ID]?.balance?.amount)}
             decimals={6}
           />
           <div className="ml-1 uppercase">
-            {accounts[STAFIHUB_NETWORK]?.balance?.denom?.slice(1)}
+            {accounts[STAFIHUB_CHAIN_ID]?.balance?.denom?.slice(1)}
           </div>
         </div>
 
         <div className="mt-[3px] text-text-gray1 font-bold text-[12px] scale-[0.8] origin-center">
-          {getShortAddress(accounts[STAFIHUB_NETWORK]?.bech32Address, 6)}
+          {getShortAddress(accounts[STAFIHUB_CHAIN_ID]?.bech32Address, 6)}
         </div>
       </div>
     );

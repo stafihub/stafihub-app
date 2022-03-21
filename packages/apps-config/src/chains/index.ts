@@ -8,7 +8,7 @@ if (isDev()) {
 const update = {};
 configs.keys().forEach((k) => {
   const c = configs(k);
-  (update as any)[c.chainName] = c;
+  (update as any)[c.chainId] = c;
 });
 
 export const chains: NetworkConfig = update;

@@ -5,18 +5,18 @@ import { Link, Outlet, useParams, useMatch } from "react-router-dom";
 export const StakeLayout = () => {
   const params = useParams();
 
-  const matchHome = useMatch(`/stake/${params.chainName}`);
-  const matchStatus = useMatch(`/stake/${params.chainName}/status`);
-  const matchRedeem = useMatch(`/stake/${params.chainName}/redeem`);
-  const matchReward = useMatch(`/stake/${params.chainName}/reward`);
-  const matchRecovery = useMatch(`/stake/${params.chainName}/recovery`);
+  const matchHome = useMatch(`/stake/${params.chainId}`);
+  const matchStatus = useMatch(`/stake/${params.chainId}/status`);
+  const matchRedeem = useMatch(`/stake/${params.chainId}/redeem`);
+  const matchReward = useMatch(`/stake/${params.chainId}/reward`);
+  const matchRecovery = useMatch(`/stake/${params.chainId}/recovery`);
 
   return (
     <div className="flex justify-center pt-[55px]">
       <CardContainer>
         <div className="flex">
           <div className="mt-[30px] ml-[20px] text-[12px] text-text-gray3">
-            <Link to={`/stake/${params.chainName}`}>
+            <Link to={`/stake/${params.chainId}`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchHome },
@@ -27,7 +27,7 @@ export const StakeLayout = () => {
               </div>
             </Link>
 
-            <Link to={`/stake/${params.chainName}/status`}>
+            <Link to={`/stake/${params.chainId}/status`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchStatus || matchRedeem },
@@ -38,7 +38,7 @@ export const StakeLayout = () => {
               </div>
             </Link>
 
-            <Link to={`/stake/${params.chainName}/reward`}>
+            <Link to={`/stake/${params.chainId}/reward`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchReward },
@@ -49,7 +49,7 @@ export const StakeLayout = () => {
               </div>
             </Link>
 
-            <Link to={`/stake/${params.chainName}/recovery`}>
+            <Link to={`/stake/${params.chainId}/recovery`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchRecovery },

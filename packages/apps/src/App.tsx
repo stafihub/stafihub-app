@@ -51,7 +51,7 @@ function App() {
 
             <Route path="/rToken" element={<RTokenHome />} />
 
-            <Route path="/stake/:chainName" element={<StakeLayout />}>
+            <Route path="/stake/:chainId" element={<StakeLayout />}>
               <Route index element={<StakeHome />} />
 
               <Route path="status" element={<StakeStatus />} />

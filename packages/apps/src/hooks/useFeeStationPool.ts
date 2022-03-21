@@ -1,9 +1,10 @@
-import { FeeStationPool, KeplrAccount } from "@stafihub/types";
+import { chains, STAFIHUB_DECIMALS } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
+import { FeeStationPool } from "@stafihub/types";
+import * as _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import ATOM from "../assets/images/ATOM.svg";
 import { useAccounts } from "./useAppSlice";
-import { STAFIHUB_DECIMALS } from "@stafihub/apps-config";
 
 export function useFeeStationPools() {
   const accounts = useAccounts();
@@ -38,23 +39,28 @@ export function useFeeStationPools() {
   }, []);
 
   const poolList: FeeStationPool[] = useMemo(() => {
+    const chainArr = _.values(chains);
+
     const formatPools = serverPoolList.map((pool: any) => {
-      const chainName = pool.symbol.slice(1);
+      const chain = chainArr.find((chain) => chain.denom === pool.symbol);
 
-      return {
-        ...pool,
-        chainName,
-        formatBalance: atomicToHuman(
-          accounts[chainName]?.balance?.amount || "--",
-          pool.decimals
-        ),
-        formatSwapRate: atomicToHuman(pool.swapRate, pool.decimals),
-        icon: ATOM,
-      } as FeeStationPool;
+      if (chain) {
+        return {
+          ...pool,
+          chainName: chain.chainName,
+          chainId: chain.chainId,
+          formatBalance: atomicToHuman(
+            accounts[chain.chainId]?.balance?.amount || "--",
+            pool.decimals
+          ),
+          formatSwapRate: atomicToHuman(pool.swapRate, pool.decimals),
+          icon: ATOM,
+        } as FeeStationPool;
+      }
+      return undefined;
     });
-    // console.log("formatPools", formatPools);
 
-    return formatPools;
+    return _.compact(formatPools);
   }, [serverPoolList, accounts]);
 
   return { poolList, swapMinLimit, swapMaxLimit };

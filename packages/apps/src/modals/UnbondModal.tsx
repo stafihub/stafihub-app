@@ -28,8 +28,8 @@ export const UnbondModal = (props: UnbondModalProps) => {
   const { updateStakeStatus } = useChainStakeStatus(props.denom || "");
 
   const params = useParams();
-  const chainName = params.chainName;
-  const { poolAddress } = usePoolInfo(getRTokenDenom(chainName));
+  const chainId = params.chainId;
+  const { poolAddress } = usePoolInfo(getRTokenDenom(chainId));
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>
@@ -51,11 +51,11 @@ export const UnbondModal = (props: UnbondModalProps) => {
         }}
       >
         <div className="text-white font-bold text-[30px]">
-          Unbond {props.inputAmount} {getRTokenDisplayName(chainName)}
+          Unbond {props.inputAmount} {getRTokenDisplayName(chainId)}
         </div>
 
         <div className="mt-[25px] text-text-gray4 text-[20px]">
-          —Commission: {props.commissionFee} {getRTokenDisplayName(chainName)}
+          —Commission: {props.commissionFee} {getRTokenDisplayName(chainId)}
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[20px]">
@@ -67,7 +67,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">
-          You will get {props.willGetAmount} {getTokenDisplayName(chainName)}
+          You will get {props.willGetAmount} {getTokenDisplayName(chainId)}
         </div>
 
         <div className="mt-[22px] self-end flex items-center">
@@ -82,7 +82,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
             loading={isLoading}
             onClick={() => {
               dispatch(
-                unbond(chainName, props.inputAmount, poolAddress, (success) => {
+                unbond(chainId, props.inputAmount, poolAddress, (success) => {
                   if (success) {
                     props.onClose();
                     updateStakeStatus();

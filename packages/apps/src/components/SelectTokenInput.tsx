@@ -2,6 +2,8 @@ import { Stack, Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import { CustomNumberInput } from "@stafihub/react-components";
 import { FeeStationPool } from "@stafihub/types";
+import { getTokenDisplayName } from "@stafihub/apps-config";
+import { useMemo } from "react";
 import downIcon from "../assets/images/icon_down_white.png";
 
 interface SelectTokenInputProps {
@@ -19,6 +21,13 @@ interface SelectTokenInputProps {
 
 export const SelectTokenInput = (props: SelectTokenInputProps) => {
   const { title, showMaxButton } = props;
+
+  const displayTokenName = useMemo(() => {
+    if (!props.selectedToken) {
+      return "";
+    }
+    return getTokenDisplayName(props.selectedToken.chainId);
+  }, [props.selectedToken]);
 
   return (
     <Box
@@ -69,7 +78,7 @@ export const SelectTokenInput = (props: SelectTokenInputProps) => {
           >
             {props.selectedToken ? (
               <div className="text-white text-[18px] uppercase">
-                {props.selectedToken.chainName}
+                {displayTokenName}
               </div>
             ) : props.content ? (
               <div className="text-white text-[18px]">{props.content}</div>

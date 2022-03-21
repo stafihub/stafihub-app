@@ -25,7 +25,6 @@ type AccountMap = { [key: string]: KeplrAccount | undefined };
 
 export interface AppState {
   isFork: boolean;
-  currentNetwork: string;
   accounts: AccountMap;
   isLoading: boolean;
   slippage: string;
@@ -34,7 +33,6 @@ export interface AppState {
 
 const initialState: AppState = {
   isFork: false,
-  currentNetwork: "stafiHub",
   accounts: {},
   isLoading: false,
   slippage: "1",
@@ -47,9 +45,6 @@ export const appSlice = createSlice({
   reducers: {
     setIsFork: (state, action: PayloadAction<boolean>) => {
       state.isFork = action.payload;
-    },
-    setCurrentNetwork: (state, action: PayloadAction<string>) => {
-      state.currentNetwork = action.payload;
     },
     setAccounts: (state, action: PayloadAction<AccountMap>) => {
       state.accounts = action.payload;
@@ -69,7 +64,6 @@ export const appSlice = createSlice({
 
 export const {
   setIsFork,
-  setCurrentNetwork,
   setAccounts,
   setIsLoading,
   setSlippage,
@@ -97,15 +91,15 @@ export const updateMultiAccounts =
   };
 
 export const connectKeplr =
-  (chainName: string | undefined): AppThunk =>
+  (chainId: string | undefined): AppThunk =>
   async (dispatch, getState) => {
-    if (!chainName) {
+    if (!chainId) {
       return;
     }
     try {
-      const enableResult = await connectAtomjs(chainName);
+      const enableResult = await connectAtomjs(chainId);
       console.log("enableResult", enableResult);
-      const accountResult = await getKeplrAccount(chainName);
+      const accountResult = await getKeplrAccount(chainId);
 
       if (!accountResult) {
         return;
@@ -117,27 +111,24 @@ export const connectKeplr =
       };
       console.log("account", account);
 
-      const balance = await queryAccountBalance(
-        chainName,
-        account.bech32Address
-      );
+      const balance = await queryAccountBalance(chainId, account.bech32Address);
       account.balance = balance;
 
-      dispatch(updateAccounts(chainName, account));
+      dispatch(updateAccounts(chainId, account));
 
-      saveNetworkAllowedFlag(chainName);
+      saveNetworkAllowedFlag(chainId);
     } catch (err: unknown) {
-      console.log(`connect ${chainName} error`, err);
+      console.log(`connect ${chainId} error`, err);
     }
   };
 
 export const connectKeplrChains =
-  (chainNames: string[]): AppThunk =>
+  (chainIds: string[]): AppThunk =>
   async (dispatch, getState) => {
-    if (_.isEmpty(chainNames)) {
+    if (_.isEmpty(chainIds)) {
       return;
     }
-    const requests = chainNames.map((network) => {
+    const requests = chainIds.map((network) => {
       return (async () => {
         try {
           const enableResult = await connectAtomjs(network);
@@ -203,26 +194,26 @@ export const updateTokenBalance =
 
 export const updateAllTokenBalance =
   (): AppThunk => async (dispatch, getState) => {
-    const chainNames = _.keys(chains);
+    const chainIds = _.keys(chains);
 
-    const requests = chainNames.map((network) => {
+    const requests = chainIds.map((chainId) => {
       return (async () => {
         try {
-          const account = getState().app.accounts[network];
+          const account = getState().app.accounts[chainId];
           // console.log("account1", account);
           if (!account) {
             return;
           }
           const newAccount = { ...account };
           const balance = await queryAccountBalance(
-            network,
+            chainId,
             newAccount.bech32Address
           );
           newAccount.balance = balance;
 
-          return { network, account: newAccount };
+          return { network: chainId, account: newAccount };
         } catch (err: unknown) {
-          console.log(`updateTokenBalance ${network} error`, err);
+          console.log(`updateTokenBalance ${chainId} error`, err);
           return null;
         }
       })();

@@ -1,5 +1,5 @@
 import { Box, Modal } from "@mui/material";
-import { chains, STAFIHUB_NETWORK } from "@stafihub/apps-config";
+import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import { Button } from "@stafihub/react-components";
 import * as _ from "lodash";
 import { useMemo } from "react";
@@ -16,8 +16,8 @@ export const AccountModal = (props: UnbondModalProps) => {
   const [isFork] = useIsFork();
 
   const { stafiHubChain, restChainsArr } = useMemo(() => {
-    const stafiHubChain = chains[STAFIHUB_NETWORK];
-    const restChainsArr = _.values(_.omit(chains, [STAFIHUB_NETWORK]));
+    const stafiHubChain = chains[getStafiHubChainId()];
+    const restChainsArr = _.values(_.omit(chains, [getStafiHubChainId()]));
     return { stafiHubChain, restChainsArr };
   }, []);
 
@@ -47,14 +47,14 @@ export const AccountModal = (props: UnbondModalProps) => {
         <div className="h-96 max-h-96 overflow-auto">
           <AccountItem
             chain={stafiHubChain}
-            chainAccount={accounts[STAFIHUB_NETWORK]}
+            chainAccount={accounts[getStafiHubChainId()]}
           />
 
           {restChainsArr.map((chainItem) => (
             <AccountItem
               key={chainItem.chainId}
               chain={chainItem}
-              chainAccount={accounts[chainItem.chainName]}
+              chainAccount={accounts[chainItem.chainId]}
             />
           ))}
         </div>

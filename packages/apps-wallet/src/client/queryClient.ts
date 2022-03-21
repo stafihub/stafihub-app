@@ -3,11 +3,11 @@ import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { QueryClientImpl } from "@stafihub/types";
 import { chains } from "@stafihub/apps-config";
 
-export async function createQueryService(network: string) {
+export async function createQueryService(chainId: string) {
   // Inside an async function...
   // The Tendermint client knows how to talk to the Tendermint RPC endpoint
   const tendermintClient = await Tendermint34Client.connect(
-    chains[network].rpc
+    chains[chainId].rpc
   );
 
   // The generic Stargate query client knows how to use the Tendermint client to submit unverified ABCI queries

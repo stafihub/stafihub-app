@@ -2,7 +2,7 @@ import {
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
-  STAFIHUB_NETWORK,
+  getStafiHubChainId,
 } from "@stafihub/apps-config";
 import { Button, FormatterText } from "@stafihub/react-components";
 import { useMemo } from "react";
@@ -19,9 +19,9 @@ import { useUnbondCommission } from "../hooks/useUnbondCommission";
 export const StakeStatus = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const chainName = params.chainName;
-  const rTokenDenom = getRTokenDenom(chainName);
-  const stafiHubAccount = useChainAccount(STAFIHUB_NETWORK);
+  const chainId = params.chainId;
+  const rTokenDenom = getRTokenDenom(chainId);
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
 
   const { stakeStatus } = useChainStakeStatus(rTokenDenom);
 
@@ -61,7 +61,7 @@ export const StakeStatus = () => {
           <img src={ATOM} className="w-[36px] h-[36px]" alt="token icon" />
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            {getRTokenDisplayName(chainName)}
+            {getRTokenDisplayName(chainId)}
           </div>
         </div>
 
@@ -71,7 +71,7 @@ export const StakeStatus = () => {
       </div>
 
       <div className="flex justify-end mt-[5px] text-text-gray4 text-[12px]">
-        Redeemable {getRTokenDisplayName(chainName)} :{" "}
+        Redeemable {getRTokenDisplayName(chainId)} :{" "}
         <FormatterText value={redeemableAmount} decimals={6} />
       </div>
 
@@ -79,7 +79,7 @@ export const StakeStatus = () => {
         <div className="flex-grow-[1] flex justify-start pl-[15px]">
           <div className="flex flex-col items-center ">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
-              Staked {getTokenDisplayName(chainName)}
+              Staked {getTokenDisplayName(chainId)}
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
@@ -93,7 +93,7 @@ export const StakeStatus = () => {
         <div className="flex-grow-[2]">
           <div className="flex flex-col items-center">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
-              Unbonding {getRTokenDisplayName(chainName)}
+              Unbonding {getRTokenDisplayName(chainId)}
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
@@ -121,7 +121,7 @@ export const StakeStatus = () => {
         <Button
           size="small"
           onClick={() => {
-            navigate(`/stake/${params.chainName}/redeem`);
+            navigate(`/stake/${params.chainId}/redeem`);
           }}
         >
           Redeem
@@ -152,7 +152,7 @@ export const StakeStatus = () => {
           />
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            {getRTokenDisplayName(chainName)} / {getTokenDisplayName(chainName)}
+            {getRTokenDisplayName(chainId)} / {getTokenDisplayName(chainId)}
           </div>
         </div>
 

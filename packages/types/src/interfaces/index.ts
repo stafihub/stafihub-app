@@ -23,6 +23,7 @@ export interface TokenModel {
 export interface FeeStationPool {
   // iris
   chainName: string;
+  chainId: string;
   // uiris
   symbol: string;
   swapRate: string;

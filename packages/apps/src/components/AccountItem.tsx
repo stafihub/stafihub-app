@@ -1,10 +1,10 @@
+import { CosmosNetworkParams } from "@stafihub/apps-config";
+import { atomicToHuman } from "@stafihub/apps-util";
+import { FormatterText } from "@stafihub/react-components";
 import { KeplrAccount } from "@stafihub/types";
-import { getShortAddress, atomicToHuman } from "@stafihub/apps-util";
 import { useDispatch } from "react-redux";
 import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import { connectKeplr } from "../redux/reducers/AppSlice";
-import { CosmosNetworkParams } from "@stafihub/apps-config";
-import { FormatterText } from "@stafihub/react-components";
 
 interface AccountItemProps {
   chain: CosmosNetworkParams;
@@ -33,7 +33,7 @@ export const AccountItem = (props: AccountItemProps) => {
           <div
             className="ml-1 text-primary text-[16px] font-bold cursor-pointer"
             onClick={() => {
-              dispatch(connectKeplr(props.chain.chainName));
+              dispatch(connectKeplr(props.chain.chainId));
             }}
           >
             {props.chain.chainName}

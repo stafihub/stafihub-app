@@ -1,5 +1,5 @@
 import { Box, IconButton, Stack } from "@mui/material";
-import { STAFIHUB_NETWORK } from "@stafihub/apps-config";
+import { getStafiHubChainId } from "@stafihub/apps-config";
 import { formatNumberToFixed } from "@stafihub/apps-util";
 import { Button, FormatterText } from "@stafihub/react-components";
 import { FeeStationPool } from "@stafihub/types";
@@ -45,8 +45,8 @@ export const FeeStation = (props: {}) => {
     return poolList.find((pool) => pool.chainName === selectedChainName);
   }, [poolList, selectedChainName]);
 
-  const stafiHubAccount = useChainAccount(STAFIHUB_NETWORK);
-  const chainAccount = useChainAccount(selectedPool?.chainName);
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
+  const chainAccount = useChainAccount(selectedPool?.chainId);
 
   const [displayStatus, setDisplayStatus] = useState<DisplayStatus>(
     DisplayStatus.Main
@@ -64,7 +64,7 @@ export const FeeStation = (props: {}) => {
 
   const [buttonDisabled, buttonText]: [boolean, string] = useMemo(() => {
     if (selectedPool && !stafiHubAccount) {
-      return [false, `Connect ${STAFIHUB_NETWORK}`];
+      return [false, `Connect StafiHub`];
     }
     if (selectedPool && !chainAccount) {
       return [false, `Connect ${selectedPool.chainName}`];
@@ -126,11 +126,11 @@ export const FeeStation = (props: {}) => {
 
   const handleClickButton = useCallback(() => {
     if (!stafiHubAccount) {
-      dispatch(connectKeplr(STAFIHUB_NETWORK));
+      dispatch(connectKeplr(getStafiHubChainId()));
       return;
     }
     if (!chainAccount) {
-      dispatch(connectKeplr(selectedPool?.chainName));
+      dispatch(connectKeplr(selectedPool?.chainId));
       return;
     }
     if (!selectedPool) {

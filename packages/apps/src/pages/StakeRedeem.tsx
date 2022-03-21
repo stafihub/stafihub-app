@@ -1,29 +1,28 @@
-import { Button, CustomNumberInput } from "@stafihub/react-components";
 import {
-  getCosmosNetwork,
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
+import { formatNumberToFixed } from "@stafihub/apps-util";
+import { Button, CustomNumberInput } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
-import { UnbondModal } from "../modals/UnbondModal";
-import { useChainAccount } from "../hooks/useAppSlice";
 import { usePoolInfo } from "../hooks";
-import { useUnbondCommission } from "../hooks/useUnbondCommission";
-import { formatNumberToFixed } from "@stafihub/apps-util";
+import { useChainAccount } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
+import { useUnbondCommission } from "../hooks/useUnbondCommission";
+import { UnbondModal } from "../modals/UnbondModal";
 
 export const StakeRedeem = () => {
   const params = useParams();
-  const chainName = params.chainName;
-  const rTokenDenom = getRTokenDenom(chainName);
+  const chainId = params.chainId;
+  const rTokenDenom = getRTokenDenom(chainId);
   const { exchangeRate } = usePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(rTokenDenom);
 
-  const chainAccount = useChainAccount(getCosmosNetwork());
+  const chainAccount = useChainAccount(chainId);
   const [unbondModalVisible, setUnbondModalVisible] = useState(false);
   const [inputAmount, setInputAmount] = useState("");
 
@@ -68,11 +67,11 @@ export const StakeRedeem = () => {
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
       <div className="text-white font-bold text-[30px]">
-        Redeem {getTokenDisplayName(chainName)}
+        Redeem {getTokenDisplayName(chainId)}
       </div>
 
       <div className="mt-10 text-white text-[20px]">
-        1. Unbond {getTokenDisplayName(chainName)}
+        1. Unbond {getTokenDisplayName(chainId)}
       </div>
 
       <div className="mt-2 flex flex-col">
@@ -110,7 +109,7 @@ export const StakeRedeem = () => {
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[12px] self-end mr-[60px]">
-          {getRTokenDisplayName(chainName)} balance:{" "}
+          {getRTokenDisplayName(chainId)} balance:{" "}
           {stakeStatus ? stakeStatus.rTokenBalance : "--"}
         </div>
       </div>

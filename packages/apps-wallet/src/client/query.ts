@@ -5,16 +5,12 @@ import type {
   KeplrAccountBalance,
   QueryGetUnbondCommissionResponse,
 } from "@stafihub/types";
-import {
-  getCosmosNetwork,
-  chains,
-  STAFIHUB_NETWORK,
-} from "@stafihub/apps-config";
+import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import { createCosmosClient, createQueryService } from ".";
 import { QueryGetAccountUnbondResponse } from "@stafihub/types";
 
 export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
-  const queryService = await createQueryService("stafiHub");
+  const queryService = await createQueryService(getStafiHubChainId());
 
   const results = await Promise.all([
     queryService.BondedPoolsByDenom({
@@ -34,10 +30,10 @@ export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
 }
 
 export async function queryPoolByDenom(
+  chainId: string,
   tokenDenom: string
 ): Promise<QueryBondedPoolsByDenomResponse> {
-  const network = getCosmosNetwork();
-  const queryService = await createQueryService(network);
+  const queryService = await createQueryService(chainId);
   const result = await queryService.BondedPoolsByDenom({
     denom: tokenDenom,
   });
@@ -46,11 +42,11 @@ export async function queryPoolByDenom(
 }
 
 export async function queryPoolDetail(
+  chainId: string,
   tokenDenom: string,
   poolAddress: string
 ): Promise<QueryGetPoolDetailResponse> {
-  const network = getCosmosNetwork();
-  const queryService = await createQueryService(network);
+  const queryService = await createQueryService(chainId);
   const result = await queryService.GetPoolDetail({
     denom: tokenDenom,
     pool: poolAddress,
@@ -60,24 +56,24 @@ export async function queryPoolDetail(
 }
 
 export async function queryAccountBalance(
-  network: string,
+  chainId: string,
   address: string
 ): Promise<KeplrAccountBalance> {
-  const client = await createCosmosClient(network);
+  const client = await createCosmosClient(chainId);
   if (!client) {
     return {
-      denom: chains[network].coinDenom,
+      denom: chains[chainId].coinDenom,
       amount: "--",
     };
   }
 
   try {
-    const result = await client.getBalance(address, chains[network].coinDenom);
+    const result = await client.getBalance(address, chains[chainId].coinDenom);
     console.log("account balance result", result);
     return result;
   } catch {
     return {
-      denom: chains[network].coinDenom,
+      denom: chains[chainId].coinDenom,
       amount: "--",
     };
   }
@@ -87,7 +83,7 @@ export async function queryrTokenBalance(
   stafiHubAddress: string,
   tokenDenom: string
 ): Promise<string> {
-  const client = await createCosmosClient("stafiHub");
+  const client = await createCosmosClient(getStafiHubChainId());
   if (!client) {
     return "--";
   }
@@ -106,7 +102,7 @@ export async function queryAccountUnbond(
   stafiHubAddress: string
 ): Promise<QueryGetAccountUnbondResponse | null> {
   try {
-    const queryService = await createQueryService(STAFIHUB_NETWORK);
+    const queryService = await createQueryService(getStafiHubChainId());
     const result = await queryService.GetAccountUnbond({
       denom: tokenDenom,
       unbonder: stafiHubAddress,
@@ -123,7 +119,7 @@ export async function queryUnbondCommission(
   tokenDenom: string
 ): Promise<QueryGetUnbondCommissionResponse | null> {
   try {
-    const queryService = await createQueryService(STAFIHUB_NETWORK);
+    const queryService = await createQueryService(getStafiHubChainId());
     const result = await queryService.GetUnbondCommission({
       denom: tokenDenom,
     });

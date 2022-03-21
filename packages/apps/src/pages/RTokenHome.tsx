@@ -27,10 +27,11 @@ export const RTokenHome = () => {
 
         {rTokenList.map((rToken) => (
           <StakeTokenItem
+            key={rToken.chainId}
             originTokenName={rToken.tokenName}
             derivativeTokenName={rToken.rTokenName}
             onClickStake={() => {
-              navigate(`/stake/${rToken.chainName}`);
+              navigate(`/stake/${rToken.chainId}`);
             }}
           />
         ))}

@@ -6,5 +6,7 @@ export type {
   QueryGetPoolDetailResponse,
   QueryGetAccountUnbondResponse,
   QueryGetUnbondCommissionResponse,
+  QueryGetBondRecordRequest,
+  QueryGetBondRecordResponse,
 } from "./query";
 export { MsgLiquidityUnbond, MsgClientImpl } from "./tx";

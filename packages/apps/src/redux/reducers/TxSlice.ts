@@ -4,11 +4,13 @@ import {
   STAFIHUB_DECIMALS,
   getTokenDisplayName,
   getExplorerUrl,
+  getRTokenDenom,
 } from "@stafihub/apps-config";
 import {
   sendLiquidityUnbondTx,
   sendStakeTx,
   sendChainTokens,
+  queryBondRecord,
 } from "@stafihub/apps-wallet";
 import { humanToAtomic } from "@stafihub/apps-util";
 import { FeeStationPool } from "@stafihub/types";
@@ -108,6 +110,7 @@ export const stake =
       if (!chainAccount) {
         return;
       }
+
       dispatch(setIsLoading(true));
       const txResponse = await sendStakeTx(
         chainId,
@@ -143,7 +146,7 @@ export const stake =
           })
         );
 
-        await timeout(3000);
+        await timeout(2500);
 
         dispatch(
           setSidebarProgressProps({
@@ -155,19 +158,41 @@ export const stake =
           })
         );
 
-        await timeout(3000);
+        const MAX_COUNT = 40;
+        let timeCount = 0;
+        while (true) {
+          const bondRecordRes = await queryBondRecord(
+            getRTokenDenom(chainId),
+            txResponse.transactionHash
+          );
 
-        dispatch(
-          setSidebarProgressProps({
-            visible: true,
-            items: [
-              { name: "Staking", status: 1 },
-              { name: "Sending", status: 1 },
-            ],
-          })
-        );
+          if (bondRecordRes) {
+            dispatch(
+              setSidebarProgressProps({
+                visible: true,
+                items: [
+                  { name: "Staking", status: 1 },
+                  { name: "Sending", status: 1 },
+                ],
+              })
+            );
 
-        dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+            dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+            break;
+          }
+
+          await timeout(2500);
+          timeCount++;
+          if (timeCount > MAX_COUNT) {
+            snackbarUtil.warning("Please check stake status later.");
+            dispatch(
+              setSidebarProgressProps({
+                visible: false,
+              })
+            );
+            break;
+          }
+        }
       }
 
       callback && callback(txResponse?.code === 0);

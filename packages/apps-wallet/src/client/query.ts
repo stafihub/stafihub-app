@@ -4,6 +4,7 @@ import type {
   QueryGetPoolDetailResponse,
   KeplrAccountBalance,
   QueryGetUnbondCommissionResponse,
+  QueryGetBondRecordResponse,
 } from "@stafihub/types";
 import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import { createCosmosClient, createQueryService } from ".";
@@ -95,6 +96,24 @@ export async function queryrTokenBalance(
   );
   console.log("rToken balance result", result);
   return result.amount;
+}
+
+export async function queryBondRecord(
+  denom: string,
+  txhash: string
+): Promise<QueryGetBondRecordResponse | null> {
+  try {
+    const queryService = await createQueryService(getStafiHubChainId());
+    const result = await queryService.GetBondRecord({
+      denom,
+      txhash,
+    });
+    console.log("queryBondRecord result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryBondRecord err", denom, txhash, err);
+  }
+  return null;
 }
 
 export async function queryAccountUnbond(

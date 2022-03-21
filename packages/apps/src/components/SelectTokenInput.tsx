@@ -1,8 +1,7 @@
-import { Stack, Typography } from "@mui/material";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import { getTokenDisplayName } from "@stafihub/apps-config";
 import { CustomNumberInput } from "@stafihub/react-components";
 import { FeeStationPool } from "@stafihub/types";
-import { getTokenDisplayName } from "@stafihub/apps-config";
 import { useMemo } from "react";
 import downIcon from "../assets/images/icon_down_white.png";
 

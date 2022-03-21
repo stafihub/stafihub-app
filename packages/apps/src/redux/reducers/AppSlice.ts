@@ -6,6 +6,7 @@ import {
 } from "@stafihub/apps-wallet";
 import { KeplrAccount } from "@stafihub/types";
 import * as _ from "lodash";
+import { chains } from "@stafihub/apps-config";
 import {
   saveNetworkAllowedFlag,
   saveStorage,
@@ -185,6 +186,44 @@ export const updateTokenBalance =
     } catch (err: unknown) {
       console.log(`updateTokenBalance ${network} error`, err);
     }
+  };
+
+export const updateAllTokenBalance =
+  (): AppThunk => async (dispatch, getState) => {
+    const chainNames = _.keys(chains);
+
+    const requests = chainNames.map((network) => {
+      return (async () => {
+        try {
+          const account = getState().app.accounts[network];
+          // console.log("account1", account);
+          if (!account) {
+            return;
+          }
+          const newAccount = { ...account };
+          const balance = await queryAccountBalance(
+            network,
+            newAccount.bech32Address
+          );
+          newAccount.balance = balance;
+
+          return { network, account: newAccount };
+        } catch (err: unknown) {
+          console.log(`updateTokenBalance ${network} error`, err);
+          return null;
+        }
+      })();
+    });
+
+    const results = await Promise.all(requests);
+
+    const accountsMap: AccountMap = {};
+    results.forEach((result) => {
+      if (result) {
+        accountsMap[result.network] = result.account;
+      }
+    });
+    dispatch(updateMultiAccounts(accountsMap));
   };
 
 export default appSlice.reducer;

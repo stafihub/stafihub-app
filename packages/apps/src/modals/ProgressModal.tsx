@@ -1,10 +1,12 @@
 import { Box, CircularProgress, LinearProgress, Modal } from "@mui/material";
 import { FormatterText } from "@stafihub/react-components";
+import { getExplorerAccountUrl } from "@stafihub/apps-config";
 import { useDispatch } from "react-redux";
 import iconClose from "../assets/images/icon_close_bold.svg";
 import iconCheckedLarge from "../assets/images/icon_success_large.png";
 import { useSwapProgressModalProps } from "../hooks/useSwapProgressModalProps";
 import { setSwapProgressModalProps } from "../redux/reducers/TxSlice";
+import { openLink } from "../utils/common";
 
 interface ProgressModalProps {}
 
@@ -29,7 +31,16 @@ export const ProgressModal = (props: ProgressModalProps) => {
           className="mt-16 w-20 h-20 px-3 py-4 bg-primary rounded-full"
         />
 
-        <div className="mt-12 mb-24 h-12 px-6 flex items-center justify-center font-bold text-white text-[22px] bg-secondary rounded-sm cursor-pointer">
+        <div
+          className="mt-12 mb-24 h-12 px-6 flex items-center justify-center font-bold text-white text-[22px] bg-secondary rounded-sm cursor-pointer"
+          onClick={() => {
+            openLink(
+              getExplorerAccountUrl(
+                swapProgressModalProps?.txDetail?.stafihubAddress
+              )
+            );
+          }}
+        >
           VIEW YOUR TRANSACTIONS
         </div>
       </>
@@ -101,8 +112,17 @@ export const ProgressModal = (props: ProgressModalProps) => {
               <CircularProgress color="white" size={60} />
             </div>
 
-            <div className="mt-9 mb-14 font-bold text-[20px] text-secondary cursor-pointer underline">
-              View on Etherscan
+            <div
+              className="mt-9 mb-14 font-bold text-[20px] text-secondary cursor-pointer underline"
+              onClick={() => {
+                openLink(
+                  getExplorerAccountUrl(
+                    swapProgressModalProps?.txDetail?.stafihubAddress
+                  )
+                );
+              }}
+            >
+              View on Explorer
             </div>
           </>
         )}

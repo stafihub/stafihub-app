@@ -30,3 +30,13 @@ export function getRTokenDenomFromChainName(
   }
   return `ur${chainName}`;
 }
+
+export function getExplorerAccountUrl(account: string | undefined) {
+  if (!account) {
+    return undefined;
+  }
+  if (isDev()) {
+    return `https://testnet-explorer.stafihub.io/stafi-hub-devnet/account/${account}`;
+  }
+  return `https://testnet-explorer.stafihub.io/stafi-hub-devnet/account/${account}`;
+}

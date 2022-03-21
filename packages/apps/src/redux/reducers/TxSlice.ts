@@ -8,13 +8,19 @@ import {
 import { humanToAtomic } from "@stafihub/apps-util";
 import { FeeStationPool } from "@stafihub/types";
 import { AppThunk } from "../store";
-import { connectKeplr, setIsLoading, updateTokenBalance } from "./AppSlice";
+import {
+  connectKeplr,
+  setIsLoading,
+  updateAllTokenBalance,
+  updateTokenBalance,
+} from "./AppSlice";
 import { timeout } from "../../utils/common";
 import snackbarUtil from "../../utils/snackbarUtils";
 
 interface TxDetail {
   amount: string;
   symbol: string;
+  stafihubAddress: string;
 }
 
 interface SwapProgressModalProps {
@@ -184,6 +190,7 @@ export const feeStationSwap =
   ): AppThunk =>
   async (dispatch, getState) => {
     try {
+      let success = false;
       const stafiHubAccount = getState().app.accounts[STAFIHUB_NETWORK];
       const chainAccount = getState().app.accounts[poolInfo.chainName];
 
@@ -238,6 +245,7 @@ export const feeStationSwap =
               txDetail: {
                 amount: outAmount,
                 symbol: poolInfo.symbol,
+                stafihubAddress: stafiHubAccount.bech32Address,
               },
             })
           );
@@ -263,6 +271,7 @@ export const feeStationSwap =
                     progress: 100,
                   })
                 );
+                success = true;
                 break;
               } else if (getUuidResJson.data?.swapStatus === 3) {
                 dispatch(
@@ -301,6 +310,9 @@ export const feeStationSwap =
 
             await timeout(1000);
           }
+
+          dispatch(updateAllTokenBalance());
+          callback && callback(success);
         }
       }
     } catch (err: unknown) {

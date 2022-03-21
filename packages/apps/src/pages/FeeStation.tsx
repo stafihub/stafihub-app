@@ -98,8 +98,6 @@ export const FeeStation = (props: {}) => {
     );
   }, [slippage, outputAmount]);
 
-  const fee = 1;
-
   const handleAmountChange = useCallback(
     (fromInput: boolean, value: string) => {
       if (!selectedPool) {
@@ -150,7 +148,17 @@ export const FeeStation = (props: {}) => {
     }
 
     dispatch(
-      feeStationSwap(inputAmount, outputAmount, minReceive, selectedPool)
+      feeStationSwap(
+        inputAmount,
+        outputAmount,
+        minReceive,
+        selectedPool,
+        (success) => {
+          if (success) {
+            setAmounts(["", ""]);
+          }
+        }
+      )
     );
   }, [
     dispatch,

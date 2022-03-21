@@ -8,5 +8,9 @@ export type {
   QueryGetUnbondCommissionResponse,
   QueryGetBondRecordRequest,
   QueryGetBondRecordResponse,
+  QueryGetEraExchangeRateRequest,
+  QueryGetEraExchangeRateResponse,
+  QueryGetChainEraRequest,
+  QueryGetChainEraResponse,
 } from "./query";
 export { MsgLiquidityUnbond, MsgClientImpl } from "./tx";

@@ -1,10 +1,8 @@
-import {
-  StakeTokenItem,
-  StakeTokenTableHeader,
-} from "@stafihub/react-components";
 import bridgeImage from "../assets/images/hub_bridge.svg";
 import { useNavigate } from "react-router-dom";
 import { useRTokenList } from "../hooks/useRTokenList";
+import { StakeTokenItem } from "../components/stake/StakeTokenItem";
+import { StakeTokenTableHeader } from "../components/stake/StakeTokenTableHeader";
 
 export const RTokenHome = () => {
   const navigate = useNavigate();
@@ -28,6 +26,7 @@ export const RTokenHome = () => {
         {rTokenList.map((rToken) => (
           <StakeTokenItem
             key={rToken.chainId}
+            chainId={rToken.chainId}
             originTokenName={rToken.tokenName}
             derivativeTokenName={rToken.rTokenName}
             onClickStake={() => {

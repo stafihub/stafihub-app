@@ -23,7 +23,7 @@ export const StakeStatus = () => {
   const rTokenDenom = getRTokenDenom(chainId);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
 
-  const { stakeStatus } = useChainStakeStatus(rTokenDenom);
+  const { stakeStatus } = useChainStakeStatus(chainId);
 
   const { exchangeRate } = usePoolInfo(rTokenDenom);
   const { unbondingAmount } = useAccountUnbond(

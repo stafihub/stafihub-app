@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import iconDown from "../../assets/images/icon_down_white.png";
 import { usePoolInfo } from "../../hooks";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
+import { useApy } from "../../hooks/useApy";
 
 interface RAssetItemProps {
   chainId: string;
@@ -14,8 +15,9 @@ interface RAssetItemProps {
 }
 
 export const RAssetItem = (props: RAssetItemProps) => {
-  const { stakeStatus } = useChainStakeStatus(getRTokenDenom(props.chainId));
+  const { stakeStatus } = useChainStakeStatus(props.chainId);
   const { exchangeRate } = usePoolInfo(getRTokenDenom(props.chainId));
+  const { apy } = useApy(props.chainId);
 
   const myStakedAmount = useMemo(() => {
     if (
@@ -41,7 +43,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
           alt="icon"
         />
 
-        <div>{props.originTokenName}</div>
+        <div>{props.derivativeTokenName}</div>
       </div>
 
       <div className="basis-3/12 text-[14px]">
@@ -52,7 +54,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
             placement="right"
           >
             <div className="ml-1 text-[12px] text-secondary border-dashed border-b-[1px] border-secondary scale-[0.8] origin-center">
-              +2.234
+              +0.00
             </div>
           </Tooltip>
         </div>
@@ -62,7 +64,9 @@ export const RAssetItem = (props: RAssetItemProps) => {
         <FormatterText value={stakeStatus?.rTokenBalance} decimals={2} />
       </div>
 
-      <div className="basis-3/12 text-[14px]">8.23%</div>
+      <div className="basis-3/12 text-[14px]">
+        <FormatterText value={apy} decimals={2} />%
+      </div>
 
       <div className="basis-4/12 text-[14px] flex items-center">
         <div className="w-[66px] h-[22px] text-white text-[12px] flex justify-center items-center border-white border-solid border-[0.5px] rounded-[3px] cursor-pointer">

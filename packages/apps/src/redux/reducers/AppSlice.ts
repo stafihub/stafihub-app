@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { chains } from "@stafihub/apps-config";
 import {
   connectAtomjs,
   getKeplrAccount,
@@ -6,13 +7,6 @@ import {
 } from "@stafihub/apps-wallet";
 import { KeplrAccount } from "@stafihub/types";
 import * as _ from "lodash";
-import { chains } from "@stafihub/apps-config";
-import {
-  saveNetworkAllowedFlag,
-  saveStorage,
-  STORAGE_KEY_SLIPPAGE,
-} from "../../utils/storage";
-import { AppThunk } from "../store";
 import {
   NoticeDataType,
   NoticeStatus,
@@ -20,6 +14,12 @@ import {
   NoticeType,
 } from "../../types/notice";
 import { addNoticeInternal, updateNoticeInternal } from "../../utils/notice";
+import {
+  saveNetworkAllowedFlag,
+  saveStorage,
+  STORAGE_KEY_SLIPPAGE,
+} from "../../utils/storage";
+import { AppThunk } from "../store";
 
 type AccountMap = { [key: string]: KeplrAccount | undefined };
 
@@ -98,7 +98,6 @@ export const connectKeplr =
     }
     try {
       const enableResult = await connectAtomjs(chainId);
-      console.log("enableResult", enableResult);
       const accountResult = await getKeplrAccount(chainId);
 
       if (!accountResult) {
@@ -132,7 +131,6 @@ export const connectKeplrChains =
       return (async () => {
         try {
           const enableResult = await connectAtomjs(network);
-          console.log("enableResult", enableResult);
           const accountResult = await getKeplrAccount(network);
           if (!accountResult) {
             return null;

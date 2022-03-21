@@ -9,12 +9,12 @@ export function useAccounts() {
   return accounts;
 }
 
-export function useChainAccount(network: string | undefined) {
+export function useChainAccount(chainId: string | undefined) {
   const account = useSelector((state: RootState) => {
-    if (!network) {
+    if (!chainId) {
       return undefined;
     }
-    return state.app.accounts[network];
+    return state.app.accounts[chainId];
   });
 
   return account;

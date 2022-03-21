@@ -13,7 +13,6 @@ import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { unbond } from "../redux/reducers/TxSlice";
 
 interface UnbondModalProps {
-  denom: string | undefined;
   visible: boolean;
   onClose: () => void;
   inputAmount: string;
@@ -23,12 +22,12 @@ interface UnbondModalProps {
 }
 
 export const UnbondModal = (props: UnbondModalProps) => {
-  const dispatch = useDispatch();
-  const isLoading = useIsLoading();
-  const { updateStakeStatus } = useChainStakeStatus(props.denom || "");
-
   const params = useParams();
   const chainId = params.chainId;
+  const dispatch = useDispatch();
+  const isLoading = useIsLoading();
+  const { updateStakeStatus } = useChainStakeStatus(chainId);
+
   const { poolAddress } = usePoolInfo(getRTokenDenom(chainId));
 
   return (

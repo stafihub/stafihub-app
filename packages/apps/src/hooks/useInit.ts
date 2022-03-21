@@ -1,9 +1,11 @@
-import { chains, isFork } from "@stafihub/apps-config";
+import { chains, getStafiHubChainId, isFork } from "@stafihub/apps-config";
 import * as _ from "lodash";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { connectKeplrChains, setIsFork } from "../redux/reducers/AppSlice";
+import { updateChainEras } from "../redux/reducers/ChainSlice";
 import { isNetworkAllowed } from "../utils/storage";
+import { useInterval } from "./useInterval";
 
 export function useInit() {
   const dispatch = useDispatch();
@@ -13,12 +15,25 @@ export function useInit() {
 
     dispatch(setIsFork(isFork()));
 
-    const networks = _.keys(chains);
+    const chainIds = _.keys(chains);
 
     dispatch(
       connectKeplrChains(
-        networks.filter((network) => isNetworkAllowed(network))
+        chainIds.filter((network) => isNetworkAllowed(network))
       )
     );
   }, [dispatch]);
+
+  const updateEras = useCallback(() => {
+    const chainIds = _.keys(_.omit(chains, [getStafiHubChainId()]));
+    dispatch(updateChainEras(chainIds));
+  }, [dispatch]);
+
+  useEffect(() => {
+    updateEras();
+  }, [updateEras]);
+
+  useInterval(() => {
+    updateEras();
+  }, 10 * 60 * 1000);
 }

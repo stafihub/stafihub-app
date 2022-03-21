@@ -104,7 +104,6 @@ async function innerConnectKeplr(chainId: string) {
   }
 
   const enableResult = await window.keplr.enable(chains[chainId].chainId);
-  console.log("enableResult", enableResult);
   return enableResult;
 }
 

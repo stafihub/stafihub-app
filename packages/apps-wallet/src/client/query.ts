@@ -5,6 +5,8 @@ import type {
   KeplrAccountBalance,
   QueryGetUnbondCommissionResponse,
   QueryGetBondRecordResponse,
+  QueryGetEraExchangeRateResponse,
+  QueryGetChainEraResponse,
 } from "@stafihub/types";
 import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import { createCosmosClient, createQueryService } from ".";
@@ -89,11 +91,7 @@ export async function queryrTokenBalance(
     return "--";
   }
 
-  const result = await client.getBalance(
-    stafiHubAddress,
-    // "stafi15lne70yk254s0pm2da6g59r82cjymzjqvvqxz7",
-    tokenDenom
-  );
+  const result = await client.getBalance(stafiHubAddress, tokenDenom);
   console.log("rToken balance result", result);
   return result.amount;
 }
@@ -146,6 +144,40 @@ export async function queryUnbondCommission(
     return result;
   } catch (err: unknown) {
     console.log("queryUnbondCommission err", err);
+  }
+  return null;
+}
+
+export async function queryChainEra(
+  denom: string
+): Promise<QueryGetChainEraResponse | null> {
+  try {
+    const queryService = await createQueryService(getStafiHubChainId());
+    const result = await queryService.GetChainEra({
+      denom,
+    });
+    console.log("queryChainEra result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryChainEra err", denom, err);
+  }
+  return null;
+}
+
+export async function queryEraExchangeRate(
+  era: number,
+  denom: string
+): Promise<QueryGetEraExchangeRateResponse | null> {
+  try {
+    const queryService = await createQueryService(getStafiHubChainId());
+    const result = await queryService.GetEraExchangeRate({
+      era,
+      denom,
+    });
+    console.log("queryEraExchangeRate result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryEraExchangeRate err", era, denom, err);
   }
   return null;
 }

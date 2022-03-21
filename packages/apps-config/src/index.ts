@@ -15,8 +15,19 @@ export function getStafiHubChainId(): string {
   return "stafihub-testnet-1";
 }
 
-export function getCosmosNetwork(): string {
-  return "iris";
+export function getHoursPerEra(): number {
+  if (isDev()) {
+    return 3;
+  }
+  return 24;
+}
+
+export function getChainDecimals(chainId: string | undefined): number {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.decimals;
 }
 
 export function getTokenDisplayName(chainId: string | undefined): string {

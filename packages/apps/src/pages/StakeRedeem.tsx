@@ -20,7 +20,7 @@ export const StakeRedeem = () => {
   const rTokenDenom = getRTokenDenom(chainId);
   const { exchangeRate } = usePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
-  const { stakeStatus } = useChainStakeStatus(rTokenDenom);
+  const { stakeStatus } = useChainStakeStatus(chainId);
 
   const chainAccount = useChainAccount(chainId);
   const [unbondModalVisible, setUnbondModalVisible] = useState(false);
@@ -140,7 +140,6 @@ export const StakeRedeem = () => {
       <UnbondModal
         visible={unbondModalVisible}
         onClose={() => setUnbondModalVisible(false)}
-        denom={stakeStatus?.rTokenDenom}
         inputAmount={inputAmount}
         receiveAddress={chainAccount?.bech32Address || ""}
         willGetAmount={formatNumberToFixed(willGetAmount)}

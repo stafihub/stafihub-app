@@ -46,7 +46,11 @@ export const StakeHome = () => {
   }, [chainAccount]);
 
   const willGetAmount = useMemo(() => {
-    if (isNaN(Number(inputAmount)) || isNaN(Number(exchangeRate))) {
+    if (
+      !inputAmount ||
+      isNaN(Number(inputAmount)) ||
+      isNaN(Number(exchangeRate))
+    ) {
       return "--";
     }
     return Number(inputAmount) / Number(exchangeRate);

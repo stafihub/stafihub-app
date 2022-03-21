@@ -17,12 +17,12 @@ export const Sidebar = () => {
         className="mt-6 ml-4 mb-[25px]  w-[116px] h-[38px] self-start"
       />
 
-      {/* <SidebarItem
+      <SidebarItem
         defaultIcon={rAssetIcon}
         activeIcon={rAssetIconActive}
         title="rAsset"
         targetUrl="/rAsset"
-      /> */}
+      />
 
       <SidebarItem
         defaultIcon={rTokenIcon}

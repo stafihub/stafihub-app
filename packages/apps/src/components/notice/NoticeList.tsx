@@ -92,7 +92,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
       >
         {noticeList.map((notice, index) => (
           <Box key={notice.id}>
-            <Box>
+            <Box mt="2px">
               <Typography variant="bold" fontSize="12px" color="#434A52">
                 {getNoticeTitle(notice)}
               </Typography>
@@ -131,7 +131,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                   props.onClose();
                 }}
               >
-                Confimed
+                {notice.status}
               </Typography>
             </Stack>
 

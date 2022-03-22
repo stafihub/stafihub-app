@@ -1,8 +1,10 @@
 import { Box, Stack } from "@mui/material";
 import { FeeStationPool } from "@stafihub/types";
+import { CustomLoading } from "@stafihub/react-components";
 import { BackIcon } from "./icons/BackIcon";
 
 interface SelectTokenListProps {
+  loading: boolean;
   list: FeeStationPool[];
   selectedToken: FeeStationPool | undefined;
   onChange: (token: FeeStationPool) => void;
@@ -35,6 +37,12 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
           overflow: "auto",
         }}
       >
+        {props.loading && (
+          <div className="flex flex-col items-center mt-10">
+            <CustomLoading color="#FF7FA7" size={40} />
+          </div>
+        )}
+
         {props.list &&
           props.list.map((item, index) => {
             return (

@@ -14,7 +14,7 @@ export function useAccountUnbond(denom: string, unbonder: string | undefined) {
         let amount = 0;
         const result = await queryAccountUnbond(denom, unbonder);
         setLoading(false);
-        setUnbondRecords(result?.unbond?.chunks?.slice(0, 10) || []);
+        setUnbondRecords(result?.unbond?.chunks?.reverse()?.slice(0, 10) || []);
         if (result?.unbond?.chunks) {
           result.unbond.chunks.forEach((chunk) => {
             amount += Number(atomicToHuman(chunk.value));

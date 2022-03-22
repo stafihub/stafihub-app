@@ -8,6 +8,7 @@ import { useAccounts } from "./useAppSlice";
 
 export function useFeeStationPools() {
   const accounts = useAccounts();
+  const [loading, setLoading] = useState(true);
   const [serverPoolList, setServerPoolList] = useState<FeeStationPool[]>([]);
   const [swapMinLimit, setSwapMinLimit] = useState("--");
   const [swapMaxLimit, setSwapMaxLimit] = useState("--");
@@ -24,6 +25,8 @@ export function useFeeStationPools() {
         }
       );
       const resJson = await response.json();
+
+      setLoading(false);
 
       if (resJson.status === "80000") {
         const pools = resJson.data.poolInfoList || [];
@@ -63,5 +66,5 @@ export function useFeeStationPools() {
     return _.compact(formatPools);
   }, [serverPoolList, accounts]);
 
-  return { poolList, swapMinLimit, swapMaxLimit };
+  return { poolList, swapMinLimit, swapMaxLimit, loading };
 }

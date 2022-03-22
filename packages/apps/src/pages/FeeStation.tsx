@@ -34,7 +34,8 @@ export const FeeStation = (props: {}) => {
   const slippage = useSlippage();
   const isLoading = useIsLoading();
 
-  const { poolList, swapMinLimit, swapMaxLimit } = useFeeStationPools();
+  const { poolList, swapMinLimit, swapMaxLimit, loading } =
+    useFeeStationPools();
 
   const [selectedChainName, setSelectedChainName] = useState("");
 
@@ -180,6 +181,7 @@ export const FeeStation = (props: {}) => {
       return (
         <Box padding="15px 20px 0">
           <SelectTokenList
+            loading={loading}
             list={poolList}
             selectedToken={selectedPool}
             onChange={(pool) => {

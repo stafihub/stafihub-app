@@ -97,7 +97,7 @@ export const connectKeplr =
       return;
     }
     try {
-      const enableResult = await connectAtomjs(chainId);
+      await connectAtomjs(chainId);
       const accountResult = await getKeplrAccount(chainId);
 
       if (!accountResult) {
@@ -130,7 +130,7 @@ export const connectKeplrChains =
     const requests = chainIds.map((network) => {
       return (async () => {
         try {
-          const enableResult = await connectAtomjs(network);
+          await connectAtomjs(network);
           const accountResult = await getKeplrAccount(network);
           if (!accountResult) {
             return null;

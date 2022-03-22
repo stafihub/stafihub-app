@@ -1,15 +1,11 @@
-import { Stack, Typography, Box } from "@mui/material";
-import {
-  getExplorerAccountUrl,
-  getExplorerTransactionUrl,
-} from "@stafihub/apps-config";
+import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUnreadNoticeFlag } from "../../redux/reducers/AppSlice";
 import {
   LocalNotice,
-  NoticeStakeData,
   NoticeFeeStationData,
+  NoticeStakeData,
   NoticeUnbondData,
 } from "../../types/notice";
 import { openLink } from "../../utils/common";

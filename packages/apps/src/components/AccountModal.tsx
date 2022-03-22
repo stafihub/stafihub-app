@@ -3,7 +3,7 @@ import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import { Button } from "@stafihub/react-components";
 import * as _ from "lodash";
 import { useMemo } from "react";
-import { useAccounts, useIsFork } from "../hooks/useAppSlice";
+import { useAccounts } from "../hooks/useAppSlice";
 import { AccountItem } from "./AccountItem";
 
 interface UnbondModalProps {
@@ -13,7 +13,7 @@ interface UnbondModalProps {
 
 export const AccountModal = (props: UnbondModalProps) => {
   const accounts = useAccounts();
-  const [isFork] = useIsFork();
+  // const [isFork] = useIsFork();
 
   const { stafiHubChain, restChainsArr } = useMemo(() => {
     const stafiHubChain = chains[getStafiHubChainId()];

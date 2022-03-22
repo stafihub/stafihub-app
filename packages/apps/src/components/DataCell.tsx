@@ -1,6 +1,6 @@
-import { Stack, Tooltip, Typography } from "@mui/material";
-import tooltipIcon from "../assets/images/icon_tooltip.svg";
+import { Stack, Tooltip } from "@mui/material";
 import classNames from "classnames";
+import tooltipIcon from "../assets/images/icon_tooltip.svg";
 
 interface DataCellProps {
   title: string;

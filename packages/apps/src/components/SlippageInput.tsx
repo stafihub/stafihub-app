@@ -12,14 +12,14 @@ export const SlippageInput = (props: SlippageInputProps) => {
       placeholder={props.placeholder}
       value={props.value}
       onChange={(e) => {
-        let value = e.target.value.replace(/[^\d\.]/g, "");
+        let value = e.target.value.replace(/[^\d.]/g, "");
         value = value.replace(/^\./g, "");
         value = value.replace(/\.{2,}/g, ".");
         value = value
           .replace(".", "$#$")
           .replace(/\./g, "")
           .replace("$#$", ".");
-        value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/, "$1$2.$3");
+        value = value.replace(/^(-)*(\d+)\.(\d\d).*$/, "$1$2.$3");
         if (Number(value) > Number(99)) {
           return;
         } else if (Number(value) > 0 && Number(value) < Number(0.1)) {

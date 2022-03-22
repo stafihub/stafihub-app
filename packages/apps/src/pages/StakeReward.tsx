@@ -2,11 +2,10 @@ import { getRTokenDenom, getTokenDisplayName } from "@stafihub/apps-config";
 import { FormatterText } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+import nodata from "../assets/images/nodata.png";
 import { StakeRewardTableHeader } from "../components/StakeRewardTableHeader";
-import { StakeRewardTableItem } from "../components/StakeRewardTableItem";
 import { usePoolInfo } from "../hooks";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
-import nodata from "../assets/images/nodata.png";
 
 export const StakeReward = () => {
   const params = useParams();

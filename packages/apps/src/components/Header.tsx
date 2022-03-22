@@ -1,26 +1,23 @@
-import { getStafiHubChainId } from "@stafihub/apps-config";
-import { getShortAddress, atomicToHuman } from "@stafihub/apps-util";
-import * as _ from "lodash";
-import { FormatterText } from "@stafihub/react-components";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import iconNotice from "../assets/images/icon_notice.svg";
-import iconStatis from "../assets/images/icon_statis.svg";
-import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
-import { connectKeplr } from "../redux/reducers/AppSlice";
-import { AccountModal } from "./AccountModal";
 import { Popover } from "@mui/material";
+import { getStafiHubChainId } from "@stafihub/apps-config";
+import { atomicToHuman, getShortAddress } from "@stafihub/apps-util";
+import { FormatterText } from "@stafihub/react-components";
+import * as _ from "lodash";
 import {
   bindPopover,
   bindTrigger,
   usePopupState,
 } from "material-ui-popup-state/hooks";
+import { useState } from "react";
+import iconNotice from "../assets/images/icon_notice.svg";
+import iconStatis from "../assets/images/icon_statis.svg";
+import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
+import { AccountModal } from "./AccountModal";
 import { NoticeList } from "./notice/NoticeList";
 
 const STAFIHUB_CHAIN_ID = getStafiHubChainId();
 
 export const Header = () => {
-  const dispatch = useDispatch();
   const accounts = useAccounts();
   const [accountModalVisible, setAccountModalVisible] = useState(false);
   const unreadNoticeFlag = useUnreadNoticeFlag();

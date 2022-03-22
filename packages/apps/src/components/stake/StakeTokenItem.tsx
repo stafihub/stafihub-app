@@ -1,9 +1,8 @@
-import { getTokenIcon, FormatterText } from "@stafihub/react-components";
 import { getRTokenDenom } from "@stafihub/apps-config";
+import { FormatterText, getTokenIcon } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { usePoolInfo } from "../../hooks";
 import { useApy } from "../../hooks/useApy";
-import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 import { useTokenSupply } from "../../hooks/useTokenSupply";
 
 interface StakeTokenItemProps {

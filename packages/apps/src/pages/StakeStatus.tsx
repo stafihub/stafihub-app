@@ -3,6 +3,7 @@ import {
   getRTokenDisplayName,
   getTokenDisplayName,
   getStafiHubChainId,
+  getHoursPerEra,
 } from "@stafihub/apps-config";
 import { Button, FormatterText } from "@stafihub/react-components";
 import { useMemo } from "react";
@@ -111,7 +112,7 @@ export const StakeStatus = () => {
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
-              + 0.002300
+              + 0.00
             </div>
           </div>
         </div>
@@ -162,7 +163,7 @@ export const StakeStatus = () => {
       </div>
 
       <div className="mt-[44px] text-text-gray4 text-[12px]">
-        Updated every 1 hours
+        Updated every {getHoursPerEra()} hours
       </div>
     </div>
   );

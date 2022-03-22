@@ -1,11 +1,13 @@
 import classNames from "classnames";
+import { getShortAddress } from "@stafihub/apps-util";
+import ReactLoading from "react-loading";
 import { useDispatch } from "react-redux";
 import iconClose from "../assets/images/icon_close_bold.svg";
-import sidebarProgressIcon from "../assets/images/sidebar_progress.svg";
 import iconSuccess from "../assets/images/icon_success.png";
+import sidebarProgressIcon from "../assets/images/sidebar_progress.svg";
 import { useSidebarProgressProps } from "../hooks/useSidebarProgressProps";
 import { setSidebarProgressProps } from "../redux/reducers/TxSlice";
-import ReactLoading from "react-loading";
+import { openLink } from "../utils/common";
 
 export const ProgressSidebar = () => {
   const dispatch = useDispatch();
@@ -61,6 +63,37 @@ export const ProgressSidebar = () => {
                 <img src={iconSuccess} alt="success" className="w-4" />
               )}
             </div>
+          </div>
+
+          <div
+            className={classNames(
+              "mt-8 ml-6 flex items-center text-[12px] text-[#8f8f8f]",
+              {
+                invisible: item.status !== 1,
+              }
+            )}
+          >
+            {item.status === 1 ? (
+              item.txHash ? (
+                <>
+                  <div>Check Tx</div>
+                  <div
+                    className="ml-3 underline cursor-pointer"
+                    onClick={() => {
+                      openLink(
+                        `${sidebarProgressProps.explorerUrl}/tx/${item.txHash}`
+                      );
+                    }}
+                  >
+                    {getShortAddress(item.txHash, 4)}
+                  </div>
+                </>
+              ) : (
+                <div>Completed</div>
+              )
+            ) : (
+              <>Pending</>
+            )}
           </div>
         </div>
       ))}

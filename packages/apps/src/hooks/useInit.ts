@@ -14,7 +14,9 @@ export function useInit() {
     console.log("chains", chains);
 
     dispatch(setIsFork(isFork()));
+  }, [dispatch]);
 
+  const fetchKeplrAccounts = useCallback(() => {
     const chainIds = _.keys(chains);
 
     dispatch(
@@ -23,6 +25,15 @@ export function useInit() {
       )
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    fetchKeplrAccounts();
+
+    // Keplr account change event.
+    window.addEventListener("keplr_keystorechange", () => {
+      fetchKeplrAccounts();
+    });
+  }, [fetchKeplrAccounts]);
 
   const updateEras = useCallback(() => {
     const chainIds = _.keys(_.omit(chains, [getStafiHubChainId()]));

@@ -36,12 +36,12 @@ export function useApy(chainId: string | undefined) {
         const apy =
           ((Number(currentRate) - Number(oldRate)) * 365.25 * 100) /
           (7 * Math.pow(10, getChainDecimals(chainId)));
-        console.log("apy:", apy);
+        // console.log("apy:", apy);
 
         setApy(apy.toString());
       }
     })();
   }, [chainEra, chainId]);
 
-  return { apy };
+  return apy;
 }

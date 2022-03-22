@@ -96,9 +96,7 @@ export const ProgressModal = (props: ProgressModalProps) => {
                 value={swapProgressModalProps.txDetail?.amount}
                 decimals={6}
               />{" "}
-              {swapProgressModalProps.txDetail?.symbol &&
-                swapProgressModalProps.txDetail?.symbol.length > 1 &&
-                swapProgressModalProps.txDetail?.symbol.slice(1).toUpperCase()}
+              {swapProgressModalProps.txDetail?.symbol}
             </div>
 
             <div className="self-stretch mx-32 mt-8">

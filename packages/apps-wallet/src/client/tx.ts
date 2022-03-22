@@ -42,7 +42,38 @@ export async function sendStakeTx(
         chains[chainId].denom
       ),
       fee,
-      `1:${stafiHubAddress}`
+      `1:${stafiHubAddress}11`
+    );
+    return sendTokens;
+  } catch {
+    return;
+  }
+}
+
+export async function sendRecoveryTx(
+  chainId: string,
+  accountAddress: string,
+  stafiHubAddress: string,
+  poolAddress: string,
+  txHash: string
+): Promise<DeliverTxResponse | undefined> {
+  try {
+    const client = await createCosmosClient(chainId);
+    const fee = {
+      amount: [
+        {
+          denom: chains[chainId].denom,
+          amount: "5000",
+        },
+      ],
+      gas: "200000",
+    };
+    const sendTokens = await client?.sendTokens(
+      accountAddress,
+      poolAddress,
+      coins(1, chains[chainId].denom),
+      fee,
+      `2:${stafiHubAddress}:${txHash}`
     );
     return sendTokens;
   } catch {

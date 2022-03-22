@@ -7,4 +7,5 @@ protoc \
   --ts_proto_opt="esModuleInterop=true,forceLong=long,useOptionals=true" \
   "./proto/ledger/tx.proto" \
   "./proto/ledger/query.proto" \
-  "./proto/ledger/ledger.proto"
+  "./proto/ledger/ledger.proto" \
+  "./proto/cosmos/bank/v1beta1/query.proto"

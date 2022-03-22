@@ -11,6 +11,7 @@ import {
   sendStakeTx,
   sendChainTokens,
   queryBondRecord,
+  sendRecoveryTx,
 } from "@stafihub/apps-wallet";
 import { humanToAtomic } from "@stafihub/apps-util";
 import { FeeStationPool } from "@stafihub/types";
@@ -24,6 +25,7 @@ import {
   updateTokenBalance,
 } from "./AppSlice";
 import { timeout } from "../../utils/common";
+import { checkTxSender } from "../../utils/notice";
 import snackbarUtil from "../../utils/snackbarUtils";
 
 interface TxDetail {
@@ -38,15 +40,17 @@ interface SwapProgressModalProps {
   txDetail?: TxDetail;
 }
 
-interface SidebarProgressItem {
+export interface SidebarProgressItem {
   name: string;
   // show item status.
   // 0-loading 1-success 2-error
   status: number;
+  txHash?: string;
 }
 
 interface SidebarProgressProps {
   visible: boolean;
+  explorerUrl?: string;
   items?: SidebarProgressItem[];
 }
 
@@ -121,12 +125,14 @@ export const stake =
       );
       dispatch(setIsLoading(false));
 
+      let success = false;
       if (txResponse?.code === 0) {
         dispatch(
           addNotice(
             txResponse.transactionHash,
             "Stake",
             {
+              sender: chainAccount.bech32Address,
               transactionHash: txResponse.transactionHash,
               address: chainAccount.bech32Address,
             },
@@ -142,6 +148,7 @@ export const stake =
         dispatch(
           setSidebarProgressProps({
             visible: true,
+            explorerUrl: getExplorerUrl(chainId),
             items: [{ name: "Staking", status: 0 }],
           })
         );
@@ -150,9 +157,12 @@ export const stake =
 
         dispatch(
           setSidebarProgressProps({
-            visible: true,
             items: [
-              { name: "Staking", status: 1 },
+              {
+                name: "Staking",
+                status: 1,
+                txHash: txResponse.transactionHash,
+              },
               { name: "Sending", status: 0 },
             ],
           })
@@ -169,22 +179,28 @@ export const stake =
           if (bondRecordRes) {
             dispatch(
               setSidebarProgressProps({
-                visible: true,
                 items: [
-                  { name: "Staking", status: 1 },
+                  {
+                    name: "Staking",
+                    status: 1,
+                    txHash: txResponse.transactionHash,
+                  },
                   { name: "Sending", status: 1 },
                 ],
               })
             );
 
             dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+            success = true;
             break;
           }
 
           await timeout(2500);
           timeCount++;
           if (timeCount > MAX_COUNT) {
-            snackbarUtil.warning("Please check stake status later.");
+            snackbarUtil.warning(
+              "Check status timeout, please try again later."
+            );
             dispatch(
               setSidebarProgressProps({
                 visible: false,
@@ -192,10 +208,119 @@ export const stake =
             );
             break;
           }
+
+          if (!getState().tx.sidebarProgressProps.visible) {
+            break;
+          }
         }
       }
 
-      callback && callback(txResponse?.code === 0);
+      callback && callback(success);
+    } catch {
+    } finally {
+    }
+  };
+
+export const stakeRecovery =
+  (
+    chainId: string | undefined,
+    stafiHubAddress: string,
+    poolAddress: string,
+    txHash: string,
+    callback?: (success: boolean) => void
+  ): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      if (!chainId) {
+        return;
+      }
+      if (!stafiHubAddress) {
+        dispatch(connectKeplr(getStafiHubChainId()));
+        return;
+      }
+      const chainAccount = getState().app.accounts[chainId];
+      if (!chainAccount) {
+        return;
+      }
+
+      if (!checkTxSender(chainAccount.bech32Address, txHash)) {
+        snackbarUtil.error(
+          "You can only send recovery request with the same account."
+        );
+        return;
+      }
+
+      dispatch(setIsLoading(true));
+      const txResponse = await sendRecoveryTx(
+        chainId,
+        chainAccount.bech32Address,
+        stafiHubAddress,
+        poolAddress,
+        txHash
+      );
+      dispatch(setIsLoading(false));
+
+      // console.log("recovery txHash", txResponse?.transactionHash);
+
+      let success = false;
+
+      if (txResponse?.code === 0) {
+        dispatch(updateTokenBalance(chainId));
+        dispatch(
+          setSidebarProgressProps({
+            visible: true,
+            explorerUrl: getExplorerUrl(chainId),
+            items: [
+              { name: "Staking", status: 1, txHash },
+              { name: "Sending", status: 0 },
+            ],
+          })
+        );
+
+        const MAX_COUNT = 40;
+        let timeCount = 0;
+        while (true) {
+          const bondRecordRes = await queryBondRecord(
+            getRTokenDenom(chainId),
+            txHash
+          );
+
+          if (bondRecordRes) {
+            dispatch(
+              setSidebarProgressProps({
+                items: [
+                  { name: "Staking", status: 1, txHash },
+                  { name: "Sending", status: 1 },
+                ],
+              })
+            );
+
+            dispatch(updateNotice(txHash, "Confimed"));
+            success = true;
+            break;
+          }
+
+          await timeout(2500);
+          timeCount++;
+          if (timeCount > MAX_COUNT) {
+            snackbarUtil.warning(
+              "Check status timeout, please try again later."
+            );
+            dispatch(
+              setSidebarProgressProps({
+                visible: false,
+              })
+            );
+            break;
+          }
+
+          if (!getState().tx.sidebarProgressProps.visible) {
+            break;
+          }
+        }
+      }
+
+      callback && callback(success);
     } catch {
     } finally {
     }
@@ -241,6 +366,7 @@ export const unbond =
             txResponse.transactionHash,
             "Unbond",
             {
+              sender: stafiHubAccount.bech32Address,
               transactionHash: txResponse.transactionHash,
               address: chainAccount.bech32Address,
             },
@@ -324,6 +450,7 @@ export const feeStationSwap =
               txResponse.transactionHash,
               "Fee Station",
               {
+                sender: chainAccount.bech32Address,
                 transactionHash: txResponse.transactionHash,
                 address: stafiHubAccount.bech32Address,
               },
@@ -343,7 +470,7 @@ export const feeStationSwap =
               progress: 0,
               txDetail: {
                 amount: outAmount,
-                symbol: poolInfo.symbol,
+                symbol: "FIS",
                 stafihubAddress: stafiHubAccount.bech32Address,
               },
             })

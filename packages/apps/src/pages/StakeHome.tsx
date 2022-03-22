@@ -20,6 +20,8 @@ import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { useChainInfo } from "../hooks/useChainInfo";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { stake } from "../redux/reducers/TxSlice";
+import { useApy } from "../hooks/useApy";
+import { useTokenSupply } from "../hooks/useTokenSupply";
 
 export const StakeHome = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,8 @@ export const StakeHome = () => {
   const chain = useChainInfo(chainId);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const chainAccount = useChainAccount(chainId);
+  const apy = useApy(chainId);
+  const supply = useTokenSupply(chainId);
   const { poolAddress, exchangeRate } = usePoolInfo(getRTokenDenom(chainId));
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
@@ -37,6 +41,13 @@ export const StakeHome = () => {
   const buttonDisabled = useMemo(() => {
     return Boolean(!poolAddress || !stafiHubAddress || !inputAmount);
   }, [poolAddress, stafiHubAddress, inputAmount]);
+
+  const totalStakedAmount = useMemo(() => {
+    if (isNaN(Number(exchangeRate)) || isNaN(Number(supply))) {
+      return "--";
+    }
+    return Number(supply) * Number(exchangeRate);
+  }, [exchangeRate, supply]);
 
   const transferrableAmount = useMemo(() => {
     if (!chainAccount || !chainAccount.balance) {
@@ -87,7 +98,8 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-[12px] text-text-gray4 text-[14px]">
-        23.344 {getTokenDisplayName(chainId)} is staked in the contracts
+        <FormatterText value={totalStakedAmount} decimals={2} />{" "}
+        {getTokenDisplayName(chainId)} is staked in the contracts
       </div>
 
       <div className="mt-[10px] mr-[35px] h-[0.5px] bg-divider" />
@@ -150,20 +162,20 @@ export const StakeHome = () => {
             </div>
 
             <div className="ml-1 mb-[1.5px] text-text-gray5 text-[12px] scale-[0.67] origin-bottom-left">
-              +BNB
+              +{getTokenDisplayName(chainId)}
             </div>
           </div>
 
-          <div className="mt-[2px] font-bold text-primary text-[30px]">
-            8.23%
+          <div className="mr-2 mt-[2px] font-bold text-primary text-[30px]">
+            <FormatterText value={apy} decimals={2} />%
           </div>
         </div>
 
-        <div className="ml-[2px] mr-[20px] font-bold text-white text-[30px]">
+        <div className="hidden ml-[2px] mr-[20px] font-bold text-white text-[30px]">
           +
         </div>
 
-        <div>
+        <div className="hidden">
           <div className="flex items-end">
             <div className="font-bold text-[14px] text-text-gray5">
               Mint APR
@@ -174,9 +186,7 @@ export const StakeHome = () => {
             </div>
           </div>
 
-          <div className="mt-[2px] font-bold text-primary text-[30px]">
-            12.23%
-          </div>
+          <div className="mt-[2px] font-bold text-primary text-[30px]">--%</div>
         </div>
       </div>
 
@@ -195,7 +205,7 @@ export const StakeHome = () => {
         </div>
 
         <div
-          className="mr-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
+          className="mx-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
           onClick={setConnectedStafiHubAddress}
         >
           Connected Address
@@ -204,7 +214,7 @@ export const StakeHome = () => {
 
       <div className="mt-[10px] w-[494px] text-text-gray5 text-[12px]">
         Note: Make sure you have the right address, otherwise you will not
-        receive the token If you provide a wrong address.
+        receive the token if you provide a wrong address.
       </div>
 
       <div className="flex justify-end mt-[30px] mr-[57px]">

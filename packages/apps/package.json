@@ -40,7 +40,7 @@
     "webpack": "^5.69.1"
   },
   "scripts": {
-    "start": "PORT=3023 craco start",
+    "start": "PORT=3024 craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",

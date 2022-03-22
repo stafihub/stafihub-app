@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { usePoolInfo } from "../../hooks";
 import { useApy } from "../../hooks/useApy";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
+import { useTokenSupply } from "../../hooks/useTokenSupply";
 
 interface StakeTokenItemProps {
   chainId: string;
@@ -16,21 +17,17 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
   const icon = useMemo(() => {
     return getTokenIcon(props.derivativeTokenName);
   }, [props.derivativeTokenName]);
-  const { apy } = useApy(props.chainId);
+  const apy = useApy(props.chainId);
+  const supply = useTokenSupply(props.chainId);
 
-  const { stakeStatus } = useChainStakeStatus(props.chainId);
   const { exchangeRate } = usePoolInfo(getRTokenDenom(props.chainId));
 
   const liquidity = useMemo(() => {
-    if (
-      !stakeStatus ||
-      isNaN(Number(exchangeRate)) ||
-      isNaN(Number(stakeStatus.rTokenBalance))
-    ) {
+    if (isNaN(Number(exchangeRate)) || isNaN(Number(supply))) {
       return "--";
     }
-    return Number(stakeStatus.rTokenBalance) * Number(exchangeRate) * 0.06;
-  }, [exchangeRate, stakeStatus]);
+    return Number(supply) * Number(exchangeRate) * 0.06;
+  }, [exchangeRate, supply]);
 
   return (
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">

@@ -13,6 +13,7 @@ export type NoticeType = "Fee Station" | "Stake" | "Unbond";
 export type NoticeStatus = "Pending" | "Error" | "Confimed";
 
 export interface NoticeTxDetail {
+  sender: string;
   transactionHash: string;
   address: string;
 }

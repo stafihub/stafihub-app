@@ -17,7 +17,7 @@ interface RAssetItemProps {
 export const RAssetItem = (props: RAssetItemProps) => {
   const { stakeStatus } = useChainStakeStatus(props.chainId);
   const { exchangeRate } = usePoolInfo(getRTokenDenom(props.chainId));
-  const { apy } = useApy(props.chainId);
+  const apy = useApy(props.chainId);
 
   const myStakedAmount = useMemo(() => {
     if (

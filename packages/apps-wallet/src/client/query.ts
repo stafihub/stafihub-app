@@ -7,9 +7,14 @@ import type {
   QueryGetBondRecordResponse,
   QueryGetEraExchangeRateResponse,
   QueryGetChainEraResponse,
+  QuerySupplyOfResponse,
 } from "@stafihub/types";
 import { chains, getStafiHubChainId } from "@stafihub/apps-config";
-import { createCosmosClient, createQueryService } from ".";
+import {
+  createCosmosBankQueryService,
+  createCosmosClient,
+  createQueryService,
+} from ".";
 import { QueryGetAccountUnbondResponse } from "@stafihub/types";
 
 export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
@@ -24,7 +29,7 @@ export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
     }),
   ]);
 
-  console.log("result", results);
+  // console.log("result", results);
 
   return {
     poolAddress: results[0].addrs[0],
@@ -40,7 +45,7 @@ export async function queryPoolByDenom(
   const result = await queryService.BondedPoolsByDenom({
     denom: tokenDenom,
   });
-  console.log("result", result);
+  // console.log("result", result);
   return result;
 }
 
@@ -54,7 +59,7 @@ export async function queryPoolDetail(
     denom: tokenDenom,
     pool: poolAddress,
   });
-  console.log("result", result);
+  // console.log("result", result);
   return result;
 }
 
@@ -72,7 +77,7 @@ export async function queryAccountBalance(
 
   try {
     const result = await client.getBalance(address, chains[chainId].coinDenom);
-    console.log("account balance result", result);
+    // console.log("account balance result", result);
     return result;
   } catch {
     return {
@@ -80,6 +85,24 @@ export async function queryAccountBalance(
       amount: "--",
     };
   }
+}
+
+export async function queryTokenSupply(
+  denom: string
+): Promise<QuerySupplyOfResponse | null> {
+  try {
+    const queryService = await createCosmosBankQueryService(
+      getStafiHubChainId()
+    );
+    const result = await queryService.SupplyOf({
+      denom,
+    });
+    // console.log("queryBondRecord result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryrTokenSupply err", denom, err);
+  }
+  return null;
 }
 
 export async function queryrTokenBalance(
@@ -92,7 +115,7 @@ export async function queryrTokenBalance(
   }
 
   const result = await client.getBalance(stafiHubAddress, tokenDenom);
-  console.log("rToken balance result", result);
+  // console.log("rToken balance result", result);
   return result.amount;
 }
 
@@ -106,7 +129,7 @@ export async function queryBondRecord(
       denom,
       txhash,
     });
-    console.log("queryBondRecord result", result);
+    // console.log("queryBondRecord result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryBondRecord err", denom, txhash, err);
@@ -124,7 +147,7 @@ export async function queryAccountUnbond(
       denom: tokenDenom,
       unbonder: stafiHubAddress,
     });
-    console.log("queryAccountUnbond result", result);
+    // console.log("queryAccountUnbond result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryAccountUnbond err", err);
@@ -140,7 +163,7 @@ export async function queryUnbondCommission(
     const result = await queryService.GetUnbondCommission({
       denom: tokenDenom,
     });
-    console.log("queryUnbondCommission result", result);
+    // console.log("queryUnbondCommission result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryUnbondCommission err", err);
@@ -156,7 +179,7 @@ export async function queryChainEra(
     const result = await queryService.GetChainEra({
       denom,
     });
-    console.log("queryChainEra result", result);
+    // console.log("queryChainEra result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryChainEra err", denom, err);
@@ -174,7 +197,7 @@ export async function queryEraExchangeRate(
       era,
       denom,
     });
-    console.log("queryEraExchangeRate result", result);
+    // console.log("queryEraExchangeRate result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryEraExchangeRate err", era, denom, err);

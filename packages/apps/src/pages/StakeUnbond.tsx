@@ -6,9 +6,11 @@ import { UnbondRecordTableHeader } from "../components/unbond/UnbondRecordTableH
 import { UnbondRewardItem } from "../components/unbond/UnbondRewardItem";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useChainAccount } from "../hooks/useAppSlice";
+import { useChainParams } from "../hooks/useChainParams";
 
 export const StakeUnbond = () => {
   const params = useParams();
+  const { unbondingDays } = useChainParams(params.chainId);
 
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const { unbondRecords, loading } = useAccountUnbond(
@@ -24,7 +26,7 @@ export const StakeUnbond = () => {
 
       <UnbondRecordTableHeader />
 
-      <div className="max-h-[275px] h-[275px] overflow-auto">
+      <div className="max-h-[325px] h-[325px] overflow-auto">
         <div className="flex flex-col items-center">
           {!loading && !unbondRecords.length && (
             <>
@@ -41,12 +43,16 @@ export const StakeUnbond = () => {
           )}
 
           {unbondRecords.map((record, index) => (
-            <UnbondRewardItem key={index} item={record} />
+            <UnbondRewardItem
+              key={index}
+              item={record}
+              unbondingDays={unbondingDays}
+            />
           ))}
         </div>
       </div>
 
-      <div className="mt-[45px] text-text-gray4 text-[12px] invisible">
+      <div className="mt-10 mb-4 text-text-gray4 text-[12px]">
         This form only shows the recent 10 records
       </div>
     </div>

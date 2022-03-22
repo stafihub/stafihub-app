@@ -8,11 +8,14 @@ import type {
   QueryGetEraExchangeRateResponse,
   QueryGetChainEraResponse,
   QuerySupplyOfResponse,
+  QueryGetUnbondRelayFeeResponse,
+  QueryParamsResponse,
 } from "@stafihub/types";
 import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import {
   createCosmosBankQueryService,
   createCosmosClient,
+  createCosmosStakingQueryService,
   createQueryService,
 } from ".";
 import { QueryGetAccountUnbondResponse } from "@stafihub/types";
@@ -203,4 +206,34 @@ export async function queryEraExchangeRate(
     console.log("queryEraExchangeRate err", era, denom, err);
   }
   return null;
+}
+
+export async function queryUnbondRelayFee(
+  denom: string
+): Promise<QueryGetUnbondRelayFeeResponse | null> {
+  try {
+    const queryService = await createQueryService(getStafiHubChainId());
+    const result = await queryService.GetUnbondRelayFee({
+      denom,
+    });
+    console.log("queryUnbondRelayFee result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryUnbondRelayFee err", denom, err);
+  }
+  return null;
+}
+
+export async function queryChainParams(
+  chainId: string
+): Promise<QueryParamsResponse | undefined> {
+  try {
+    const queryService = await createCosmosStakingQueryService(chainId);
+    const result = await queryService.Params({});
+    console.log("queryChainParams result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryChainParams err", chainId, err);
+  }
+  return;
 }

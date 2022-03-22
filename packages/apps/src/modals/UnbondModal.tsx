@@ -1,10 +1,9 @@
 import { Box, Modal } from "@mui/material";
-import { Button } from "@stafihub/react-components";
+import { Button, FormatterText } from "@stafihub/react-components";
 import {
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
-  getUnbondPeriod,
 } from "@stafihub/apps-config/src";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -12,6 +11,8 @@ import { usePoolInfo } from "../hooks";
 import { useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { unbond } from "../redux/reducers/TxSlice";
+import { useUnbondRelayFee } from "../hooks/useUnbondRelayFee";
+import { useChainParams } from "../hooks/useChainParams";
 
 interface UnbondModalProps {
   visible: boolean;
@@ -28,6 +29,8 @@ export const UnbondModal = (props: UnbondModalProps) => {
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
   const { updateStakeStatus } = useChainStakeStatus(chainId);
+  const { relayFee } = useUnbondRelayFee(chainId);
+  const { unbondingDays } = useChainParams(chainId);
 
   const { poolAddress } = usePoolInfo(getRTokenDenom(chainId));
 
@@ -59,11 +62,11 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[20px]">
-          —Relay Fee: 3 FIS
+          —Relay Fee: <FormatterText value={relayFee} decimals={2} /> FIS
         </div>
 
         <div className="mt-[40px] text-text-gray4 text-[20px]">
-          —Period: around {getUnbondPeriod()} days
+          —Period: around {unbondingDays} days
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">

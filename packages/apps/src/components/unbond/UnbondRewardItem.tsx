@@ -1,24 +1,21 @@
-import { useParams } from "react-router-dom";
-import { UserUnlockChunk } from "@stafihub/types";
+import { getChainDecimals, getHoursPerEra } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
-import { useMemo } from "react";
-import success from "../../assets/images/icon_success.svg";
-import {
-  getChainDecimals,
-  getHoursPerEra,
-  getUnbondPeriod,
-} from "@stafihub/apps-config";
 import { FormatterText } from "@stafihub/react-components";
+import { UserUnlockChunk } from "@stafihub/types";
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
+import successIcon from "../../assets/images/icon_success.svg";
+import pendingIcon from "../../assets/images/icon_pending.svg";
 import { useChainEra } from "../../hooks/useChainEra";
 
 interface UnbondRewardItemProps {
   item: UserUnlockChunk;
+  unbondingDays: string;
 }
 
 export const UnbondRewardItem = (props: UnbondRewardItemProps) => {
   const params = useParams();
   const era = useChainEra(params.chainId);
-  const unbondPeriodDays = getUnbondPeriod();
   const amount = useMemo(() => {
     if (!props.item) {
       return "--";
@@ -47,7 +44,11 @@ export const UnbondRewardItem = (props: UnbondRewardItemProps) => {
   return (
     <div className="w-full h-[50px] py-[10px] flex items-center text-text-gray2 text-[14px] border-[#494D51] border-solid border-b-[1px]">
       <div className="basis-1/12 flex items-center justify-center">
-        <img src={success} alt="icon" className="w-4" />
+        <img
+          src={completed ? successIcon : pendingIcon}
+          alt="icon"
+          className="w-4"
+        />
       </div>
 
       <div className="basis-2/12 text-[14px] text-white">
@@ -59,7 +60,9 @@ export const UnbondRewardItem = (props: UnbondRewardItemProps) => {
       </div>
 
       <div className="basis-2/12 text-[12px]">
-        <div>≈{unbondPeriodDays} days</div>
+        {!isNaN(Number(props.unbondingDays)) && (
+          <div>≈{props.unbondingDays} days</div>
+        )}
         {!completed && <div className="mt-1">{remainingDays}</div>}
       </div>
 

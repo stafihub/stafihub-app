@@ -3,3 +3,9 @@ export {
   QuerySupplyOfRequest,
   QuerySupplyOfResponse,
 } from "./bank/v1beta1/query";
+
+export {
+  QueryClientImpl as CosmosStakingQueryClientImpl,
+  QueryParamsRequest,
+  QueryParamsResponse,
+} from "./staking/v1beta1/query";

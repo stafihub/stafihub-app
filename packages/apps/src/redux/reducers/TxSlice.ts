@@ -176,7 +176,7 @@ export const stake =
                 status: 1,
                 txHash: txResponse.transactionHash,
               },
-              { name: "Sending", status: 0 },
+              { name: "Minting", status: 0 },
             ],
           })
         );
@@ -198,7 +198,7 @@ export const stake =
                     status: 1,
                     txHash: txResponse.transactionHash,
                   },
-                  { name: "Sending", status: 1 },
+                  { name: "Minting", status: 1 },
                 ],
               })
             );
@@ -296,7 +296,7 @@ export const stakeRecovery =
             explorerUrl: getExplorerUrl(chainId),
             items: [
               { name: "Staking", status: 1, txHash },
-              { name: "Sending", status: 0 },
+              { name: "Minting", status: 0 },
             ],
           })
         );
@@ -314,7 +314,7 @@ export const stakeRecovery =
               setSidebarProgressProps({
                 items: [
                   { name: "Staking", status: 1, txHash },
-                  { name: "Sending", status: 1 },
+                  { name: "Minting", status: 1 },
                 ],
               })
             );

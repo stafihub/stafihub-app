@@ -2,9 +2,15 @@ import {
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
+  getChainAccountPrefix,
 } from "@stafihub/apps-config";
 import { formatNumberToFixed } from "@stafihub/apps-util";
-import { Button, CustomNumberInput } from "@stafihub/react-components";
+import { checkAddress } from "@stafihub/apps-wallet";
+import {
+  Button,
+  CustomNumberInput,
+  CustomInput,
+} from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
@@ -13,6 +19,7 @@ import { useChainAccount } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 import { UnbondModal } from "../modals/UnbondModal";
+import snackbarUtils from "../utils/snackbarUtils";
 
 export const StakeRedeem = () => {
   const params = useParams();
@@ -25,20 +32,8 @@ export const StakeRedeem = () => {
   const chainAccount = useChainAccount(chainId);
   const [unbondModalVisible, setUnbondModalVisible] = useState(false);
   const [inputAmount, setInputAmount] = useState("");
-
-  const redeemableAmount = useMemo(() => {
-    if (
-      isNaN(Number(unbondCommission)) ||
-      !stakeStatus ||
-      isNaN(Number(stakeStatus.rTokenBalance))
-    ) {
-      return "--";
-    }
-    return (
-      Number(stakeStatus.rTokenBalance) *
-      (1 - Number(unbondCommission))
-    ).toString();
-  }, [unbondCommission, stakeStatus]);
+  const [showEditAddress, setShowEditAddress] = useState(false);
+  const [editAddress, setEditAddress] = useState("");
 
   const commissionFee = useMemo(() => {
     if (isNaN(Number(unbondCommission)) || isNaN(Number(inputAmount))) {
@@ -58,11 +53,18 @@ export const StakeRedeem = () => {
     if (Number(inputAmount) <= 0) {
       return true;
     }
-    if (Number(inputAmount) > Number(redeemableAmount)) {
+    if (Number(inputAmount) > Number(stakeStatus?.rTokenBalance)) {
       return true;
     }
     return false;
-  }, [redeemableAmount, inputAmount]);
+  }, [stakeStatus, inputAmount]);
+
+  const finalAddress = useMemo(() => {
+    if (!showEditAddress) {
+      return chainAccount?.bech32Address || "";
+    }
+    return editAddress;
+  }, [chainAccount, showEditAddress, editAddress]);
 
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
@@ -88,12 +90,13 @@ export const StakeRedeem = () => {
             <div
               className="text-primary text-[16px] cursor-pointer"
               onClick={() => {
-                console.log("redeemableAmount", redeemableAmount);
                 if (
-                  !isNaN(Number(redeemableAmount)) &&
-                  Number(redeemableAmount) > 0
+                  !isNaN(Number(stakeStatus?.rTokenBalance)) &&
+                  Number(stakeStatus?.rTokenBalance) > 0
                 ) {
-                  setInputAmount(formatNumberToFixed(redeemableAmount));
+                  setInputAmount(
+                    formatNumberToFixed(stakeStatus?.rTokenBalance)
+                  );
                 }
               }}
             >
@@ -116,20 +119,57 @@ export const StakeRedeem = () => {
 
       <div className="mt-10 text-white text-[20px]">2. Receiving address</div>
 
-      <div className="mt-[20px]  w-[494px] flex items-center justify-between">
-        <div className="text-white text-[14px] w-[63px] text-center">
-          {chainAccount?.bech32Address}
-        </div>
+      <div className="mt-[20px] w-[494px] h-[40px] flex items-center justify-between">
+        {showEditAddress ? (
+          <>
+            <div className="pl-2 py-1 mr-6 flex-1 border-b-[1px] border-[#494D51] border-solid">
+              <CustomInput
+                fontSize={14}
+                placeholder="..."
+                value={editAddress}
+                handleValueChange={setEditAddress}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="pl-2 text-white text-[14px] text-center">
+            {chainAccount?.bech32Address}
+          </div>
+        )}
 
-        <div className="mr-[10px] text-primary text-[12px] cursor-pointer italic">
-          Edit
-        </div>
+        {showEditAddress ? (
+          <div
+            className="mr-[10px] text-primary text-[12px] cursor-pointer italic"
+            onClick={() => {
+              setShowEditAddress(false);
+            }}
+          >
+            Cancel
+          </div>
+        ) : (
+          <div
+            className="mr-[10px] text-primary text-[12px] cursor-pointer italic"
+            onClick={() => {
+              setShowEditAddress(true);
+              setEditAddress(chainAccount?.bech32Address || "");
+            }}
+          >
+            Edit
+          </div>
+        )}
       </div>
 
       <div className="flex justify-end mt-[130px] mr-[57px]">
         <Button
           disabled={buttonDisabled}
           onClick={() => {
+            if (
+              !finalAddress ||
+              !checkAddress(finalAddress, getChainAccountPrefix(params.chainId))
+            ) {
+              snackbarUtils.warning("Please input valid address");
+              return;
+            }
             setUnbondModalVisible(true);
           }}
         >
@@ -141,7 +181,7 @@ export const StakeRedeem = () => {
         visible={unbondModalVisible}
         onClose={() => setUnbondModalVisible(false)}
         inputAmount={inputAmount}
-        receiveAddress={chainAccount?.bech32Address || ""}
+        receiveAddress={finalAddress}
         willGetAmount={formatNumberToFixed(willGetAmount)}
         commissionFee={formatNumberToFixed(commissionFee)}
       />

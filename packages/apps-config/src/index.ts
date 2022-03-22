@@ -22,13 +22,6 @@ export function getHoursPerEra(): number {
   return 24;
 }
 
-export function getUnbondPeriod(): number {
-  if (isDev()) {
-    return 14;
-  }
-  return 14;
-}
-
 export function getChainAccountPrefix(chainId: string | undefined): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);

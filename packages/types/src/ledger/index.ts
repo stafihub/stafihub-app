@@ -12,5 +12,6 @@ export type {
   QueryGetEraExchangeRateResponse,
   QueryGetChainEraRequest,
   QueryGetChainEraResponse,
+  QueryGetUnbondRelayFeeResponse,
 } from "./query";
 export { MsgLiquidityUnbond, MsgClientImpl } from "./tx";

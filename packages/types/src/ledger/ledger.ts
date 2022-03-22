@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Coin } from "../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "stafihub.stafihub.ledger";
 
@@ -240,7 +241,7 @@ export interface EraExchangeRate {
 
 export interface UnbondRelayFee {
   denom: string;
-  value: string;
+  value?: Coin;
 }
 
 export interface Unbonding {
@@ -1299,7 +1300,7 @@ export const EraExchangeRate = {
   },
 };
 
-const baseUnbondRelayFee: object = { denom: "", value: "" };
+const baseUnbondRelayFee: object = { denom: "" };
 
 export const UnbondRelayFee = {
   encode(
@@ -1309,8 +1310,8 @@ export const UnbondRelayFee = {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
-    if (message.value !== "") {
-      writer.uint32(18).string(message.value);
+    if (message.value !== undefined) {
+      Coin.encode(message.value, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -1326,7 +1327,7 @@ export const UnbondRelayFee = {
           message.denom = reader.string();
           break;
         case 2:
-          message.value = reader.string();
+          message.value = Coin.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -1344,22 +1345,26 @@ export const UnbondRelayFee = {
         : "";
     message.value =
       object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+        ? Coin.fromJSON(object.value)
+        : undefined;
     return message;
   },
 
   toJSON(message: UnbondRelayFee): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
-    message.value !== undefined && (obj.value = message.value);
+    message.value !== undefined &&
+      (obj.value = message.value ? Coin.toJSON(message.value) : undefined);
     return obj;
   },
 
   fromPartial(object: DeepPartial<UnbondRelayFee>): UnbondRelayFee {
     const message = { ...baseUnbondRelayFee } as UnbondRelayFee;
     message.denom = object.denom ?? "";
-    message.value = object.value ?? "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? Coin.fromPartial(object.value)
+        : undefined;
     return message;
   },
 };

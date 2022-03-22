@@ -1,6 +1,6 @@
-import { Box, CircularProgress, LinearProgress, Modal } from "@mui/material";
-import { FormatterText } from "@stafihub/react-components";
+import { Box, LinearProgress, Modal } from "@mui/material";
 import { getExplorerAccountUrl } from "@stafihub/apps-config";
+import { CustomLoading, FormatterText } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import iconClose from "../assets/images/icon_close_bold.svg";
 import iconCheckedLarge from "../assets/images/icon_success_large.png";
@@ -107,7 +107,7 @@ export const ProgressModal = (props: ProgressModalProps) => {
             </div>
 
             <div className="mt-10">
-              <CircularProgress color="white" size={60} />
+              <CustomLoading color="#ffffff" size={60} />
             </div>
 
             <div

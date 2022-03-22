@@ -4,6 +4,7 @@ import {
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
+  getUnbondPeriod,
 } from "@stafihub/apps-config/src";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -62,7 +63,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[40px] text-text-gray4 text-[20px]">
-          —Period: around 14 days
+          —Period: around {getUnbondPeriod()} days
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">

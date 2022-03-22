@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import ReactLoading from "react-loading";
+import { CustomLoading } from "./CustomLoading";
 
 type ButtonProps = React.PropsWithChildren<{
   loading?: boolean;
@@ -33,7 +33,7 @@ export const Button = (props: ButtonProps) => {
       <div className="flex items-center">
         {props.loading && (
           <div className="mr-2">
-            <ReactLoading type="spin" color="#23292f" height={24} width={24} />
+            <CustomLoading color="#23292f" size={24} />
           </div>
         )}
       </div>

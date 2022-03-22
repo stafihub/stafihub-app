@@ -9,6 +9,7 @@ export const StakeLayout = () => {
   const matchStatus = useMatch(`/stake/${params.chainId}/status`);
   const matchRedeem = useMatch(`/stake/${params.chainId}/redeem`);
   const matchReward = useMatch(`/stake/${params.chainId}/reward`);
+  const matchUnbond = useMatch(`/stake/${params.chainId}/unbond`);
   const matchRecovery = useMatch(`/stake/${params.chainId}/recovery`);
 
   return (
@@ -46,6 +47,17 @@ export const StakeLayout = () => {
                 )}
               >
                 -Reward
+              </div>
+            </Link>
+
+            <Link to={`/stake/${params.chainId}/unbond`}>
+              <div
+                className={ClassNames(
+                  { "font-bold text-primary": matchUnbond },
+                  "mb-[5px] cursor-pointer"
+                )}
+              >
+                -Unbond
               </div>
             </Link>
 

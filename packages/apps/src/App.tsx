@@ -15,6 +15,7 @@ import { SnackbarProvider } from "notistack";
 import { Fade } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { SnackbarUtilsConfigurator } from "./utils/snackbarUtils";
+import { StakeUnbond } from "./pages/StakeUnbond";
 
 const useStyles = makeStyles({
   successSnackbar: {
@@ -57,6 +58,8 @@ function App() {
               <Route path="status" element={<StakeStatus />} />
 
               <Route path="reward" element={<StakeReward />} />
+
+              <Route path="unbond" element={<StakeUnbond />} />
 
               <Route path="recovery" element={<StakeRecovery />} />
 

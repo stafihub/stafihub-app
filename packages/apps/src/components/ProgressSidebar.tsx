@@ -1,6 +1,6 @@
-import classNames from "classnames";
 import { getShortAddress } from "@stafihub/apps-util";
-import ReactLoading from "react-loading";
+import classNames from "classnames";
+import { CustomLoading } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import iconClose from "../assets/images/icon_close_bold.svg";
 import iconSuccess from "../assets/images/icon_success.png";
@@ -53,12 +53,7 @@ export const ProgressSidebar = () => {
 
             <div className="">
               {item.status === 0 ? (
-                <ReactLoading
-                  type="spin"
-                  color="#FF7FA7"
-                  height={14}
-                  width={14}
-                />
+                <CustomLoading color="#FF7FA7" size={14} />
               ) : (
                 <img src={iconSuccess} alt="success" className="w-4" />
               )}

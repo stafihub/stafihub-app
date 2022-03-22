@@ -54,7 +54,11 @@ export const StakeStatus = () => {
     ) {
       return "--";
     }
-    return Number(stakeStatus.rTokenBalance) * (1 - Number(unbondCommission));
+    return (
+      Number(stakeStatus.rTokenBalance) *
+      (1 - Number(unbondCommission)) *
+      Number(exchangeRate)
+    );
   }, [unbondCommission, exchangeRate, stakeStatus]);
 
   return (
@@ -82,7 +86,7 @@ export const StakeStatus = () => {
       </div>
 
       <div className="flex justify-end mt-[5px] text-text-gray4 text-[12px]">
-        <div className="mr-1">Redeemable {getRTokenDisplayName(chainId)} :</div>
+        <div className="mr-1">Redeemable {getTokenDisplayName(chainId)} :</div>
 
         <FormatterText value={redeemableAmount} decimals={6} />
       </div>
@@ -106,11 +110,11 @@ export const StakeStatus = () => {
           <div
             className="flex flex-col items-center cursor-pointer"
             onClick={() => {
-              navigate(`/stake/${chainId}/redeem`);
+              navigate(`/stake/${chainId}/unbond`);
             }}
           >
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center flex items-center">
-              Unbonding {getRTokenDisplayName(chainId)}
+              Unbonding {getTokenDisplayName(chainId)}
               <img src={iconArrowRight} alt="arrow" className="ml-1 h-[10px]" />
             </div>
 

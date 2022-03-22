@@ -137,7 +137,7 @@ export const StakeHome = () => {
           </div>
         </div>
 
-        <div className="mt-[10px] text-white text-[14px]">
+        <div className="self-end mr-[60px] mt-[10px] text-white text-[14px]">
           Transferable:{" "}
           <FormatterText
             value={transferrableAmount}
@@ -220,10 +220,15 @@ export const StakeHome = () => {
       <div className="flex justify-end mt-[30px] mr-[57px]">
         <Button
           onClick={clickStake}
-          disabled={buttonDisabled}
+          disabled={
+            buttonDisabled || Number(inputAmount) > Number(transferrableAmount)
+          }
           loading={isLoading}
         >
-          Stake
+          {Number(inputAmount) > 0 &&
+          Number(inputAmount) > Number(transferrableAmount)
+            ? "Insufficient Balance"
+            : "Stake"}
         </Button>
       </div>
     </div>

@@ -13,7 +13,7 @@
     "@cosmjs/tendermint-rpc": "0.27.1",
     "@stafihub/apps-config": "workspace:0.1.0",
     "@stafihub/types": "workspace:0.1.0",
-    "buffer": "^6.0.3"
+    "bech32": "^2.0.0"
   },
   "eslintConfig": {
     "extends": []

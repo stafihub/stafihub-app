@@ -1,7 +1,12 @@
-import { getRTokenDenom, getTokenDisplayName } from "@stafihub/apps-config";
+import {
+  getHoursPerEra,
+  getRTokenDenom,
+  getTokenDisplayName,
+} from "@stafihub/apps-config";
 import { FormatterText } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+import iconSwitch from "../assets/images/icon_switch.svg";
 import nodata from "../assets/images/nodata.png";
 import { StakeRewardTableHeader } from "../components/StakeRewardTableHeader";
 import { usePoolInfo } from "../hooks";
@@ -31,6 +36,14 @@ export const StakeReward = () => {
         but it can't be shown in the est.Reward as the calculation limits.
       </div>
 
+      <div className="mt-6 flex items-center">
+        <div className="text-[12px] text-text-gray4">rAsset on</div>
+        <div className="ml-1 flex items-center cursor-pointer">
+          <div className="text-[12px] text-primary font-bold">StaFiHub</div>
+          <img src={iconSwitch} className="ml-1 h-[14px]" alt="switch" />
+        </div>
+      </div>
+
       <div className="mt-6 flex justify-between text-white font-bold text-[22px]">
         <div>Staked Value</div>
 
@@ -53,7 +66,7 @@ export const StakeReward = () => {
 
       <div className="mt-[30px] font-bold text-white text-[22px]">Details</div>
 
-      <StakeRewardTableHeader />
+      <StakeRewardTableHeader chainId={params.chainId} />
 
       <div className="max-h-[120px] h-[120px] overflow-auto">
         {/* <StakeRewardTableItem />
@@ -74,7 +87,7 @@ export const StakeReward = () => {
       </div>
 
       <div className="mt-[45px] text-text-gray4 text-[12px]">
-        Era is updated every 1 hours
+        Era is updated every {getHoursPerEra()} hours
       </div>
     </div>
   );

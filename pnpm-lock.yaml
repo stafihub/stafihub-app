@@ -131,6 +131,7 @@ importers:
       '@cosmjs/tendermint-rpc': 0.27.1
       '@stafihub/apps-config': workspace:0.1.0
       '@stafihub/types': workspace:0.1.0
+      bech32: ^2.0.0
       buffer: ^6.0.3
     dependencies:
       '@cosmjs/encoding': 0.27.1
@@ -141,6 +142,7 @@ importers:
       '@cosmjs/tendermint-rpc': 0.27.1
       '@stafihub/apps-config': link:../apps-config
       '@stafihub/types': link:../types
+      bech32: 2.0.0
       buffer: 6.0.3
 
   packages/react-components:
@@ -3899,6 +3901,10 @@ packages:
 
   /bech32/1.1.4:
     resolution: {integrity: sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==}
+    dev: false
+
+  /bech32/2.0.0:
+    resolution: {integrity: sha512-LcknSilhIGatDAsY1ak2I8VtGaHNhgMSYVxFrGLXv+xLHytaKZKcaUJJUE7qmBr7h33o5YQwP55pMI0xmkpJwg==}
     dev: false
 
   /bfj/7.0.2:

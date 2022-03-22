@@ -22,6 +22,14 @@ export function getHoursPerEra(): number {
   return 24;
 }
 
+export function getChainAccountPrefix(chainId: string | undefined): string {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.bech32Config.bech32PrefixAccAddr;
+}
+
 export function getChainDecimals(chainId: string | undefined): number {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);

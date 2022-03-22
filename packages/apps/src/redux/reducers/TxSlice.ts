@@ -5,6 +5,7 @@ import {
   getTokenDisplayName,
   getExplorerUrl,
   getRTokenDenom,
+  getChainAccountPrefix,
 } from "@stafihub/apps-config";
 import {
   sendLiquidityUnbondTx,
@@ -12,6 +13,7 @@ import {
   sendChainTokens,
   queryBondRecord,
   sendRecoveryTx,
+  checkAddress,
 } from "@stafihub/apps-wallet";
 import { humanToAtomic } from "@stafihub/apps-util";
 import { FeeStationPool } from "@stafihub/types";
@@ -110,6 +112,17 @@ export const stake =
       if (!chainId) {
         return;
       }
+
+      if (
+        !checkAddress(
+          stafiHubAddress,
+          getChainAccountPrefix(getStafiHubChainId())
+        )
+      ) {
+        snackbarUtil.error("Address format error");
+        return;
+      }
+
       const chainAccount = getState().app.accounts[chainId];
       if (!chainAccount) {
         return;
@@ -238,6 +251,17 @@ export const stakeRecovery =
         dispatch(connectKeplr(getStafiHubChainId()));
         return;
       }
+
+      if (
+        !checkAddress(
+          stafiHubAddress,
+          getChainAccountPrefix(getStafiHubChainId())
+        )
+      ) {
+        snackbarUtil.error("Address format error");
+        return;
+      }
+
       const chainAccount = getState().app.accounts[chainId];
       if (!chainAccount) {
         return;

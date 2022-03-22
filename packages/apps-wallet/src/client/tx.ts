@@ -42,7 +42,7 @@ export async function sendStakeTx(
         chains[chainId].denom
       ),
       fee,
-      `1:${stafiHubAddress}11`
+      `1:${stafiHubAddress}`
     );
     return sendTokens;
   } catch {

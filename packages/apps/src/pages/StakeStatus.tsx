@@ -10,7 +10,9 @@ import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
 import iconDown from "../assets/images/icon_down.png";
+import iconSwitch from "../assets/images/icon_switch.svg";
 import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
+import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import { usePoolInfo } from "../hooks";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useChainAccount } from "../hooks/useAppSlice";
@@ -57,7 +59,15 @@ export const StakeStatus = () => {
 
   return (
     <div className="px-[52px] py-[42px]">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center">
+        <div className="text-[12px] text-text-gray4">rAsset on</div>
+        <div className="ml-1 flex items-center cursor-pointer">
+          <div className="text-[12px] text-primary font-bold">StaFiHub</div>
+          <img src={iconSwitch} className="ml-1 h-[14px]" alt="switch" />
+        </div>
+      </div>
+
+      <div className="mt-7 flex items-center justify-between">
         <div className="flex items-center">
           <img src={ATOM} className="w-[36px] h-[36px]" alt="token icon" />
 
@@ -72,7 +82,8 @@ export const StakeStatus = () => {
       </div>
 
       <div className="flex justify-end mt-[5px] text-text-gray4 text-[12px]">
-        Redeemable {getRTokenDisplayName(chainId)} :{" "}
+        <div className="mr-1">Redeemable {getRTokenDisplayName(chainId)} :</div>
+
         <FormatterText value={redeemableAmount} decimals={6} />
       </div>
 
@@ -92,9 +103,15 @@ export const StakeStatus = () => {
         <div className="w-[0.5px] h-[35px] bg-divider" />
 
         <div className="flex-grow-[2]">
-          <div className="flex flex-col items-center">
-            <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
+          <div
+            className="flex flex-col items-center cursor-pointer"
+            onClick={() => {
+              navigate(`/stake/${chainId}/redeem`);
+            }}
+          >
+            <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center flex items-center">
               Unbonding {getRTokenDisplayName(chainId)}
+              <img src={iconArrowRight} alt="arrow" className="ml-1 h-[10px]" />
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
@@ -105,10 +122,16 @@ export const StakeStatus = () => {
 
         <div className="w-[0.5px] h-[35px] bg-divider" />
 
-        <div className="flex-grow-[1] flex justify-end pr-[15px]">
+        <div
+          className="flex-grow-[1] flex justify-end pr-[15px] cursor-pointer"
+          onClick={() => {
+            navigate(`/stake/${chainId}/reward`);
+          }}
+        >
           <div className="flex flex-col items-center">
-            <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
+            <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center flex items-center">
               Reward of last 24h
+              <img src={iconArrowRight} alt="arrow" className="ml-1 h-[10px]" />
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">

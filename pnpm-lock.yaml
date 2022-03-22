@@ -61,6 +61,7 @@ importers:
       '@stafihub/types': workspace:^0.1.0
       '@types/lodash': ^4.14.180
       autoprefixer: ^10.4.2
+      buffer: ^6.0.3
       classnames: ^2.3.1
       craco-alias: ^3.0.1
       crypto-browserify: ^3.12.0
@@ -89,6 +90,7 @@ importers:
       '@stafihub/apps-wallet': link:../apps-wallet
       '@stafihub/react-components': link:../react-components
       '@stafihub/types': link:../types
+      buffer: 6.0.3
       classnames: 2.3.1
       crypto-browserify: 3.12.0
       lodash: 4.17.21

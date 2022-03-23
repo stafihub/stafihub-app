@@ -10,7 +10,7 @@ import {
   CustomNumberInput,
   FormatterText,
 } from "@stafihub/react-components";
-import { atomicToHuman } from "@stafihub/apps-util";
+import { atomicToHuman, formatNumberToFixed } from "@stafihub/apps-util";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
@@ -120,9 +120,11 @@ export const StakeHome = () => {
               onClick={() => {
                 if (
                   !isNaN(Number(transferrableAmount)) &&
-                  Number(transferrableAmount) > 0
+                  Number(transferrableAmount) > 0.05
                 ) {
-                  setInputAmount(transferrableAmount);
+                  setInputAmount(
+                    formatNumberToFixed(Number(transferrableAmount) - 0.05, 6)
+                  );
                 }
               }}
             >

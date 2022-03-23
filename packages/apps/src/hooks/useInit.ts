@@ -2,7 +2,11 @@ import { chains, getStafiHubChainId, isFork } from "@stafihub/apps-config";
 import * as _ from "lodash";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { connectKeplrChains, setIsFork } from "../redux/reducers/AppSlice";
+import {
+  connectKeplrChains,
+  setIsFork,
+  updateAllTokenBalance,
+} from "../redux/reducers/AppSlice";
 import { updateChainEras } from "../redux/reducers/ChainSlice";
 import { isNetworkAllowed } from "../utils/storage";
 import { useInterval } from "./useInterval";
@@ -16,6 +20,7 @@ export function useInit() {
     dispatch(setIsFork(isFork()));
   }, [dispatch]);
 
+  // Auto connect keplr chain if connected before.
   const fetchKeplrAccounts = useCallback(() => {
     const chainIds = _.keys(chains);
 
@@ -44,7 +49,13 @@ export function useInit() {
     updateEras();
   }, [updateEras]);
 
+  // Update eras every 10min.
   useInterval(() => {
     updateEras();
   }, 10 * 60 * 1000);
+
+  // Update balances every 6s.
+  useInterval(() => {
+    dispatch(updateAllTokenBalance());
+  }, 6000);
 }

@@ -21,6 +21,8 @@ export function useApy(chainId: string | undefined) {
         const currentEra = Math.max(0, chainEra - 1);
         const oldEra = Math.max(0, chainEra - 1 - (24 * 7) / getHoursPerEra());
 
+        // console.log("currentEra oldEra", currentEra, oldEra);
+
         const currentRateRes = await queryEraExchangeRate(
           currentEra,
           getRTokenDenom(chainId)

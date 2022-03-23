@@ -19,6 +19,49 @@ import {
   createQueryService,
 } from ".";
 import { QueryGetAccountUnbondResponse } from "@stafihub/types";
+import { IndexedTx } from "@cosmjs/stargate";
+
+export async function queryTx(
+  chainId: string,
+  txHash: string
+): Promise<IndexedTx | null> {
+  const client = await createCosmosClient(chainId);
+  if (!client) {
+    return null;
+  }
+
+  try {
+    const result = await client.getTx(txHash);
+    console.log("queryTx result", result);
+    return result;
+  } catch {
+    return null;
+  }
+}
+
+export async function queryAccountBalance(
+  chainId: string,
+  address: string
+): Promise<KeplrAccountBalance> {
+  const client = await createCosmosClient(chainId);
+  if (!client) {
+    return {
+      denom: chains[chainId].coinDenom,
+      amount: "--",
+    };
+  }
+
+  try {
+    const result = await client.getBalance(address, chains[chainId].coinDenom);
+    // console.log("account balance result", result);
+    return result;
+  } catch {
+    return {
+      denom: chains[chainId].coinDenom,
+      amount: "--",
+    };
+  }
+}
 
 export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
   const queryService = await createQueryService(getStafiHubChainId());
@@ -64,30 +107,6 @@ export async function queryPoolDetail(
   });
   // console.log("result", result);
   return result;
-}
-
-export async function queryAccountBalance(
-  chainId: string,
-  address: string
-): Promise<KeplrAccountBalance> {
-  const client = await createCosmosClient(chainId);
-  if (!client) {
-    return {
-      denom: chains[chainId].coinDenom,
-      amount: "--",
-    };
-  }
-
-  try {
-    const result = await client.getBalance(address, chains[chainId].coinDenom);
-    // console.log("account balance result", result);
-    return result;
-  } catch {
-    return {
-      denom: chains[chainId].coinDenom,
-      amount: "--",
-    };
-  }
 }
 
 export async function queryTokenSupply(

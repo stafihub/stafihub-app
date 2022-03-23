@@ -70,17 +70,3 @@ export function getNoticeList(): LocalNotice[] {
 
   return noticeList || [];
 }
-
-export function checkTxSender(sender: string, txHash: string): boolean {
-  const noticeList = getNoticeList();
-
-  const targetNotice = noticeList.find((value) => {
-    return value.id === txHash;
-  });
-
-  if (!targetNotice || !targetNotice.txDetail.sender) {
-    return true;
-  }
-
-  return targetNotice.txDetail.sender === sender;
-}

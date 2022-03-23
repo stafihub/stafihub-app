@@ -14,6 +14,7 @@ import {
   queryBondRecord,
   sendRecoveryTx,
   checkAddress,
+  queryTx,
 } from "@stafihub/apps-wallet";
 import { humanToAtomic } from "@stafihub/apps-util";
 import { FeeStationPool, LiquidityBondState } from "@stafihub/types";
@@ -27,7 +28,6 @@ import {
   updateTokenBalance,
 } from "./AppSlice";
 import { timeout } from "../../utils/common";
-import { checkTxSender } from "../../utils/notice";
 import snackbarUtil from "../../utils/snackbarUtils";
 
 interface TxDetail {
@@ -288,14 +288,74 @@ export const stakeRecovery =
         return;
       }
 
-      if (!checkTxSender(chainAccount.bech32Address, txHash)) {
+      dispatch(setIsLoading(true));
+
+      const txDetail = await queryTx(chainId, txHash);
+
+      if (!txDetail) {
+        snackbarUtil.error("The txHash does not exist on chain.");
+        return;
+      }
+
+      const parsedRawLog = JSON.parse(txDetail.rawLog || "");
+
+      if (!txDetail.rawLog || !parsedRawLog.length || !parsedRawLog[0].events) {
+        snackbarUtil.error("This transaction is not a transfer transaction.");
+        return;
+      }
+
+      const messageLog = parsedRawLog[0].events.find((event: any) => {
+        return event.type === "message";
+      });
+
+      if (!messageLog) {
+        snackbarUtil.error("This transaction is not a transfer transaction.");
+        return;
+      }
+
+      const messageLogAttributes = messageLog.attributes;
+      const actionAttribute = messageLogAttributes?.find(
+        (attribute: any) => attribute.key === "action"
+      );
+      const senderAttribute = messageLogAttributes?.find(
+        (attribute: any) => attribute.key === "sender"
+      );
+
+      const action = actionAttribute.value;
+      const sender = senderAttribute.value;
+
+      if (action !== "/cosmos.bank.v1beta1.MsgSend") {
+        snackbarUtil.error("This transaction is not a transfer transaction.");
+        return;
+      }
+
+      if (sender !== chainAccount.bech32Address) {
         snackbarUtil.error(
-          "You can only send recovery request with the same account."
+          `Please select your ${getTokenDisplayName(
+            chainId
+          )} account that sent the transaction.`
         );
         return;
       }
 
-      dispatch(setIsLoading(true));
+      // console.log("rawLog", parsedRawLog);
+
+      const currentBondRecordRes = await queryBondRecord(
+        getRTokenDenom(chainId),
+        txHash
+      );
+
+      if (
+        currentBondRecordRes &&
+        currentBondRecordRes.bondRecord?.state ===
+          LiquidityBondState.LIQUIDITY_BOND_STATE_VERIFY_OK
+      ) {
+        snackbarUtil.error(
+          "The minting process is already completed with this txHash."
+        );
+        return;
+      }
+
       const txResponse = await sendRecoveryTx(
         chainId,
         chainAccount.bech32Address,
@@ -383,6 +443,7 @@ export const stakeRecovery =
       callback && callback(success);
     } catch {
     } finally {
+      dispatch(setIsLoading(false));
     }
   };
 

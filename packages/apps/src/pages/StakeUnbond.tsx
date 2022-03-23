@@ -1,21 +1,18 @@
-import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
+import { getRTokenDenom } from "@stafihub/apps-config";
 import { CustomLoading } from "@stafihub/react-components";
 import { useParams } from "react-router-dom";
 import nodata from "../assets/images/nodata.png";
 import { UnbondRecordTableHeader } from "../components/unbond/UnbondRecordTableHeader";
 import { UnbondRewardItem } from "../components/unbond/UnbondRewardItem";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
-import { useChainAccount } from "../hooks/useAppSlice";
 import { useChainParams } from "../hooks/useChainParams";
 
 export const StakeUnbond = () => {
   const params = useParams();
   const { unbondingDays } = useChainParams(params.chainId);
 
-  const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const { unbondRecords, loading } = useAccountUnbond(
-    getRTokenDenom(params.chainId),
-    stafiHubAccount?.bech32Address
+    getRTokenDenom(params.chainId)
   );
 
   return (

@@ -1,21 +1,19 @@
 import {
+  getHoursPerEra,
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
-  getStafiHubChainId,
-  getHoursPerEra,
 } from "@stafihub/apps-config";
 import { Button, FormatterText } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
-import iconDown from "../assets/images/icon_down.png";
-import iconSwitch from "../assets/images/icon_switch.svg";
-import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
 import iconArrowRight from "../assets/images/icon_arrow_right.svg";
+import iconDown from "../assets/images/icon_down.png";
+import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
+import iconSwitch from "../assets/images/icon_switch.svg";
 import { usePoolInfo } from "../hooks";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
-import { useChainAccount } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 
@@ -24,15 +22,11 @@ export const StakeStatus = () => {
   const params = useParams();
   const chainId = params.chainId;
   const rTokenDenom = getRTokenDenom(chainId);
-  const stafiHubAccount = useChainAccount(getStafiHubChainId());
 
   const { stakeStatus } = useChainStakeStatus(chainId);
 
   const { exchangeRate } = usePoolInfo(rTokenDenom);
-  const { unbondingAmount } = useAccountUnbond(
-    rTokenDenom,
-    stafiHubAccount?.bech32Address
-  );
+  const { unbondingAmount } = useAccountUnbond(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
 
   const stakedAmount = useMemo(() => {

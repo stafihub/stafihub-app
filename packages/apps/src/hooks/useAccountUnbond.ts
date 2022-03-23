@@ -1,18 +1,27 @@
 import { atomicToHuman } from "@stafihub/apps-util";
 import { queryAccountUnbond } from "@stafihub/apps-wallet";
 import { UserUnlockChunk } from "@stafihub/types";
+import { getStafiHubChainId } from "@stafihub/apps-config";
 import { useEffect, useState } from "react";
+import { useChainAccount } from "./useAppSlice";
 
-export function useAccountUnbond(denom: string, unbonder: string | undefined) {
+export function useAccountUnbond(denom: string) {
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
+
   const [loading, setLoading] = useState(true);
   const [unbondingAmount, setUnbondingAmount] = useState("--");
   const [unbondRecords, setUnbondRecords] = useState<UserUnlockChunk[]>([]);
 
   useEffect(() => {
     (async () => {
-      if (unbonder && denom) {
+      if (!stafiHubAccount) {
+        setLoading(false);
+      } else {
         let amount = 0;
-        const result = await queryAccountUnbond(denom, unbonder);
+        const result = await queryAccountUnbond(
+          denom,
+          stafiHubAccount.bech32Address
+        );
         setLoading(false);
         setUnbondRecords(result?.unbond?.chunks?.reverse()?.slice(0, 10) || []);
         if (result?.unbond?.chunks) {
@@ -23,7 +32,7 @@ export function useAccountUnbond(denom: string, unbonder: string | undefined) {
         setUnbondingAmount(amount.toString());
       }
     })();
-  }, [denom, unbonder]);
+  }, [denom, stafiHubAccount]);
 
   return { unbondingAmount, unbondRecords, loading };
 }

@@ -27,7 +27,7 @@ export function useApy(chainId: string | undefined) {
           currentEra,
           getRTokenDenom(chainId)
         );
-        const currentRate = currentRateRes?.eraExchangeRate?.value || 0;
+        const currentRate = currentRateRes?.eraExchangeRate?.value || 1000000;
 
         const oldRateRes = await queryEraExchangeRate(
           oldEra,

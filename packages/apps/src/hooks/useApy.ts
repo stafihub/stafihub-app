@@ -18,10 +18,10 @@ export function useApy(chainId: string | undefined) {
   useEffect(() => {
     (async () => {
       if (chainEra) {
-        const currentEra = Math.max(0, chainEra - 1);
-        const oldEra = Math.max(0, chainEra - 1 - (24 * 7) / getHoursPerEra());
+        const annualizedDay = 0.25;
 
-        // console.log("currentEra oldEra", currentEra, oldEra);
+        const currentEra = Math.max(0, chainEra - 1);
+        const oldEra = Math.max(0, chainEra - 1 - (24 * annualizedDay) / getHoursPerEra());
 
         const currentRateRes = await queryEraExchangeRate(
           currentEra,
@@ -33,12 +33,11 @@ export function useApy(chainId: string | undefined) {
           oldEra,
           getRTokenDenom(chainId)
         );
-        const oldRate = oldRateRes?.eraExchangeRate?.value || 0;
+        const oldRate = oldRateRes?.eraExchangeRate?.value || 1000000;
 
         const apy =
           ((Number(currentRate) - Number(oldRate)) * 365.25 * 100) /
-          (7 * Math.pow(10, getChainDecimals(chainId)));
-        // console.log("apy:", apy);
+          (annualizedDay * Math.pow(10, getChainDecimals(chainId)));
 
         setApy(apy.toString());
       }

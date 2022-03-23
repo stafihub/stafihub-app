@@ -16,7 +16,7 @@ import {
   checkAddress,
 } from "@stafihub/apps-wallet";
 import { humanToAtomic } from "@stafihub/apps-util";
-import { FeeStationPool } from "@stafihub/types";
+import { FeeStationPool, LiquidityBondState } from "@stafihub/types";
 import { AppThunk } from "../store";
 import {
   addNotice,
@@ -190,22 +190,43 @@ export const stake =
           );
 
           if (bondRecordRes) {
-            dispatch(
-              setSidebarProgressProps({
-                items: [
-                  {
-                    name: "Staking",
-                    status: 1,
-                    txHash: txResponse.transactionHash,
-                  },
-                  { name: "Minting", status: 1 },
-                ],
-              })
-            );
+            if (
+              bondRecordRes.bondRecord?.state ===
+              LiquidityBondState.LIQUIDITY_BOND_STATE_VERIFY_OK
+            ) {
+              dispatch(
+                setSidebarProgressProps({
+                  items: [
+                    {
+                      name: "Staking",
+                      status: 1,
+                      txHash: txResponse.transactionHash,
+                    },
+                    { name: "Minting", status: 1 },
+                  ],
+                })
+              );
 
-            dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
-            success = true;
-            break;
+              dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+              success = true;
+              break;
+            } else {
+              dispatch(
+                setSidebarProgressProps({
+                  items: [
+                    {
+                      name: "Staking",
+                      status: 1,
+                      txHash: txResponse.transactionHash,
+                    },
+                    { name: "Minting", status: 2 },
+                  ],
+                })
+              );
+
+              dispatch(updateNotice(txResponse.transactionHash, "Error"));
+              break;
+            }
           }
 
           await timeout(2500);
@@ -301,7 +322,7 @@ export const stakeRecovery =
           })
         );
 
-        const MAX_COUNT = 40;
+        const MAX_COUNT = 20;
         let timeCount = 0;
         while (true) {
           const bondRecordRes = await queryBondRecord(
@@ -310,31 +331,46 @@ export const stakeRecovery =
           );
 
           if (bondRecordRes) {
+            if (
+              bondRecordRes.bondRecord?.state ===
+              LiquidityBondState.LIQUIDITY_BOND_STATE_VERIFY_OK
+            ) {
+              dispatch(
+                setSidebarProgressProps({
+                  items: [
+                    {
+                      name: "Staking",
+                      status: 1,
+                      txHash,
+                    },
+                    { name: "Minting", status: 1 },
+                  ],
+                })
+              );
+
+              dispatch(updateNotice(txHash, "Confimed"));
+              success = true;
+              break;
+            }
+          }
+
+          await timeout(6000);
+          timeCount++;
+          if (timeCount > MAX_COUNT) {
             dispatch(
               setSidebarProgressProps({
                 items: [
-                  { name: "Staking", status: 1, txHash },
-                  { name: "Minting", status: 1 },
+                  {
+                    name: "Staking",
+                    status: 1,
+                    txHash,
+                  },
+                  { name: "Minting", status: 2 },
                 ],
               })
             );
 
-            dispatch(updateNotice(txHash, "Confimed"));
-            success = true;
-            break;
-          }
-
-          await timeout(2500);
-          timeCount++;
-          if (timeCount > MAX_COUNT) {
-            snackbarUtil.warning(
-              "Check status timeout, please try again later."
-            );
-            dispatch(
-              setSidebarProgressProps({
-                visible: false,
-              })
-            );
+            dispatch(updateNotice(txHash, "Error"));
             break;
           }
 

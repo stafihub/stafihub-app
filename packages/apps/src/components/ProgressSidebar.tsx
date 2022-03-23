@@ -3,7 +3,8 @@ import classNames from "classnames";
 import { CustomLoading } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import iconClose from "../assets/images/icon_close_bold.svg";
-import iconSuccess from "../assets/images/icon_success.png";
+import iconSuccess from "../assets/images/icon_correct.svg";
+import iconError from "../assets/images/icon_error.svg";
 import sidebarProgressIcon from "../assets/images/sidebar_progress.svg";
 import { useSidebarProgressProps } from "../hooks/useSidebarProgressProps";
 import { setSidebarProgressProps } from "../redux/reducers/TxSlice";
@@ -54,8 +55,10 @@ export const ProgressSidebar = () => {
             <div className="">
               {item.status === 0 ? (
                 <CustomLoading color="#FF7FA7" size={14} />
-              ) : (
+              ) : item.status === 1 ? (
                 <img src={iconSuccess} alt="success" className="w-4" />
+              ) : (
+                <img src={iconError} alt="error" className="w-4" />
               )}
             </div>
           </div>
@@ -64,7 +67,7 @@ export const ProgressSidebar = () => {
             className={classNames(
               "mt-8 ml-6 flex items-center text-[12px] text-[#8f8f8f]",
               {
-                invisible: item.status !== 1,
+                invisible: item.status === 0,
               }
             )}
           >
@@ -86,8 +89,10 @@ export const ProgressSidebar = () => {
               ) : (
                 <div>Completed</div>
               )
-            ) : (
+            ) : item.status === 0 ? (
               <>Pending</>
+            ) : (
+              <div>Error</div>
             )}
           </div>
         </div>

@@ -4,7 +4,7 @@ import { FormatterText } from "@stafihub/react-components";
 import { UserUnlockChunk } from "@stafihub/types";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import successIcon from "../../assets/images/icon_success.svg";
+import successIcon from "../../assets/images/icon_success_round.svg";
 import pendingIcon from "../../assets/images/icon_pending.svg";
 import { useChainEra } from "../../hooks/useChainEra";
 

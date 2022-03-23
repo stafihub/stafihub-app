@@ -111,6 +111,62 @@ export function bondActionToJSON(object: BondAction): string {
   }
 }
 
+export enum LiquidityBondState {
+  LIQUIDITY_BOND_STATE_VERIFY_OK = 0,
+  LIQUIDITY_BOND_STATE_DENOM_UNMATCH = 1,
+  LIQUIDITY_BOND_STATE_BONDER_UNMATCH = 2,
+  LIQUIDITY_BOND_STATE_POOL_UNMATCH = 3,
+  LIQUIDITY_BOND_STATE_AMOUNT_UNMATCH = 4,
+  LIQUIDITY_BOND_STATE_MEMO_UNMATCH = 5,
+  UNRECOGNIZED = -1,
+}
+
+export function liquidityBondStateFromJSON(object: any): LiquidityBondState {
+  switch (object) {
+    case 0:
+    case "LIQUIDITY_BOND_STATE_VERIFY_OK":
+      return LiquidityBondState.LIQUIDITY_BOND_STATE_VERIFY_OK;
+    case 1:
+    case "LIQUIDITY_BOND_STATE_DENOM_UNMATCH":
+      return LiquidityBondState.LIQUIDITY_BOND_STATE_DENOM_UNMATCH;
+    case 2:
+    case "LIQUIDITY_BOND_STATE_BONDER_UNMATCH":
+      return LiquidityBondState.LIQUIDITY_BOND_STATE_BONDER_UNMATCH;
+    case 3:
+    case "LIQUIDITY_BOND_STATE_POOL_UNMATCH":
+      return LiquidityBondState.LIQUIDITY_BOND_STATE_POOL_UNMATCH;
+    case 4:
+    case "LIQUIDITY_BOND_STATE_AMOUNT_UNMATCH":
+      return LiquidityBondState.LIQUIDITY_BOND_STATE_AMOUNT_UNMATCH;
+    case 5:
+    case "LIQUIDITY_BOND_STATE_MEMO_UNMATCH":
+      return LiquidityBondState.LIQUIDITY_BOND_STATE_MEMO_UNMATCH;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return LiquidityBondState.UNRECOGNIZED;
+  }
+}
+
+export function liquidityBondStateToJSON(object: LiquidityBondState): string {
+  switch (object) {
+    case LiquidityBondState.LIQUIDITY_BOND_STATE_VERIFY_OK:
+      return "LIQUIDITY_BOND_STATE_VERIFY_OK";
+    case LiquidityBondState.LIQUIDITY_BOND_STATE_DENOM_UNMATCH:
+      return "LIQUIDITY_BOND_STATE_DENOM_UNMATCH";
+    case LiquidityBondState.LIQUIDITY_BOND_STATE_BONDER_UNMATCH:
+      return "LIQUIDITY_BOND_STATE_BONDER_UNMATCH";
+    case LiquidityBondState.LIQUIDITY_BOND_STATE_POOL_UNMATCH:
+      return "LIQUIDITY_BOND_STATE_POOL_UNMATCH";
+    case LiquidityBondState.LIQUIDITY_BOND_STATE_AMOUNT_UNMATCH:
+      return "LIQUIDITY_BOND_STATE_AMOUNT_UNMATCH";
+    case LiquidityBondState.LIQUIDITY_BOND_STATE_MEMO_UNMATCH:
+      return "LIQUIDITY_BOND_STATE_MEMO_UNMATCH";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 /** OriginalTxType enumerates the tx type of a signature. */
 export enum OriginalTxType {
   ORIGINAL_TX_TYPE_TRANSFER = 0,
@@ -269,6 +325,7 @@ export interface BondRecord {
   pool: string;
   txhash: string;
   amount: string;
+  state: LiquidityBondState;
 }
 
 export interface Signature {
@@ -1631,6 +1688,7 @@ const baseBondRecord: object = {
   pool: "",
   txhash: "",
   amount: "",
+  state: 0,
 };
 
 export const BondRecord = {
@@ -1652,6 +1710,9 @@ export const BondRecord = {
     }
     if (message.amount !== "") {
       writer.uint32(42).string(message.amount);
+    }
+    if (message.state !== 0) {
+      writer.uint32(48).int32(message.state);
     }
     return writer;
   },
@@ -1677,6 +1738,9 @@ export const BondRecord = {
           break;
         case 5:
           message.amount = reader.string();
+          break;
+        case 6:
+          message.state = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -1708,6 +1772,10 @@ export const BondRecord = {
       object.amount !== undefined && object.amount !== null
         ? String(object.amount)
         : "";
+    message.state =
+      object.state !== undefined && object.state !== null
+        ? liquidityBondStateFromJSON(object.state)
+        : 0;
     return message;
   },
 
@@ -1718,6 +1786,8 @@ export const BondRecord = {
     message.pool !== undefined && (obj.pool = message.pool);
     message.txhash !== undefined && (obj.txhash = message.txhash);
     message.amount !== undefined && (obj.amount = message.amount);
+    message.state !== undefined &&
+      (obj.state = liquidityBondStateToJSON(message.state));
     return obj;
   },
 
@@ -1728,6 +1798,7 @@ export const BondRecord = {
     message.pool = object.pool ?? "";
     message.txhash = object.txhash ?? "";
     message.amount = object.amount ?? "";
+    message.state = object.state ?? 0;
     return message;
   },
 };

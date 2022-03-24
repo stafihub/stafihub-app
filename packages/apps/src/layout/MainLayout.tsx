@@ -1,7 +1,7 @@
-import { Sidebar } from "@stafihub/react-components";
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
 import { ProgressSidebar } from "../components/ProgressSidebar";
+import { Sidebar } from "../components/Sidebar";
 import { ProgressModal } from "../modals/ProgressModal";
 
 export const MainLayout = () => {

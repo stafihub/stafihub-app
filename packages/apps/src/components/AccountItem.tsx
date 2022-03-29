@@ -61,7 +61,7 @@ export const AccountItem = (props: AccountItemProps) => {
               />
 
               <div className="ml-1 uppercase">
-                {props.chainAccount.balance?.denom?.slice(1)}
+                {props.chainAccount.balance?.denom}
               </div>
             </div>
           </div>

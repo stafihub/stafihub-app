@@ -62,9 +62,9 @@ export const Sidebar = () => {
       </div>
 
       <div className="absolute bottom-48 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
-        <div>Run out of FIS fee?</div>
+        <div>Need FIS for fees?</div>
         <div className="mt-[1px] flex items-center">
-          <div>Try</div>
+          <div>Try our</div>
           <div
             className="ml-1 text-primary underline cursor-pointer"
             onClick={() => navigate("/feeStation")}

@@ -128,7 +128,7 @@ export const StakeStatus = () => {
         >
           <div className="flex flex-col items-center">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center flex items-center">
-              Reward of last 24h
+              Reward in last 24h
               <img src={iconArrowRight} alt="arrow" className="ml-1 h-[10px]" />
             </div>
 

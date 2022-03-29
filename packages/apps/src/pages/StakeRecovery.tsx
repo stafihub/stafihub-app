@@ -45,13 +45,13 @@ export const StakeRecovery = () => {
       </div>
 
       <div className="mt-[10px] text-white text-[14px] leading-tight">
-        Under special occasions like sudden shutdown of your computer after
-        sending your PoS tokens, you may not receive your rToken tokens because
-        of being not able to sign the staking authorization.
+        Under certain circumstances such as the sudden shutdown of your computer
+        after staking your PoS Tokens, you may not receive your rTokens due to
+        being unable to sign the staking authorization transaction.
       </div>
 
       <div className="mt-[10px] text-white text-[14px] leading-tight">
-        You could submit your token sending TX information to proceed.
+        Fret not, submit your TX information to recover your rTokens.
       </div>
 
       <div className="mt-[34px] text-white text-[12px]">Token</div>
@@ -81,7 +81,7 @@ export const StakeRecovery = () => {
         </div>
       </div>
 
-      <div className="mt-[40px] text-white text-[12px]">Received address</div>
+      <div className="mt-[40px] text-white text-[12px]">Receiving address</div>
 
       <div className="mt-[10px] border-solid border-[1px] rounded-[3.5px] border-input-border h-[46px] flex items-center justify-between">
         <div className="ml-5 flex-1">

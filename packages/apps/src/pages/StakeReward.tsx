@@ -31,9 +31,10 @@ export const StakeReward = () => {
   return (
     <div className="pl-[43px] py-[30px] pr-[22px]">
       <div className="bg-[rgba(255,127,168,0.08)] text-[12px] text-text-gray6 p-[10px] border-solid border-[1px] border-[rgba(255,127,168,0.24)] rounded-[8px]">
-        Reminding: Holding rTokens still keeps generating staking reward while
-        you depositing them to farm, mine and other yield generation protocols,
-        but it can't be shown in the est.Reward as the calculation limits.
+        Reminder: rTokens will continuously generate staking rewards even when
+        deposited in farms, mines or other yield generation methods, however, it
+        will not be visible in the Est. Reward column as calculations are
+        limited.
       </div>
 
       <div className="mt-6 flex items-center">

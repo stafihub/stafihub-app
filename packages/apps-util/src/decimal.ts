@@ -37,6 +37,9 @@ export function formatNumberToFixed(
   if (isNaN(Number(num))) {
     return "--";
   }
+  if (Number(num) === 0) {
+    return "0";
+  }
   const newNum = (
     Math.floor(Number(num) * Math.pow(10, decimals)) / Math.pow(10, decimals)
   ).toFixed(decimals);

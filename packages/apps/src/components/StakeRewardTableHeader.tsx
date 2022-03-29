@@ -22,7 +22,7 @@ export const StakeRewardTableHeader = (props: {
       <div className="basis-3/12">{getRTokenDisplayName(props.chainId)}</div>
 
       <div className="basis-3/12 flex items-center justify-end">
-        est. Reward
+        Est. Reward
       </div>
 
       <div className="bg-divider h-[0.5px] absolute left-0 right-0 bottom-0" />

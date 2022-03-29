@@ -5,7 +5,7 @@ export const UnbondRecordTableHeader = () => {
 
       <div className="basis-2/12">Amount</div>
 
-      <div className="basis-2/12">Period</div>
+      <div className="basis-2/12">Date</div>
 
       <div className="w-[310px]">Received Address</div>
     </div>

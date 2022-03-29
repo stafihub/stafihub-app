@@ -99,7 +99,7 @@ export const StakeHome = () => {
 
       <div className="mt-[12px] text-text-gray4 text-[14px]">
         <FormatterText value={totalStakedAmount} decimals={2} />{" "}
-        {getTokenDisplayName(chainId)} is staked in the contracts
+        {getTokenDisplayName(chainId)} is currently staked
       </div>
 
       <div className="mt-[10px] mr-[35px] h-[0.5px] bg-divider" />
@@ -149,11 +149,12 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-12 font-bold text-text-gray5 text-[14px]">
-        You will get {getRTokenDisplayName(chainId)}
+        You will get
       </div>
 
       <div className="mt-[2px] font-bold text-primary text-[30px]">
-        <FormatterText value={willGetAmount} decimals={6} />
+        <FormatterText value={willGetAmount} decimals={6} />{" "}
+        {getRTokenDisplayName(chainId)}
       </div>
 
       <div className="mt-6 flex items-end">
@@ -193,7 +194,7 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-14 font-bold text-white text-[16px]">
-        Received address
+        Receiving address
       </div>
 
       <div className="mt-[10px] border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
@@ -215,8 +216,8 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-[10px] w-[494px] text-text-gray5 text-[12px]">
-        Note: Make sure you have the right address, otherwise you will not
-        receive the token if you provide a wrong address.
+        Note: Please ensure you have input the correct address. Failure to do so
+        may cause you to lose your tokens.
       </div>
 
       <div className="flex justify-end mt-[30px] mr-[57px]">

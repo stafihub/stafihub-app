@@ -55,7 +55,7 @@ export const Header = () => {
             decimals={6}
           />
           <div className="ml-1 uppercase">
-            {accounts[STAFIHUB_CHAIN_ID]?.balance?.denom?.slice(1)}
+            {accounts[STAFIHUB_CHAIN_ID]?.balance?.denom}
           </div>
         </div>
 

@@ -161,7 +161,7 @@ export async function sendLiquidityUnbondTx(
       amount: [
         {
           denom: chains[getStafiHubChainId()].denom,
-          amount: "2000",
+          amount: "1",
         },
       ],
       gas: "180000",

@@ -1,4 +1,5 @@
 import { chains } from "./chains";
+import * as _ from "lodash";
 
 export * from "./types";
 export * from "./chains";
@@ -52,6 +53,19 @@ export function getRTokenDisplayName(chainId: string | undefined): string {
   }
   const chain = chains[chainId];
   return `r${chain.denom.slice(1).toUpperCase()}`;
+}
+
+export function getChainIdFromRTokenDisplayName(
+  rTokenName: string | undefined
+): string {
+  const chainArr = _.values(chains);
+  const matchedChain = chainArr.find((chain) => {
+    return getRTokenDisplayName(chain.chainId) === rTokenName;
+  });
+  if (!matchedChain) {
+    throw new Error(`Chain with this rTokenName not found: ${rTokenName}`);
+  }
+  return matchedChain.chainId;
 }
 
 export function getDenom(chainId: string | undefined): string {

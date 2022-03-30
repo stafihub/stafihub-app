@@ -1,4 +1,5 @@
 import {
+  getChainIdFromRTokenDisplayName,
   getHoursPerEra,
   getRTokenDenom,
   getTokenDisplayName,
@@ -14,8 +15,9 @@ import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 
 export const StakeReward = () => {
   const params = useParams();
-  const { stakeStatus } = useChainStakeStatus(params.chainId);
-  const { exchangeRate } = usePoolInfo(getRTokenDenom(params.chainId));
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const { stakeStatus } = useChainStakeStatus(chainId);
+  const { exchangeRate } = usePoolInfo(getRTokenDenom(chainId));
 
   const myStakedValue = useMemo(() => {
     if (
@@ -55,7 +57,7 @@ export const StakeReward = () => {
 
       <div className="mt-[5px] flex justify-end">
         <div className="text-secondary text-[14px]">
-          +0.00 {getTokenDisplayName(params.chainId)}
+          +0.00 {getTokenDisplayName(chainId)}
         </div>
 
         <div className="ml-[4px] text-white text-[14px]">(last era)</div>
@@ -67,7 +69,7 @@ export const StakeReward = () => {
 
       <div className="mt-[30px] font-bold text-white text-[22px]">Details</div>
 
-      <StakeRewardTableHeader chainId={params.chainId} />
+      <StakeRewardTableHeader chainId={chainId} />
 
       <div className="max-h-[120px] h-[120px] overflow-auto">
         {/* <StakeRewardTableItem />

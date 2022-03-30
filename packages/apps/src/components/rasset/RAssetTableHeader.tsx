@@ -5,7 +5,7 @@ export const RAssetTableHeader = () => {
         <div className="ml-11">Derivative</div>
       </div>
 
-      <div className="basis-3/12">My Staked</div>
+      <div className="basis-3/12">Staked</div>
 
       <div className="basis-3/12">rToken</div>
 

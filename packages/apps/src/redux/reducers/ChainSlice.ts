@@ -24,12 +24,12 @@ export const chainSlice = createSlice({
   initialState,
   reducers: {
     setChainStakeStatusMap: (
-      state,
+      state: ChainState,
       action: PayloadAction<ChainStakeStatusMap>
     ) => {
       state.chainStakeStatusMap = action.payload;
     },
-    setChainEras: (state, action: PayloadAction<ChainEraMap>) => {
+    setChainEras: (state: ChainState, action: PayloadAction<ChainEraMap>) => {
       state.chainEras = action.payload;
     },
   },

@@ -5,19 +5,19 @@ import { Link, Outlet, useParams, useMatch } from "react-router-dom";
 export const StakeLayout = () => {
   const params = useParams();
 
-  const matchHome = useMatch(`/stake/${params.chainId}`);
-  const matchStatus = useMatch(`/stake/${params.chainId}/status`);
-  const matchRedeem = useMatch(`/stake/${params.chainId}/redeem`);
-  const matchReward = useMatch(`/stake/${params.chainId}/reward`);
-  const matchUnbond = useMatch(`/stake/${params.chainId}/unbond`);
-  const matchRecovery = useMatch(`/stake/${params.chainId}/recovery`);
+  const matchHome = useMatch(`/${params.rToken}/stake`);
+  const matchStatus = useMatch(`/${params.rToken}/stake/status`);
+  const matchRedeem = useMatch(`/${params.rToken}/stake/redeem`);
+  const matchReward = useMatch(`/${params.rToken}/stake/reward`);
+  const matchUnbond = useMatch(`/${params.rToken}/stake/unbond`);
+  const matchRecovery = useMatch(`/${params.rToken}/stake/recovery`);
 
   return (
     <div className="flex justify-center pt-[55px]">
       <CardContainer>
         <div className="flex">
           <div className="mt-[30px] ml-[20px] text-[12px] text-text-gray3">
-            <Link to={`/stake/${params.chainId}`}>
+            <Link to={`/${params.rToken}/stake`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchHome },
@@ -28,7 +28,7 @@ export const StakeLayout = () => {
               </div>
             </Link>
 
-            <Link to={`/stake/${params.chainId}/status`}>
+            <Link to={`/${params.rToken}/stake/status`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchStatus || matchRedeem },
@@ -39,7 +39,7 @@ export const StakeLayout = () => {
               </div>
             </Link>
 
-            <Link to={`/stake/${params.chainId}/reward`}>
+            <Link to={`/${params.rToken}/stake/reward`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchReward },
@@ -50,7 +50,7 @@ export const StakeLayout = () => {
               </div>
             </Link>
 
-            <Link to={`/stake/${params.chainId}/unbond`}>
+            <Link to={`/${params.rToken}/stake/unbond`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchUnbond },
@@ -61,7 +61,7 @@ export const StakeLayout = () => {
               </div>
             </Link>
 
-            <Link to={`/stake/${params.chainId}/recovery`}>
+            <Link to={`/${params.rToken}/stake/recovery`}>
               <div
                 className={ClassNames(
                   { "font-bold text-primary": matchRecovery },

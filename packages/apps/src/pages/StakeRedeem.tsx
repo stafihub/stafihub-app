@@ -3,6 +3,7 @@ import {
   getRTokenDisplayName,
   getTokenDisplayName,
   getChainAccountPrefix,
+  getChainIdFromRTokenDisplayName,
 } from "@stafihub/apps-config";
 import { formatNumberToFixed } from "@stafihub/apps-util";
 import { checkAddress } from "@stafihub/apps-wallet";
@@ -23,7 +24,7 @@ import snackbarUtils from "../utils/snackbarUtils";
 
 export const StakeRedeem = () => {
   const params = useParams();
-  const chainId = params.chainId;
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const rTokenDenom = getRTokenDenom(chainId);
   const { exchangeRate } = usePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
@@ -165,7 +166,7 @@ export const StakeRedeem = () => {
           onClick={() => {
             if (
               !finalAddress ||
-              !checkAddress(finalAddress, getChainAccountPrefix(params.chainId))
+              !checkAddress(finalAddress, getChainAccountPrefix(chainId))
             ) {
               snackbarUtils.warning("Please input valid address");
               return;

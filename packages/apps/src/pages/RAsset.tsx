@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import bridgeImage from "../assets/images/hub_bridge.svg";
 import { RAssetItem } from "../components/rasset/RAssetItem";
 import { RAssetTableHeader } from "../components/rasset/RAssetTableHeader";
 import { useRAssetList } from "../hooks/useRAssetList";
 
 export const RAsset = () => {
-  const navigate = useNavigate();
   const rAssetList = useRAssetList();
 
   return (
@@ -29,9 +27,6 @@ export const RAsset = () => {
             chainId={rAsset.chainId}
             originTokenName={rAsset.tokenName}
             derivativeTokenName={rAsset.rTokenName}
-            onClickStake={() => {
-              navigate(`/stake/${rAsset.chainId}`);
-            }}
           />
         ))}
 

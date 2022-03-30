@@ -3,6 +3,7 @@ import {
   getRTokenDisplayName,
   getTokenDisplayName,
   getStafiHubChainId,
+  getChainIdFromRTokenDisplayName,
 } from "@stafihub/apps-config";
 import {
   Button,
@@ -27,7 +28,7 @@ export const StakeHome = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const chainId = params.chainId;
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const isLoading = useIsLoading();
   const chain = useChainInfo(chainId);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
@@ -77,7 +78,7 @@ export const StakeHome = () => {
     dispatch(
       stake(chainId, inputAmount, stafiHubAddress, poolAddress, (success) => {
         if (success) {
-          navigate(`/stake/${chainId}/status`);
+          navigate(`/${params.rToken}/stake/status`);
         }
       })
     );

@@ -1,10 +1,11 @@
 import { Box, Modal } from "@mui/material";
 import { Button, FormatterText } from "@stafihub/react-components";
 import {
+  getChainIdFromRTokenDisplayName,
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
-} from "@stafihub/apps-config/src";
+} from "@stafihub/apps-config";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { usePoolInfo } from "../hooks";
@@ -25,7 +26,7 @@ interface UnbondModalProps {
 
 export const UnbondModal = (props: UnbondModalProps) => {
   const params = useParams();
-  const chainId = params.chainId;
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
   const { updateStakeStatus } = useChainStakeStatus(chainId);
@@ -85,12 +86,18 @@ export const UnbondModal = (props: UnbondModalProps) => {
             loading={isLoading}
             onClick={() => {
               dispatch(
-                unbond(chainId, props.inputAmount, poolAddress, (success) => {
-                  if (success) {
-                    props.onClose();
-                    updateStakeStatus();
+                unbond(
+                  chainId,
+                  props.inputAmount,
+                  poolAddress,
+                  relayFee,
+                  (success) => {
+                    if (success) {
+                      props.onClose();
+                      updateStakeStatus();
+                    }
                   }
-                })
+                )
               );
             }}
           >

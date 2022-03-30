@@ -1,4 +1,5 @@
 import {
+  getChainIdFromRTokenDisplayName,
   getHoursPerEra,
   getRTokenDenom,
   getRTokenDisplayName,
@@ -20,7 +21,7 @@ import { useUnbondCommission } from "../hooks/useUnbondCommission";
 export const StakeStatus = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const chainId = params.chainId;
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const rTokenDenom = getRTokenDenom(chainId);
 
   const { stakeStatus } = useChainStakeStatus(chainId);
@@ -104,7 +105,7 @@ export const StakeStatus = () => {
           <div
             className="flex flex-col items-center cursor-pointer"
             onClick={() => {
-              navigate(`/stake/${chainId}/unbond`);
+              navigate(`/${params.rToken}/stake/unbond`);
             }}
           >
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center flex items-center">
@@ -123,7 +124,7 @@ export const StakeStatus = () => {
         <div
           className="flex-grow-[1] flex justify-end pr-[15px] cursor-pointer"
           onClick={() => {
-            navigate(`/stake/${chainId}/reward`);
+            navigate(`/${params.rToken}/stake/reward`);
           }}
         >
           <div className="flex flex-col items-center">
@@ -143,7 +144,7 @@ export const StakeStatus = () => {
         <Button
           size="small"
           onClick={() => {
-            navigate(`/stake/${params.chainId}/redeem`);
+            navigate(`/${params.rToken}/stake/redeem`);
           }}
         >
           Redeem

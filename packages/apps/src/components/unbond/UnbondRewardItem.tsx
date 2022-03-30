@@ -1,4 +1,8 @@
-import { getChainDecimals, getHoursPerEra } from "@stafihub/apps-config";
+import {
+  getChainDecimals,
+  getChainIdFromRTokenDisplayName,
+  getHoursPerEra,
+} from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
 import { FormatterText } from "@stafihub/react-components";
 import { UserUnlockChunk } from "@stafihub/types";
@@ -15,13 +19,14 @@ interface UnbondRewardItemProps {
 
 export const UnbondRewardItem = (props: UnbondRewardItemProps) => {
   const params = useParams();
-  const era = useChainEra(params.chainId);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const era = useChainEra(chainId);
   const amount = useMemo(() => {
     if (!props.item) {
       return "--";
     }
-    return atomicToHuman(props.item.value, getChainDecimals(params.chainId));
-  }, [props.item, params.chainId]);
+    return atomicToHuman(props.item.value, getChainDecimals(chainId));
+  }, [props.item, chainId]);
 
   const [completed, remainingDays]: [boolean, string] = useMemo(() => {
     if (!props.item || !era) {

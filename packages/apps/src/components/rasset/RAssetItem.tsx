@@ -11,7 +11,6 @@ interface RAssetItemProps {
   chainId: string;
   originTokenName: string;
   derivativeTokenName: string;
-  onClickStake: () => void;
 }
 
 export const RAssetItem = (props: RAssetItemProps) => {

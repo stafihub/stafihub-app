@@ -43,20 +43,20 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setIsFork: (state, action: PayloadAction<boolean>) => {
+    setIsFork: (state: AppState, action: PayloadAction<boolean>) => {
       state.isFork = action.payload;
     },
-    setAccounts: (state, action: PayloadAction<AccountMap>) => {
+    setAccounts: (state: AppState, action: PayloadAction<AccountMap>) => {
       state.accounts = action.payload;
     },
-    setIsLoading: (state, action: PayloadAction<boolean>) => {
+    setIsLoading: (state: AppState, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setSlippage: (state, action: PayloadAction<string>) => {
+    setSlippage: (state: AppState, action: PayloadAction<string>) => {
       saveStorage(STORAGE_KEY_SLIPPAGE, action.payload);
       state.slippage = action.payload;
     },
-    setUnreadNoticeFlag: (state, action: PayloadAction<boolean>) => {
+    setUnreadNoticeFlag: (state: AppState, action: PayloadAction<boolean>) => {
       state.unreadNoticeFlag = action.payload;
     },
   },

@@ -6,6 +6,7 @@ import {
   getExplorerUrl,
   getRTokenDenom,
   getChainAccountPrefix,
+  getChainDecimals,
 } from "@stafihub/apps-config";
 import {
   sendLiquidityUnbondTx,
@@ -16,7 +17,7 @@ import {
   checkAddress,
   queryTx,
 } from "@stafihub/apps-wallet";
-import { humanToAtomic } from "@stafihub/apps-util";
+import { humanToAtomic, atomicToHuman } from "@stafihub/apps-util";
 import { FeeStationPool, LiquidityBondState } from "@stafihub/types";
 import { AppThunk } from "../store";
 import {
@@ -76,7 +77,7 @@ export const txSlice = createSlice({
   initialState,
   reducers: {
     setSwapProgressModalProps: (
-      state,
+      state: TxState,
       action: PayloadAction<Partial<SwapProgressModalProps>>
     ) => {
       state.swapProgressModalProps = {
@@ -85,7 +86,7 @@ export const txSlice = createSlice({
       };
     },
     setSidebarProgressProps: (
-      state,
+      state: TxState,
       action: PayloadAction<Partial<SidebarProgressProps>>
     ) => {
       state.sidebarProgressProps = {
@@ -452,6 +453,7 @@ export const unbond =
     chainId: string | undefined,
     inputAmount: string,
     poolAddress: string,
+    relayFee: string,
     callback?: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
@@ -468,6 +470,16 @@ export const unbond =
 
       const chainAccount = getState().app.accounts[chainId];
       if (!chainAccount) {
+        return;
+      }
+
+      const fisAmount = atomicToHuman(
+        stafiHubAccount.balance?.amount,
+        getChainDecimals(getStafiHubChainId())
+      );
+
+      if (Number(fisAmount) < Number(relayFee) + Number(0.0045)) {
+        snackbarUtil.warning("Insufficient Balance for fee payment");
         return;
       }
 

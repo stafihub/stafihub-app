@@ -1,4 +1,7 @@
-import { getRTokenDenom } from "@stafihub/apps-config";
+import {
+  getChainIdFromRTokenDisplayName,
+  getRTokenDenom,
+} from "@stafihub/apps-config";
 import { CustomLoading } from "@stafihub/react-components";
 import { useParams } from "react-router-dom";
 import nodata from "../assets/images/nodata.png";
@@ -9,11 +12,10 @@ import { useChainParams } from "../hooks/useChainParams";
 
 export const StakeUnbond = () => {
   const params = useParams();
-  const { unbondingDays } = useChainParams(params.chainId);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const { unbondingDays } = useChainParams(chainId);
 
-  const { unbondRecords, loading } = useAccountUnbond(
-    getRTokenDenom(params.chainId)
-  );
+  const { unbondRecords, loading } = useAccountUnbond(getRTokenDenom(chainId));
 
   return (
     <div className="pl-[30px] pt-[36px] pr-[30px]">

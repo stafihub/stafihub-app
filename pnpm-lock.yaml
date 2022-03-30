@@ -70,6 +70,7 @@ importers:
       moment: ^2.29.1
       notistack: ^2.0.3
       postcss: ^8.4.6
+      postcss-flexbugs-fixes: ^5.0.2
       react-loading: ^2.0.3
       react-redux: ^7.2.6
       react-router-dom: '6'
@@ -97,6 +98,7 @@ importers:
       material-ui-popup-state: 2.0.0_04cccb159326fc32d263f5d228230564
       moment: 2.29.1
       notistack: 2.0.3_63011001f7e0af16b06ddd93c62e2262
+      postcss-flexbugs-fixes: 5.0.2_postcss@8.4.8
       react-loading: 2.0.3_react@17.0.2
       react-redux: 7.2.6_react-dom@17.0.2+react@17.0.2
       react-router-dom: 6.2.2_react-dom@17.0.2+react@17.0.2
@@ -115,7 +117,13 @@ importers:
       webpack: 5.70.0
 
   packages/apps-config:
-    specifiers: {}
+    specifiers:
+      '@types/lodash': ^4.14.180
+      lodash: ^4.17.21
+    dependencies:
+      lodash: 4.17.21
+    devDependencies:
+      '@types/lodash': 4.14.180
 
   packages/apps-util:
     specifiers:
@@ -134,7 +142,6 @@ importers:
       '@stafihub/apps-config': workspace:0.1.0
       '@stafihub/types': workspace:0.1.0
       bech32: ^2.0.0
-      buffer: ^6.0.3
     dependencies:
       '@cosmjs/encoding': 0.27.1
       '@cosmjs/launchpad': 0.27.1
@@ -145,7 +152,6 @@ importers:
       '@stafihub/apps-config': link:../apps-config
       '@stafihub/types': link:../types
       bech32: 2.0.0
-      buffer: 6.0.3
 
   packages/react-components:
     specifiers:

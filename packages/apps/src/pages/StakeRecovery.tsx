@@ -1,4 +1,5 @@
 import {
+  getChainIdFromRTokenDisplayName,
   getRTokenDenom,
   getStafiHubChainId,
   getTokenDisplayName,
@@ -15,9 +16,10 @@ import { stakeRecovery } from "../redux/reducers/TxSlice";
 export const StakeRecovery = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const isLoading = useIsLoading();
-  const { poolAddress } = usePoolInfo(getRTokenDenom(params.chainId));
+  const { poolAddress } = usePoolInfo(getRTokenDenom(chainId));
   const [txHash, setTxHash] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
 
@@ -33,9 +35,7 @@ export const StakeRecovery = () => {
     if (!txHash || !stafiHubAddress || !poolAddress) {
       return;
     }
-    dispatch(
-      stakeRecovery(params.chainId, stafiHubAddress, poolAddress, txHash)
-    );
+    dispatch(stakeRecovery(chainId, stafiHubAddress, poolAddress, txHash));
   };
 
   return (
@@ -58,7 +58,7 @@ export const StakeRecovery = () => {
 
       <div className="mt-[7px] h-[34px] border-solid border-[1px] rounded-[5px] border-input-border flex items-center">
         <div className="ml-[13px] text-[#8f8f8f] text-[12px]">
-          {getTokenDisplayName(params.chainId)}
+          {getTokenDisplayName(chainId)}
         </div>
       </div>
 

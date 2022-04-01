@@ -5,6 +5,7 @@ import { setUnreadNoticeFlag } from "../../redux/reducers/AppSlice";
 import {
   LocalNotice,
   NoticeFeeStationData,
+  NoticeIBCBridgeData,
   NoticeStakeData,
   NoticeUnbondData,
 } from "../../types/notice";
@@ -44,6 +45,10 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
       if (notice.type === "Unbond") {
         data = notice.data as NoticeUnbondData;
         return `Unbond ${data.unstakeAmount} ${data.rTokenName}.`;
+      }
+      if (notice.type === "IBC Bridge") {
+        data = notice.data as NoticeIBCBridgeData;
+        return `Swap ${data.amount} ${data.tokenName} from ${data.inputChainName} to ${data.outputChainName}.`;
       }
     } catch (err: unknown) {}
 

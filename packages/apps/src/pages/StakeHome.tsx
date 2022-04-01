@@ -1,28 +1,31 @@
 import {
+  getChainIdFromRTokenDisplayName,
+  getDenom,
   getRTokenDenom,
   getRTokenDisplayName,
-  getTokenDisplayName,
   getStafiHubChainId,
-  getChainIdFromRTokenDisplayName,
+  getTokenDisplayName,
 } from "@stafihub/apps-config";
+import { formatNumberToFixed } from "@stafihub/apps-util";
 import {
   Button,
   CustomInput,
   CustomNumberInput,
   FormatterText,
 } from "@stafihub/react-components";
-import { atomicToHuman, formatNumberToFixed } from "@stafihub/apps-util";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
-import { usePoolInfo } from "../hooks";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
+import { useApy } from "../hooks/useApy";
 import { useChainInfo } from "../hooks/useChainInfo";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
+import { useTokenSupply } from "../hooks/useTokenSupply";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { stake } from "../redux/reducers/TxSlice";
-import { useApy } from "../hooks/useApy";
-import { useTokenSupply } from "../hooks/useTokenSupply";
+import { getHumanAccountBalance } from "../utils/common";
+import snackbarUtil from "../utils/snackbarUtils";
 
 export const StakeHome = () => {
   const dispatch = useDispatch();
@@ -35,7 +38,9 @@ export const StakeHome = () => {
   const chainAccount = useChainAccount(chainId);
   const apy = useApy(chainId);
   const supply = useTokenSupply(chainId);
-  const { poolAddress, exchangeRate } = usePoolInfo(getRTokenDenom(chainId));
+  const { poolAddress, exchangeRate, leastBond } = useStakePoolInfo(
+    getRTokenDenom(chainId)
+  );
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
 
@@ -51,11 +56,11 @@ export const StakeHome = () => {
   }, [exchangeRate, supply]);
 
   const transferrableAmount = useMemo(() => {
-    if (!chainAccount || !chainAccount.balance) {
+    if (!chainAccount) {
       return "--";
     }
-    return atomicToHuman(chainAccount?.balance?.amount);
-  }, [chainAccount]);
+    return getHumanAccountBalance(chainAccount.allBalances, getDenom(chainId));
+  }, [chainAccount, chainId]);
 
   const willGetAmount = useMemo(() => {
     if (
@@ -75,6 +80,16 @@ export const StakeHome = () => {
     if (!chainAccount) {
       dispatch(connectKeplr(chainId));
     }
+
+    if (Number(inputAmount) < Number(leastBond)) {
+      snackbarUtil.warning(
+        `The stake amount is less than the minimum stake size: ${leastBond} ${getTokenDisplayName(
+          chainId
+        )}`
+      );
+      return;
+    }
+
     dispatch(
       stake(chainId, inputAmount, stafiHubAddress, poolAddress, (success) => {
         if (success) {

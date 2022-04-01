@@ -1,13 +1,13 @@
-import { CosmosNetworkParams } from "@stafihub/apps-config";
-import { atomicToHuman } from "@stafihub/apps-util";
+import { getDenom, KeplrChainParams } from "@stafihub/apps-config";
 import { FormatterText } from "@stafihub/react-components";
-import { KeplrAccount } from "@stafihub/types";
 import { useDispatch } from "react-redux";
 import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import { connectKeplr } from "../redux/reducers/AppSlice";
+import { KeplrAccount } from "../types/interface";
+import { getHumanAccountBalance } from "../utils/common";
 
 interface AccountItemProps {
-  chain: CosmosNetworkParams;
+  chain: KeplrChainParams;
   chainAccount: KeplrAccount | undefined;
 }
 
@@ -56,12 +56,15 @@ export const AccountItem = (props: AccountItemProps) => {
 
             <div className="text-white font-bold text-[16px] flex items-center">
               <FormatterText
-                value={atomicToHuman(props.chainAccount.balance?.amount)}
+                value={getHumanAccountBalance(
+                  props.chainAccount.allBalances,
+                  getDenom(props.chain.chainId)
+                )}
                 decimals={6}
               />
 
               <div className="ml-1 uppercase">
-                {props.chainAccount.balance?.denom}
+                {getDenom(props.chain.chainId)}
               </div>
             </div>
           </div>

@@ -1,12 +1,12 @@
 import { atomicToHuman } from "@stafihub/apps-util";
 import { queryrTokenBalance } from "@stafihub/apps-wallet";
-import { ChainStakeStatus } from "@stafihub/types";
 import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateChainStakeStatus } from "../redux/reducers/ChainSlice";
 import { RootState } from "../redux/store";
 import { useChainAccount } from "./useAppSlice";
+import { ChainStakeStatus } from "../types/interface";
 
 export function useChainStakeStatus(chainId: string | undefined) {
   const dispatch = useDispatch();

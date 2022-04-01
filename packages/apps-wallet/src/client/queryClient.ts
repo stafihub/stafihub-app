@@ -4,6 +4,8 @@ import {
   QueryClientImpl,
   CosmosBankQueryClientImpl,
   CosmosStakingQueryClientImpl,
+  IBCApplicationsQueryClientImpl,
+  IBCCoreChannelQueryClientImpl,
 } from "@stafihub/types";
 import { chains } from "@stafihub/apps-config";
 
@@ -70,6 +72,54 @@ export async function createCosmosStakingQueryService(chainId: string) {
 
   // Here we instantiate a specific query client which will have the custom methods defined in the .proto file
   const queryService = new CosmosStakingQueryClientImpl(rpcClient);
+
+  return queryService;
+
+  // Now you can use this service to submit queries
+  //   const queryResult = await queryService.GetLeastBond({
+  //     foo: "bar",
+  //   });
+}
+
+export async function createIBCApplicationsQueryService(chainId: string) {
+  // Inside an async function...
+  // The Tendermint client knows how to talk to the Tendermint RPC endpoint
+  const tendermintClient = await Tendermint34Client.connect(
+    chains[chainId].rpc
+  );
+
+  // The generic Stargate query client knows how to use the Tendermint client to submit unverified ABCI queries
+  const queryClient = new QueryClient(tendermintClient);
+
+  // This helper function wraps the generic Stargate query client for use by the specific generated query client
+  const rpcClient = createProtobufRpcClient(queryClient);
+
+  // Here we instantiate a specific query client which will have the custom methods defined in the .proto file
+  const queryService = new IBCApplicationsQueryClientImpl(rpcClient);
+
+  return queryService;
+
+  // Now you can use this service to submit queries
+  //   const queryResult = await queryService.GetLeastBond({
+  //     foo: "bar",
+  //   });
+}
+
+export async function createIBCCoreConnectionQueryService(chainId: string) {
+  // Inside an async function...
+  // The Tendermint client knows how to talk to the Tendermint RPC endpoint
+  const tendermintClient = await Tendermint34Client.connect(
+    chains[chainId].rpc
+  );
+
+  // The generic Stargate query client knows how to use the Tendermint client to submit unverified ABCI queries
+  const queryClient = new QueryClient(tendermintClient);
+
+  // This helper function wraps the generic Stargate query client for use by the specific generated query client
+  const rpcClient = createProtobufRpcClient(queryClient);
+
+  // Here we instantiate a specific query client which will have the custom methods defined in the .proto file
+  const queryService = new IBCCoreChannelQueryClientImpl(rpcClient);
 
   return queryService;
 

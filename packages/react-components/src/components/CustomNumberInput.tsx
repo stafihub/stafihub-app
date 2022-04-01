@@ -5,6 +5,7 @@ interface CustomInputProps {
   placeholder?: string;
   fontSize?: number;
   value: string;
+  primary?: boolean;
   handleValueChange: (value: string) => void;
 }
 
@@ -13,7 +14,10 @@ export const CustomNumberInput = (props: CustomInputProps) => {
     <input
       disabled={props.disabled}
       className={classNames(
-        "bg-transparent border-none outline-none text-white font-bold placeholder:text-placdholder"
+        "bg-transparent border-none outline-none  font-bold ",
+        props.primary
+          ? "text-primary placeholder:text-placdholder-primary"
+          : "text-white placeholder:text-placdholder"
       )}
       style={{
         fontSize: props.fontSize ? `${props.fontSize}px` : "22px",

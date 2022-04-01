@@ -5,11 +5,12 @@ import rBridgeIcon from "../assets/images/icon_rBridge.svg";
 import rBridgeIconActive from "../assets/images/icon_rBridge_active.svg";
 import rTokenIcon from "../assets/images/icon_rToken.svg";
 import rTokenIconActive from "../assets/images/icon_rToken_active.svg";
-import { useNavigate, useMatch } from "react-router-dom";
+import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { SidebarItem } from "@stafihub/react-components";
 
 export const Sidebar = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const matchBridge = useMatch("/rBridge");
 
@@ -36,6 +37,7 @@ export const Sidebar = () => {
         activeIcon={rTokenIconActive}
         title="rToken"
         targetUrl="/rToken"
+        match={location.pathname.includes("/stake")}
       />
 
       <div

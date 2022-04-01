@@ -1,6 +1,10 @@
 import { Popover } from "@mui/material";
-import { getStafiHubChainId } from "@stafihub/apps-config";
-import { atomicToHuman, getShortAddress } from "@stafihub/apps-util";
+import {
+  getDenom,
+  getStafiHubChainId,
+  getTokenDisplayName,
+} from "@stafihub/apps-config";
+import { getShortAddress } from "@stafihub/apps-util";
 import { FormatterText } from "@stafihub/react-components";
 import * as _ from "lodash";
 import {
@@ -12,6 +16,7 @@ import { useState } from "react";
 import iconNotice from "../assets/images/icon_notice.svg";
 import iconStatis from "../assets/images/icon_statis.svg";
 import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
+import { getHumanAccountBalance } from "../utils/common";
 import { AccountModal } from "./AccountModal";
 import { NoticeList } from "./notice/NoticeList";
 
@@ -51,11 +56,14 @@ export const Header = () => {
       >
         <div className="text-white font-bold text-[14px] flex items-center">
           <FormatterText
-            value={atomicToHuman(accounts[STAFIHUB_CHAIN_ID]?.balance?.amount)}
+            value={getHumanAccountBalance(
+              accounts[STAFIHUB_CHAIN_ID]?.allBalances,
+              getDenom(STAFIHUB_CHAIN_ID)
+            )}
             decimals={6}
           />
           <div className="ml-1 uppercase">
-            {accounts[STAFIHUB_CHAIN_ID]?.balance?.denom}
+            {getTokenDisplayName(STAFIHUB_CHAIN_ID)}
           </div>
         </div>
 

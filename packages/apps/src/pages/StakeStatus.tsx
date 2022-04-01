@@ -13,7 +13,7 @@ import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import iconDown from "../assets/images/icon_down.png";
 import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
 import iconSwitch from "../assets/images/icon_switch.svg";
-import { usePoolInfo } from "../hooks";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
@@ -26,7 +26,7 @@ export const StakeStatus = () => {
 
   const { stakeStatus } = useChainStakeStatus(chainId);
 
-  const { exchangeRate } = usePoolInfo(rTokenDenom);
+  const { exchangeRate } = useStakePoolInfo(rTokenDenom);
   const { unbondingAmount } = useAccountUnbond(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
 

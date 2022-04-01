@@ -1,5 +1,6 @@
-import { TokenModel } from "@stafihub/types";
+import { atomicToHuman } from "@stafihub/apps-util";
 import atomIcon from "../assets/images/ATOM.svg";
+import { Coin, TokenModel } from "../types/interface";
 
 export function timeout(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -24,4 +25,16 @@ export function openLink(url: string | undefined | null) {
     otherWindow.opener = null;
     otherWindow.location = url;
   }
+}
+
+export function getHumanAccountBalance(
+  balances: Coin[] | undefined,
+  denom: string | undefined,
+  decimals: number = 6
+): string {
+  if (!balances || !denom) {
+    return "--";
+  }
+  const target = balances.find((coin) => coin.denom === denom);
+  return target ? atomicToHuman(target.amount, decimals) : "--";
 }

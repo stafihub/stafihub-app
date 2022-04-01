@@ -63,6 +63,7 @@ importers:
       autoprefixer: ^10.4.2
       buffer: ^6.0.3
       classnames: ^2.3.1
+      cosmjs-types: ^0.4.1
       craco-alias: ^3.0.1
       crypto-browserify: ^3.12.0
       lodash: ^4.17.21
@@ -93,6 +94,7 @@ importers:
       '@stafihub/types': link:../types
       buffer: 6.0.3
       classnames: 2.3.1
+      cosmjs-types: 0.4.1
       crypto-browserify: 3.12.0
       lodash: 4.17.21
       material-ui-popup-state: 2.0.0_04cccb159326fc32d263f5d228230564

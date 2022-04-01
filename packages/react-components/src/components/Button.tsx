@@ -6,6 +6,7 @@ type ButtonProps = React.PropsWithChildren<{
   disabled?: boolean;
   size?: "small" | "middle";
   type?: "rounded" | "rectangle";
+  px?: number;
   onClick?: () => void;
 }>;
 
@@ -23,6 +24,10 @@ export const Button = (props: ButtonProps) => {
         { "rounded-full": !props.type || props.type === "rounded" },
         { "rounded-[2.4px]": props.type === "rectangle" }
       )}
+      style={{
+        paddingLeft: props.px ? `${props.px}px` : "",
+        paddingRight: props.px ? `${props.px}px` : "",
+      }}
       onClick={() => {
         if (props.disabled || props.loading) {
           return;

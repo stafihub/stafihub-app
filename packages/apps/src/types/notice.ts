@@ -8,7 +8,7 @@ export interface LocalNotice {
   status: NoticeStatus;
 }
 
-export type NoticeType = "Fee Station" | "Stake" | "Unbond";
+export type NoticeType = "Fee Station" | "Stake" | "Unbond" | "IBC Bridge";
 
 export type NoticeStatus = "Pending" | "Error" | "Confimed";
 
@@ -21,7 +21,8 @@ export interface NoticeTxDetail {
 export type NoticeDataType =
   | NoticeFeeStationData
   | NoticeStakeData
-  | NoticeUnbondData;
+  | NoticeUnbondData
+  | NoticeIBCBridgeData;
 
 export interface NoticeFeeStationData {
   inputTokenName: string;
@@ -38,4 +39,11 @@ export interface NoticeStakeData {
 export interface NoticeUnbondData {
   rTokenName: string;
   unstakeAmount: string;
+}
+
+export interface NoticeIBCBridgeData {
+  tokenName: string;
+  inputChainName: string;
+  outputChainName: string;
+  amount: string;
 }

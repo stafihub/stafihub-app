@@ -5,7 +5,8 @@ export * from "./types";
 export * from "./chains";
 
 export function isDev(): boolean {
-  return true;
+  // console.log("REACT_APP_ENV", process.env.REACT_APP_ENV);
+  return process.env.REACT_APP_ENV !== "production";
 }
 
 export function isFork(): boolean {
@@ -23,12 +24,28 @@ export function getHoursPerEra(): number {
   return 24;
 }
 
+export function getChainRestEndpoint(chainId: string | undefined): string {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.restEndpoint;
+}
+
 export function getChainAccountPrefix(chainId: string | undefined): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
   const chain = chains[chainId];
   return chain.bech32Config.bech32PrefixAccAddr;
+}
+
+export function getChainName(chainId: string | undefined): string {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.chainName;
 }
 
 export function getChainDecimals(chainId: string | undefined): number {
@@ -44,7 +61,8 @@ export function getTokenDisplayName(chainId: string | undefined): string {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
   const chain = chains[chainId];
-  return chain.denom.slice(1).toUpperCase();
+  // return chain.denom.slice(1).toUpperCase();
+  return chain.coinDenom;
 }
 
 export function getRTokenDisplayName(chainId: string | undefined): string {
@@ -52,7 +70,8 @@ export function getRTokenDisplayName(chainId: string | undefined): string {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
   const chain = chains[chainId];
-  return `r${chain.denom.slice(1).toUpperCase()}`;
+  // return `r${chain.denom.slice(1).toUpperCase()}`;
+  return `r${chain.coinDenom}`;
 }
 
 export function getChainIdFromRTokenDisplayName(

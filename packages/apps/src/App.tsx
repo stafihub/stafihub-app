@@ -16,7 +16,7 @@ import { Fade } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { SnackbarUtilsConfigurator } from "./utils/snackbarUtils";
 import { StakeUnbond } from "./pages/StakeUnbond";
-import { RBridge } from "./pages/RBridge";
+import { IBCBridge } from "./pages/IBCBridge";
 
 const useStyles = makeStyles({
   successSnackbar: {
@@ -69,7 +69,7 @@ function App() {
 
             <Route path="/feeStation" element={<FeeStation />} />
 
-            <Route path="/rBridge" element={<RBridge />} />
+            <Route path="/rBridge" element={<IBCBridge />} />
 
             <Route path="/" element={<Navigate replace to="/rToken" />} />
           </Route>

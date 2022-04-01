@@ -10,14 +10,14 @@ import { useParams } from "react-router-dom";
 import iconSwitch from "../assets/images/icon_switch.svg";
 import nodata from "../assets/images/nodata.png";
 import { StakeRewardTableHeader } from "../components/StakeRewardTableHeader";
-import { usePoolInfo } from "../hooks";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 
 export const StakeReward = () => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const { stakeStatus } = useChainStakeStatus(chainId);
-  const { exchangeRate } = usePoolInfo(getRTokenDenom(chainId));
+  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(chainId));
 
   const myStakedValue = useMemo(() => {
     if (

@@ -8,7 +8,7 @@ import { Button, CustomInput } from "@stafihub/react-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { usePoolInfo } from "../hooks";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { stakeRecovery } from "../redux/reducers/TxSlice";
@@ -19,7 +19,7 @@ export const StakeRecovery = () => {
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const isLoading = useIsLoading();
-  const { poolAddress } = usePoolInfo(getRTokenDenom(chainId));
+  const { poolAddress } = useStakePoolInfo(getRTokenDenom(chainId));
   const [txHash, setTxHash] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
 

@@ -11,7 +11,7 @@ import {
   getStafiHubChainId,
 } from "@stafihub/apps-config";
 import { humanToAtomic } from "@stafihub/apps-util";
-import { MsgLiquidityUnbond } from "@stafihub/types";
+import { IBCMsgTransfer, MsgLiquidityUnbond } from "@stafihub/types";
 import { createCosmosClient } from "./connection";
 
 declare const window: any;
@@ -176,6 +176,83 @@ export async function sendLiquidityUnbondTx(
 
     return response;
   } catch {
+    return;
+  }
+}
+
+export async function sendIBCTransferTx(
+  srcChainId: string,
+  sender: string,
+  receiver: string,
+  amount: string,
+  sourcePort: string,
+  sourceChannel: string,
+  denom: string
+): Promise<DeliverTxResponse | undefined> {
+  console.log("sendIBCTransferTx arguments:", arguments);
+
+  if (!window.getOfflineSigner) {
+    return;
+  }
+
+  try {
+    const myRegistry = new Registry(defaultStargateTypes);
+    const msgTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
+    myRegistry.register(msgTypeUrl, IBCMsgTransfer);
+
+    const offlineSigner = window.getOfflineSigner(srcChainId);
+
+    const client = await SigningStargateClient.connectWithSigner(
+      chains[srcChainId].rpc,
+      offlineSigner,
+      { registry: myRegistry }
+    );
+
+    const currentHeight = await client.getHeight();
+
+    const message = {
+      typeUrl: msgTypeUrl,
+      value: IBCMsgTransfer.fromPartial({
+        sourcePort,
+        sourceChannel,
+        token: {
+          denom,
+          amount,
+        },
+        sender,
+        receiver,
+        // timeoutTimestamp: (new Date().valueOf() + 10000) * 1000000,
+        timeoutHeight: {
+          revisionHeight: currentHeight,
+          revisionNumber: currentHeight + 100,
+        },
+      }),
+    };
+
+    const fee = {
+      amount: [
+        {
+          denom: chains[srcChainId].denom,
+          amount: "1",
+        },
+      ],
+      gas: "180000",
+    };
+
+    const response = await client.signAndBroadcast(
+      sender,
+      [message],
+      fee,
+      "use your power wisely"
+    );
+
+    console.log("message", message);
+
+    console.log("response", response);
+
+    return response;
+  } catch (err: unknown) {
+    console.log("sendIBCTransferTx err", err);
     return;
   }
 }

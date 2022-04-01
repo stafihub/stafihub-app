@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getRTokenDenom } from "@stafihub/apps-config";
 import { queryChainEra } from "@stafihub/apps-wallet";
-import { ChainStakeStatus } from "@stafihub/types";
+import { ChainStakeStatus } from "../../types/interface";
 import { AppThunk } from "../store";
 
 // { denom:ChainStakeStatus }

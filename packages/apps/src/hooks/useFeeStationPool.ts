@@ -1,9 +1,10 @@
-import { chains, STAFIHUB_DECIMALS } from "@stafihub/apps-config";
+import { chains, getDenom, STAFIHUB_DECIMALS } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
-import { FeeStationPool } from "@stafihub/types";
 import * as _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import ATOM from "../assets/images/ATOM.svg";
+import { FeeStationPool } from "../types/interface";
+import { getHumanAccountBalance } from "../utils/common";
 import { useAccounts } from "./useAppSlice";
 
 export function useFeeStationPools() {
@@ -52,8 +53,9 @@ export function useFeeStationPools() {
           ...pool,
           chainName: chain.chainName,
           chainId: chain.chainId,
-          formatBalance: atomicToHuman(
-            accounts[chain.chainId]?.balance?.amount || "--",
+          formatBalance: getHumanAccountBalance(
+            accounts[chain.chainId]?.allBalances,
+            getDenom(chain.chainId),
             pool.decimals
           ),
           formatSwapRate: atomicToHuman(pool.swapRate, pool.decimals),

@@ -1,25 +1,30 @@
+import { IndexedTx } from "@cosmjs/stargate";
+import { getStafiHubChainId } from "@stafihub/apps-config";
 import type {
-  PoolInfo,
   QueryBondedPoolsByDenomResponse,
-  QueryGetPoolDetailResponse,
-  KeplrAccountBalance,
-  QueryGetUnbondCommissionResponse,
+  QueryChannelClientStateResponse,
   QueryGetBondRecordResponse,
-  QueryGetEraExchangeRateResponse,
   QueryGetChainEraResponse,
-  QuerySupplyOfResponse,
+  QueryGetEraExchangeRateResponse,
+  QueryGetPoolDetailResponse,
+  QueryGetUnbondCommissionResponse,
   QueryGetUnbondRelayFeeResponse,
   QueryParamsResponse,
+  QuerySupplyOfResponse,
 } from "@stafihub/types";
-import { chains, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  QueryDenomTraceResponse,
+  QueryGetAccountUnbondResponse,
+} from "@stafihub/types";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
   createCosmosBankQueryService,
   createCosmosClient,
   createCosmosStakingQueryService,
+  createIBCApplicationsQueryService,
+  createIBCCoreConnectionQueryService,
   createQueryService,
 } from ".";
-import { QueryGetAccountUnbondResponse } from "@stafihub/types";
-import { IndexedTx } from "@cosmjs/stargate";
 
 export async function queryTx(
   chainId: string,
@@ -39,31 +44,27 @@ export async function queryTx(
   }
 }
 
-export async function queryAccountBalance(
+export async function queryAccountBalances(
   chainId: string,
   address: string
-): Promise<KeplrAccountBalance> {
+): Promise<Coin[]> {
   const client = await createCosmosClient(chainId);
   if (!client) {
-    return {
-      denom: chains[chainId].coinDenom,
-      amount: "--",
-    };
+    return [];
   }
 
   try {
-    const result = await client.getBalance(address, chains[chainId].coinDenom);
-    // console.log("account balance result", result);
-    return result;
+    // const result = await client.getBalance(address, chains[chainId].denom);
+
+    const allBalancesResult = await client.getAllBalances(address);
+    console.log("account allBalancesResult", allBalancesResult);
+    return [...allBalancesResult];
   } catch {
-    return {
-      denom: chains[chainId].coinDenom,
-      amount: "--",
-    };
+    return [];
   }
 }
 
-export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
+export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
   const queryService = await createQueryService(getStafiHubChainId());
 
   const results = await Promise.all([
@@ -73,13 +74,19 @@ export async function queryPoolInfo(tokenDenom: string): Promise<PoolInfo> {
     queryService.GetExchangeRate({
       denom: tokenDenom,
     }),
+    queryService.GetRParams({
+      denom: tokenDenom,
+    }),
   ]);
 
-  // console.log("result", results);
+  console.log("result", results);
 
   return {
     poolAddress: results[0].addrs[0],
     exchangeRate: results[1].exchangeRate?.value,
+    leastBond: results[2].rParams?.leastBond
+      ? parseInt(results[2].rParams?.leastBond).toString()
+      : "--",
   };
 }
 
@@ -253,6 +260,41 @@ export async function queryChainParams(
     return result;
   } catch (err: unknown) {
     console.log("queryChainParams err", chainId, err);
+  }
+  return;
+}
+
+export async function queryDenomTrace(
+  chainId: string,
+  // ibc/{hash}
+  ibcDenom: string
+): Promise<QueryDenomTraceResponse | undefined> {
+  try {
+    const queryService = await createIBCApplicationsQueryService(chainId);
+    const result = await queryService.DenomTrace({
+      hash: ibcDenom.split("/")[1],
+    });
+    console.log("queryDenomTrace result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryDenomTrace err", chainId, err);
+  }
+  return;
+}
+
+export async function queryChannel(
+  chainId: string
+): Promise<QueryChannelClientStateResponse | undefined> {
+  try {
+    const queryService = await createIBCCoreConnectionQueryService(chainId);
+    const result = await queryService.ChannelClientState({
+      portId: "transfer",
+      channelId: "channel-0",
+    });
+    console.log("queryChannel result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryChannel err", chainId, err);
   }
   return;
 }

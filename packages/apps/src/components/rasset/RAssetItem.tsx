@@ -3,7 +3,7 @@ import { getTokenIcon, FormatterText } from "@stafihub/react-components";
 import { getRTokenDenom } from "@stafihub/apps-config";
 import { useMemo } from "react";
 import iconDown from "../../assets/images/icon_down_white.png";
-import { usePoolInfo } from "../../hooks";
+import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 import { useApy } from "../../hooks/useApy";
 
@@ -15,7 +15,7 @@ interface RAssetItemProps {
 
 export const RAssetItem = (props: RAssetItemProps) => {
   const { stakeStatus } = useChainStakeStatus(props.chainId);
-  const { exchangeRate } = usePoolInfo(getRTokenDenom(props.chainId));
+  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
   const apy = useApy(props.chainId);
 
   const myStakedAmount = useMemo(() => {
@@ -38,7 +38,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
       <div className="basis-4/12 font-bold text-[16px] flex items-center justify-start">
         <img
           src={icon}
-          className="ml-11 w-[26px] h-[26px] mr-[10px]"
+          className="ml-9 w-[26px] h-[26px] mr-[10px]"
           alt="icon"
         />
 

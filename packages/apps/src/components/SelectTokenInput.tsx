@@ -1,9 +1,9 @@
 import { Box, Stack } from "@mui/material";
 import { getTokenDisplayName } from "@stafihub/apps-config";
 import { CustomNumberInput } from "@stafihub/react-components";
-import { FeeStationPool } from "@stafihub/types";
 import { useMemo } from "react";
 import downIcon from "../assets/images/icon_down_white.png";
+import { FeeStationPool } from "../types/interface";
 
 interface SelectTokenInputProps {
   title: string;

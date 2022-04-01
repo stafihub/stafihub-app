@@ -1,8 +1,8 @@
-import { chains, CosmosNetworkParams } from "@stafihub/apps-config";
+import { chains, KeplrChainParams } from "@stafihub/apps-config";
 import { useEffect, useState } from "react";
 
 export function useChainInfo(chainId: string | undefined) {
-  const [chainInfo, setChainInfo] = useState<CosmosNetworkParams | undefined>();
+  const [chainInfo, setChainInfo] = useState<KeplrChainParams | undefined>();
 
   useEffect(() => {
     if (chainId) {

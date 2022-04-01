@@ -50,7 +50,7 @@ export const ProgressSidebar = () => {
           </div>
 
           <div className="mt-2 ml-6 mr-6 flex items-center justify-between">
-            <div className="text-[#8f8f8f] text-[12px] 5px]">Brocasting…</div>
+            <div className="text-[#8f8f8f] text-[12px] 5px]">Broadcasting</div>
 
             <div className="">
               {item.status === 0 ? (

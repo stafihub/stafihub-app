@@ -1,24 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  getStafiHubChainId,
-  STAFIHUB_DECIMALS,
-  getTokenDisplayName,
-  getExplorerUrl,
-  getRTokenDenom,
   getChainAccountPrefix,
   getChainDecimals,
+  getChainName,
+  getDenom,
+  getExplorerUrl,
+  getRTokenDenom,
+  getStafiHubChainId,
+  getTokenDisplayName,
+  STAFIHUB_DECIMALS,
 } from "@stafihub/apps-config";
+import { humanToAtomic } from "@stafihub/apps-util";
 import {
-  sendLiquidityUnbondTx,
-  sendStakeTx,
-  sendChainTokens,
-  queryBondRecord,
-  sendRecoveryTx,
   checkAddress,
+  queryBondRecord,
+  queryDenomTrace,
   queryTx,
+  sendChainTokens,
+  sendIBCTransferTx,
+  sendLiquidityUnbondTx,
+  sendRecoveryTx,
+  sendStakeTx,
 } from "@stafihub/apps-wallet";
-import { humanToAtomic, atomicToHuman } from "@stafihub/apps-util";
-import { FeeStationPool, LiquidityBondState } from "@stafihub/types";
+import { LiquidityBondState } from "@stafihub/types";
+import { FeeStationPool } from "../../types/interface";
+import { getHumanAccountBalance, timeout } from "../../utils/common";
+import snackbarUtil from "../../utils/snackbarUtils";
 import { AppThunk } from "../store";
 import {
   addNotice,
@@ -28,8 +35,6 @@ import {
   updateNotice,
   updateTokenBalance,
 } from "./AppSlice";
-import { timeout } from "../../utils/common";
-import snackbarUtil from "../../utils/snackbarUtils";
 
 interface TxDetail {
   amount: string;
@@ -99,6 +104,8 @@ export const txSlice = createSlice({
 
 export const { setSwapProgressModalProps, setSidebarProgressProps } =
   txSlice.actions;
+
+export default txSlice.reducer;
 
 export const stake =
   (
@@ -473,8 +480,9 @@ export const unbond =
         return;
       }
 
-      const fisAmount = atomicToHuman(
-        stafiHubAccount.balance?.amount,
+      const fisAmount = getHumanAccountBalance(
+        stafiHubAccount.allBalances,
+        getDenom(getStafiHubChainId()),
         getChainDecimals(getStafiHubChainId())
       );
 
@@ -688,4 +696,90 @@ export const feeStationSwap =
     }
   };
 
-export default txSlice.reducer;
+/**
+ * IBC Bridge swap tokens.
+ */
+export const ibcBridgeSwap =
+  (
+    srcChainId: string,
+    dstChainId: string,
+    ibcDenom: string,
+    inputAmount: string,
+    dstAddress: string
+  ): AppThunk =>
+  async (dispatch, getState) => {
+    // Check dst address.
+    if (!checkAddress(dstAddress, getChainAccountPrefix(dstChainId))) {
+      snackbarUtil.error("Address format error");
+      return;
+    }
+
+    // Check wallet connections.
+    const srcChainAccount = getState().app.accounts[srcChainId];
+    if (!srcChainAccount) {
+      dispatch(connectKeplr(srcChainId));
+      return;
+    }
+
+    const dstChainAccount = getState().app.accounts[dstChainId];
+    if (!dstChainAccount) {
+      dispatch(connectKeplr(dstChainId));
+      return;
+    }
+
+    try {
+      dispatch(setIsLoading(true));
+
+      const denomTrace = await queryDenomTrace(getStafiHubChainId(), ibcDenom);
+
+      if (!denomTrace || !denomTrace.denomTrace) {
+        snackbarUtil.error("DenomTrace not found");
+        return;
+      }
+
+      const sourcePort = denomTrace.denomTrace.path.split("/")[0];
+      const sourceChannel = denomTrace.denomTrace.path.split("/")[1];
+
+      const txResponse = await sendIBCTransferTx(
+        srcChainId,
+        srcChainAccount.bech32Address,
+        dstAddress,
+        humanToAtomic(inputAmount, getChainDecimals(srcChainId)),
+        sourcePort,
+        sourceChannel,
+        srcChainId === getStafiHubChainId()
+          ? ibcDenom
+          : denomTrace.denomTrace.baseDenom
+      );
+
+      if (txResponse?.code === 0) {
+        snackbarUtil.success("Swap success");
+        dispatch(
+          addNotice(
+            txResponse.transactionHash,
+            "IBC Bridge",
+            {
+              sender: srcChainAccount.bech32Address,
+              transactionHash: txResponse.transactionHash,
+              address: dstChainAccount.bech32Address,
+            },
+            {
+              tokenName: getTokenDisplayName(
+                srcChainId === getStafiHubChainId() ? dstChainId : srcChainId
+              ),
+              amount: inputAmount,
+              inputChainName: getChainName(srcChainId),
+              outputChainName: getChainName(dstChainId),
+            },
+            getExplorerUrl(srcChainId),
+            "Confimed"
+          )
+        );
+      } else {
+        snackbarUtil.error(`Swap failure ${txResponse?.rawLog}`);
+      }
+    } catch {
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };

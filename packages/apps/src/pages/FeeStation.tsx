@@ -2,7 +2,6 @@ import { Box, IconButton, Stack } from "@mui/material";
 import { getStafiHubChainId } from "@stafihub/apps-config";
 import { formatNumberToFixed } from "@stafihub/apps-util";
 import { Button, FormatterText } from "@stafihub/react-components";
-import { FeeStationPool } from "@stafihub/types";
 import classNames from "classnames";
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -20,6 +19,7 @@ import {
 import { useFeeStationPools } from "../hooks/useFeeStationPool";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { feeStationSwap } from "../redux/reducers/TxSlice";
+import { FeeStationPool } from "../types/interface";
 import snackbarUtil from "../utils/snackbarUtils";
 
 const enum DisplayStatus {

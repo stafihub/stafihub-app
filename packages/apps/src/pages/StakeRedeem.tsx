@@ -15,7 +15,7 @@ import {
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ATOM from "../assets/images/ATOM.svg";
-import { usePoolInfo } from "../hooks";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useChainAccount } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
@@ -26,7 +26,7 @@ export const StakeRedeem = () => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const rTokenDenom = getRTokenDenom(chainId);
-  const { exchangeRate } = usePoolInfo(rTokenDenom);
+  const { exchangeRate } = useStakePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(chainId);
 

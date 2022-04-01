@@ -6,6 +6,7 @@ interface SidebarItemProps {
   activeIcon: any;
   title: string;
   targetUrl: string;
+  match?: boolean;
 }
 
 export const SidebarItem = (props: SidebarItemProps) => {
@@ -16,19 +17,19 @@ export const SidebarItem = (props: SidebarItemProps) => {
     <div
       className={classNames(
         "mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer",
-        { "bg-[#FFEEF3]": match }
+        { "bg-[#FFEEF3]": props.match || match }
       )}
       onClick={() => navigate(props.targetUrl)}
     >
       <img
-        src={match ? props.activeIcon : props.defaultIcon}
+        src={props.match || match ? props.activeIcon : props.defaultIcon}
         alt="icon"
         className="w-[36px] h-[36px] rounded-full ml-[9px]"
       />
 
       <div
         className={classNames("text-[16px] text-white ml-[10px]", {
-          "font-bold text-[#6758FF]": match,
+          "font-bold text-[#6758FF]": props.match || match,
         })}
       >
         {props.title}

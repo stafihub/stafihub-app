@@ -8,7 +8,7 @@ import {
 } from "@stafihub/apps-config";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { usePoolInfo } from "../hooks";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { unbond } from "../redux/reducers/TxSlice";
@@ -33,7 +33,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
   const { relayFee } = useUnbondRelayFee(chainId);
   const { unbondingDays } = useChainParams(chainId);
 
-  const { poolAddress } = usePoolInfo(getRTokenDenom(chainId));
+  const { poolAddress } = useStakePoolInfo(getRTokenDenom(chainId));
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>

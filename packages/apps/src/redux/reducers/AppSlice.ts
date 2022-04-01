@@ -3,10 +3,10 @@ import { chains } from "@stafihub/apps-config";
 import {
   connectAtomjs,
   getKeplrAccount,
-  queryAccountBalance,
+  queryAccountBalances,
 } from "@stafihub/apps-wallet";
-import { KeplrAccount } from "@stafihub/types";
 import * as _ from "lodash";
+import { KeplrAccount } from "../../types/interface";
 import {
   NoticeDataType,
   NoticeStatus,
@@ -108,10 +108,13 @@ export const connectKeplr =
         name: accountResult.name,
         bech32Address: accountResult.bech32Address,
       };
-      console.log("account", account);
+      // console.log("account", account);
 
-      const balance = await queryAccountBalance(chainId, account.bech32Address);
-      account.balance = balance;
+      const balances = await queryAccountBalances(
+        chainId,
+        account.bech32Address
+      );
+      account.allBalances = balances;
 
       dispatch(updateAccounts(chainId, account));
 
@@ -141,11 +144,13 @@ export const connectKeplrChains =
             bech32Address: accountResult.bech32Address,
           };
 
-          const balance = await queryAccountBalance(
+          const balances = await queryAccountBalances(
             network,
             account.bech32Address
           );
-          account.balance = balance;
+          account.allBalances = balances;
+
+          // console.log("balance", balance);
 
           saveNetworkAllowedFlag(network);
 
@@ -178,11 +183,11 @@ export const updateTokenBalance =
         return;
       }
       const newAccount = { ...account };
-      const balance = await queryAccountBalance(
+      const balances = await queryAccountBalances(
         network,
         newAccount.bech32Address
       );
-      newAccount.balance = balance;
+      newAccount.allBalances = balances;
 
       dispatch(updateAccounts(network, newAccount));
     } catch (err: unknown) {
@@ -203,11 +208,11 @@ export const updateAllTokenBalance =
             return;
           }
           const newAccount = { ...account };
-          const balance = await queryAccountBalance(
+          const balances = await queryAccountBalances(
             chainId,
             newAccount.bech32Address
           );
-          newAccount.balance = balance;
+          newAccount.allBalances = balances;
 
           return { network: chainId, account: newAccount };
         } catch (err: unknown) {

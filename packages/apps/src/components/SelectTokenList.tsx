@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
-import { FeeStationPool } from "@stafihub/types";
 import { CustomLoading } from "@stafihub/react-components";
+import { FeeStationPool } from "../types/interface";
 import { BackIcon } from "./icons/BackIcon";
 
 interface SelectTokenListProps {

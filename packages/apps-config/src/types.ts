@@ -2,9 +2,9 @@ export type Environment = "dev" | "production";
 
 export const STAFIHUB_DECIMALS = 6;
 
-export type NetworkConfig = { [key: string]: CosmosNetworkParams };
+export type NetworkConfig = { [key: string]: KeplrChainParams };
 
-export interface CosmosNetworkParams {
+export interface KeplrChainParams {
   chainId: string;
   chainName: string;
   rpc: string;
@@ -14,4 +14,5 @@ export interface CosmosNetworkParams {
   decimals: number;
   bech32Config: any;
   explorerUrl: string;
+  ibcDenom?: string;
 }

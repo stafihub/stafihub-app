@@ -42,8 +42,9 @@
     "webpack": "^5.69.1"
   },
   "scripts": {
-    "start": "PORT=3025 craco start",
-    "build": "craco build",
+    "start": "REACT_APP_ENV=dev PORT=3025 craco start",
+    "build:dev": "REACT_APP_ENV=dev craco build",
+    "build": "REACT_APP_ENV=production craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",

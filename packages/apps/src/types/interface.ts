@@ -39,3 +39,8 @@ export interface ChainStakeStatus {
   rTokenDenom: string;
   rTokenBalance: string;
 }
+
+export interface IBCChannelToken {
+  denom: string;
+  channelName: string;
+}

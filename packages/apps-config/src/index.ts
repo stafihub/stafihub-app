@@ -111,6 +111,14 @@ export function getExplorerUrl(chainId: string | undefined) {
   return chain.explorerUrl;
 }
 
+export function getIBCChannels(chainId: string | undefined) {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.stafihubIBCChannels;
+}
+
 export function getExplorerAccountUrl(account: string | undefined) {
   if (!account) {
     return undefined;

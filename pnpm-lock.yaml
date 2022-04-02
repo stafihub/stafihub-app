@@ -63,7 +63,6 @@ importers:
       autoprefixer: ^10.4.2
       buffer: ^6.0.3
       classnames: ^2.3.1
-      cosmjs-types: ^0.4.1
       craco-alias: ^3.0.1
       crypto-browserify: ^3.12.0
       lodash: ^4.17.21
@@ -94,7 +93,6 @@ importers:
       '@stafihub/types': link:../types
       buffer: 6.0.3
       classnames: 2.3.1
-      cosmjs-types: 0.4.1
       crypto-browserify: 3.12.0
       lodash: 4.17.21
       material-ui-popup-state: 2.0.0_04cccb159326fc32d263f5d228230564
@@ -2314,8 +2312,8 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.17.7
-      '@emotion/react': 11.8.2_47ea947e2a228aa5b9e98bcc4bbde992
-      '@emotion/styled': 11.8.1_014d3fd47caecfb5ae8372631ae4f839
+      '@emotion/react': 11.8.2_00d6772dea80510e818fd171caaa025a
+      '@emotion/styled': 11.8.1_19c9b884401318110e0b35fad34f7b03
       '@mui/base': 5.0.0-alpha.72_f456dfc349ace84b0ea11d9e6e4ef3ab
       '@mui/system': 5.5.1_fcd809b460cfc9d78b56b52c09fcfe39
       '@mui/types': 7.1.3_@types+react@17.0.40
@@ -2364,8 +2362,8 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.7
       '@emotion/cache': 11.7.1
-      '@emotion/react': 11.8.2_47ea947e2a228aa5b9e98bcc4bbde992
-      '@emotion/styled': 11.8.1_014d3fd47caecfb5ae8372631ae4f839
+      '@emotion/react': 11.8.2_00d6772dea80510e818fd171caaa025a
+      '@emotion/styled': 11.8.1_19c9b884401318110e0b35fad34f7b03
       prop-types: 15.8.1
       react: 17.0.2
     dev: false
@@ -2418,8 +2416,8 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.17.7
-      '@emotion/react': 11.8.2_47ea947e2a228aa5b9e98bcc4bbde992
-      '@emotion/styled': 11.8.1_014d3fd47caecfb5ae8372631ae4f839
+      '@emotion/react': 11.8.2_00d6772dea80510e818fd171caaa025a
+      '@emotion/styled': 11.8.1_19c9b884401318110e0b35fad34f7b03
       '@mui/private-theming': 5.4.4_00d6772dea80510e818fd171caaa025a
       '@mui/styled-engine': 5.4.4_dc240608ee0d50d8faddd7dd724375c2
       '@mui/types': 7.1.3_@types+react@17.0.40

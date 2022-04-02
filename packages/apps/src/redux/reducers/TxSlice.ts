@@ -14,7 +14,6 @@ import { humanToAtomic } from "@stafihub/apps-util";
 import {
   checkAddress,
   queryBondRecord,
-  queryDenomTrace,
   queryTx,
   sendChainTokens,
   sendIBCTransferTx,
@@ -35,6 +34,7 @@ import {
   updateNotice,
   updateTokenBalance,
 } from "./AppSlice";
+import { getIBCChannel } from "./IBCSlice";
 
 interface TxDetail {
   amount: string;
@@ -703,7 +703,7 @@ export const ibcBridgeSwap =
   (
     srcChainId: string,
     dstChainId: string,
-    ibcDenom: string,
+    srcChannel: string,
     inputAmount: string,
     dstAddress: string
   ): AppThunk =>
@@ -730,26 +730,36 @@ export const ibcBridgeSwap =
     try {
       dispatch(setIsLoading(true));
 
-      const denomTrace = await queryDenomTrace(getStafiHubChainId(), ibcDenom);
+      const otherChainId =
+        srcChainId === getStafiHubChainId() ? dstChainId : srcChainId;
 
-      if (!denomTrace || !denomTrace.denomTrace) {
-        snackbarUtil.error("DenomTrace not found");
-        return;
+      let transferDenom = undefined;
+
+      if (srcChainId !== getStafiHubChainId()) {
+        transferDenom = getDenom(otherChainId);
+      } else {
+        const ibcChannel = getIBCChannel(
+          getState().ibc.ibcChannelStore,
+          getDenom(otherChainId),
+          srcChannel
+        );
+
+        transferDenom = ibcChannel?.ibcDenom;
       }
 
-      const sourcePort = denomTrace.denomTrace.path.split("/")[0];
-      const sourceChannel = denomTrace.denomTrace.path.split("/")[1];
+      if (!transferDenom) {
+        snackbarUtil.error("Transfer denom info not found");
+        return;
+      }
 
       const txResponse = await sendIBCTransferTx(
         srcChainId,
         srcChainAccount.bech32Address,
         dstAddress,
         humanToAtomic(inputAmount, getChainDecimals(srcChainId)),
-        sourcePort,
-        sourceChannel,
-        srcChainId === getStafiHubChainId()
-          ? ibcDenom
-          : denomTrace.denomTrace.baseDenom
+        "transfer",
+        srcChannel,
+        transferDenom
       );
 
       if (txResponse?.code === 0) {

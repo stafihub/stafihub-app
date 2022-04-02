@@ -2,7 +2,7 @@ import { IndexedTx } from "@cosmjs/stargate";
 import { getStafiHubChainId } from "@stafihub/apps-config";
 import type {
   QueryBondedPoolsByDenomResponse,
-  QueryChannelClientStateResponse,
+  QueryChannelResponse,
   QueryGetBondRecordResponse,
   QueryGetChainEraResponse,
   QueryGetEraExchangeRateResponse,
@@ -55,9 +55,8 @@ export async function queryAccountBalances(
 
   try {
     // const result = await client.getBalance(address, chains[chainId].denom);
-
     const allBalancesResult = await client.getAllBalances(address);
-    console.log("account allBalancesResult", allBalancesResult);
+    // console.log("account allBalancesResult", allBalancesResult);
     return [...allBalancesResult];
   } catch {
     return [];
@@ -274,7 +273,7 @@ export async function queryDenomTrace(
     const result = await queryService.DenomTrace({
       hash: ibcDenom.split("/")[1],
     });
-    console.log("queryDenomTrace result", result);
+    // console.log("queryDenomTrace result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryDenomTrace err", chainId, err);
@@ -283,13 +282,14 @@ export async function queryDenomTrace(
 }
 
 export async function queryChannel(
-  chainId: string
-): Promise<QueryChannelClientStateResponse | undefined> {
+  chainId: string,
+  channelName: string
+): Promise<QueryChannelResponse | undefined> {
   try {
     const queryService = await createIBCCoreConnectionQueryService(chainId);
-    const result = await queryService.ChannelClientState({
+    const result = await queryService.Channel({
       portId: "transfer",
-      channelId: "channel-0",
+      channelId: channelName,
     });
     console.log("queryChannel result", result);
     return result;

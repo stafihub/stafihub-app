@@ -1,12 +1,12 @@
 import { Popover } from "@mui/material";
-import { getStafiHubChainId, KeplrChainParams } from "@stafihub/apps-config";
+import { KeplrChainParams } from "@stafihub/apps-config";
 import { ChainIcon } from "@stafihub/react-components";
+import classNames from "classnames";
 import {
   bindPopover,
   bindTrigger,
   usePopupState,
 } from "material-ui-popup-state/hooks";
-import classNames from "classnames";
 import iconDown from "../../assets/images/icon_down_gray.svg";
 
 interface BridgeChainSelectorProps {
@@ -81,10 +81,7 @@ export const BridgeChainSelector = (props: BridgeChainSelectorProps) => {
 
                 <div
                   className={classNames(
-                    "ml-4  font-bold text-[16px]",
-                    chain.chainId === getStafiHubChainId()
-                      ? "text-secondary"
-                      : "text-text-black1"
+                    "ml-4  font-bold text-[16px] text-text-black1"
                   )}
                 >
                   {chain.chainName}

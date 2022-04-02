@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { chains } from "@stafihub/apps-config";
+import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import {
   connectAtomjs,
   getKeplrAccount,
@@ -96,32 +96,8 @@ export const connectKeplr =
     if (!chainId) {
       return;
     }
-    try {
-      await connectAtomjs(chainId);
-      const accountResult = await getKeplrAccount(chainId);
 
-      if (!accountResult) {
-        return;
-      }
-
-      const account: KeplrAccount = {
-        name: accountResult.name,
-        bech32Address: accountResult.bech32Address,
-      };
-      // console.log("account", account);
-
-      const balances = await queryAccountBalances(
-        chainId,
-        account.bech32Address
-      );
-      account.allBalances = balances;
-
-      dispatch(updateAccounts(chainId, account));
-
-      saveNetworkAllowedFlag(chainId);
-    } catch (err: unknown) {
-      console.log(`connect ${chainId} error`, err);
-    }
+    _connectkeplr(dispatch, chainId);
   };
 
 export const connectKeplrChains =
@@ -130,36 +106,8 @@ export const connectKeplrChains =
     if (_.isEmpty(chainIds)) {
       return;
     }
-    const requests = chainIds.map((network) => {
-      return (async () => {
-        try {
-          await connectAtomjs(network);
-          const accountResult = await getKeplrAccount(network);
-          if (!accountResult) {
-            return null;
-          }
-
-          const account: KeplrAccount = {
-            name: accountResult.name,
-            bech32Address: accountResult.bech32Address,
-          };
-
-          const balances = await queryAccountBalances(
-            network,
-            account.bech32Address
-          );
-          account.allBalances = balances;
-
-          // console.log("balance", balance);
-
-          saveNetworkAllowedFlag(network);
-
-          return { network, account };
-        } catch (err: unknown) {
-          console.log(`connect ${network} error`, err);
-          return null;
-        }
-      })();
+    const requests = chainIds.map((chainId) => {
+      return _connectkeplr(dispatch, chainId);
     });
 
     const results = await Promise.all(requests);
@@ -172,6 +120,38 @@ export const connectKeplrChains =
     });
     dispatch(updateMultiAccounts(accountsMap));
   };
+
+const _connectkeplr = async (dispatch: any, chainId: string) => {
+  try {
+    await connectAtomjs(chainId);
+    const accountResult = await getKeplrAccount(chainId);
+
+    if (!accountResult) {
+      return;
+    }
+
+    const account: KeplrAccount = {
+      name: accountResult.name,
+      bech32Address: accountResult.bech32Address,
+    };
+    // console.log("account", account);
+
+    const balances = await queryAccountBalances(chainId, account.bech32Address);
+    account.allBalances = balances;
+
+    dispatch(updateAccounts(chainId, account));
+
+    saveNetworkAllowedFlag(chainId);
+
+    if (chainId === getStafiHubChainId()) {
+    }
+
+    return { network: chainId, account };
+  } catch (err: unknown) {
+    console.log(`connect ${chainId} error`, err);
+    return null;
+  }
+};
 
 export const updateTokenBalance =
   (network: string): AppThunk =>

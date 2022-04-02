@@ -1,14 +1,18 @@
-import { useNavigate } from "react-router-dom";
 import {
   chains,
+  getDenom,
+  getIBCChannels,
   getStafiHubChainId,
   getTokenDisplayName,
   KeplrChainParams,
 } from "@stafihub/apps-config";
+import { queryChannel } from "@stafihub/apps-wallet";
 import { Button, CardContainer } from "@stafihub/react-components";
+import { State } from "@stafihub/types";
 import * as _ from "lodash";
-import { useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import iconArrow from "../assets/images/bridge_arrow.png";
 import { BridgeChainSelector } from "../components/bridge/BridgeChainSelector";
 import { BridgeTokenSelector } from "../components/bridge/BridgeTokenSelector";
@@ -16,7 +20,10 @@ import { SwapAddressInput } from "../components/bridge/SwapAddressInput";
 import { SwapAmountInput } from "../components/bridge/SwapAmountInput";
 import { useAccounts, useIsLoading } from "../hooks/useAppSlice";
 import { connectKeplr } from "../redux/reducers/AppSlice";
+import { getIBCBalanceInChannel } from "../redux/reducers/IBCSlice";
 import { ibcBridgeSwap } from "../redux/reducers/TxSlice";
+import { RootState } from "../redux/store";
+import { IBCChannelToken } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 
@@ -37,11 +44,24 @@ export const IBCBridge = () => {
   });
   const [inputAmount, setInputAmount] = useState("");
   const [dstAddress, setDstAddress] = useState("");
+  const [selectedChannelToken, setSelectedChannelToken] =
+    useState<IBCChannelToken | null>(null);
+  const [tokenChannelList, setTokenChannelList] = useState<
+    IBCChannelToken[] | null
+  >([]);
+
+  const { ibcChannelStore } = useSelector((state: RootState) => {
+    return {
+      ibcChannelStore: state.ibc.ibcChannelStore,
+    };
+  });
 
   const chainArr = useMemo(() => {
     return _.values(chains)
       .filter((item) => {
-        return item.chainId === getStafiHubChainId() || item.ibcDenom;
+        return (
+          item.chainId === getStafiHubChainId() || item.stafihubIBCChannels
+        );
       })
       .sort((one, two) => {
         return one.chainId === getStafiHubChainId() ? -1 : 0;
@@ -49,16 +69,18 @@ export const IBCBridge = () => {
   }, []);
 
   const balance = useMemo(() => {
-    if (!chainPair.src) {
+    if (!chainPair.src || !selectedChannelToken) {
       return "--";
     }
     if (chainPair.src.chainId === getStafiHubChainId() && !chainPair.dst) {
       return "--";
     }
     if (chainPair.src.chainId === getStafiHubChainId()) {
-      return getHumanAccountBalance(
+      return getIBCBalanceInChannel(
         accounts[getStafiHubChainId()]?.allBalances,
-        chainPair.dst?.ibcDenom
+        ibcChannelStore,
+        selectedChannelToken.denom,
+        selectedChannelToken.channelName
       );
     } else {
       return getHumanAccountBalance(
@@ -66,7 +88,7 @@ export const IBCBridge = () => {
         chainPair.src.denom
       );
     }
-  }, [accounts, chainPair]);
+  }, [accounts, chainPair, ibcChannelStore, selectedChannelToken]);
 
   const [buttonText, buttonDisabled] = useMemo(() => {
     if (chainPair.src && !accounts[chainPair.src.chainId]) {
@@ -78,7 +100,8 @@ export const IBCBridge = () => {
       !inputAmount ||
       Number(inputAmount) <= 0 ||
       isNaN(Number(inputAmount)) ||
-      !dstAddress
+      !dstAddress ||
+      !selectedChannelToken
     ) {
       return ["Swap", true];
     }
@@ -86,7 +109,14 @@ export const IBCBridge = () => {
       return ["Insufficient Balance", true];
     }
     return ["Swap", false];
-  }, [accounts, chainPair, inputAmount, balance, dstAddress]);
+  }, [
+    accounts,
+    chainPair,
+    inputAmount,
+    balance,
+    dstAddress,
+    selectedChannelToken,
+  ]);
 
   const tokenName = useMemo(() => {
     if (!chainPair.src || !chainPair.dst) {
@@ -95,6 +125,55 @@ export const IBCBridge = () => {
     return chainPair.src.chainId === getStafiHubChainId()
       ? getTokenDisplayName(chainPair.dst.chainId)
       : getTokenDisplayName(chainPair.src.chainId);
+  }, [chainPair]);
+
+  // Update tokenList when chain changes.
+  useEffect(() => {
+    setTokenChannelList(null);
+
+    (async () => {
+      if (!chainPair.src || !chainPair.dst) {
+        setTokenChannelList([]);
+        setSelectedChannelToken(null);
+        return;
+      }
+
+      const otherChainId =
+        chainPair.src.chainId === getStafiHubChainId()
+          ? chainPair.dst.chainId
+          : chainPair.src.chainId;
+
+      const configChannels = getIBCChannels(otherChainId);
+
+      if (!configChannels) {
+        setTokenChannelList([]);
+        setSelectedChannelToken(null);
+        return;
+      }
+
+      // Check channel status.
+      const requests = configChannels.map((channelName) => {
+        return (async () => {
+          const channelRes = await queryChannel(otherChainId, channelName);
+          return channelRes?.channel?.state === State.STATE_OPEN;
+        })();
+      });
+
+      const activeResponses = await Promise.all(requests);
+
+      setTokenChannelList(
+        (
+          configChannels?.filter((item, index) => {
+            return activeResponses[index];
+          }) || []
+        ).map((channelName) => {
+          return {
+            denom: getDenom(otherChainId),
+            channelName,
+          };
+        })
+      );
+    })();
   }, [chainPair]);
 
   const handleSrcChainChange = (chain: KeplrChainParams) => {
@@ -140,21 +219,23 @@ export const IBCBridge = () => {
       snackbarUtil.error("Please select chain first");
       return;
     }
-    const srcChainId = chainPair.src.chainId;
-    const dstChainId = chainPair.dst.chainId;
 
-    const ibcDenom =
-      chainPair.src.chainId === getStafiHubChainId()
-        ? chainPair.dst.ibcDenom
-        : chainPair.src.ibcDenom;
-
-    if (!ibcDenom) {
-      snackbarUtil.error("IBC config not found");
+    if (!selectedChannelToken) {
+      snackbarUtil.error("Please select token channel");
       return;
     }
 
+    const srcChainId = chainPair.src.chainId;
+    const dstChainId = chainPair.dst.chainId;
+
     dispatch(
-      ibcBridgeSwap(srcChainId, dstChainId, ibcDenom, inputAmount, dstAddress)
+      ibcBridgeSwap(
+        srcChainId,
+        dstChainId,
+        selectedChannelToken.channelName,
+        inputAmount,
+        dstAddress
+      )
     );
   };
 
@@ -205,7 +286,12 @@ export const IBCBridge = () => {
           </div>
 
           <div className="mt-6">
-            <BridgeTokenSelector selectedTokenName={tokenName} />
+            <BridgeTokenSelector
+              tokenName={tokenName}
+              selectedToken={selectedChannelToken}
+              data={tokenChannelList}
+              onChange={setSelectedChannelToken}
+            />
           </div>
 
           <div className="mt-4">

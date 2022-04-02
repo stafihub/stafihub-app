@@ -12,4 +12,5 @@ protoc \
   "./proto/cosmos/staking/v1beta1/query.proto" \
   "./proto/ibc/applications/transfer/v1/query.proto" \
   "./proto/ibc/applications/transfer/v1/tx.proto" \
-  "./proto/ibc/core/channel/v1/query.proto" 
+  "./proto/ibc/core/channel/v1/query.proto" \
+  "./proto/ibc/lightclients/tendermint/v1/tendermint.proto" 

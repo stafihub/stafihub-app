@@ -8,11 +8,14 @@ import {
   updateAllTokenBalance,
 } from "../redux/reducers/AppSlice";
 import { updateChainEras } from "../redux/reducers/ChainSlice";
+import { updateStafiHubIBCChannels } from "../redux/reducers/IBCSlice";
 import { isNetworkAllowed } from "../utils/storage";
+import { useChainAccount } from "./useAppSlice";
 import { useInterval } from "./useInterval";
 
 export function useInit() {
   const dispatch = useDispatch();
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
 
   useEffect(() => {
     console.log("chains", chains);
@@ -58,4 +61,9 @@ export function useInit() {
   useInterval(() => {
     dispatch(updateAllTokenBalance());
   }, 6000);
+
+  // Update IBC channels.
+  useEffect(() => {
+    dispatch(updateStafiHubIBCChannels(stafiHubAccount?.allBalances));
+  }, [stafiHubAccount, dispatch]);
 }

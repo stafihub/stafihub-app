@@ -10,9 +10,9 @@ import { queryChannel } from "@stafihub/apps-wallet";
 import { Button, CardContainer } from "@stafihub/react-components";
 import { State } from "@stafihub/types";
 import * as _ from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import iconArrow from "../assets/images/bridge_arrow.png";
 import { BridgeChainSelector } from "../components/bridge/BridgeChainSelector";
 import { BridgeTokenSelector } from "../components/bridge/BridgeTokenSelector";
@@ -33,9 +33,10 @@ interface ChainPair {
 }
 
 export const IBCBridge = () => {
-  const accounts = useAccounts();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const accounts = useAccounts();
   const isLoading = useIsLoading();
 
   const [chainPair, setChainPair] = useState<ChainPair>({
@@ -56,6 +57,30 @@ export const IBCBridge = () => {
     };
   });
 
+  const handleSrcChainChange = useCallback(
+    (chain: KeplrChainParams) => {
+      if (chainPair.src?.chainId === chain.chainId) {
+        return;
+      }
+      if (chain.chainId !== chainPair.dst?.chainId) {
+        setSelectedChannelToken(null);
+      }
+      let dstChain = null;
+      if (chain.chainId === getStafiHubChainId()) {
+        dstChain = chainPair.src;
+      } else {
+        dstChain = chains[getStafiHubChainId()];
+      }
+      setChainPair({
+        src: chain,
+        dst: dstChain,
+      });
+      setInputAmount("");
+      setDstAddress("");
+    },
+    [chainPair.src, chainPair.dst?.chainId]
+  );
+
   const chainArr = useMemo(() => {
     return _.values(chains)
       .filter((item) => {
@@ -67,6 +92,17 @@ export const IBCBridge = () => {
         return one.chainId === getStafiHubChainId() ? -1 : 0;
       });
   }, []);
+
+  useEffect(() => {
+    if (location.state && (location.state as any).fromChainId) {
+      const src = chainArr.find(
+        (item) => item.chainId === (location.state as any).fromChainId
+      );
+      if (src) {
+        handleSrcChainChange(src);
+      }
+    }
+  }, [location.state, chainArr, handleSrcChainChange]);
 
   const balance = useMemo(() => {
     if (!chainPair.src || !selectedChannelToken) {
@@ -175,27 +211,6 @@ export const IBCBridge = () => {
       );
     })();
   }, [chainPair]);
-
-  const handleSrcChainChange = (chain: KeplrChainParams) => {
-    if (chainPair.src?.chainId === chain.chainId) {
-      return;
-    }
-    if (chain.chainId !== chainPair.dst?.chainId) {
-      setSelectedChannelToken(null);
-    }
-    let dstChain = null;
-    if (chain.chainId === getStafiHubChainId()) {
-      dstChain = chainPair.src;
-    } else {
-      dstChain = chains[getStafiHubChainId()];
-    }
-    setChainPair({
-      src: chain,
-      dst: dstChain,
-    });
-    setInputAmount("");
-    setDstAddress("");
-  };
 
   const handleDstChainChange = (chain: KeplrChainParams) => {
     if (chainPair.dst?.chainId === chain.chainId) {

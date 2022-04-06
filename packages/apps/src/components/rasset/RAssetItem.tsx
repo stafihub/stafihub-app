@@ -6,6 +6,7 @@ import iconDown from "../../assets/images/icon_down_white.png";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 import { useApy } from "../../hooks/useApy";
+import { useNavigate } from "react-router-dom";
 
 interface RAssetItemProps {
   chainId: string;
@@ -14,6 +15,7 @@ interface RAssetItemProps {
 }
 
 export const RAssetItem = (props: RAssetItemProps) => {
+  const navigate = useNavigate();
   const { stakeStatus } = useChainStakeStatus(props.chainId);
   const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
   const apy = useApy(props.chainId);
@@ -72,7 +74,16 @@ export const RAssetItem = (props: RAssetItemProps) => {
           Trade
           <img src={iconDown} alt="down" className="ml-[2px] w-[10px]" />
         </div>
-        <div className="ml-2 w-[66px] h-[22px] text-white text-[12px] flex justify-center items-center border-white border-solid border-[0.5px] rounded-[3px] cursor-pointer">
+        <div
+          className="ml-2 w-[66px] h-[22px] text-white text-[12px] flex justify-center items-center border-white border-solid border-[0.5px] rounded-[3px] cursor-pointer"
+          onClick={() => {
+            navigate("/rBridge", {
+              state: {
+                fromChainId: props.chainId,
+              },
+            });
+          }}
+        >
           Bridge
         </div>
       </div>

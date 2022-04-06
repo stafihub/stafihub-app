@@ -1,20 +1,19 @@
 import { Box, Modal } from "@mui/material";
-import { Button, FormatterText } from "@stafihub/react-components";
 import {
   getChainIdFromRTokenDisplayName,
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
+import { Button, FormatterText } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
-import { unbond } from "../redux/reducers/TxSlice";
-import { useUnbondRelayFee } from "../hooks/useUnbondRelayFee";
-import { useChainParams } from "../hooks/useChainParams";
 import { useRParams } from "../hooks/useRParams";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
+import { useUnbondRelayFee } from "../hooks/useUnbondRelayFee";
+import { unbond } from "../redux/reducers/TxSlice";
 
 interface UnbondModalProps {
   visible: boolean;

@@ -12,7 +12,7 @@ import { State } from "@stafihub/types";
 import * as _ from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import iconArrow from "../assets/images/bridge_arrow.png";
 import { BridgeChainSelector } from "../components/bridge/BridgeChainSelector";
 import { BridgeTokenSelector } from "../components/bridge/BridgeTokenSelector";
@@ -35,7 +35,6 @@ interface ChainPair {
 export const IBCBridge = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const accounts = useAccounts();
   const isLoading = useIsLoading();
 

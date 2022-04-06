@@ -5,6 +5,7 @@
   "scripts": {
     "start": "cd packages/apps && pnpm start",
     "build": "cd packages/apps && pnpm build",
+    "build:dev": "cd packages/apps && pnpm build:dev",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

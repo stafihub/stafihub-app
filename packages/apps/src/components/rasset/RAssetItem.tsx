@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import { getTokenIcon, FormatterText } from "@stafihub/react-components";
+import { FormatterText, RTokenIcon } from "@stafihub/react-components";
 import { getRTokenDenom } from "@stafihub/apps-config";
 import { useMemo } from "react";
 import iconDown from "../../assets/images/icon_down_white.png";
@@ -31,18 +31,12 @@ export const RAssetItem = (props: RAssetItemProps) => {
     return Number(stakeStatus.rTokenBalance) * Number(exchangeRate);
   }, [stakeStatus, exchangeRate]);
 
-  const icon = useMemo(() => {
-    return getTokenIcon(props.derivativeTokenName);
-  }, [props.derivativeTokenName]);
-
   return (
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">
       <div className="basis-4/12 font-bold text-[16px] flex items-center justify-start">
-        <img
-          src={icon}
-          className="ml-9 w-[26px] h-[26px] mr-[10px]"
-          alt="icon"
-        />
+        <div className="ml-9 mr-[10px]">
+          <RTokenIcon rtokenName={props.derivativeTokenName} size={26} />
+        </div>
 
         <div>{props.derivativeTokenName}</div>
       </div>

@@ -1,19 +1,8 @@
 import { atomicToHuman } from "@stafihub/apps-util";
-import atomIcon from "../assets/images/ATOM.svg";
-import { Coin, TokenModel } from "../types/interface";
+import { Coin } from "../types/interface";
 
 export function timeout(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-export function createTokenModel(name: string): TokenModel {
-  let icon = atomIcon;
-
-  return {
-    name: name,
-    icon,
-    balance: "--",
-  };
 }
 
 export function openLink(url: string | undefined | null) {

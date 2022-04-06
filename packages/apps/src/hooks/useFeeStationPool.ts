@@ -2,7 +2,6 @@ import { chains, getDenom, STAFIHUB_DECIMALS } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
 import * as _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
-import ATOM from "../assets/images/ATOM.svg";
 import { FeeStationPool } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import { useAccounts } from "./useAppSlice";
@@ -59,7 +58,6 @@ export function useFeeStationPools() {
             pool.decimals
           ),
           formatSwapRate: atomicToHuman(pool.swapRate, pool.decimals),
-          icon: ATOM,
         } as FeeStationPool;
       }
       return undefined;

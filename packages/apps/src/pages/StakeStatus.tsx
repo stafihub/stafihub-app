@@ -4,10 +4,9 @@ import {
   getRTokenDisplayName,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
-import { Button, FormatterText } from "@stafihub/react-components";
+import { Button, FormatterText, RTokenIcon } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ATOM from "../assets/images/ATOM.svg";
 import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import iconDown from "../assets/images/icon_down.png";
 import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
@@ -67,7 +66,7 @@ export const StakeStatus = () => {
 
       <div className="mt-7 flex items-center justify-between">
         <div className="flex items-center">
-          <img src={ATOM} className="w-[36px] h-[36px]" alt="token icon" />
+          {params.rToken && <RTokenIcon rtokenName={params.rToken} size={36} />}
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
             {getRTokenDisplayName(chainId)}

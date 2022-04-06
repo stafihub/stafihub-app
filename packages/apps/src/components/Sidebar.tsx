@@ -15,7 +15,7 @@ export const Sidebar = () => {
   const matchBridge = useMatch("/rBridge");
 
   return (
-    <div className="w-[160px] h-screen bg-gradient-to-b from-[#0f0f0f] via-[#131313] to-[#0a0a0a] flex flex-col items-center overflow-auto relative">
+    <div className="w-[160px] min-w-[160px] h-screen bg-gradient-to-b from-[#0f0f0f] via-[#131313] to-[#0a0a0a] flex flex-col items-center overflow-auto relative">
       <img
         src={stafihubLogo}
         alt="logo"

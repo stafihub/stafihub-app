@@ -1,5 +1,5 @@
 import { getRTokenDenom } from "@stafihub/apps-config";
-import { FormatterText, getTokenIcon } from "@stafihub/react-components";
+import { FormatterText, TokenIcon } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useApy } from "../../hooks/useApy";
@@ -13,9 +13,6 @@ interface StakeTokenItemProps {
 }
 
 export const StakeTokenItem = (props: StakeTokenItemProps) => {
-  const icon = useMemo(() => {
-    return getTokenIcon(props.derivativeTokenName);
-  }, [props.derivativeTokenName]);
   const apy = useApy(props.chainId);
   const supply = useTokenSupply(props.chainId);
 
@@ -31,11 +28,9 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
   return (
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">
       <div className="basis-4/12 font-bold text-[16px] flex items-center">
-        <img
-          src={icon}
-          className="w-[26px] h-[26px] ml-9 mr-[10px]"
-          alt="icon"
-        />
+        <div className="ml-9 mr-[10px]">
+          <TokenIcon tokenName={props.originTokenName} size={26} />
+        </div>
 
         <div>{props.originTokenName}</div>
       </div>

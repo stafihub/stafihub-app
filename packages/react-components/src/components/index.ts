@@ -5,3 +5,5 @@ export * from "./CustomNumberInput";
 export * from "./FormatterText";
 export * from "./CustomLoading";
 export * from "./ChainIcon";
+export * from "./TokenIcon";
+export * from "./RTokenIcon";

@@ -11,10 +11,10 @@ import {
   Button,
   CustomNumberInput,
   CustomInput,
+  RTokenIcon,
 } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import ATOM from "../assets/images/ATOM.svg";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useChainAccount } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
@@ -104,11 +104,11 @@ export const StakeRedeem = () => {
               Max
             </div>
 
-            <img
-              src={ATOM}
-              className="w-[36px] h-[36px] mx-[5px]"
-              alt="token icon"
-            />
+            <div className="mx-[5px]">
+              {params.rToken && (
+                <RTokenIcon rtokenName={params.rToken} size={36} />
+              )}
+            </div>
           </div>
         </div>
 

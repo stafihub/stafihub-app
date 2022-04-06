@@ -7,10 +7,12 @@ import { updateChainStakeStatus } from "../redux/reducers/ChainSlice";
 import { RootState } from "../redux/store";
 import { useChainAccount } from "./useAppSlice";
 import { ChainStakeStatus } from "../types/interface";
+import { useStakePoolInfo } from "./useStakePoolInfo";
 
 export function useChainStakeStatus(chainId: string | undefined) {
   const dispatch = useDispatch();
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
+  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(chainId));
 
   const stakeStatusMap = useSelector((state: RootState) => {
     return state.chain.chainStakeStatusMap;
@@ -21,19 +23,22 @@ export function useChainStakeStatus(chainId: string | undefined) {
   }, [stakeStatusMap, chainId]);
 
   const updateStakeStatus = useCallback(async () => {
-    if (!chainId || !stafiHubAccount) {
+    if (!chainId || !stafiHubAccount || isNaN(Number(exchangeRate))) {
       return;
     }
     const result = await queryrTokenBalance(
       stafiHubAccount.bech32Address,
       getRTokenDenom(chainId)
     );
+    const rTokenBalance = atomicToHuman(result);
+    const stakedValue = Number(rTokenBalance) * Number(exchangeRate) * 0.06;
     const chainStakeStatus: ChainStakeStatus = {
       rTokenDenom: chainId,
-      rTokenBalance: atomicToHuman(result),
+      rTokenBalance,
+      stakedValue: stakedValue.toString(),
     };
     dispatch(updateChainStakeStatus(chainId, chainStakeStatus));
-  }, [dispatch, chainId, stafiHubAccount]);
+  }, [dispatch, chainId, stafiHubAccount, exchangeRate]);
 
   useEffect(() => {
     updateStakeStatus();

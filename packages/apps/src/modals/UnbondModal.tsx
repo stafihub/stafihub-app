@@ -52,6 +52,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
           margin: "auto",
           marginTop: "120px",
           outline: "none",
+          transform: "translateX(80px)",
         }}
       >
         <div className="text-white font-bold text-[30px]">

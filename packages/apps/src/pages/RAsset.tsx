@@ -1,10 +1,35 @@
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import bridgeImage from "../assets/images/hub_bridge.svg";
 import { RAssetItem } from "../components/rasset/RAssetItem";
 import { RAssetTableHeader } from "../components/rasset/RAssetTableHeader";
 import { useRAssetList } from "../hooks/useRAssetList";
+import { RootState } from "../redux/store";
+import * as _ from "lodash";
+import { FormatterText } from "@stafihub/react-components";
 
 export const RAsset = () => {
   const rAssetList = useRAssetList();
+
+  const stakeStatusMap = useSelector((state: RootState) => {
+    return state.chain.chainStakeStatusMap;
+  });
+
+  const totalStakedValue = useMemo(() => {
+    const sum = _.values(stakeStatusMap).reduce(
+      (previousValue, currentValue) => {
+        const oldValue = isNaN(Number(previousValue))
+          ? 0
+          : Number(previousValue);
+        const newValue =
+          Number(oldValue) + Number(currentValue?.stakedValue || 0);
+        return newValue.toString();
+      },
+      "--"
+    );
+
+    return sum;
+  }, [stakeStatusMap]);
 
   return (
     <div className="flex flex-col items-center">
@@ -35,7 +60,9 @@ export const RAsset = () => {
           <div className="text-[16px] text-text-gray3">
             Total Staked Value ($)
           </div>
-          <div className="ml-2 text-[20px] font-bold text-white">--</div>
+          <div className="ml-2 text-[20px] font-bold text-white">
+            <FormatterText value={totalStakedValue} decimals={2} />
+          </div>
         </div>
       </div>
     </div>

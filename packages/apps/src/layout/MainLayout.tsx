@@ -6,7 +6,7 @@ import { ProgressModal } from "../modals/ProgressModal";
 
 export const MainLayout = () => {
   return (
-    <div className="bg-black-900 h-screen flex w-full-screen relative">
+    <div className="bg-black-900 h-screen max-w-[1920px] flex w-full relative">
       <Sidebar />
 
       <div className="flex-1 flex flex-col">

@@ -1,28 +1,28 @@
 import classNames from "classnames";
 import { useMemo } from "react";
-import CosmosHub from "../assets/images/CosmosHub.svg";
-import StaFiHub from "../assets/images/StaFiHub.svg";
+import rIRIS from "../assets/images/rIRIS.png";
+import rATOM from "../assets/images/rATOM.svg";
 
-const getIconSource = (displayHubName: string) => {
-  if (displayHubName === "StaFiHub") {
-    return StaFiHub;
+const getIconSource = (rtokenName: string) => {
+  if (rtokenName === "rIRIS") {
+    return rIRIS;
   }
-  if (displayHubName === "CosmosHub") {
-    return CosmosHub;
+  if (rtokenName === "rATOM") {
+    return rATOM;
   }
   return undefined;
 };
 
-interface ChainIconProps {
-  displayHubName: string;
+interface TokenIconProps {
+  rtokenName: string;
   size?: number;
   withBorder?: boolean;
 }
 
-export const ChainIcon = (props: ChainIconProps) => {
+export const RTokenIcon = (props: TokenIconProps) => {
   const icon = useMemo(() => {
-    return getIconSource(props.displayHubName);
-  }, [props.displayHubName]);
+    return getIconSource(props.rtokenName);
+  }, [props.rtokenName]);
 
   return (
     <div>

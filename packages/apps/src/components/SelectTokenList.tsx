@@ -1,5 +1,6 @@
 import { Box, Stack } from "@mui/material";
-import { CustomLoading } from "@stafihub/react-components";
+import { CustomLoading, TokenIcon } from "@stafihub/react-components";
+import { getTokenDisplayName } from "@stafihub/apps-config";
 import { FeeStationPool } from "../types/interface";
 import { BackIcon } from "./icons/BackIcon";
 
@@ -78,7 +79,7 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
               >
                 <Stack direction="row" alignItems="center">
                   <Box mr="10px">
-                    <img
+                    {/* <img
                       src={item.icon}
                       alt="icon"
                       style={{
@@ -88,6 +89,12 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
                         borderRadius: "50%",
                         border: "1px solid #eeeeee",
                       }}
+                    /> */}
+
+                    <TokenIcon
+                      tokenName={getTokenDisplayName(item.chainId)}
+                      size={36}
+                      withBorder
                     />
                   </Box>
 

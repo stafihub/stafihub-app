@@ -38,6 +38,7 @@ export const AccountModal = (props: UnbondModalProps) => {
           margin: "auto",
           marginTop: "120px",
           outline: "none",
+          transform: "translateX(80px)",
         }}
       >
         <div className="mb-2 text-white font-bold text-[30px]">

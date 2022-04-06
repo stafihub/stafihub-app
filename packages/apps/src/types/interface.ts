@@ -31,13 +31,13 @@ export interface FeeStationPool {
   decimals: number;
   formatSwapRate: string;
   poolAddress: string;
-  icon?: any;
   formatBalance?: string;
 }
 
 export interface ChainStakeStatus {
   rTokenDenom: string;
   rTokenBalance: string;
+  stakedValue: string;
 }
 
 export interface IBCChannelToken {

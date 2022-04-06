@@ -12,11 +12,11 @@ import {
   CustomInput,
   CustomNumberInput,
   FormatterText,
+  TokenIcon,
 } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import ATOM from "../assets/images/ATOM.svg";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { useApy } from "../hooks/useApy";
 import { useChainInfo } from "../hooks/useChainInfo";
@@ -147,11 +147,11 @@ export const StakeHome = () => {
               Max
             </div>
 
-            <img
-              src={ATOM}
-              className="w-[36px] h-[36px] mx-[5px]"
-              alt="token icon"
-            />
+            <div className="mx-[5px]">
+              {params.rToken && (
+                <TokenIcon tokenName={params.rToken.slice(1)} size={36} />
+              )}
+            </div>
           </div>
         </div>
 

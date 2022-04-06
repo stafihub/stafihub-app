@@ -1,6 +1,5 @@
 import {
   getChainIdFromRTokenDisplayName,
-  getHoursPerEra,
   getRTokenDenom,
   getRTokenDisplayName,
   getTokenDisplayName,
@@ -13,9 +12,9 @@ import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import iconDown from "../assets/images/icon_down.png";
 import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
 import iconSwitch from "../assets/images/icon_switch.svg";
-import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 
 export const StakeStatus = () => {
@@ -26,7 +25,7 @@ export const StakeStatus = () => {
 
   const { stakeStatus } = useChainStakeStatus(chainId);
 
-  const { exchangeRate } = useStakePoolInfo(rTokenDenom);
+  const { exchangeRate, eraHours } = useStakePoolInfo(rTokenDenom);
   const { unbondingAmount } = useAccountUnbond(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
 
@@ -185,7 +184,7 @@ export const StakeStatus = () => {
       </div>
 
       <div className="mt-[44px] text-text-gray4 text-[12px]">
-        Updated every {getHoursPerEra()} hours
+        Updated every {eraHours} hours
       </div>
     </div>
   );

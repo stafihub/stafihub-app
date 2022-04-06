@@ -1,4 +1,4 @@
-import { Popover } from "@mui/material";
+import { Collapse, Popover } from "@mui/material";
 import { CustomLoading } from "@stafihub/react-components";
 import classNames from "classnames";
 import { bindPopover, bindTrigger } from "material-ui-popup-state";
@@ -53,6 +53,7 @@ export const BridgeTokenSelector = (props: BridgeTokenSelectorProps) => {
       {/* Select Chain Popover */}
       <Popover
         {...bindPopover(selectPopupState)}
+        TransitionComponent={Collapse}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",

@@ -7,6 +7,7 @@ export type NetworkConfig = { [key: string]: KeplrChainParams };
 export interface KeplrChainParams {
   chainId: string;
   chainName: string;
+  displayHubName: string;
   rpc: string;
   restEndpoint: string;
   denom: string;

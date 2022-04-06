@@ -25,15 +25,16 @@ export const RTokenHome = () => {
         <StakeTokenTableHeader />
 
         {rTokenList.map((rToken) => (
-          <StakeTokenItem
-            key={rToken.chainId}
-            chainId={rToken.chainId}
-            originTokenName={rToken.tokenName}
-            derivativeTokenName={rToken.rTokenName}
-            onClickStake={() => {
-              navigate(`/${getRTokenDisplayName(rToken.chainId)}/stake`);
-            }}
-          />
+          <div key={rToken.chainId} className="mb-3">
+            <StakeTokenItem
+              chainId={rToken.chainId}
+              originTokenName={rToken.tokenName}
+              derivativeTokenName={rToken.rTokenName}
+              onClickStake={() => {
+                navigate(`/${getRTokenDisplayName(rToken.chainId)}/stake`);
+              }}
+            />
+          </div>
         ))}
       </div>
     </div>

@@ -14,6 +14,7 @@ import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { unbond } from "../redux/reducers/TxSlice";
 import { useUnbondRelayFee } from "../hooks/useUnbondRelayFee";
 import { useChainParams } from "../hooks/useChainParams";
+import { useRParams } from "../hooks/useRParams";
 
 interface UnbondModalProps {
   visible: boolean;
@@ -31,7 +32,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
   const isLoading = useIsLoading();
   const { updateStakeStatus } = useChainStakeStatus(chainId);
   const { relayFee } = useUnbondRelayFee(chainId);
-  const { unbondingDays } = useChainParams(chainId);
+  const { bondingDays } = useRParams(getRTokenDenom(chainId));
 
   const { poolAddress } = useStakePoolInfo(getRTokenDenom(chainId));
 
@@ -67,7 +68,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[40px] text-text-gray4 text-[20px]">
-          -Date: around {unbondingDays} days
+          -Date: around {bondingDays} days
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">

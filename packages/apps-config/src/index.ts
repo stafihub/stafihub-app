@@ -17,13 +17,6 @@ export function getStafiHubChainId(): string {
   return "stafihub-testnet-1";
 }
 
-export function getHoursPerEra(): number {
-  if (isDev()) {
-    return 3;
-  }
-  return 24;
-}
-
 export function getChainRestEndpoint(chainId: string | undefined): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);

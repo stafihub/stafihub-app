@@ -6,6 +6,7 @@ export function useStakePoolInfo(denom: string) {
   const [poolAddress, setPoolAddress] = useState("--");
   const [exchangeRate, setExchangeRate] = useState("--");
   const [leastBond, setLeastBond] = useState("--");
+  const [eraHours, setEraHours] = useState("--");
 
   useEffect(() => {
     (async () => {
@@ -16,9 +17,12 @@ export function useStakePoolInfo(denom: string) {
       if (result.leastBond) {
         setLeastBond(atomicToHuman(result.leastBond));
       }
+      if (result.eraHours) {
+        setEraHours(result.eraHours);
+      }
       setPoolAddress(result.poolAddress);
     })();
   }, [denom]);
 
-  return { poolAddress, exchangeRate, leastBond };
+  return { poolAddress, exchangeRate, leastBond, eraHours };
 }

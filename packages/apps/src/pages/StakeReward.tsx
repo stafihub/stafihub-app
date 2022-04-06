@@ -1,6 +1,5 @@
 import {
   getChainIdFromRTokenDisplayName,
-  getHoursPerEra,
   getRTokenDenom,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
@@ -10,14 +9,14 @@ import { useParams } from "react-router-dom";
 import iconSwitch from "../assets/images/icon_switch.svg";
 import nodata from "../assets/images/nodata.png";
 import { StakeRewardTableHeader } from "../components/StakeRewardTableHeader";
-import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 
 export const StakeReward = () => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const { stakeStatus } = useChainStakeStatus(chainId);
-  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(chainId));
+  const { exchangeRate, eraHours } = useStakePoolInfo(getRTokenDenom(chainId));
 
   const myStakedValue = useMemo(() => {
     if (
@@ -90,7 +89,7 @@ export const StakeReward = () => {
       </div>
 
       <div className="mt-[45px] text-text-gray4 text-[12px]">
-        Era is updated every {getHoursPerEra()} hours
+        Era is updated every {eraHours} hours
       </div>
     </div>
   );

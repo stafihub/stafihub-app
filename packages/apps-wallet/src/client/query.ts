@@ -11,6 +11,7 @@ import type {
   QueryGetUnbondRelayFeeResponse,
   QueryParamsResponse,
   QuerySupplyOfResponse,
+  QueryGetRParamsResponse,
 } from "@stafihub/types";
 import {
   QueryDenomTraceResponse,
@@ -78,7 +79,7 @@ export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
     }),
   ]);
 
-  console.log("result", results);
+  // console.log("result", results);
 
   return {
     poolAddress: results[0].addrs[0],
@@ -86,7 +87,24 @@ export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
     leastBond: results[2].rParams?.leastBond
       ? parseInt(results[2].rParams?.leastBond).toString()
       : "--",
+    eraHours: results[2].rParams?.eraSeconds
+      ? Math.round(Number(results[2].rParams.eraSeconds) / 3600).toString()
+      : "--",
   };
+}
+
+export async function queryRParams(
+  tokenDenom: string
+): Promise<QueryGetRParamsResponse> {
+  const queryService = await createQueryService(getStafiHubChainId());
+
+  const result = await queryService.GetRParams({
+    denom: tokenDenom,
+  });
+
+  // console.log(`queryRParams ${tokenDenom} result`, result);
+
+  return result;
 }
 
 export async function queryPoolByDenom(

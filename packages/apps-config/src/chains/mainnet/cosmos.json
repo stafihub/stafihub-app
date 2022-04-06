@@ -1,6 +1,7 @@
 {
   "chainName": "StaFi-Cosmos-Devnet",
   "chainId": "cosmos-stafi-1",
+  "displayHubName": "CosmosHub",
   "rpc": "https://test-cosmos-rpc1.stafihub.io",
   "restEndpoint": "https://test-cosmos-rest1.stafihub.io",
   "denom": "uatom",
@@ -15,5 +16,5 @@
     "bech32PrefixConsPub": "cosmosvalconspub"
   },
   "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-cosmos-devnet",
-  "stafihubIBCChannels": ["channel-0", "channel-1"]
+  "stafihubIBCChannels": ["channel-2"]
 }

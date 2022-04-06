@@ -1,6 +1,7 @@
 {
   "chainName": "StaFi-Hub-Devnet",
   "chainId": "stafihub-testnet-1",
+  "displayHubName": "StaFiHub",
   "rpc": "https://test-rpc1.stafihub.io",
   "restEndpoint": "https://test-rest-rpc1.stafihub.io",
   "denom": "ufis",

@@ -22,17 +22,18 @@ export const RAsset = () => {
         <RAssetTableHeader />
 
         {rAssetList.map((rAsset) => (
-          <RAssetItem
-            key={rAsset.chainId}
-            chainId={rAsset.chainId}
-            originTokenName={rAsset.tokenName}
-            derivativeTokenName={rAsset.rTokenName}
-          />
+          <div key={rAsset.chainId} className="mb-3">
+            <RAssetItem
+              chainId={rAsset.chainId}
+              originTokenName={rAsset.tokenName}
+              derivativeTokenName={rAsset.rTokenName}
+            />
+          </div>
         ))}
 
         <div className="self-stretch mt-16 flex justify-end items-center">
           <div className="text-[16px] text-text-gray3">
-            Total staked Value ($)
+            Total Staked Value ($)
           </div>
           <div className="ml-2 text-[20px] font-bold text-white">--</div>
         </div>

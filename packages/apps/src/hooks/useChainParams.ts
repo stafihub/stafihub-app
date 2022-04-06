@@ -16,14 +16,14 @@ export function useChainParams(chainId: string | undefined) {
     })();
   }, [chainId]);
 
-  const unbondingDays = useMemo(() => {
-    if (chainParams?.params?.unbondingTime?.seconds) {
-      const days = chainParams?.params?.unbondingTime?.seconds?.div(86400);
+  // const unbondingDays = useMemo(() => {
+  //   if (chainParams?.params?.unbondingTime?.seconds) {
+  //     const days = chainParams?.params?.unbondingTime?.seconds?.div(86400);
 
-      return (Math.floor(days.toNumber()) + 1).toString();
-    }
-    return "--";
-  }, [chainParams]);
+  //     return (Math.floor(days.toNumber()) + 1).toString();
+  //   }
+  //   return "--";
+  // }, [chainParams]);
 
-  return { unbondingDays };
+  // return { unbondingDays };
 }

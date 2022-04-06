@@ -1,15 +1,13 @@
-import {
-  getChainDecimals,
-  getHoursPerEra,
-  getRTokenDenom,
-} from "@stafihub/apps-config";
+import { getChainDecimals, getRTokenDenom } from "@stafihub/apps-config";
 import { queryEraExchangeRate } from "@stafihub/apps-wallet";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { useRParams } from "./useRParams";
 
 export function useApy(chainId: string | undefined) {
   const [apy, setApy] = useState("--");
+  const { eraHours } = useRParams(getRTokenDenom(chainId));
 
   const chainEra = useSelector((state: RootState) => {
     return chainId ? state.chain.chainEras[chainId] : undefined;
@@ -17,11 +15,14 @@ export function useApy(chainId: string | undefined) {
 
   useEffect(() => {
     (async () => {
-      if (chainEra) {
+      if (chainEra && !isNaN(Number(eraHours))) {
         const annualizedDay = 0.25;
 
         const currentEra = Math.max(0, chainEra - 1);
-        const oldEra = Math.max(0, chainEra - 1 - (24 * annualizedDay) / getHoursPerEra());
+        const oldEra = Math.max(
+          0,
+          chainEra - 1 - (24 * annualizedDay) / Number(eraHours)
+        );
 
         const currentRateRes = await queryEraExchangeRate(
           currentEra,
@@ -42,7 +43,7 @@ export function useApy(chainId: string | undefined) {
         setApy(apy.toString());
       }
     })();
-  }, [chainEra, chainId]);
+  }, [chainEra, chainId, eraHours]);
 
   return apy;
 }

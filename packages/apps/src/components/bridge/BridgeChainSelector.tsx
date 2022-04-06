@@ -1,4 +1,4 @@
-import { Popover } from "@mui/material";
+import { Popover, Collapse } from "@mui/material";
 import { KeplrChainParams } from "@stafihub/apps-config";
 import { ChainIcon } from "@stafihub/react-components";
 import classNames from "classnames";
@@ -29,7 +29,7 @@ export const BridgeChainSelector = (props: BridgeChainSelectorProps) => {
       >
         {props.selectedChain ? (
           <div className="text-[16px] font-bold text-white">
-            {props.selectedChain.chainName}
+            {props.selectedChain.displayHubName}
           </div>
         ) : (
           <div className="text-[12px] text-text-gray7">
@@ -43,6 +43,7 @@ export const BridgeChainSelector = (props: BridgeChainSelectorProps) => {
       {/* Select Chain Popover */}
       <Popover
         {...bindPopover(selectPopupState)}
+        TransitionComponent={Collapse}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
@@ -77,14 +78,18 @@ export const BridgeChainSelector = (props: BridgeChainSelectorProps) => {
                   }
                 )}
               >
-                <ChainIcon chainId={chain.chainId} size={36} withBorder />
+                <ChainIcon
+                  displayHubName={chain.displayHubName}
+                  size={36}
+                  withBorder
+                />
 
                 <div
                   className={classNames(
                     "ml-4  font-bold text-[16px] text-text-black1"
                   )}
                 >
-                  {chain.chainName}
+                  {chain.displayHubName}
                 </div>
               </div>
 

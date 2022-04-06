@@ -180,6 +180,9 @@ export const IBCBridge = () => {
     if (chainPair.src?.chainId === chain.chainId) {
       return;
     }
+    if (chain.chainId !== chainPair.dst?.chainId) {
+      setSelectedChannelToken(null);
+    }
     let dstChain = null;
     if (chain.chainId === getStafiHubChainId()) {
       dstChain = chainPair.src;
@@ -190,11 +193,16 @@ export const IBCBridge = () => {
       src: chain,
       dst: dstChain,
     });
+    setInputAmount("");
+    setDstAddress("");
   };
 
   const handleDstChainChange = (chain: KeplrChainParams) => {
     if (chainPair.dst?.chainId === chain.chainId) {
       return;
+    }
+    if (chain.chainId !== chainPair.src?.chainId) {
+      setSelectedChannelToken(null);
     }
     let srcChain = null;
     if (chain.chainId === getStafiHubChainId()) {
@@ -206,6 +214,8 @@ export const IBCBridge = () => {
       src: srcChain,
       dst: chain,
     });
+    setInputAmount("");
+    setDstAddress("");
   };
 
   const clickSwap = () => {
@@ -274,6 +284,8 @@ export const IBCBridge = () => {
                   src: chainPair.dst,
                   dst: chainPair.src,
                 });
+                setInputAmount("");
+                setDstAddress("");
               }}
             />
             <div className="flex-1 ml-[-3px]">
@@ -308,10 +320,6 @@ export const IBCBridge = () => {
               value={dstAddress}
               onChange={setDstAddress}
             />
-          </div>
-
-          <div className="mt-3 text-text-gray4 text-[12px]">
-            Estimate Fee: -- FIS
           </div>
 
           <div className="mt-5 flex justify-end">

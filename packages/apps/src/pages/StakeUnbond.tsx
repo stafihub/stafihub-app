@@ -8,12 +8,12 @@ import nodata from "../assets/images/nodata.png";
 import { UnbondRecordTableHeader } from "../components/unbond/UnbondRecordTableHeader";
 import { UnbondRewardItem } from "../components/unbond/UnbondRewardItem";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
-import { useChainParams } from "../hooks/useChainParams";
+import { useRParams } from "../hooks/useRParams";
 
 export const StakeUnbond = () => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const { unbondingDays } = useChainParams(chainId);
+  const { bondingDays } = useRParams(getRTokenDenom(chainId));
 
   const { unbondRecords, loading } = useAccountUnbond(getRTokenDenom(chainId));
 
@@ -45,7 +45,7 @@ export const StakeUnbond = () => {
             <UnbondRewardItem
               key={index}
               item={record}
-              unbondingDays={unbondingDays}
+              unbondingDays={bondingDays}
             />
           ))}
         </div>

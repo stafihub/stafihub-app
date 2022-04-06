@@ -258,7 +258,12 @@ export const stake =
       }
 
       callback && callback(success);
-    } catch {
+    } catch (err: unknown) {
+      if ((err as Error).message === "Request rejected") {
+        snackbarUtil.error(`Cancelled`);
+      } else {
+        snackbarUtil.error((err as Error).message);
+      }
     } finally {
     }
   };
@@ -449,7 +454,12 @@ export const stakeRecovery =
       }
 
       callback && callback(success);
-    } catch {
+    } catch (err: unknown) {
+      if ((err as Error).message === "Request rejected") {
+        snackbarUtil.error(`Cancelled`);
+      } else {
+        snackbarUtil.error((err as Error).message);
+      }
     } finally {
       dispatch(setIsLoading(false));
     }
@@ -524,6 +534,11 @@ export const unbond =
       callback && callback(txResponse?.code === 0);
     } catch (err: unknown) {
       console.log("sendLiquidityUnbondTx err", err);
+      if ((err as Error).message === "Request rejected") {
+        snackbarUtil.error(`Cancelled`);
+      } else {
+        snackbarUtil.error((err as Error).message);
+      }
     } finally {
       dispatch(setIsLoading(false));
     }
@@ -690,7 +705,11 @@ export const feeStationSwap =
     } catch (err: unknown) {
       console.log("feeStationSwap err", err);
       dispatch(setIsLoading(false));
-      snackbarUtil.error((err as Error).message);
+      if ((err as Error).message === "Request rejected") {
+        snackbarUtil.error(`Cancelled`);
+      } else {
+        snackbarUtil.error((err as Error).message);
+      }
     } finally {
       dispatch(setIsLoading(false));
     }
@@ -788,7 +807,12 @@ export const ibcBridgeSwap =
       } else {
         snackbarUtil.error(`Swap failure ${txResponse?.rawLog}`);
       }
-    } catch {
+    } catch (err: unknown) {
+      if ((err as Error).message === "Request rejected") {
+        snackbarUtil.error(`Cancelled`);
+      } else {
+        snackbarUtil.error((err as Error).message);
+      }
     } finally {
       dispatch(setIsLoading(false));
     }

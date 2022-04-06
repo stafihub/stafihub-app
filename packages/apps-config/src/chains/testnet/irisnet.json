@@ -1,7 +1,7 @@
 {
-  "chainName": "StaFi-Iris-Devnet",
+  "chainName": "StaFi-Irisnet-Devnet",
   "chainId": "iris-stafi-1",
-  "displayHubName": "IrisHub",
+  "displayHubName": "IrisnetHub",
   "rpc": "https://test-iris-rpc1.stafihub.io",
   "restEndpoint": "https://test-iris-rest1.stafihub.io",
   "denom": "uiris",
@@ -15,5 +15,5 @@
     "bech32PrefixConsAddr": "ica",
     "bech32PrefixConsPub": "icp"
   },
-  "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-iris-devnet"
+  "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-irisnet-devnet"
 }

@@ -265,6 +265,7 @@ export const stake =
         snackbarUtil.error((err as Error).message);
       }
     } finally {
+      dispatch(setIsLoading(false));
     }
   };
 

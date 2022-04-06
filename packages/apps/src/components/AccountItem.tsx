@@ -1,4 +1,8 @@
-import { getDenom, KeplrChainParams } from "@stafihub/apps-config";
+import {
+  getDenom,
+  getTokenDisplayName,
+  KeplrChainParams,
+} from "@stafihub/apps-config";
 import { FormatterText } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import iconArrowRight from "../assets/images/icon_arrow_right.svg";
@@ -64,7 +68,7 @@ export const AccountItem = (props: AccountItemProps) => {
               />
 
               <div className="ml-1 uppercase">
-                {getDenom(props.chain.chainId)}
+                {getTokenDisplayName(props.chain.chainId)}
               </div>
             </div>
           </div>

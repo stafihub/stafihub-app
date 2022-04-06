@@ -93,16 +93,16 @@ export const IBCBridge = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (location.state && (location.state as any).fromChainId) {
-      const src = chainArr.find(
-        (item) => item.chainId === (location.state as any).fromChainId
-      );
-      if (src) {
-        handleSrcChainChange(src);
-      }
-    }
-  }, [location.state, chainArr, handleSrcChainChange]);
+  // useEffect(() => {
+  //   if (location.state && (location.state as any).fromChainId) {
+  //     const src = chainArr.find(
+  //       (item) => item.chainId === (location.state as any).fromChainId
+  //     );
+  //     if (src) {
+  //       handleSrcChainChange(src);
+  //     }
+  //   }
+  // }, [location.state, chainArr, handleSrcChainChange]);
 
   const balance = useMemo(() => {
     if (!chainPair.src || !selectedChannelToken) {

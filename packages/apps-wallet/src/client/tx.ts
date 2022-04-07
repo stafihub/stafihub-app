@@ -172,7 +172,7 @@ export async function sendIBCTransferTx(
   sourceChannel: string,
   denom: string
 ): Promise<DeliverTxResponse | undefined> {
-  console.log("sendIBCTransferTx arguments:", arguments);
+  // console.log("sendIBCTransferTx arguments:", arguments);
 
   if (!window.getOfflineSigner) {
     return;
@@ -228,9 +228,9 @@ export async function sendIBCTransferTx(
     "use your power wisely"
   );
 
-  console.log("message", message);
+  // console.log("message", message);
 
-  console.log("response", response);
+  // console.log("response", response);
 
   return response;
 }

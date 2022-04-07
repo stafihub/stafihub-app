@@ -38,7 +38,7 @@ export async function queryTx(
 
   try {
     const result = await client.getTx(txHash);
-    console.log("queryTx result", result);
+    // console.log("queryTx result", result);
     return result;
   } catch {
     return null;
@@ -259,7 +259,7 @@ export async function queryUnbondRelayFee(
     const result = await queryService.GetUnbondRelayFee({
       denom,
     });
-    console.log("queryUnbondRelayFee result", result);
+    // console.log("queryUnbondRelayFee result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryUnbondRelayFee err", denom, err);
@@ -273,7 +273,7 @@ export async function queryChainParams(
   try {
     const queryService = await createCosmosStakingQueryService(chainId);
     const result = await queryService.Params({});
-    console.log("queryChainParams result", result);
+    // console.log("queryChainParams result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryChainParams err", chainId, err);
@@ -309,7 +309,7 @@ export async function queryChannel(
       portId: "transfer",
       channelId: channelName,
     });
-    console.log("queryChannel result", result);
+    // console.log("queryChannel result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryChannel err", chainId, err);

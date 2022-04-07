@@ -1,17 +1,5 @@
 import classNames from "classnames";
-import { useMemo } from "react";
-import IRIS from "../assets/images/IRIS.png";
-import ATOM from "../assets/images/ATOM.svg";
-
-const getIconSource = (tokenName: string) => {
-  if (tokenName === "IRIS") {
-    return IRIS;
-  }
-  if (tokenName === "ATOM") {
-    return ATOM;
-  }
-  return undefined;
-};
+import { useEffect, useState } from "react";
 
 interface TokenIconProps {
   tokenName: string;
@@ -20,14 +8,22 @@ interface TokenIconProps {
 }
 
 export const TokenIcon = (props: TokenIconProps) => {
-  const icon = useMemo(() => {
-    return getIconSource(props.tokenName);
+  const [image, setImage] = useState();
+
+  useEffect(() => {
+    loadImage(props.tokenName);
   }, [props.tokenName]);
+
+  const loadImage = (tokenName: string) => {
+    import(`../assets/images/${tokenName}.svg`).then((image) => {
+      setImage(image.default);
+    });
+  };
 
   return (
     <div>
       <img
-        src={icon}
+        src={image}
         alt="icon"
         className={classNames("rounded-full", {
           "border-solid border-[1px] border-border-main": props.withBorder,

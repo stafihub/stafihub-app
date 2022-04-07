@@ -9,7 +9,7 @@ export const StakeTokenTableHeader = () => {
 
       <div className="basis-3/12">APY</div>
 
-      <div className="basis-4/12">Liquidity</div>
+      <div className="basis-4/12">Staked Value</div>
 
       <div className="basis-3/12">Liquify</div>
     </div>

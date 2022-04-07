@@ -19,6 +19,7 @@ import { StakeUnbond } from "./pages/StakeUnbond";
 import { IBCBridge } from "./pages/IBCBridge";
 
 const useStyles = makeStyles({
+  root: { marginLeft: "160px" },
   successSnackbar: {
     backgroundColor: "#6758FF !important",
     // color: "#1d1930 !important",
@@ -41,6 +42,7 @@ function App() {
       }}
       TransitionComponent={Fade as React.ComponentType}
       classes={{
+        root: classes.root,
         variantSuccess: classes.successSnackbar,
       }}
     >

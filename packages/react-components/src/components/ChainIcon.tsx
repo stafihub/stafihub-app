@@ -1,17 +1,5 @@
 import classNames from "classnames";
-import { useMemo } from "react";
-import CosmosHub from "../assets/images/CosmosHub.svg";
-import StaFiHub from "../assets/images/StaFiHub.svg";
-
-const getIconSource = (displayHubName: string) => {
-  if (displayHubName === "StaFiHub") {
-    return StaFiHub;
-  }
-  if (displayHubName === "CosmosHub") {
-    return CosmosHub;
-  }
-  return undefined;
-};
+import { useEffect, useState } from "react";
 
 interface ChainIconProps {
   displayHubName: string;
@@ -20,14 +8,22 @@ interface ChainIconProps {
 }
 
 export const ChainIcon = (props: ChainIconProps) => {
-  const icon = useMemo(() => {
-    return getIconSource(props.displayHubName);
+  const [image, setImage] = useState();
+
+  useEffect(() => {
+    loadImage(props.displayHubName);
   }, [props.displayHubName]);
+
+  const loadImage = (displayHubName: string) => {
+    import(`../assets/images/${displayHubName}.svg`).then((image) => {
+      setImage(image.default);
+    });
+  };
 
   return (
     <div>
       <img
-        src={icon}
+        src={image}
         alt="icon"
         className={classNames("rounded-full", {
           "border-solid border-[1px] border-border-main": props.withBorder,

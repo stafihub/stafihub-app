@@ -38,10 +38,12 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
       <div className="basis-3/12 text-[14px]">{props.derivativeTokenName}</div>
 
       <div className="basis-3/12 text-[14px]">
-        <FormatterText value={apy} decimals={2} />%
+        <FormatterText value={apy} decimals={2} />
+        {!isNaN(Number(apy)) && "%"}
       </div>
 
       <div className="basis-4/12 text-[14px]">
+        {!isNaN(Number(liquidity)) && "$"}
         <FormatterText value={liquidity} decimals={2} />
       </div>
 

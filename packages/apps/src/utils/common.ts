@@ -25,5 +25,5 @@ export function getHumanAccountBalance(
     return "--";
   }
   const target = balances.find((coin) => coin.denom === denom);
-  return target ? atomicToHuman(target.amount, decimals) : "--";
+  return target ? atomicToHuman(target.amount, decimals) : "0";
 }

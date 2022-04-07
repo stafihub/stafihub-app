@@ -78,7 +78,7 @@ export const updateStafiHubIBCChannels =
       }
     });
 
-    console.log("ibcChannelStore", ibcChannelStore);
+    // console.log("ibcChannelStore", ibcChannelStore);
 
     dispatch(setIBCChannelStore(ibcChannelStore));
   };

@@ -14,31 +14,43 @@ export function useFeeStationPools() {
   const [swapMaxLimit, setSwapMaxLimit] = useState("--");
 
   useEffect(() => {
-    (async () => {
-      const response = await fetch(
-        "https://test-rtoken-api.stafihub.io/feeStation/api/v1/station/poolInfo",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const resJson = await response.json();
+    const abortController = new AbortController();
 
-      setLoadingPools(false);
-
-      if (resJson.status === "80000") {
-        const pools = resJson.data.poolInfoList || [];
-        setServerPoolList(pools);
-        setSwapMaxLimit(
-          atomicToHuman(resJson.data.swapMaxLimit, STAFIHUB_DECIMALS)
-        );
-        setSwapMinLimit(
-          atomicToHuman(resJson.data.swapMinLimit, STAFIHUB_DECIMALS)
-        );
+    fetch(
+      "https://test-rtoken-api.stafihub.io/feeStation/api/v1/station/poolInfo",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        signal: abortController.signal,
       }
-    })();
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((resJson) => {
+        setLoadingPools(false);
+
+        if (resJson.status === "80000") {
+          const pools = resJson.data.poolInfoList || [];
+          setServerPoolList(pools);
+          setSwapMaxLimit(
+            atomicToHuman(resJson.data.swapMaxLimit, STAFIHUB_DECIMALS)
+          );
+          setSwapMinLimit(
+            atomicToHuman(resJson.data.swapMinLimit, STAFIHUB_DECIMALS)
+          );
+        }
+      })
+      .catch((err: Error) => {
+        if (err.name === "AbortError") return;
+        throw err;
+      });
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   const poolList: FeeStationPool[] = useMemo(() => {

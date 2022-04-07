@@ -5,7 +5,7 @@
   "rpc": "https://test-rpc1.stafihub.io",
   "restEndpoint": "https://test-rest-rpc1.stafihub.io",
   "denom": "ufis",
-  "coinDenom": "ufis",
+  "coinDenom": "FIS",
   "decimals": 6,
   "bech32Config": {
     "bech32PrefixAccAddr": "stafi",

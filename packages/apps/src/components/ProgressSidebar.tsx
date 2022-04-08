@@ -72,27 +72,29 @@ export const ProgressSidebar = () => {
             )}
           >
             {item.status === 1 ? (
-              item.txHash ? (
-                <>
-                  <div>Check Tx</div>
-                  <div
-                    className="ml-3 underline cursor-pointer"
-                    onClick={() => {
-                      openLink(
-                        `${sidebarProgressProps.explorerUrl}/tx/${item.txHash}`
-                      );
-                    }}
-                  >
-                    {getShortAddress(item.txHash, 4)}
-                  </div>
-                </>
-              ) : (
-                <div>Completed</div>
-              )
+              <div>Completed</div>
             ) : item.status === 0 ? (
               <>Pending</>
             ) : (
               <div>Error</div>
+            )}
+          </div>
+
+          <div className="mt-8 ml-6 flex items-center text-[12px] text-[#8f8f8f]">
+            {item.txHash && (
+              <>
+                <div>Check Tx</div>
+                <div
+                  className="ml-3 underline cursor-pointer"
+                  onClick={() => {
+                    openLink(
+                      `${sidebarProgressProps.explorerUrl}/tx/${item.txHash}`
+                    );
+                  }}
+                >
+                  {getShortAddress(item.txHash, 4)}
+                </div>
+              </>
             )}
           </div>
         </div>

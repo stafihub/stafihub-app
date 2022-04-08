@@ -33,7 +33,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
 
   return (
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">
-      <div className="basis-4/12 font-bold text-[16px] flex items-center justify-start">
+      <div className="basis-5/12 font-bold text-[16px] flex items-center justify-start">
         <div className="ml-9 mr-[10px]">
           <RTokenIcon rtokenName={props.derivativeTokenName} size={26} />
         </div>
@@ -41,7 +41,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
         <div>{props.derivativeTokenName}</div>
       </div>
 
-      <div className="basis-3/12 text-[14px]">
+      <div className="basis-4/12 text-[14px]">
         <div className="flex items-center">
           <FormatterText value={myStakedAmount} decimals={2} />
           <Tooltip
@@ -59,11 +59,11 @@ export const RAssetItem = (props: RAssetItemProps) => {
         <FormatterText value={stakeStatus?.rTokenBalance} decimals={2} />
       </div>
 
-      <div className="basis-3/12 text-[14px]">
+      <div className="basis-4/12 text-[14px]">
         <FormatterText value={apy} decimals={2} />%
       </div>
 
-      <div className="basis-4/12 text-[14px] flex items-center">
+      <div className="basis-5/12 text-[14px] flex items-center">
         <div className="w-[66px] h-[22px] text-white text-[12px] flex justify-center items-center border-white border-solid border-[0.5px] rounded-[3px] cursor-pointer">
           Trade
           <img src={iconDown} alt="down" className="ml-[2px] w-[10px]" />

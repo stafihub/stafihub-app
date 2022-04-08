@@ -23,7 +23,7 @@ import { useChainInfo } from "../hooks/useChainInfo";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
 import { connectKeplr } from "../redux/reducers/AppSlice";
-import { stake } from "../redux/reducers/TxSlice";
+import { setSidebarProgressProps, stake } from "../redux/reducers/TxSlice";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 
@@ -93,7 +93,17 @@ export const StakeHome = () => {
     dispatch(
       stake(chainId, inputAmount, stafiHubAddress, poolAddress, (success) => {
         if (success) {
-          navigate(`/${params.rToken}/stake/status`);
+          snackbarUtil.success("Stake succeed");
+          setInputAmount("");
+          setStafiHubAddress("");
+          setTimeout(() => {
+            dispatch(
+              setSidebarProgressProps({
+                visible: false,
+              })
+            );
+            navigate(`/${params.rToken}/stake/status`);
+          }, 3000);
         }
       })
     );

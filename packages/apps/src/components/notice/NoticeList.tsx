@@ -70,7 +70,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
     return "";
   };
   return (
-    <Box width="230px" padding="10px 10px 10px">
+    <Box width="250px" padding="10px 10px 10px">
       <Typography variant="bold" fontSize="14px" color="#23292F">
         Notification
       </Typography>
@@ -86,7 +86,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
 
       <Box
         minHeight="200px"
-        maxHeight="270px"
+        maxHeight="300px"
         sx={{
           overflow: "auto",
         }}
@@ -94,26 +94,28 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
         {noticeList.map((notice, index) => (
           <Box key={notice.id}>
             <Box mt="2px">
-              <Typography variant="bold" fontSize="12px" color="#434A52">
+              <Typography
+                variant="bold"
+                fontSize="14px"
+                color="#434A52"
+                lineHeight={1}
+              >
                 {getNoticeTitle(notice)}
               </Typography>
             </Box>
 
-            <Box>
-              <Typography fontSize="12px" color="#8E8E8E">
+            <Box mt="6px">
+              <Typography fontSize="13px" color="#8E8E8E" lineHeight={1}>
                 {getNoticeContent(notice)}
               </Typography>
             </Box>
 
-            <Stack direction="row" justifyContent="space-between">
+            <Stack direction="row" justifyContent="space-between" mt="6px">
               <Typography
                 mt="2px"
                 fontSize="12px"
                 color="#8E8E8E"
-                sx={{
-                  transform: "scale(0.8)",
-                  transformOrigin: "left center",
-                }}
+                lineHeight={1}
               >
                 {formatDate(notice.timestamp)}
               </Typography>
@@ -121,6 +123,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
               <Typography
                 fontSize="13px"
                 color="primary"
+                lineHeight={1}
                 sx={{
                   transform: "scale(0.8)",
                   transformOrigin: "right center",

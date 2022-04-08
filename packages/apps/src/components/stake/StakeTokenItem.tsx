@@ -27,7 +27,7 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
 
   return (
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">
-      <div className="basis-4/12 font-bold text-[16px] flex items-center">
+      <div className="basis-5/12 font-bold text-[16px] flex items-center">
         <div className="ml-9 mr-[10px]">
           <TokenIcon tokenName={props.originTokenName} size={26} />
         </div>
@@ -37,7 +37,7 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
 
       <div className="basis-3/12 text-[14px]">{props.derivativeTokenName}</div>
 
-      <div className="basis-3/12 text-[14px]">
+      <div className="basis-4/12 text-[14px]">
         <FormatterText value={apy} decimals={2} />
         {!isNaN(Number(apy)) && "%"}
       </div>

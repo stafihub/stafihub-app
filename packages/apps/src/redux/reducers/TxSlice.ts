@@ -170,7 +170,7 @@ export const stake =
           setSidebarProgressProps({
             visible: true,
             explorerUrl: getExplorerUrl(chainId),
-            items: [{ name: "Staking", status: 0 }],
+            items: [{ name: "Sending", status: 0 }],
           })
         );
 
@@ -180,11 +180,11 @@ export const stake =
           setSidebarProgressProps({
             items: [
               {
-                name: "Staking",
+                name: "Sending",
                 status: 1,
                 txHash: txResponse.transactionHash,
               },
-              { name: "Minting", status: 0 },
+              { name: "Staking", status: 0 },
             ],
           })
         );
@@ -206,16 +206,17 @@ export const stake =
                 setSidebarProgressProps({
                   items: [
                     {
-                      name: "Staking",
+                      name: "Sending",
                       status: 1,
                       txHash: txResponse.transactionHash,
                     },
-                    { name: "Minting", status: 1 },
+                    { name: "Staking", status: 1 },
                   ],
                 })
               );
 
               dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+              dispatch(updateAllTokenBalance());
               success = true;
               break;
             } else {
@@ -223,11 +224,11 @@ export const stake =
                 setSidebarProgressProps({
                   items: [
                     {
-                      name: "Staking",
+                      name: "Sending",
                       status: 1,
                       txHash: txResponse.transactionHash,
                     },
-                    { name: "Minting", status: 2 },
+                    { name: "Staking", status: 2 },
                   ],
                 })
               );

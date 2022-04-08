@@ -26,18 +26,18 @@ export const Sidebar = () => {
       />
 
       <SidebarItem
-        defaultIcon={rAssetIcon}
-        activeIcon={rAssetIconActive}
-        title="rAsset"
-        targetUrl="/rAsset"
-      />
-
-      <SidebarItem
         defaultIcon={rTokenIcon}
         activeIcon={rTokenIconActive}
         title="rToken"
         targetUrl="/rToken"
         match={location.pathname.includes("/stake")}
+      />
+
+      <SidebarItem
+        defaultIcon={rAssetIcon}
+        activeIcon={rAssetIconActive}
+        title="rAsset"
+        targetUrl="/rAsset"
       />
 
       <div
@@ -63,7 +63,7 @@ export const Sidebar = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-48 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
+      <div className="absolute bottom-5 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
         <div>Need FIS for fees?</div>
         <div className="mt-[1px] flex items-center">
           <div>Try our</div>

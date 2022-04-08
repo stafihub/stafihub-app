@@ -68,7 +68,7 @@ export const UnbondRewardItem = (props: UnbondRewardItemProps) => {
 
       <div className="basis-2/12 text-[12px]">
         {!isNaN(Number(props.unbondingDays)) && (
-          <div>≈{props.unbondingDays} days</div>
+          <div>≈{props.unbondingDays} D</div>
         )}
         {!completed && !isNaN(Number(remainingDays)) && (
           <div className="mt-1">{remainingDays}</div>

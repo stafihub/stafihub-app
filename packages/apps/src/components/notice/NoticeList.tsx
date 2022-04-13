@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUnreadNoticeFlag } from "../../redux/reducers/AppSlice";
+import { setStakeSidebarProps } from "../../redux/reducers/TxSlice";
 import {
   LocalNotice,
   NoticeFeeStationData,
@@ -131,7 +132,25 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                   cursor: "pointer",
                 }}
                 onClick={() => {
-                  openLink(getNoticeUrl(notice));
+                  if (notice.type === "Stake") {
+                    dispatch(
+                      setStakeSidebarProps({
+                        visible: true,
+                        explorerUrl: notice.explorerUrl,
+                        txHash: notice.txDetail?.transactionHash,
+                        chainId: notice.txDetail?.chainId,
+                        sendingStatus: 2,
+                        mintingStatus:
+                          notice.status === "Pending"
+                            ? 1
+                            : notice.status === "Confimed"
+                            ? 2
+                            : -1,
+                      })
+                    );
+                  } else {
+                    openLink(getNoticeUrl(notice));
+                  }
                   props.onClose();
                 }}
               >

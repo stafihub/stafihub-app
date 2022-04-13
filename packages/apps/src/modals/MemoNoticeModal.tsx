@@ -47,7 +47,12 @@ export const MemoNoticeModal = (props: ClaimMintRewardModalProps) => {
             </div>
 
             <div className="mt-20">
-              <Button bgPrimary type="rectangle" onClick={props.onConfirm}>
+              <Button
+                bgPrimary
+                textDark
+                type="rectangle"
+                onClick={props.onConfirm}
+              >
                 Understood
               </Button>
             </div>

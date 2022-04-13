@@ -23,7 +23,7 @@ import { useChainInfo } from "../hooks/useChainInfo";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
 import { connectKeplr } from "../redux/reducers/AppSlice";
-import { setSidebarProgressProps, stake } from "../redux/reducers/TxSlice";
+import { setStakeSidebarProps, stake } from "../redux/reducers/TxSlice";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 
@@ -98,7 +98,7 @@ export const StakeHome = () => {
           setStafiHubAddress("");
           setTimeout(() => {
             dispatch(
-              setSidebarProgressProps({
+              setStakeSidebarProps({
                 visible: false,
               })
             );

@@ -16,6 +16,7 @@ export interface NoticeTxDetail {
   sender: string;
   transactionHash: string;
   address: string;
+  chainId: string;
 }
 
 export type NoticeDataType =

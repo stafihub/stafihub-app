@@ -110,7 +110,7 @@ const TokenItem = (props: TokenItemProps) => {
           <TokenIcon tokenName={item.tokenName} size={36} withBorder />
 
           <div className={classNames("ml-[10px] text-[16px] text-text-black1")}>
-            {item.tokenName}
+            {item.rTokenName}
           </div>
         </div>
 

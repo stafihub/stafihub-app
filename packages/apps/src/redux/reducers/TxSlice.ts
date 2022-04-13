@@ -48,23 +48,20 @@ interface SwapProgressModalProps {
   txDetail?: TxDetail;
 }
 
-export interface SidebarProgressItem {
-  name: string;
-  // show item status.
-  // 0-loading 1-success 2-error
-  status: number;
-  txHash?: string;
-}
-
-interface SidebarProgressProps {
+interface StakeSidebarProps {
   visible: boolean;
   explorerUrl?: string;
-  items?: SidebarProgressItem[];
+  chainId?: string;
+  txHash?: string;
+  // 1:loading 2:success -1:error
+  sendingStatus?: number;
+  mintingStatus?: number;
+  stakingStatus?: number;
 }
 
 export interface TxState {
   swapProgressModalProps: SwapProgressModalProps;
-  sidebarProgressProps: SidebarProgressProps;
+  stakeSidebarProps: StakeSidebarProps;
 }
 
 const initialState: TxState = {
@@ -72,7 +69,7 @@ const initialState: TxState = {
     visible: false,
     progress: 0,
   },
-  sidebarProgressProps: {
+  stakeSidebarProps: {
     visible: false,
   },
 };
@@ -90,19 +87,19 @@ export const txSlice = createSlice({
         ...action.payload,
       };
     },
-    setSidebarProgressProps: (
+    setStakeSidebarProps: (
       state: TxState,
-      action: PayloadAction<Partial<SidebarProgressProps>>
+      action: PayloadAction<Partial<StakeSidebarProps>>
     ) => {
-      state.sidebarProgressProps = {
-        ...state.sidebarProgressProps,
+      state.stakeSidebarProps = {
+        ...state.stakeSidebarProps,
         ...action.payload,
       };
     },
   },
 });
 
-export const { setSwapProgressModalProps, setSidebarProgressProps } =
+export const { setSwapProgressModalProps, setStakeSidebarProps } =
   txSlice.actions;
 
 export default txSlice.reducer;
@@ -156,6 +153,7 @@ export const stake =
               sender: chainAccount.bech32Address,
               transactionHash: txResponse.transactionHash,
               address: chainAccount.bech32Address,
+              chainId,
             },
             {
               tokenName: getTokenDisplayName(chainId),
@@ -167,33 +165,13 @@ export const stake =
 
         dispatch(updateTokenBalance(chainId));
         dispatch(
-          setSidebarProgressProps({
+          setStakeSidebarProps({
             visible: true,
             explorerUrl: getExplorerUrl(chainId),
-            items: [
-              {
-                name: "Sending",
-                status: 1,
-                txHash: txResponse.transactionHash,
-              },
-              { name: "Minting", status: 0 },
-            ],
-          })
-        );
-
-        await timeout(2500);
-
-        dispatch(
-          setSidebarProgressProps({
-            items: [
-              {
-                name: "Sending",
-                status: 1,
-                txHash: txResponse.transactionHash,
-              },
-              { name: "Minting", status: 1 },
-              { name: "Staking", status: 0 },
-            ],
+            chainId: chainId,
+            txHash: txResponse.transactionHash,
+            sendingStatus: 2,
+            mintingStatus: 1,
           })
         );
 
@@ -211,16 +189,8 @@ export const stake =
               LiquidityBondState.LIQUIDITY_BOND_STATE_VERIFY_OK
             ) {
               dispatch(
-                setSidebarProgressProps({
-                  items: [
-                    {
-                      name: "Sending",
-                      status: 1,
-                      txHash: txResponse.transactionHash,
-                    },
-                    { name: "Minting", status: 1 },
-                    { name: "Staking", status: 1 },
-                  ],
+                setStakeSidebarProps({
+                  mintingStatus: 2,
                 })
               );
 
@@ -230,16 +200,8 @@ export const stake =
               break;
             } else {
               dispatch(
-                setSidebarProgressProps({
-                  items: [
-                    {
-                      name: "Sending",
-                      status: 1,
-                      txHash: txResponse.transactionHash,
-                    },
-                    { name: "Minting", status: 1 },
-                    { name: "Staking", status: 2 },
-                  ],
+                setStakeSidebarProps({
+                  mintingStatus: -1,
                 })
               );
 
@@ -255,14 +217,14 @@ export const stake =
               "Check status timeout, please try again later."
             );
             dispatch(
-              setSidebarProgressProps({
+              setStakeSidebarProps({
                 visible: false,
               })
             );
             break;
           }
 
-          if (!getState().tx.sidebarProgressProps.visible) {
+          if (!getState().tx.stakeSidebarProps.visible) {
             break;
           }
         }
@@ -397,13 +359,12 @@ export const stakeRecovery =
       if (txResponse?.code === 0) {
         dispatch(updateTokenBalance(chainId));
         dispatch(
-          setSidebarProgressProps({
+          setStakeSidebarProps({
             visible: true,
             explorerUrl: getExplorerUrl(chainId),
-            items: [
-              { name: "Staking", status: 1, txHash },
-              { name: "Minting", status: 0 },
-            ],
+            txHash,
+            sendingStatus: 2,
+            mintingStatus: 1,
           })
         );
 
@@ -421,15 +382,8 @@ export const stakeRecovery =
               LiquidityBondState.LIQUIDITY_BOND_STATE_VERIFY_OK
             ) {
               dispatch(
-                setSidebarProgressProps({
-                  items: [
-                    {
-                      name: "Staking",
-                      status: 1,
-                      txHash,
-                    },
-                    { name: "Minting", status: 1 },
-                  ],
+                setStakeSidebarProps({
+                  mintingStatus: 2,
                 })
               );
 
@@ -443,15 +397,8 @@ export const stakeRecovery =
           timeCount++;
           if (timeCount > MAX_COUNT) {
             dispatch(
-              setSidebarProgressProps({
-                items: [
-                  {
-                    name: "Staking",
-                    status: 1,
-                    txHash,
-                  },
-                  { name: "Minting", status: 2 },
-                ],
+              setStakeSidebarProps({
+                mintingStatus: -1,
               })
             );
 
@@ -459,7 +406,7 @@ export const stakeRecovery =
             break;
           }
 
-          if (!getState().tx.sidebarProgressProps.visible) {
+          if (!getState().tx.stakeSidebarProps.visible) {
             break;
           }
         }
@@ -532,6 +479,7 @@ export const unbond =
               sender: stafiHubAccount.bech32Address,
               transactionHash: txResponse.transactionHash,
               address: chainAccount.bech32Address,
+              chainId,
             },
             {
               rTokenName: getTokenDisplayName(chainId),
@@ -621,6 +569,7 @@ export const feeStationSwap =
                 sender: chainAccount.bech32Address,
                 transactionHash: txResponse.transactionHash,
                 address: stafiHubAccount.bech32Address,
+                chainId: poolInfo.chainId,
               },
               {
                 inputTokenName: getTokenDisplayName(poolInfo.chainId),
@@ -803,6 +752,7 @@ export const ibcBridgeSwap =
               sender: srcChainAccount.bech32Address,
               transactionHash: txResponse.transactionHash,
               address: dstChainAccount.bech32Address,
+              chainId: srcChainId,
             },
             {
               tokenName: getTokenDisplayName(

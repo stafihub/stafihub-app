@@ -38,7 +38,8 @@ export const StakeTokenCard = (props: StakeTokenCardProps) => {
       </div>
 
       <div className="mt-2 ml-4 text-[#646464] text-[12px] scale-[0.7] origin-top-left">
-        $2,23B Liquidity
+        {!isNaN(Number(liquidity)) && "$"}
+        <FormatterText value={liquidity} decimals={2} /> Liquidity
       </div>
 
       <div className="mt-4 self-center">

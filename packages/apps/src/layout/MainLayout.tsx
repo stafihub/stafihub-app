@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/Header";
-import { ProgressSidebar } from "../components/ProgressSidebar";
 import { Sidebar } from "../components/Sidebar";
+import { StakeSidebar } from "../components/StakeSidebar";
 import { ProgressModal } from "../modals/ProgressModal";
 
 export const MainLayout = () => {
@@ -17,7 +17,7 @@ export const MainLayout = () => {
         </div>
       </div>
 
-      <ProgressSidebar />
+      <StakeSidebar />
 
       <ProgressModal />
     </div>

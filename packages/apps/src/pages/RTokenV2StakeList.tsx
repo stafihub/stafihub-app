@@ -1,12 +1,8 @@
-import bridgeImage from "../assets/images/hub_bridge.svg";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useRTokenList } from "../hooks/useRTokenList";
-import { StakeTokenItem } from "../components/stake/StakeTokenItem";
-import { StakeTokenTableHeader } from "../components/stake/StakeTokenTableHeader";
 import { getRTokenDisplayName } from "@stafihub/apps-config";
-import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { StakeTokenCard } from "../components/stake/StakeTokenCard";
+import { useRTokenList } from "../hooks/useRTokenList";
 
 export const RTokenV2StakeList = () => {
   const navigate = useNavigate();
@@ -19,11 +15,11 @@ export const RTokenV2StakeList = () => {
 
   return (
     <div className="mt-16 min-h-[500px] relative flex flex-col items-center">
-      <img
+      {/* <img
         src={bridgeImage}
         alt="background"
         className="w-[1138px] h-[100px] opacity-20 top-[400px] absolute"
-      />
+      /> */}
 
       <div className="w-[580px] flex flex-wrap">
         {rTokenList.map((rToken) => (

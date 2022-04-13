@@ -17,18 +17,18 @@ import {
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import iconApy from "../assets/images/icon_apy.svg";
+import iconStakeMenu from "../assets/images/icon_stake_menu.svg";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { useApy } from "../hooks/useApy";
 import { useChainInfo } from "../hooks/useChainInfo";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
+import { MemoNoticeModal } from "../modals/MemoNoticeModal";
 import { connectKeplr } from "../redux/reducers/AppSlice";
-import { setSidebarProgressProps, stake } from "../redux/reducers/TxSlice";
+import { setStakeSidebarProps, stake } from "../redux/reducers/TxSlice";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
-import iconStakeMenu from "../assets/images/icon_stake_menu.svg";
-import iconApy from "../assets/images/icon_apy.svg";
-import { MemoNoticeModal } from "../modals/MemoNoticeModal";
 
 export const StakeV2 = () => {
   const dispatch = useDispatch();
@@ -102,7 +102,7 @@ export const StakeV2 = () => {
           setStafiHubAddress("");
           setTimeout(() => {
             dispatch(
-              setSidebarProgressProps({
+              setStakeSidebarProps({
                 visible: false,
               })
             );
@@ -202,8 +202,8 @@ export const StakeV2 = () => {
       </div>
 
       <div className="mt-[10px] w-[494px] text-text-gray5 text-[12px]">
-        Note: Please ensure you have input the correct address. Failure to do so
-        may cause you to lose your tokens.
+        Note: Make sure you have the right address, otherwise you will not
+        receive the token If you provide a wrong address.
       </div>
 
       <div className="self-center mt-14 flex items-center">
@@ -212,57 +212,50 @@ export const StakeV2 = () => {
         <div className="ml-1 text-white font-bold text-[20px]">Stake APY</div>
       </div>
 
-      <div className="mt-6 font-bold text-primary text-[90px]">
+      <div className="self-center mt-6 font-bold text-primary text-[90px]">
         <FormatterText value={apy} decimals={2} />%
       </div>
 
       <div className="mt-10 h-[0.5px] bg-divider" />
 
-      <div className="mt-5 flex items-end">
-        <div>
-          <div className="flex items-end">
-            <div className="font-bold text-[14px] text-text-gray8">
-              Staking APR
+      <div className="hidden">
+        <div className="self-center mt-5 flex items-end">
+          <div>
+            <div className="flex items-end">
+              <div className="font-bold text-[14px] text-text-gray8">
+                Staking APR
+              </div>
+
+              <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
+                +{getTokenDisplayName(chainId)}
+              </div>
             </div>
 
-            <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
-              +{getTokenDisplayName(chainId)}
+            <div className="mr-2 mt-[2px] font-bold text-text-gray8 text-[24px]">
+              <FormatterText value={apy} decimals={2} />%
             </div>
           </div>
 
-          <div className="mr-2 mt-[2px] font-bold text-text-gray8 text-[24px]">
-            <FormatterText value={apy} decimals={2} />%
+          <div className="hidden ml-[2px] mr-[20px] font-bold text-white text-[30px]">
+            +
+          </div>
+
+          <div className="hidden">
+            <div className="flex items-end">
+              <div className="font-bold text-[14px] text-text-gray8">
+                Mint APR
+              </div>
+
+              <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
+                +FIS
+              </div>
+            </div>
+
+            <div className="mt-[2px] font-bold text-text-gray8 text-[24px]">
+              --%
+            </div>
           </div>
         </div>
-
-        <div className="hidden ml-[2px] mr-[20px] font-bold text-white text-[30px]">
-          +
-        </div>
-
-        <div className="hidden">
-          <div className="flex items-end">
-            <div className="font-bold text-[14px] text-text-gray8">
-              Mint APR
-            </div>
-
-            <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
-              +FIS
-            </div>
-          </div>
-
-          <div className="mt-[2px] font-bold text-text-gray8 text-[24px]">
-            --%
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-12 font-bold text-text-gray5 text-[14px]">
-        You will get
-      </div>
-
-      <div className="mt-[2px] font-bold text-primary text-[30px]">
-        <FormatterText value={willGetAmount} decimals={6} />{" "}
-        {getRTokenDisplayName(chainId)}
       </div>
 
       <div className="mt-14">

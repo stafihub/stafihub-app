@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="37px" height="37px" viewBox="0 0 37 37" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0.0381243 9.79099L0.0381243 9.43727L15.7466 0.0106021L27.9631 7.36698L27.9631 7.72396L12.2911 16.9961L0.0381243 9.79099Z" id="path_1" />
+    <path d="M3.49206 6.11029L10.1397 9.68614L10.3627 13.6829L0.296949 7.81904L3.49206 6.11029Z" id="path_2" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+    <clipPath id="clip_2">
+      <use xlink:href="#path_2" />
+    </clipPath>
+  </defs>
+  <g id="Group-2-Copy-51" transform="translate(0.25 0.25)">
+    <path d="M17.8651 36C27.7318 36 35.7303 27.9411 35.7303 18C35.7303 8.05887 27.7318 0 17.8651 0C7.9985 0 0 8.05887 0 18C0 27.9411 7.9985 36 17.8651 36Z" id="Oval-5-Copy-2" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+    <path d="M6 13.3848L6 7.74219C6.03516 5.91405 6.94921 5 8.74219 5L11.3789 5L11.3789 6.21289L9.32227 6.21289C8.37304 6.21289 7.88086 6.6875 7.8457 7.63672L7.8457 13.3848L6 13.3848Z" id="r" fill="#6758FF" fill-rule="evenodd" stroke="none" />
+    <g id="Group-6" transform="translate(4 10)">
+      <g id="Group-5">
+        <g id="Group-4">
+          <g id="Group-2">
+            <g id="Group">
+              <g id="Rectangle-6">
+                <use stroke="none" fill="#FFFFFF" xlink:href="#path_1" fill-rule="evenodd" />
+                <g clip-path="url(#clip_1)">
+                  <use xlink:href="#path_1" fill="none" stroke="#FDFDFD" stroke-width="1.2727273" />
+                </g>
+              </g>
+              <path d="M0.080379 9.76643L0.080379 9.46172L12.3238 16.6043L12.292 16.9458L0.080379 9.76643Z" id="Rectangle-6" fill="#D4D9DC" fill-rule="evenodd" stroke="none" />
+              <path d="M12.3028 16.6026L27.925 7.3821L27.925 7.69422L12.2911 16.9957L12.3028 16.6026Z" id="Rectangle" fill="#D8D8D8" fill-rule="evenodd" stroke="none" />
+            </g>
+            <g id="Group-Copy" transform="matrix(-1 8.742278E-08 -8.742278E-08 -1 25.80392 15.341462)">
+              <path d="M0.0312426 7.8645L0.206368 7.7493L13.2021 0.00870576L23.3089 6.04931L23.3089 6.34244L10.3434 13.9561L0.0312426 7.8645Z" id="Rectangle-6" fill="none" fill-rule="evenodd" stroke="none" />
+              <path d="M10.1321 9.67895L19.8866 3.93159L23.3372 6.0831L10.3259 13.6463L10.1321 9.67895Z" id="Rectangle-2" fill="#3B3E40" fill-rule="evenodd" stroke="none" />
+              <g id="Rectangle-3">
+                <use stroke="none" fill="#23292F" xlink:href="#path_2" fill-rule="evenodd" />
+                <g clip-path="url(#clip_2)">
+                  <use xlink:href="#path_2" fill="none" stroke="#232930" stroke-width="1.2727273" />
+                </g>
+              </g>
+              <path d="M3.48113 6.14035L13.5782 0.308117L19.9685 4.02418L10.1313 9.68312L3.48113 6.14035Z" id="Rectangle-4" fill="#1A1F24" fill-rule="evenodd" stroke="none" />
+              <path d="M0.241326 8.01959L0.241326 7.76938L10.3704 13.6344L10.3441 13.9148L0.241326 8.01959Z" id="Rectangle-6" fill="#D4D9DC" fill-rule="evenodd" stroke="none" />
+              <path d="M10.353 13.633L23.2774 6.06172L23.4587 6.19782L10.3433 13.9558L10.353 13.633Z" id="Rectangle" fill="#D8D8D8" fill-rule="evenodd" stroke="none" />
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

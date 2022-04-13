@@ -18,7 +18,7 @@ export const FormatterText = (props: FormatterTextProps) => {
     if (Number(props.value) === 0) {
       return "0";
     }
-    const decimals = props.decimals || 2;
+    const decimals = props.decimals || 0;
     const newNum = (
       (Number(props.value) * Math.pow(10, decimals)) /
       Math.pow(10, decimals)

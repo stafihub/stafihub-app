@@ -13,8 +13,9 @@ import {
   usePopupState,
 } from "material-ui-popup-state/hooks";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import iconMore from "../assets/images/icon_more.svg";
 import iconNotice from "../assets/images/icon_notice.svg";
-import iconStatis from "../assets/images/icon_statis.svg";
 import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
 import { getHumanAccountBalance } from "../utils/common";
 import { AccountModal } from "./AccountModal";
@@ -23,6 +24,7 @@ import { NoticeList } from "./notice/NoticeList";
 const STAFIHUB_CHAIN_ID = getStafiHubChainId();
 
 export const Header = () => {
+  const navigate = useNavigate();
   const accounts = useAccounts();
   const [accountModalVisible, setAccountModalVisible] = useState(false);
   const unreadNoticeFlag = useUnreadNoticeFlag();
@@ -30,6 +32,11 @@ export const Header = () => {
   const noticePopupState = usePopupState({
     variant: "popover",
     popupId: "notice",
+  });
+
+  const menuPopupState = usePopupState({
+    variant: "popover",
+    popupId: "menu",
   });
 
   const renderAccount = () => {
@@ -93,10 +100,17 @@ export const Header = () => {
 
       {renderAccount()}
 
-      <img
+      {/* <img
         src={iconStatis}
         alt="statis"
         className="mr-5 w-[19px] h-[19px] cursor-pointer"
+      /> */}
+
+      <img
+        src={iconMore}
+        alt="menu"
+        className="mr-5 w-[19px] h-[19px] cursor-pointer"
+        {...bindTrigger(menuPopupState)}
       />
 
       <AccountModal
@@ -127,6 +141,43 @@ export const Header = () => {
           isOpen={noticePopupState.isOpen}
           onClose={noticePopupState.close}
         />
+      </Popover>
+
+      {/* Menu */}
+      <Popover
+        {...bindPopover(menuPopupState)}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        sx={{
+          marginTop: "14px",
+          "& .MuiTypography-root": {
+            padding: "0px",
+          },
+        }}
+      >
+        <div className="w-[120px]">
+          <div className="h-8 flex items-center justify-center text-[12px] text-text-black1 cursor-pointer">
+            Info
+          </div>
+
+          <div className="h-[1px] bg-divider-light" />
+
+          <div
+            className="h-8 flex items-center justify-center text-[12px] text-text-black1 cursor-pointer"
+            onClick={() => {
+              navigate("/stake/recovery");
+              menuPopupState.close();
+            }}
+          >
+            rToken Recovery
+          </div>
+        </div>
       </Popover>
     </div>
   );

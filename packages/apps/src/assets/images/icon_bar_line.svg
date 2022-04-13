@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="bar-chart-outline">
+    <path d="M24 0L24 24L-1.90735e-06 24L0 -1.04907e-06L24 0Z" id="Rectangle-path" fill="#FFFFFF" fill-opacity="0" fill-rule="evenodd" stroke="none" />
+    <path d="M12 4C11.4477 4 11 4.44772 11 5L11 20C11 20.5523 11.4477 21 12 21C12.5523 21 13 20.5523 13 20L13 5C13 4.44772 12.5523 4 12 4Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+    <path d="M19 12C18.4477 12 18 12.4477 18 13L18 20C18 20.5523 18.4477 21 19 21C19.5523 21 20 20.5523 20 20L20 13C20 12.4477 19.5523 12 19 12Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+    <path d="M5 8C4.44772 8 4 8.44771 4 9L4 20C4 20.5523 4.44772 21 5 21C5.55228 21 6 20.5523 6 20L6 9C6 8.44771 5.55228 8 5 8Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>

@@ -7,7 +7,7 @@ import {
   getRTokenDisplayName,
 } from "@stafihub/apps-config/src";
 
-interface RTokenItem {
+export interface RTokenItem {
   chainName: string;
   chainId: string;
   tokenName: string;

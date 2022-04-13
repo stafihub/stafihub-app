@@ -6,6 +6,7 @@ interface CustomInputProps {
   fontSize?: number;
   value: string;
   primary?: boolean;
+  light?: boolean;
   handleValueChange: (value: string) => void;
 }
 
@@ -15,7 +16,9 @@ export const CustomNumberInput = (props: CustomInputProps) => {
       disabled={props.disabled}
       className={classNames(
         "bg-transparent border-none outline-none  font-bold ",
-        props.primary
+        props.light
+          ? "text-text-black1 placeholder:text-[#cacaca]"
+          : props.primary
           ? "text-primary placeholder:text-placdholder-primary"
           : "text-white placeholder:text-placdholder"
       )}

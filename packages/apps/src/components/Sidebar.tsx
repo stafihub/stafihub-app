@@ -1,6 +1,8 @@
 import stafihubLogo from "../assets/images/stafihub_logo.svg";
 import rAssetIcon from "../assets/images/icon_rAsset.svg";
 import rAssetIconActive from "../assets/images/icon_rAsset_active.svg";
+import rPoolIcon from "../assets/images/icon_rPool.svg";
+import rPoolIconActive from "../assets/images/icon_rPool_active.svg";
 import rBridgeIcon from "../assets/images/icon_rBridge.svg";
 import rBridgeIconActive from "../assets/images/icon_rBridge_active.svg";
 import rTokenIcon from "../assets/images/icon_rToken.svg";
@@ -30,7 +32,7 @@ export const Sidebar = () => {
         activeIcon={rTokenIconActive}
         title="rToken"
         targetUrl="/rToken"
-        match={location.pathname.includes("/stake")}
+        match={location.pathname.includes("/rToken")}
       />
 
       <SidebarItem
@@ -62,6 +64,17 @@ export const Sidebar = () => {
           <div className="text-[12px] scale-[0.7] origin-left">IBC</div>
         </div>
       </div>
+
+      {/* <SidebarItem
+        defaultIcon={rPoolIcon}
+        activeIcon={rPoolIconActive}
+        title="rPool"
+        targetUrl="/rPool"
+        match={
+          location.pathname.includes("/rPool") ||
+          location.pathname.includes("/mint")
+        }
+      /> */}
 
       <div className="absolute bottom-5 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
         <div>Need FIS for fees?</div>

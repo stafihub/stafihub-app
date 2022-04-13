@@ -4,6 +4,7 @@ interface CustomInputProps {
   placeholder: string;
   fontSize?: number;
   primary?: boolean;
+  light?: boolean;
   value: string;
   handleValueChange: (value: string) => void;
 }
@@ -13,7 +14,9 @@ export const CustomInput = (props: CustomInputProps) => {
     <input
       className={classNames(
         "w-full bg-transparent border-none outline-none  font-bold",
-        props.primary
+        props.light
+          ? "text-text-black1 placeholder:text-[#cacaca]"
+          : props.primary
           ? "text-primary placeholder:text-placdholder-primary"
           : "text-white placeholder:text-placdholder"
       )}

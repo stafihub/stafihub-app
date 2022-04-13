@@ -7,3 +7,4 @@ export * from "./CustomLoading";
 export * from "./ChainIcon";
 export * from "./TokenIcon";
 export * from "./RTokenIcon";
+export * from "./TokenIconLarge";

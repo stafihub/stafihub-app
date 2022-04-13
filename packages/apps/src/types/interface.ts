@@ -44,3 +44,22 @@ export interface IBCChannelToken {
   denom: string;
   channelName: string;
 }
+
+export interface MintProgramsData {
+  portalOn: string;
+  derivativeTokenName: string;
+  apyList: MintProgramsApy[];
+  rewardList: MintProgramsReward[];
+  mintedValue: string;
+  duration: string;
+}
+
+export interface MintProgramsApy {
+  unit: string;
+  ratio: string;
+}
+
+export interface MintProgramsReward {
+  unit: string;
+  amount: string;
+}

@@ -49,8 +49,12 @@ export const ProgressSidebar = () => {
             </div>
           </div>
 
-          <div className="mt-2 ml-6 mr-6 flex items-center justify-between">
-            <div className="text-[#8f8f8f] text-[12px] 5px]">Broadcasting</div>
+          <div className="mt-2 mx-6 flex items-center justify-between">
+            <div className="text-[#8f8f8f] text-[12px] 5px]">
+              {item.name === "Staking"
+                ? "Waiting to be staked"
+                : "Broadcasting"}
+            </div>
 
             <div className="">
               {item.status === 0 ? (
@@ -63,9 +67,15 @@ export const ProgressSidebar = () => {
             </div>
           </div>
 
+          {item.name === "Staking" && (
+            <div className="mt-2 ml-6 text-primary font-bold text-[12px] scale-[0.7] origin-top-left">
+              Next staking circle in 3 hours
+            </div>
+          )}
+
           <div
             className={classNames(
-              "mt-8 ml-6 flex items-center text-[12px] text-[#8f8f8f]",
+              "mt-3 mx-6 flex items-center justify-between text-[12px] text-[#8f8f8f]",
               {
                 invisible: item.status === 0,
               }
@@ -78,6 +88,16 @@ export const ProgressSidebar = () => {
             ) : (
               <div>Error</div>
             )}
+
+            <div className="">
+              {item.status === 1 && (
+                <img src={iconSuccess} alt="success" className="w-4" />
+              )}
+
+              {item.status === 2 && (
+                <img src={iconError} alt="error" className="w-4" />
+              )}
+            </div>
           </div>
 
           <div className="mt-8 ml-6 flex items-center text-[12px] text-[#8f8f8f]">

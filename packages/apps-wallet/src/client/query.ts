@@ -108,10 +108,9 @@ export async function queryRParams(
 }
 
 export async function queryPoolByDenom(
-  chainId: string,
   tokenDenom: string
 ): Promise<QueryBondedPoolsByDenomResponse> {
-  const queryService = await createQueryService(chainId);
+  const queryService = await createQueryService(getStafiHubChainId());
   const result = await queryService.BondedPoolsByDenom({
     denom: tokenDenom,
   });

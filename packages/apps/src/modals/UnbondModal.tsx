@@ -50,7 +50,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
           width: "520px",
           borderRadius: "20px",
           margin: "auto",
-          marginTop: "120px",
+          marginTop: "140px",
           outline: "none",
           transform: "translateX(80px)",
         }}

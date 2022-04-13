@@ -53,9 +53,12 @@ export const StakeTokenCard = (props: StakeTokenCardProps) => {
         className="mt-[10px] self-stretch h-12 bg-primary rounded-b-[4px] relative flex items-center justify-center cursor-pointer"
         onClick={props.onClickStake}
       >
-        <div className="text-white text-[20px] font-bold">8.32%</div>
+        <div className="text-white text-[20px] font-bold">
+          <FormatterText value={apy} decimals={2} />
+          {!isNaN(Number(apy)) && "%"}
+        </div>
 
-        <div className="absolute right-10 top-auto bottom-auto text-[12px] text-text-gray5">
+        <div className="absolute right-9 top-auto bottom-auto text-[12px] text-text-gray5">
           APY
         </div>
       </div>

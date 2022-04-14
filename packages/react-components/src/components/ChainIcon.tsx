@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
+import iconEmpty from "../assets/images/icon_empty.svg";
 
 interface ChainIconProps {
   displayHubName: string;
@@ -23,7 +24,7 @@ export const ChainIcon = (props: ChainIconProps) => {
   return (
     <div>
       <img
-        src={image}
+        src={image || iconEmpty}
         alt="icon"
         className={classNames("rounded-full", {
           "border-solid border-[1px] border-border-main": props.withBorder,

@@ -12,6 +12,7 @@ import type {
   QueryParamsResponse,
   QuerySupplyOfResponse,
   QueryGetRParamsResponse,
+  GetLatestBlockResponse,
 } from "@stafihub/types";
 import {
   QueryDenomTraceResponse,
@@ -20,6 +21,7 @@ import {
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
   createCosmosBankQueryService,
+  createCosmosBaseQueryService,
   createCosmosClient,
   createCosmosStakingQueryService,
   createIBCApplicationsQueryService,
@@ -103,6 +105,18 @@ export async function queryRParams(
   });
 
   // console.log(`queryRParams ${tokenDenom} result`, result);
+
+  return result;
+}
+
+export async function queryLatestBlock(
+  chainId: string
+): Promise<GetLatestBlockResponse | null> {
+  const queryService = await createCosmosBaseQueryService(chainId);
+
+  const result = await queryService.GetLatestBlock({});
+
+  console.log(`queryLatestBlock ${chainId} result`, result);
 
   return result;
 }

@@ -1,10 +1,15 @@
 import { getShortAddress } from "@stafihub/apps-util";
 import { CustomLoading } from "@stafihub/react-components";
 import classNames from "classnames";
-import { getRTokenDenom } from "@stafihub/apps-config";
-import { queryBondRecord } from "@stafihub/apps-wallet";
+import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  queryBondRecord,
+  queryChainEra,
+  queryRParams,
+  queryLatestBlock,
+} from "@stafihub/apps-wallet";
 import { LiquidityBondState } from "@stafihub/types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import iconClose from "../assets/images/icon_close_bold.svg";
 import iconSuccess from "../assets/images/icon_correct.svg";
@@ -22,6 +27,62 @@ export const StakeSidebar = () => {
   const intervalID = useRef<ReturnType<typeof setInterval> | null>(null);
   const dispatch = useDispatch();
   const stakeSidebarProps = useStakeSidebarProps();
+
+  const [stakingSuccess, setStakingSuccess] = useState(false);
+  const [stakingRemainingHours, setStakingRemainingHours] =
+    useState("-- hours");
+
+  useEffect(() => {
+    (async () => {
+      if (
+        stakeSidebarProps.mintingStatus !== 2 ||
+        !stakeSidebarProps.eraNumber ||
+        !stakeSidebarProps.chainId
+      ) {
+        return;
+      }
+
+      const currentEraResult = await queryChainEra(
+        getRTokenDenom(stakeSidebarProps.chainId)
+      );
+      if (
+        currentEraResult &&
+        currentEraResult.era > stakeSidebarProps.eraNumber
+      ) {
+        setStakingSuccess(true);
+      } else {
+        const rParamsResult = await queryRParams(
+          getRTokenDenom(stakeSidebarProps.chainId)
+        );
+        if (!rParamsResult.rParams) {
+          return;
+        }
+        const eraSeconds = rParamsResult.rParams?.eraSeconds;
+        const latestBlockResult = await queryLatestBlock(getStafiHubChainId());
+        const currentBlockSeconds = (
+          Number(latestBlockResult?.block?.header?.time?.getTime()) / 1000
+        ).toFixed(0);
+        console.log("currentBlockSeconds", currentBlockSeconds);
+
+        const remainingSeconds =
+          (stakeSidebarProps.eraNumber + 1) * Number(eraSeconds) -
+          Number(currentBlockSeconds);
+        console.log("remainingSeconds", remainingSeconds);
+
+        if (remainingSeconds > 0 && remainingSeconds < 3600) {
+          const temp = Math.ceil(remainingSeconds / 3600);
+          setStakingRemainingHours(
+            "less than " + temp + (temp > 1 ? " hours" : " hour")
+          );
+        }
+      }
+    })();
+  }, [
+    stakeSidebarProps.visible,
+    stakeSidebarProps.mintingStatus,
+    stakeSidebarProps.eraNumber,
+    stakeSidebarProps.chainId,
+  ]);
 
   useEffect(() => {
     if (stakeSidebarProps.visible && stakeSidebarProps.mintingStatus === 1) {
@@ -236,8 +297,8 @@ export const StakeSidebar = () => {
             Waiting to be staked
           </div>
 
-          <div className="mt-2 ml-6 text-primary font-bold text-[12px] scale-[0.7] origin-top-left">
-            Next staking circle in 3 hours
+          <div className="mt-2 ml-6 text-primary font-bold text-[12px] scale-[0.8] origin-top-left">
+            Next staking circle in {stakingRemainingHours}
           </div>
         </div>
       )}

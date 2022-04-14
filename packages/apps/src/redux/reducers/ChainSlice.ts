@@ -49,6 +49,9 @@ export const updateChainStakeStatus =
     dispatch(setChainStakeStatusMap(newMap));
   };
 
+/**
+ * Query rToken eras in StaFiHub chain.
+ */
 export const updateChainEras =
   (chainIds: string[]): AppThunk =>
   async (dispatch, getState) => {

@@ -201,9 +201,9 @@ export const StakeV2 = () => {
         </div>
       </div>
 
-      <div className="mt-[10px] w-[494px] text-text-gray5 text-[12px]">
+      <div className="mt-[10px] w-[494px] text-text-gray8 text-[12px]">
         Note: Make sure you have the right address, otherwise you will not
-        receive the token If you provide a wrong address.
+        receive the token if you provide a wrong address.
       </div>
 
       <div className="self-center mt-14 flex items-center">

@@ -9,3 +9,8 @@ export {
   QueryParamsRequest,
   QueryParamsResponse,
 } from "./staking/v1beta1/query";
+
+export {
+  ServiceClientImpl as CosmosBaseServiceClientImpl,
+  GetLatestBlockResponse,
+} from "./base/tendermint/v1beta1/query";

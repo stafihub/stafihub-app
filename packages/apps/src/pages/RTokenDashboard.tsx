@@ -20,6 +20,7 @@ import { DashboardRecords } from "../components/stake/DashboardRecords";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
+import nodata from "../assets/images/nodata.png";
 
 export const RTokenDashboard = () => {
   const navigate = useNavigate();
@@ -115,11 +116,13 @@ export const RTokenDashboard = () => {
               </div>
             </div>
 
-            <div className="mt-3 text-text-gray7 text-[14px]">rATOM Value</div>
+            <div className="mt-3 text-text-gray7 text-[14px]">
+              {params.rToken} Value
+            </div>
 
             <div className="mt-8 w-[110px]">
               <Button bgPrimary textDark type="rectangle" size="small">
-                Trade rATOM
+                Trade {params.rToken}
               </Button>
             </div>
           </div>
@@ -145,7 +148,7 @@ export const RTokenDashboard = () => {
                 px={1}
                 onClick={() => navigate(`/${params.rToken}/stake/redeem`)}
               >
-                Redeem rATOM
+                Redeem {params.rToken}
               </Button>
             </div>
           </div>
@@ -159,7 +162,7 @@ export const RTokenDashboard = () => {
             </div>
 
             <div className="mt-3 text-text-gray7 text-[14px]">
-              rATOM / ATOM Rate
+              {params.rToken} / {tokenName} Rate
             </div>
 
             <div className="mt-12 text-text-gray7 text-[12px] scale-[0.85] origin-top-left">
@@ -232,7 +235,15 @@ export const RTokenDashboard = () => {
 
             <div className="mt-2 h-[0.5px] bg-divider" />
 
-            <div className="mt-2 h-[320px]"></div>
+            <div className="mt-2 h-[320px]">
+              <div className="flex justify-center">
+                <img
+                  src={nodata}
+                  alt="no data"
+                  className="mt-[80px] w-[146px]"
+                />
+              </div>
+            </div>
           </div>
         </div>
 

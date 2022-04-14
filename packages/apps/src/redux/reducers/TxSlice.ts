@@ -53,6 +53,7 @@ interface StakeSidebarProps {
   explorerUrl?: string;
   chainId?: string;
   txHash?: string;
+  eraNumber?: number;
   // 1:loading 2:success -1:error
   sendingStatus?: number;
   mintingStatus?: number;
@@ -145,6 +146,8 @@ export const stake =
 
       let success = false;
       if (txResponse?.code === 0) {
+        console.log("chainEras", getState().chain.chainEras);
+        const eraNumber = getState().chain.chainEras[chainId] || 0;
         dispatch(
           addNotice(
             txResponse.transactionHash,
@@ -158,6 +161,7 @@ export const stake =
             {
               tokenName: getTokenDisplayName(chainId),
               stakeAmount: inputAmount,
+              eraNumber,
             },
             getExplorerUrl(chainId)
           )
@@ -170,6 +174,7 @@ export const stake =
             explorerUrl: getExplorerUrl(chainId),
             chainId: chainId,
             txHash: txResponse.transactionHash,
+            eraNumber,
             sendingStatus: 2,
             mintingStatus: 1,
           })

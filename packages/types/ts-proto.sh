@@ -8,6 +8,7 @@ protoc \
   "./proto/ledger/tx.proto" \
   "./proto/ledger/query.proto" \
   "./proto/ledger/ledger.proto" \
+  "./proto/cosmos/base/tendermint/v1beta1/query.proto" \
   "./proto/cosmos/bank/v1beta1/query.proto" \
   "./proto/cosmos/staking/v1beta1/query.proto" \
   "./proto/ibc/applications/transfer/v1/query.proto" \

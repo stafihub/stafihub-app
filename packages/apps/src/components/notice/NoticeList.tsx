@@ -133,12 +133,14 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                 }}
                 onClick={() => {
                   if (notice.type === "Stake") {
+                    const stakeData = notice.data as NoticeStakeData;
                     dispatch(
                       setStakeSidebarProps({
                         visible: true,
                         explorerUrl: notice.explorerUrl,
                         txHash: notice.txDetail?.transactionHash,
                         chainId: notice.txDetail?.chainId,
+                        eraNumber: stakeData.eraNumber,
                         sendingStatus: 2,
                         mintingStatus:
                           notice.status === "Pending"

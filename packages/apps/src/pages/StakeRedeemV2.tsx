@@ -14,6 +14,7 @@ import {
   RTokenIcon,
 } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import iconDown from "../assets/images/icon_down_white.png";
 import { useChainAccount } from "../hooks/useAppSlice";
@@ -21,9 +22,11 @@ import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 import { UnbondModal } from "../modals/UnbondModal";
+import { connectKeplr } from "../redux/reducers/AppSlice";
 import snackbarUtils from "../utils/snackbarUtils";
 
 export const StakeRedeemV2 = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
@@ -35,8 +38,7 @@ export const StakeRedeemV2 = () => {
   const chainAccount = useChainAccount(chainId);
   const [unbondModalVisible, setUnbondModalVisible] = useState(false);
   const [inputAmount, setInputAmount] = useState("");
-  const [showEditAddress, setShowEditAddress] = useState(false);
-  const [editAddress, setEditAddress] = useState("");
+  const [receivingAddress, setReceivingAddress] = useState("");
 
   const commissionFee = useMemo(() => {
     if (isNaN(Number(unbondCommission)) || isNaN(Number(inputAmount))) {
@@ -62,12 +64,13 @@ export const StakeRedeemV2 = () => {
     return false;
   }, [stakeStatus, inputAmount]);
 
-  const finalAddress = useMemo(() => {
-    if (!showEditAddress) {
-      return chainAccount?.bech32Address || "";
+  const setConnectedReceivingAddress = () => {
+    if (!chainAccount) {
+      dispatch(connectKeplr(chainId));
+      return;
     }
-    return editAddress;
-  }, [chainAccount, showEditAddress, editAddress]);
+    setReceivingAddress(chainAccount.bech32Address);
+  };
 
   return (
     <div className="pt-[36px] pl-[90px] pb-[45px]">
@@ -135,53 +138,31 @@ export const StakeRedeemV2 = () => {
         2. Receiving address
       </div>
 
-      <div className="ml-10 mt-[20px] w-[494px] h-[40px] flex items-center justify-between">
-        {showEditAddress ? (
-          <>
-            <div className="pl-2 py-1 mr-6 flex-1 border-b-[1px] border-[#494D51] border-solid">
-              <CustomInput
-                fontSize={14}
-                placeholder="..."
-                value={editAddress}
-                handleValueChange={setEditAddress}
-              />
-            </div>
-          </>
-        ) : (
-          <div className="pl-2 text-white text-[14px] text-center">
-            {chainAccount?.bech32Address}
-          </div>
-        )}
+      <div className="ml-10 mt-2 border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
+        <div className="ml-5 flex-1">
+          <CustomInput
+            fontSize={14}
+            placeholder="stafi..."
+            value={receivingAddress}
+            handleValueChange={setReceivingAddress}
+          />
+        </div>
 
-        {showEditAddress ? (
-          <div
-            className="mr-[10px] text-primary text-[12px] cursor-pointer italic"
-            onClick={() => {
-              setShowEditAddress(false);
-            }}
-          >
-            Cancel
-          </div>
-        ) : (
-          <div
-            className="mr-[10px] text-primary text-[12px] cursor-pointer italic"
-            onClick={() => {
-              setShowEditAddress(true);
-              setEditAddress(chainAccount?.bech32Address || "");
-            }}
-          >
-            Edit
-          </div>
-        )}
+        <div
+          className="mx-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
+          onClick={setConnectedReceivingAddress}
+        >
+          Connected Address
+        </div>
       </div>
 
-      <div className="ml-10 flex mt-[130px]">
+      <div className="ml-10 flex mt-[100px]">
         <Button
           disabled={buttonDisabled}
           onClick={() => {
             if (
-              !finalAddress ||
-              !checkAddress(finalAddress, getChainAccountPrefix(chainId))
+              !receivingAddress ||
+              !checkAddress(receivingAddress, getChainAccountPrefix(chainId))
             ) {
               snackbarUtils.warning("Please input valid address");
               return;
@@ -197,7 +178,7 @@ export const StakeRedeemV2 = () => {
         visible={unbondModalVisible}
         onClose={() => setUnbondModalVisible(false)}
         inputAmount={inputAmount}
-        receiveAddress={finalAddress}
+        receiveAddress={receivingAddress}
         willGetAmount={formatNumberToFixed(willGetAmount)}
         commissionFee={formatNumberToFixed(commissionFee)}
       />

@@ -35,6 +35,7 @@ export interface NoticeFeeStationData {
 export interface NoticeStakeData {
   tokenName: string;
   stakeAmount: string;
+  eraNumber: number;
 }
 
 export interface NoticeUnbondData {

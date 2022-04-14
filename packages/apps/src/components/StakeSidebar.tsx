@@ -69,7 +69,7 @@ export const StakeSidebar = () => {
           Number(currentBlockSeconds);
         console.log("remainingSeconds", remainingSeconds);
 
-        if (remainingSeconds > 0 && remainingSeconds < 3600) {
+        if (remainingSeconds > 0) {
           const temp = Math.ceil(remainingSeconds / 3600);
           setStakingRemainingHours(
             "less than " + temp + (temp > 1 ? " hours" : " hour")

@@ -142,6 +142,7 @@ export const StakeV2 = () => {
           <div className="ml-5">
             <CustomNumberInput
               light
+              disabled={isLoading}
               placeholder="STAKE AMOUNT"
               value={inputAmount}
               handleValueChange={setInputAmount}
@@ -157,7 +158,7 @@ export const StakeV2 = () => {
                   Number(transferrableAmount) > 0.05
                 ) {
                   setInputAmount(
-                    formatNumberToFixed(Number(transferrableAmount) - 0.05, 6)
+                    formatNumberToFixed(Number(transferrableAmount) - 0.05, 2)
                   );
                 }
               }}
@@ -175,10 +176,7 @@ export const StakeV2 = () => {
 
         <div className="mr-[60px] mt-[10px] text-white text-[12px]">
           Transferable:{" "}
-          <FormatterText
-            value={transferrableAmount}
-            decimals={chain?.decimals}
-          />
+          <FormatterText value={transferrableAmount} decimals={2} />
         </div>
       </div>
 
@@ -186,6 +184,7 @@ export const StakeV2 = () => {
         <div className="ml-5 flex-1">
           <CustomInput
             light
+            disabled={isLoading}
             fontSize={14}
             placeholder="RECEVING ADDRESS"
             value={stafiHubAddress}
@@ -274,7 +273,7 @@ export const StakeV2 = () => {
             "Insufficient Balance"
           ) : (
             <div>
-              You will get <FormatterText value={willGetAmount} decimals={6} />{" "}
+              You will get <FormatterText value={willGetAmount} decimals={2} />{" "}
               {getRTokenDisplayName(chainId)}
             </div>
           )}

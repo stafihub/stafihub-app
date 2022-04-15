@@ -94,7 +94,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
       >
         {noticeList.map((notice, index) => (
           <Box key={notice.id}>
-            <Box mt="2px">
+            <Box mt="10px">
               <Typography
                 variant="bold"
                 fontSize="14px"

@@ -2,6 +2,8 @@ import {
   chains,
   getDenom,
   getIBCChannels,
+  getRTokenDenom,
+  getRTokenDisplayName,
   getStafiHubChainId,
   getTokenDisplayName,
   KeplrChainParams,
@@ -19,6 +21,7 @@ import { BridgeTokenSelector } from "../components/bridge/BridgeTokenSelector";
 import { SwapAddressInput } from "../components/bridge/SwapAddressInput";
 import { SwapAmountInput } from "../components/bridge/SwapAmountInput";
 import { useAccounts, useIsLoading } from "../hooks/useAppSlice";
+import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { getIBCBalanceInChannel } from "../redux/reducers/IBCSlice";
 import { ibcBridgeSwap } from "../redux/reducers/TxSlice";
@@ -50,11 +53,16 @@ export const IBCBridge = () => {
     IBCChannelToken[] | null
   >([]);
 
-  const { ibcChannelStore } = useSelector((state: RootState) => {
-    return {
-      ibcChannelStore: state.ibc.ibcChannelStore,
-    };
-  });
+  const { updateStakeStatus } = useChainStakeStatus(undefined);
+
+  const { ibcChannelStore, chainStakeStatusMap } = useSelector(
+    (state: RootState) => {
+      return {
+        ibcChannelStore: state.ibc.ibcChannelStore,
+        chainStakeStatusMap: state.chain.chainStakeStatusMap,
+      };
+    }
+  );
 
   const handleSrcChainChange = useCallback(
     (chain: KeplrChainParams) => {
@@ -79,6 +87,18 @@ export const IBCBridge = () => {
     },
     [chainPair.src, chainPair.dst?.chainId]
   );
+
+  useEffect(() => {
+    // Update rToken balance.
+    if (chainPair.dst && chainPair.src) {
+      const otherChainId =
+        chainPair.src.chainId === getStafiHubChainId()
+          ? chainPair.dst.chainId
+          : chainPair.src.chainId;
+
+      updateStakeStatus(otherChainId);
+    }
+  }, [chainPair, updateStakeStatus]);
 
   const chainArr = useMemo(() => {
     return _.values(chains)
@@ -110,20 +130,49 @@ export const IBCBridge = () => {
     if (chainPair.src.chainId === getStafiHubChainId() && !chainPair.dst) {
       return "--";
     }
-    if (chainPair.src.chainId === getStafiHubChainId()) {
-      return getIBCBalanceInChannel(
-        accounts[getStafiHubChainId()]?.allBalances,
-        ibcChannelStore,
-        selectedChannelToken.denom,
-        selectedChannelToken.channelName
-      );
+    if (selectedChannelToken.denom.startsWith("ur")) {
+      if (chainPair.src.chainId === getStafiHubChainId()) {
+        const stakeStatus = chainStakeStatusMap[chainPair.dst!!.chainId];
+        if (!stakeStatus || isNaN(Number(stakeStatus.rTokenBalance))) {
+          return "--";
+        }
+        return stakeStatus.rTokenBalance;
+      } else {
+        return getIBCBalanceInChannel(
+          accounts[chainPair.src.chainId]?.allBalances,
+          ibcChannelStore,
+          selectedChannelToken.denom,
+          selectedChannelToken.channelName
+        );
+        // return getHumanAccountBalance(
+        //   accounts[chainPair.src.chainId]?.allBalances,
+        //   // chainPair.src.denom
+        //   selectedChannelToken.denom
+        // );
+      }
     } else {
-      return getHumanAccountBalance(
-        accounts[chainPair.src.chainId]?.allBalances,
-        chainPair.src.denom
-      );
+      if (chainPair.src.chainId === getStafiHubChainId()) {
+        return getIBCBalanceInChannel(
+          accounts[getStafiHubChainId()]?.allBalances,
+          ibcChannelStore,
+          selectedChannelToken.denom,
+          selectedChannelToken.channelName
+        );
+      } else {
+        return getHumanAccountBalance(
+          accounts[chainPair.src.chainId]?.allBalances,
+          // chainPair.src.denom
+          selectedChannelToken.denom
+        );
+      }
     }
-  }, [accounts, chainPair, ibcChannelStore, selectedChannelToken]);
+  }, [
+    accounts,
+    chainPair,
+    ibcChannelStore,
+    selectedChannelToken,
+    chainStakeStatusMap,
+  ]);
 
   const [buttonText, buttonDisabled] = useMemo(() => {
     if (chainPair.src && !accounts[chainPair.src.chainId]) {
@@ -152,15 +201,6 @@ export const IBCBridge = () => {
     dstAddress,
     selectedChannelToken,
   ]);
-
-  const tokenName = useMemo(() => {
-    if (!chainPair.src || !chainPair.dst) {
-      return "";
-    }
-    return chainPair.src.chainId === getStafiHubChainId()
-      ? getTokenDisplayName(chainPair.dst.chainId)
-      : getTokenDisplayName(chainPair.src.chainId);
-  }, [chainPair]);
 
   // Update tokenList when chain changes.
   useEffect(() => {
@@ -196,18 +236,27 @@ export const IBCBridge = () => {
 
       const activeResponses = await Promise.all(requests);
 
-      setTokenChannelList(
-        (
-          configChannels?.filter((item, index) => {
-            return activeResponses[index];
-          }) || []
-        ).map((channelName) => {
-          return {
-            denom: getDenom(otherChainId),
-            channelName,
-          };
-        })
-      );
+      const tokenChannelList: IBCChannelToken[] = [];
+
+      (
+        configChannels?.filter((item, index) => {
+          return activeResponses[index];
+        }) || []
+      ).forEach((channelName) => {
+        tokenChannelList.push({
+          denom: getDenom(otherChainId),
+          channelName,
+          displayTokenName: getTokenDisplayName(otherChainId),
+        });
+
+        tokenChannelList.push({
+          denom: getRTokenDenom(otherChainId),
+          channelName,
+          displayTokenName: getRTokenDisplayName(otherChainId),
+        });
+      });
+
+      setTokenChannelList(tokenChannelList);
     })();
   }, [chainPair]);
 
@@ -254,11 +303,18 @@ export const IBCBridge = () => {
 
     dispatch(
       ibcBridgeSwap(
+        selectedChannelToken.denom.startsWith("ur"),
         srcChainId,
         dstChainId,
         selectedChannelToken.channelName,
         inputAmount,
-        dstAddress
+        dstAddress,
+        (success) => {
+          if (success) {
+            setInputAmount("");
+            setDstAddress("");
+          }
+        }
       )
     );
   };
@@ -313,7 +369,6 @@ export const IBCBridge = () => {
 
           <div className="mt-6">
             <BridgeTokenSelector
-              tokenName={tokenName}
               selectedToken={selectedChannelToken}
               data={tokenChannelList}
               onChange={setSelectedChannelToken}
@@ -322,6 +377,7 @@ export const IBCBridge = () => {
 
           <div className="mt-4">
             <SwapAmountInput
+              disabled={isLoading}
               value={inputAmount}
               onChange={setInputAmount}
               balance={balance}
@@ -330,6 +386,7 @@ export const IBCBridge = () => {
 
           <div className="mt-4">
             <SwapAddressInput
+              disabled={isLoading}
               chainId={chainPair.dst?.chainId}
               value={dstAddress}
               onChange={setDstAddress}

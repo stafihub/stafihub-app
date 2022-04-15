@@ -21,6 +21,7 @@ export function getHumanAccountBalance(
   denom: string | undefined,
   decimals: number = 6
 ): string {
+  // console.log("balances", balances);
   if (!balances || !denom) {
     return "--";
   }

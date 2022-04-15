@@ -62,12 +62,12 @@ export const StakeSidebar = () => {
         const currentBlockSeconds = (
           Number(latestBlockResult?.block?.header?.time?.getTime()) / 1000
         ).toFixed(0);
-        console.log("currentBlockSeconds", currentBlockSeconds);
+        // console.log("currentBlockSeconds", currentBlockSeconds);
 
         const remainingSeconds =
           (stakeSidebarProps.eraNumber + 1) * Number(eraSeconds) -
           Number(currentBlockSeconds);
-        console.log("remainingSeconds", remainingSeconds);
+        // console.log("remainingSeconds", remainingSeconds);
 
         if (remainingSeconds > 0) {
           const temp = Math.ceil(remainingSeconds / 3600);

@@ -95,7 +95,7 @@ export const ProgressModal = (props: ProgressModalProps) => {
             <div className="mt-8 font-bold text-white text-[40px]">
               <FormatterText
                 value={swapProgressModalProps.txDetail?.amount}
-                decimals={6}
+                decimals={2}
               />{" "}
               {swapProgressModalProps.txDetail?.symbol}
             </div>

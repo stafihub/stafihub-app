@@ -12,6 +12,7 @@
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
     "classnames": "^2.3.1",
+    "icomoon-react": "^2.0.19",
     "react-loading": "^2.0.3",
     "react-router-dom": "6",
     "react-scripts": "5.0.0",

@@ -21,16 +21,6 @@ export const StakeRewardListV2 = () => {
         <StakeRewardTableHeader chainId={chainId} />
 
         <div className="min-h-[150px] overflow-auto">
-          {/* <StakeRewardTableItem />
-
-  <StakeRewardTableItem />
-
-  <StakeRewardTableItem />
-
-  <StakeRewardTableItem />
-
-  <StakeRewardTableItem /> */}
-
           <div className="flex flex-col items-center">
             <img src={nodata} alt="nodata" className="mt-12 w-20" />
 

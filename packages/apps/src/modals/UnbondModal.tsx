@@ -95,7 +95,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
                   (success) => {
                     if (success) {
                       props.onClose();
-                      updateStakeStatus();
+                      updateStakeStatus(chainId);
                     }
                   }
                 )

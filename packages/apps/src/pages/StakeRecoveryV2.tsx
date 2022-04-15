@@ -86,7 +86,7 @@ export const StakeRecoveryV2 = () => {
           }}
         />
 
-        <div className="ml-5 mb-1 text-white text-[30px] font-bold">
+        <div className="ml-5 text-white text-[30px] font-bold">
           Staking Record
         </div>
       </div>

@@ -84,7 +84,7 @@ export const StakeRedeemV2 = () => {
           }}
         />
 
-        <div className="ml-5 mb-1 text-white text-[30px] font-bold">
+        <div className="ml-5 text-white text-[30px] font-bold">
           Redeem {getTokenDisplayName(chainId)}
         </div>
       </div>
@@ -142,7 +142,7 @@ export const StakeRedeemV2 = () => {
         <div className="ml-5 flex-1">
           <CustomInput
             fontSize={14}
-            placeholder="stafi..."
+            placeholder={`${getChainAccountPrefix(chainId)}...`}
             value={receivingAddress}
             handleValueChange={setReceivingAddress}
           />

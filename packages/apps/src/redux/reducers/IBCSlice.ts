@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getStafiHubChainId } from "@stafihub/apps-config";
-import { queryDenomTrace } from "@stafihub/apps-wallet";
 import { atomicToHuman } from "@stafihub/apps-util";
+import { queryDenomTrace } from "@stafihub/apps-wallet";
+import { DenomTrace } from "@stafihub/types";
 import { Coin } from "../../types/interface";
 import { AppThunk } from "../store";
-import { DenomTrace } from "@stafihub/types";
 
 export interface IBCChannel {
   ibcDenom: string;
@@ -40,8 +39,8 @@ export const { setIBCChannelStore } = ibcSlice.actions;
 
 export default ibcSlice.reducer;
 
-export const updateStafiHubIBCChannels =
-  (balances: Coin[] | undefined): AppThunk =>
+export const updateChainIBCChannels =
+  (chainId: string, balances: Coin[] | undefined): AppThunk =>
   async (dispatch, getState) => {
     if (!balances) {
       dispatch(setIBCChannelStore({}));
@@ -50,10 +49,9 @@ export const updateStafiHubIBCChannels =
     const requests = balances.map((coin) =>
       (async () => {
         if (coin.denom.startsWith("ibc/")) {
-          const denomTraceRes = await queryDenomTrace(
-            getStafiHubChainId(),
-            coin.denom
-          );
+          const denomTraceRes = await queryDenomTrace(chainId, coin.denom);
+          // console.log("xxx", coin.denom, chainId, denomTraceRes);
+
           if (denomTraceRes && denomTraceRes.denomTrace) {
             return {
               ibcDenom: coin.denom,
@@ -80,7 +78,12 @@ export const updateStafiHubIBCChannels =
 
     // console.log("ibcChannelStore", ibcChannelStore);
 
-    dispatch(setIBCChannelStore(ibcChannelStore));
+    dispatch(
+      setIBCChannelStore({
+        ...getState().ibc.ibcChannelStore,
+        ...ibcChannelStore,
+      })
+    );
   };
 
 /**
@@ -97,6 +100,8 @@ export function getIBCBalanceInChannel(
   if (!balances) {
     return "--";
   }
+
+  // console.log("ibcChannelStore", ibcChannelStore);
 
   const ibcChannelArr = ibcChannelStore[denom];
   if (!ibcChannelArr) {

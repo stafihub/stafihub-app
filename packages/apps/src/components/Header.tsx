@@ -67,7 +67,7 @@ export const Header = () => {
               accounts[STAFIHUB_CHAIN_ID]?.allBalances,
               getDenom(STAFIHUB_CHAIN_ID)
             )}
-            decimals={6}
+            decimals={2}
           />
           <div className="ml-1 uppercase">
             {getTokenDisplayName(STAFIHUB_CHAIN_ID)}

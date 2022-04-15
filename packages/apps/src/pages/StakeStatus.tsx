@@ -74,14 +74,14 @@ export const StakeStatus = () => {
         </div>
 
         <div className="ml-[10px] text-primary text-[30px] font-bold cursor-pointer">
-          <FormatterText value={stakeStatus?.rTokenBalance} decimals={6} />
+          <FormatterText value={stakeStatus?.rTokenBalance} decimals={2} />
         </div>
       </div>
 
       <div className="flex justify-end mt-[5px] text-text-gray4 text-[12px]">
         <div className="mr-1">Redeemable {getTokenDisplayName(chainId)} :</div>
 
-        <FormatterText value={redeemableAmount} decimals={6} />
+        <FormatterText value={redeemableAmount} decimals={2} />
       </div>
 
       <div className="mt-[50px] flex items-center">
@@ -178,7 +178,7 @@ export const StakeStatus = () => {
         </div>
 
         <div className="ml-[10px] text-primary text-[30px] font-bold cursor-pointer">
-          <FormatterText value={exchangeRate} decimals={6} />
+          <FormatterText value={exchangeRate} decimals={2} />
         </div>
       </div>
 

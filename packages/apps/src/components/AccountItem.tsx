@@ -64,7 +64,7 @@ export const AccountItem = (props: AccountItemProps) => {
                   props.chainAccount.allBalances,
                   getDenom(props.chain.chainId)
                 )}
-                decimals={6}
+                decimals={2}
               />
 
               <div className="ml-1 uppercase">

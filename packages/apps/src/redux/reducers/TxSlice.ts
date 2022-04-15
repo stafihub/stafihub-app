@@ -6,6 +6,7 @@ import {
   getDenom,
   getExplorerUrl,
   getRTokenDenom,
+  getRTokenDisplayName,
   getStafiHubChainId,
   getTokenDisplayName,
   STAFIHUB_DECIMALS,
@@ -142,11 +143,9 @@ export const stake =
         stafiHubAddress,
         poolAddress
       );
-      dispatch(setIsLoading(false));
 
       let success = false;
       if (txResponse?.code === 0) {
-        console.log("chainEras", getState().chain.chainEras);
         const eraNumber = getState().chain.chainEras[chainId] || 0;
         dispatch(
           addNotice(
@@ -168,13 +167,22 @@ export const stake =
         );
 
         dispatch(updateTokenBalance(chainId));
+
         dispatch(
           setStakeSidebarProps({
             visible: true,
             explorerUrl: getExplorerUrl(chainId),
             chainId: chainId,
-            txHash: txResponse.transactionHash,
             eraNumber,
+            sendingStatus: 1,
+          })
+        );
+
+        await timeout(3000);
+
+        dispatch(
+          setStakeSidebarProps({
+            txHash: txResponse.transactionHash,
             sendingStatus: 2,
             mintingStatus: 1,
           })
@@ -475,7 +483,7 @@ export const unbond =
         poolAddress
       );
       if (txResponse?.code === 0) {
-        snackbarUtil.success("Unbond success");
+        snackbarUtil.success("Unbond succeed");
         dispatch(
           addNotice(
             txResponse.transactionHash,
@@ -686,11 +694,13 @@ export const feeStationSwap =
  */
 export const ibcBridgeSwap =
   (
+    isRToken: boolean,
     srcChainId: string,
     dstChainId: string,
     srcChannel: string,
     inputAmount: string,
-    dstAddress: string
+    dstAddress: string,
+    callback: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
     // Check dst address.
@@ -720,22 +730,38 @@ export const ibcBridgeSwap =
 
       let transferDenom = undefined;
 
-      if (srcChainId !== getStafiHubChainId()) {
-        transferDenom = getDenom(otherChainId);
-      } else {
-        const ibcChannel = getIBCChannel(
-          getState().ibc.ibcChannelStore,
-          getDenom(otherChainId),
-          srcChannel
-        );
+      if (srcChainId === getStafiHubChainId()) {
+        if (isRToken) {
+          transferDenom = getRTokenDenom(otherChainId);
+        } else {
+          const ibcChannel = getIBCChannel(
+            getState().ibc.ibcChannelStore,
+            getDenom(otherChainId),
+            srcChannel
+          );
 
-        transferDenom = ibcChannel?.ibcDenom;
+          transferDenom = ibcChannel?.ibcDenom;
+        }
+      } else {
+        if (isRToken) {
+          const ibcChannel = getIBCChannel(
+            getState().ibc.ibcChannelStore,
+            getRTokenDenom(otherChainId),
+            srcChannel
+          );
+
+          transferDenom = ibcChannel?.ibcDenom;
+        } else {
+          transferDenom = getDenom(otherChainId);
+        }
       }
 
       if (!transferDenom) {
         snackbarUtil.error("Transfer denom info not found");
         return;
       }
+
+      // console.log("transferDenom", transferDenom);
 
       const txResponse = await sendIBCTransferTx(
         srcChainId,
@@ -748,7 +774,7 @@ export const ibcBridgeSwap =
       );
 
       if (txResponse?.code === 0) {
-        snackbarUtil.success("Swap success");
+        snackbarUtil.success("Swap succeed");
         dispatch(
           addNotice(
             txResponse.transactionHash,
@@ -760,9 +786,9 @@ export const ibcBridgeSwap =
               chainId: srcChainId,
             },
             {
-              tokenName: getTokenDisplayName(
-                srcChainId === getStafiHubChainId() ? dstChainId : srcChainId
-              ),
+              tokenName: isRToken
+                ? getRTokenDisplayName(otherChainId)
+                : getTokenDisplayName(otherChainId),
               amount: inputAmount,
               inputChainName: getChainName(srcChainId),
               outputChainName: getChainName(dstChainId),
@@ -771,6 +797,7 @@ export const ibcBridgeSwap =
             "Confimed"
           )
         );
+        callback(true);
       } else {
         snackbarUtil.error(`Swap failure ${txResponse?.rawLog}`);
       }

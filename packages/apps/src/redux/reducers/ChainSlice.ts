@@ -4,7 +4,7 @@ import { queryChainEra } from "@stafihub/apps-wallet";
 import { ChainStakeStatus } from "../../types/interface";
 import { AppThunk } from "../store";
 
-// { denom:ChainStakeStatus }
+// { chainId:ChainStakeStatus }
 type ChainStakeStatusMap = { [key: string]: ChainStakeStatus | undefined };
 
 type ChainEraMap = { [key: string]: number };

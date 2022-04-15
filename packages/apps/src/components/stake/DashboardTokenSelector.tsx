@@ -7,7 +7,7 @@ import {
 } from "material-ui-popup-state/hooks";
 import { RTokenItem, useRTokenList } from "../../hooks/useRTokenList";
 import { useMatch, useParams, useNavigate } from "react-router-dom";
-import { TokenIcon, FormatterText } from "@stafihub/react-components";
+import { TokenIcon, FormatterText, Icon } from "@stafihub/react-components";
 import iconClose from "../../assets/images/icon_close_dark.svg";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 
@@ -30,13 +30,24 @@ export const DashboardTokenSelector = (props: DashboardTokenSelectorProps) => {
       <div
         {...bindTrigger(selectPopupState)}
         className={classNames(
-          "ml-20 text-[20px] cursor-pointer pb-3 px-1 font-bold",
-          matchDashboard
-            ? "text-secondary border-b-[2px] border-secondary border-solid"
-            : "text-white"
+          "ml-20 flex items-center cursor-pointer pb-3 px-1",
+          { "border-b-[2px] border-secondary border-solid": matchDashboard }
         )}
       >
-        DASHBOARD
+        <div
+          className={classNames(
+            "mr-1 text-[20px] cursor-pointer font-bold",
+            matchDashboard ? "text-secondary" : "text-white"
+          )}
+        >
+          DASHBOARD
+        </div>
+
+        <Icon
+          icon="arrow-down"
+          size={18}
+          color={matchDashboard ? "#FF7FA7" : "white"}
+        />
       </div>
 
       {/* Select rToken Popover */}

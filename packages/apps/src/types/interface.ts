@@ -41,6 +41,7 @@ export interface ChainStakeStatus {
 }
 
 export interface IBCChannelToken {
+  displayTokenName: string;
   denom: string;
   channelName: string;
 }

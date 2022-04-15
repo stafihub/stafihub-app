@@ -6,6 +6,7 @@ import { connectKeplr } from "../../redux/reducers/AppSlice";
 interface SwapAddressInputProps {
   chainId: string | undefined;
   value: string;
+  disabled?: boolean;
   onChange: (v: string) => void;
 }
 
@@ -14,7 +15,7 @@ export const SwapAddressInput = (props: SwapAddressInputProps) => {
   const accounts = useAccounts();
 
   const clickConnectedAddress = () => {
-    if (!props.chainId) {
+    if (!props.chainId || props.disabled) {
       return;
     }
     if (!accounts[props.chainId]) {
@@ -34,6 +35,7 @@ export const SwapAddressInput = (props: SwapAddressInputProps) => {
       <div className="h-[24px] mt-3 flex items-center justify-between">
         <div className="flex-1">
           <CustomInput
+            disabled={props.disabled}
             fontSize={14}
             placeholder="..."
             value={props.value}

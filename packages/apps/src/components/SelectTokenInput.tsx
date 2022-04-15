@@ -58,7 +58,11 @@ export const SelectTokenInput = (props: SelectTokenInputProps) => {
               sx={{
                 cursor: "pointer",
               }}
-              onClick={props.onClickMax}
+              onClick={() => {
+                if (!props.disabled) {
+                  props.onClickMax && props.onClickMax();
+                }
+              }}
             >
               <div className="text-primary text-[12px]">Max</div>
             </Box>

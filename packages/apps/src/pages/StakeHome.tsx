@@ -179,7 +179,7 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-[2px] font-bold text-primary text-[30px]">
-        <FormatterText value={willGetAmount} decimals={6} />{" "}
+        <FormatterText value={willGetAmount} decimals={2} />{" "}
         {getRTokenDisplayName(chainId)}
       </div>
 

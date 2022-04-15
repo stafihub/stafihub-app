@@ -47,7 +47,7 @@ export const RAsset = () => {
         <RAssetTableHeader />
 
         {rAssetList.map((rAsset) => (
-          <div key={rAsset.chainId} className="mb-3">
+          <div key={rAsset.chainId} className="my-[10px]">
             <RAssetItem
               chainId={rAsset.chainId}
               originTokenName={rAsset.tokenName}

@@ -16,6 +16,7 @@ module.exports = {
       "placdholder-primary": "#887CFFa0",
       black: {
         700: "#151515",
+        800: "#111017",
         900: "#000002",
       },
       text: {

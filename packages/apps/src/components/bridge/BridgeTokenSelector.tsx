@@ -8,7 +8,6 @@ import iconDown from "../../assets/images/icon_down_gray.svg";
 import { IBCChannelToken } from "../../types/interface";
 
 interface BridgeTokenSelectorProps {
-  tokenName: string;
   selectedToken: IBCChannelToken | undefined | null;
   data: IBCChannelToken[] | null;
   onChange: (token: IBCChannelToken) => void;
@@ -37,7 +36,8 @@ export const BridgeTokenSelector = (props: BridgeTokenSelectorProps) => {
       >
         {props.selectedToken ? (
           <div className="text-[16px] font-bold text-white">
-            {props.tokenName} ({props.selectedToken.channelName})
+            {props.selectedToken.displayTokenName} (
+            {props.selectedToken.channelName})
           </div>
         ) : (
           <div className="text-[12px] text-text-gray7">Choose a token</div>
@@ -72,7 +72,7 @@ export const BridgeTokenSelector = (props: BridgeTokenSelectorProps) => {
         <div className="min-w-[563px]">
           {props.data?.map((channelToken, index) => (
             <div
-              key={channelToken.channelName}
+              key={`${channelToken.denom}-${channelToken.channelName}`}
               className="cursor-pointer"
               onClick={() => {
                 selectPopupState.close();
@@ -85,7 +85,8 @@ export const BridgeTokenSelector = (props: BridgeTokenSelectorProps) => {
                   {
                     "bg-divider-light":
                       channelToken.channelName ===
-                      props.selectedToken?.channelName,
+                        props.selectedToken?.channelName &&
+                      channelToken.denom === props.selectedToken?.denom,
                   }
                 )}
               >
@@ -94,7 +95,7 @@ export const BridgeTokenSelector = (props: BridgeTokenSelectorProps) => {
                     "ml-4  font-bold text-[16px] text-text-black1"
                   )}
                 >
-                  {props.tokenName} ({channelToken.channelName})
+                  {channelToken.displayTokenName} ({channelToken.channelName})
                 </div>
               </div>
 

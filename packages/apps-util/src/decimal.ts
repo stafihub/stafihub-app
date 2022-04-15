@@ -9,7 +9,7 @@ export function atomicToHuman(
   }
   const decimal = Decimal.fromAtomics(atomics, fractionalDigits);
 
-  return decimal.toString();
+  return formatNumberToFixed(decimal.toString());
 }
 
 export function humanToAtomic(
@@ -29,7 +29,7 @@ export function humanToAtomic(
 
 export function formatNumberToFixed(
   num: string | number | undefined,
-  decimals: number = 6
+  decimals: number = 2
 ) {
   if (num === undefined || num === "") {
     return "--";

@@ -2,6 +2,7 @@ import {
   getChainDecimals,
   getChainIdFromRTokenDisplayName,
   getRTokenDenom,
+  getTokenDisplayName,
 } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
 import { FormatterText } from "@stafihub/react-components";
@@ -50,7 +51,7 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
 
   return (
     <div className="w-full h-[50px] py-[10px] flex items-center text-text-gray2 text-[14px] border-[#494D51] border-solid border-b-[1px]">
-      <div className="basis-1/12 flex items-center justify-center">
+      <div className="basis-[4%] flex items-center">
         <img
           src={completed ? successIcon : pendingIcon}
           alt="icon"
@@ -58,12 +59,16 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
         />
       </div>
 
-      <div className="basis-2/12 text-[14px] text-white">
+      <div className="basis-[10%] text-[14px] text-white">
         {!isNaN(Number(amount)) && Number(amount) < 0.01 ? (
           "<0.01"
         ) : (
           <FormatterText value={amount} decimals={2} />
         )}
+      </div>
+
+      <div className="basis-[16%] text-[14px] text-white">
+        {getTokenDisplayName(chainId)}
       </div>
 
       <div className="basis-2/12 text-[12px]">
@@ -76,7 +81,7 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
         <div className="mt-1">{remainingDays}</div>
       </div>
 
-      <div className="w-[310px] text-[12px] text-white font-bold">
+      <div className="basis-4/12 text-[12px] text-white font-bold">
         <div className="break-all">{props.item.recipient}</div>
       </div>
     </div>

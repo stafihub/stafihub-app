@@ -41,9 +41,11 @@ export const DashboardRecords = () => {
         </div>
       </div>
 
-      <div className="mt-6">{tab === "unbond" && <StakeUnbondV2 />}</div>
+      <div className="mt-6">
+        {tab === "unbond" && <StakeUnbondV2 />}
 
-      <div className="mt-6">{tab === "reward" && <StakeRewardListV2 />}</div>
+        {tab === "reward" && <StakeRewardListV2 />}
+      </div>
     </div>
   );
 };

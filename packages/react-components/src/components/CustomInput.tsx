@@ -2,6 +2,7 @@ import classNames from "classnames";
 
 interface CustomInputProps {
   placeholder: string;
+  disabled?: boolean;
   fontSize?: number;
   primary?: boolean;
   light?: boolean;
@@ -12,6 +13,7 @@ interface CustomInputProps {
 export const CustomInput = (props: CustomInputProps) => {
   return (
     <input
+      disabled={props.disabled}
       className={classNames(
         "w-full bg-transparent border-none outline-none  font-bold",
         props.light

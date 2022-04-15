@@ -9,18 +9,19 @@ import {
   RTokenIcon,
   TokenIcon,
 } from "@stafihub/react-components";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import iconApy from "../assets/images/icon_apy.svg";
 import iconBarLine from "../assets/images/icon_bar_line.svg";
 import iconReward from "../assets/images/icon_rAsset_reward.svg";
-import iconSwitch from "../assets/images/icon_switch.svg";
+// import iconSwitch from "../assets/images/icon_switch.svg";
 import iconWaveLine from "../assets/images/icon_wave_line.svg";
 import { DashboardRecords } from "../components/stake/DashboardRecords";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 import nodata from "../assets/images/nodata.png";
+import { TradeModal } from "../modals/TradeModal";
 
 export const RTokenDashboard = () => {
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ export const RTokenDashboard = () => {
   const { stakeStatus } = useChainStakeStatus(chainId);
   const { exchangeRate, eraHours } = useStakePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
+
+  const [tradeModalVisible, setTradeModalVisible] = useState(false);
 
   const stakedAmount = useMemo(() => {
     if (
@@ -58,6 +61,13 @@ export const RTokenDashboard = () => {
     );
   }, [unbondCommission, exchangeRate, stakeStatus]);
 
+  const stakedValue = useMemo(() => {
+    if (!stakedAmount || isNaN(Number(stakedAmount))) {
+      return "--";
+    }
+    return Number(stakedAmount) * 0.06;
+  }, [stakedAmount]);
+
   const rTokenValue = useMemo(() => {
     if (!stakeStatus || isNaN(Number(stakeStatus.rTokenBalance))) {
       return "--";
@@ -79,7 +89,7 @@ export const RTokenDashboard = () => {
           <div className="text-[12px] text-text-gray4">rAsset on</div>
           <div className="ml-1 flex items-center cursor-pointer">
             <div className="text-[12px] text-primary font-bold">StaFiHub</div>
-            <img src={iconSwitch} className="ml-1 h-[14px]" alt="switch" />
+            {/* <img src={iconSwitch} className="ml-1 h-[14px]" alt="switch" /> */}
           </div>
         </div>
 
@@ -121,7 +131,13 @@ export const RTokenDashboard = () => {
             </div>
 
             <div className="mt-8 w-[110px]">
-              <Button bgPrimary textDark type="rectangle" size="small">
+              <Button
+                bgPrimary
+                textDark
+                type="rectangle"
+                size="small"
+                onClick={() => setTradeModalVisible(true)}
+              >
                 Trade {params.rToken}
               </Button>
             </div>
@@ -156,6 +172,7 @@ export const RTokenDashboard = () => {
           <div className="mt-3 ml-12 min-w-[185px] pt-7 pl-4 pr-6 pb-5 bg-[#111017] rounded-[4px]">
             <div className="flex items-center">
               <img src={iconApy} alt="apy" className="w-6 h-6" />
+
               <div className="ml-1 text-white font-bold text-[20px]">
                 <FormatterText value={exchangeRate} decimals={2} />
               </div>
@@ -219,7 +236,9 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="flex flex-col items-end">
-                <div className="text-[22px] font-bold text-white">$2301.21</div>
+                <div className="text-[22px] font-bold text-white">
+                  $ <FormatterText value={stakedValue} decimals={2} />
+                </div>
 
                 <div className="mt-2 flex">
                   <div className="text-secondary text-[14px]">
@@ -251,6 +270,12 @@ export const RTokenDashboard = () => {
           <DashboardRecords />
         </div>
       </div>
+
+      <TradeModal
+        tradeTokenName={params.rToken || ""}
+        visible={tradeModalVisible}
+        onClose={() => setTradeModalVisible(false)}
+      />
     </div>
   );
 };

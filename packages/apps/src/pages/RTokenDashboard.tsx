@@ -1,5 +1,6 @@
 import {
   getChainIdFromRTokenDisplayName,
+  getDenom,
   getRTokenDenom,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
@@ -22,6 +23,7 @@ import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 import nodata from "../assets/images/nodata.png";
 import { TradeModal } from "../modals/TradeModal";
+import { usePriceFromDenom } from "../hooks/useAppSlice";
 
 export const RTokenDashboard = () => {
   const navigate = useNavigate();
@@ -29,6 +31,8 @@ export const RTokenDashboard = () => {
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const tokenName = getTokenDisplayName(chainId);
   const rTokenDenom = getRTokenDenom(chainId);
+  const tokenPrice = usePriceFromDenom(getDenom(chainId));
+  const rTokenPrice = usePriceFromDenom(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(chainId);
   const { exchangeRate, eraHours } = useStakePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
@@ -62,25 +66,37 @@ export const RTokenDashboard = () => {
   }, [unbondCommission, exchangeRate, stakeStatus]);
 
   const stakedValue = useMemo(() => {
-    if (!stakedAmount || isNaN(Number(stakedAmount))) {
+    if (
+      !stakedAmount ||
+      isNaN(Number(stakedAmount)) ||
+      isNaN(Number(tokenPrice))
+    ) {
       return "--";
     }
-    return Number(stakedAmount) * 20.1;
-  }, [stakedAmount]);
+    return Number(stakedAmount) * Number(tokenPrice);
+  }, [stakedAmount, tokenPrice]);
 
   const rTokenValue = useMemo(() => {
-    if (!stakeStatus || isNaN(Number(stakeStatus.rTokenBalance))) {
+    if (
+      !stakeStatus ||
+      isNaN(Number(stakeStatus.rTokenBalance)) ||
+      isNaN(Number(rTokenPrice))
+    ) {
       return "--";
     }
-    return Number(stakeStatus.rTokenBalance) * 20.1;
-  }, [stakeStatus]);
+    return Number(stakeStatus.rTokenBalance) * Number(rTokenPrice);
+  }, [stakeStatus, rTokenPrice]);
 
   const redeemableValue = useMemo(() => {
-    if (!redeemableAmount || isNaN(Number(redeemableAmount))) {
+    if (
+      !redeemableAmount ||
+      isNaN(Number(redeemableAmount)) ||
+      isNaN(Number(tokenPrice))
+    ) {
       return "--";
     }
-    return Number(redeemableAmount) * 20.1;
-  }, [redeemableAmount]);
+    return Number(redeemableAmount) * Number(tokenPrice);
+  }, [redeemableAmount, tokenPrice]);
 
   return (
     <div className="w-[1050px]">

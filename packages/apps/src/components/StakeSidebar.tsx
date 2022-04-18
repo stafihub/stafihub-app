@@ -108,14 +108,6 @@ export const StakeSidebar = () => {
 
             dispatch(updateNotice(stakeSidebarProps.txHash, "Confimed"));
             dispatch(updateAllTokenBalance());
-          } else {
-            dispatch(
-              setStakeSidebarProps({
-                mintingStatus: -1,
-              })
-            );
-
-            dispatch(updateNotice(stakeSidebarProps.txHash, "Error"));
           }
         }
       }, 3000);

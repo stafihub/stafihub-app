@@ -18,6 +18,7 @@ import { unbond } from "../redux/reducers/TxSlice";
 interface UnbondModalProps {
   visible: boolean;
   onClose: () => void;
+  onSuccess: () => void;
   inputAmount: string;
   receiveAddress: string;
   willGetAmount: string;
@@ -94,7 +95,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
                   relayFee,
                   (success) => {
                     if (success) {
-                      props.onClose();
+                      props.onSuccess();
                       updateStakeStatus(chainId);
                     }
                   }

@@ -1,10 +1,11 @@
-import { getRTokenDenom } from "@stafihub/apps-config";
+import { getDenom, getRTokenDenom } from "@stafihub/apps-config";
 import {
   FormatterText,
   RTokenIcon,
   TokenIconLarge,
 } from "@stafihub/react-components";
 import { useMemo } from "react";
+import { usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useApy } from "../../hooks/useApy";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../../hooks/useTokenSupply";
@@ -19,15 +20,20 @@ interface StakeTokenCardProps {
 export const StakeTokenCard = (props: StakeTokenCardProps) => {
   const apy = useApy(props.chainId);
   const supply = useTokenSupply(props.chainId);
+  const tokenPrice = usePriceFromDenom(getDenom(props.chainId));
 
   const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
 
   const liquidity = useMemo(() => {
-    if (isNaN(Number(exchangeRate)) || isNaN(Number(supply))) {
+    if (
+      isNaN(Number(exchangeRate)) ||
+      isNaN(Number(supply)) ||
+      isNaN(Number(tokenPrice))
+    ) {
       return "--";
     }
-    return Number(supply) * Number(exchangeRate) * 20.1;
-  }, [exchangeRate, supply]);
+    return Number(supply) * Number(exchangeRate) * Number(tokenPrice);
+  }, [exchangeRate, supply, tokenPrice]);
 
   return (
     <div className="w-full bg-white rounded-[4px] flex flex-col items-start">

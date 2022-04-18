@@ -184,6 +184,11 @@ export const StakeRedeemV2 = () => {
       <UnbondModal
         visible={unbondModalVisible}
         onClose={() => setUnbondModalVisible(false)}
+        onSuccess={() => {
+          setInputAmount("");
+          setReceivingAddress("");
+          setUnbondModalVisible(false);
+        }}
         inputAmount={inputAmount}
         receiveAddress={receivingAddress}
         willGetAmount={formatNumberToFixed(willGetAmount)}

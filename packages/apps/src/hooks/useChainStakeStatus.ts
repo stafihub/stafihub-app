@@ -1,4 +1,8 @@
-import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  getDenom,
+  getRTokenDenom,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
 import { queryrTokenBalance, queryStakePoolInfo } from "@stafihub/apps-wallet";
 import { useCallback, useEffect, useMemo } from "react";
@@ -6,11 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateChainStakeStatus } from "../redux/reducers/ChainSlice";
 import { RootState } from "../redux/store";
 import { ChainStakeStatus } from "../types/interface";
-import { useChainAccount } from "./useAppSlice";
+import { useChainAccount, usePriceList } from "./useAppSlice";
 
 export function useChainStakeStatus(chainId: string | undefined) {
   const dispatch = useDispatch();
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
+  const priceList = usePriceList();
 
   const stakeStatusMap = useSelector((state: RootState) => {
     return state.chain.chainStakeStatusMap;
@@ -38,7 +43,15 @@ export function useChainStakeStatus(chainId: string | undefined) {
         getRTokenDenom(chainId)
       );
       const rTokenBalance = atomicToHuman(result);
-      const stakedValue = Number(rTokenBalance) * Number(exchangeRate) * 20.1;
+      const matched = priceList.find(
+        (price) => price.denom === getDenom(chainId)
+      );
+      let tokenPrice = "--";
+      if (matched) {
+        tokenPrice = atomicToHuman(matched?.price, 6);
+      }
+      const stakedValue =
+        Number(rTokenBalance) * Number(exchangeRate) * Number(tokenPrice);
       const chainStakeStatus: ChainStakeStatus = {
         rTokenDenom: chainId,
         rTokenBalance,
@@ -46,7 +59,7 @@ export function useChainStakeStatus(chainId: string | undefined) {
       };
       dispatch(updateChainStakeStatus(chainId, chainStakeStatus));
     },
-    [dispatch, stafiHubAccount]
+    [dispatch, stafiHubAccount, priceList]
   );
 
   useEffect(() => {

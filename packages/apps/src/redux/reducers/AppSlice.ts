@@ -6,7 +6,7 @@ import {
   queryAccountBalances,
 } from "@stafihub/apps-wallet";
 import * as _ from "lodash";
-import { KeplrAccount } from "../../types/interface";
+import { KeplrAccount, PriceItem } from "../../types/interface";
 import {
   NoticeDataType,
   NoticeStatus,
@@ -31,6 +31,7 @@ export interface AppState {
   isLoading: boolean;
   slippage: string;
   unreadNoticeFlag: boolean;
+  priceList: PriceItem[];
 }
 
 const initialState: AppState = {
@@ -39,6 +40,7 @@ const initialState: AppState = {
   isLoading: false,
   slippage: "1",
   unreadNoticeFlag: false,
+  priceList: [],
 };
 
 export const appSlice = createSlice({
@@ -61,6 +63,9 @@ export const appSlice = createSlice({
     setUnreadNoticeFlag: (state: AppState, action: PayloadAction<boolean>) => {
       state.unreadNoticeFlag = action.payload;
     },
+    setPriceList: (state: AppState, action: PayloadAction<PriceItem[]>) => {
+      state.priceList = action.payload;
+    },
   },
 });
 
@@ -70,6 +75,7 @@ export const {
   setIsLoading,
   setSlippage,
   setUnreadNoticeFlag,
+  setPriceList,
 } = appSlice.actions;
 
 export const updateAccounts =
@@ -249,5 +255,23 @@ export const updateNotice =
     updateNoticeInternal(id, newStatus);
     dispatch(setUnreadNoticeFlag(true));
   };
+
+export const updatePriceList = (): AppThunk => async (dispatch, getState) => {
+  fetch("https://test-rtoken-api.stafihub.io/rtokenInfo/webapi/priceList", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((resJson) => {
+      if (resJson.status === "80000") {
+        dispatch(setPriceList(resJson.data.priceList || []));
+      }
+    })
+    .catch((err: Error) => {});
+};
 
 export default appSlice.reducer;

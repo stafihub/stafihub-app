@@ -64,3 +64,8 @@ export interface MintProgramsReward {
   unit: string;
   amount: string;
 }
+
+export interface PriceItem {
+  denom: string;
+  price: string;
+}

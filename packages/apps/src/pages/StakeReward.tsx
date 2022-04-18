@@ -1,5 +1,6 @@
 import {
   getChainIdFromRTokenDisplayName,
+  getDenom,
   getRTokenDenom,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
@@ -9,12 +10,14 @@ import { useParams } from "react-router-dom";
 import iconSwitch from "../assets/images/icon_switch.svg";
 import nodata from "../assets/images/nodata.png";
 import { StakeRewardTableHeader } from "../components/StakeRewardTableHeader";
+import { usePriceFromDenom } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 
 export const StakeReward = () => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const tokenPrice = usePriceFromDenom(getDenom(chainId));
   const { stakeStatus } = useChainStakeStatus(chainId);
   const { exchangeRate, eraHours } = useStakePoolInfo(getRTokenDenom(chainId));
 
@@ -22,12 +25,17 @@ export const StakeReward = () => {
     if (
       !stakeStatus ||
       isNaN(Number(stakeStatus.rTokenBalance)) ||
-      isNaN(Number(exchangeRate))
+      isNaN(Number(exchangeRate)) ||
+      isNaN(Number(tokenPrice))
     ) {
       return "--";
     }
-    return Number(stakeStatus.rTokenBalance) * Number(exchangeRate) * 20.1;
-  }, [stakeStatus, exchangeRate]);
+    return (
+      Number(stakeStatus.rTokenBalance) *
+      Number(exchangeRate) *
+      Number(tokenPrice)
+    );
+  }, [stakeStatus, exchangeRate, tokenPrice]);
 
   return (
     <div className="pl-[43px] py-[30px] pr-[22px]">

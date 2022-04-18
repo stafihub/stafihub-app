@@ -1,3 +1,4 @@
+import { atomicToHuman } from "@stafihub/apps-util";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
@@ -50,4 +51,25 @@ export function useUnreadNoticeFlag() {
   });
 
   return unreadNoticeFlag;
+}
+
+export function usePriceList() {
+  const priceList = useSelector((state: RootState) => {
+    return state.app.priceList;
+  });
+
+  return priceList;
+}
+
+export function usePriceFromDenom(denom: string) {
+  const price = useSelector((state: RootState) => {
+    const matched = state.app.priceList.find((price) => price.denom === denom);
+    if (matched) {
+      return atomicToHuman(matched?.price, 6);
+    } else {
+      return "--";
+    }
+  });
+
+  return price;
 }

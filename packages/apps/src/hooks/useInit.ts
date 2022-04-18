@@ -6,6 +6,7 @@ import {
   connectKeplrChains,
   setIsFork,
   updateAllTokenBalance,
+  updatePriceList,
 } from "../redux/reducers/AppSlice";
 import { updateChainEras } from "../redux/reducers/ChainSlice";
 import { updateChainIBCChannels } from "../redux/reducers/IBCSlice";
@@ -48,14 +49,24 @@ export function useInit() {
     dispatch(updateChainEras(chainIds));
   }, [dispatch]);
 
+  const updatePrices = useCallback(() => {
+    dispatch(updatePriceList());
+  }, [dispatch]);
+
   useEffect(() => {
     updateEras();
-  }, [updateEras]);
+    updatePrices();
+  }, [updateEras, updatePrices]);
 
   // Update eras every 10min.
   useInterval(() => {
     updateEras();
   }, 10 * 60 * 1000);
+
+  // Update priceList every 30s.
+  useInterval(() => {
+    updatePrices();
+  }, 30 * 1000);
 
   // Update balances every 6s.
   useInterval(() => {

@@ -1,5 +1,5 @@
 {
-  "chainName": "Cosmos-Devnet",
+  "chainName": "Cosmos-Testnet",
   "chainId": "cosmos-stafi-1",
   "displayHubName": "CosmosHub",
   "rpc": "https://test-cosmos-rpc1.stafihub.io",
@@ -15,6 +15,6 @@
     "bech32PrefixConsAddr": "cosmosvalcons",
     "bech32PrefixConsPub": "cosmosvalconspub"
   },
-  "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-cosmos-devnet",
-  "stafihubIBCChannels": ["channel-2"]
+  "explorerUrl": "https://testnet-explorer.stafihub.io/cosmos-testnet",
+  "stafihubIBCChannels": ["channel-0"]
 }

@@ -220,6 +220,14 @@ export interface QueryRelayFeeReceiverResponse {
   receiver: string;
 }
 
+export interface QueryUnbondSwitchRequest {
+  denom: string;
+}
+
+export interface QueryUnbondSwitchResponse {
+  isOpen: boolean;
+}
+
 const baseQueryGetExchangeRateRequest: object = { denom: "" };
 
 export const QueryGetExchangeRateRequest = {
@@ -3508,6 +3516,134 @@ export const QueryRelayFeeReceiverResponse = {
   },
 };
 
+const baseQueryUnbondSwitchRequest: object = { denom: "" };
+
+export const QueryUnbondSwitchRequest = {
+  encode(
+    message: QueryUnbondSwitchRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryUnbondSwitchRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryUnbondSwitchRequest,
+    } as QueryUnbondSwitchRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryUnbondSwitchRequest {
+    const message = {
+      ...baseQueryUnbondSwitchRequest,
+    } as QueryUnbondSwitchRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryUnbondSwitchRequest): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryUnbondSwitchRequest>
+  ): QueryUnbondSwitchRequest {
+    const message = {
+      ...baseQueryUnbondSwitchRequest,
+    } as QueryUnbondSwitchRequest;
+    message.denom = object.denom ?? "";
+    return message;
+  },
+};
+
+const baseQueryUnbondSwitchResponse: object = { isOpen: false };
+
+export const QueryUnbondSwitchResponse = {
+  encode(
+    message: QueryUnbondSwitchResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.isOpen === true) {
+      writer.uint32(8).bool(message.isOpen);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryUnbondSwitchResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryUnbondSwitchResponse,
+    } as QueryUnbondSwitchResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.isOpen = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryUnbondSwitchResponse {
+    const message = {
+      ...baseQueryUnbondSwitchResponse,
+    } as QueryUnbondSwitchResponse;
+    message.isOpen =
+      object.isOpen !== undefined && object.isOpen !== null
+        ? Boolean(object.isOpen)
+        : false;
+    return message;
+  },
+
+  toJSON(message: QueryUnbondSwitchResponse): unknown {
+    const obj: any = {};
+    message.isOpen !== undefined && (obj.isOpen = message.isOpen);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryUnbondSwitchResponse>
+  ): QueryUnbondSwitchResponse {
+    const message = {
+      ...baseQueryUnbondSwitchResponse,
+    } as QueryUnbondSwitchResponse;
+    message.isOpen = object.isOpen ?? false;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Queries a list of getExchangeRate items. */
@@ -3604,6 +3740,10 @@ export interface Query {
   RelayFeeReceiver(
     request: QueryRelayFeeReceiverRequest
   ): Promise<QueryRelayFeeReceiverResponse>;
+  /** Queries a list of UnbondSwitch items. */
+  UnbondSwitch(
+    request: QueryUnbondSwitchRequest
+  ): Promise<QueryUnbondSwitchResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -3635,6 +3775,7 @@ export class QueryClientImpl implements Query {
     this.GetRParams = this.GetRParams.bind(this);
     this.TotalProtocolFee = this.TotalProtocolFee.bind(this);
     this.RelayFeeReceiver = this.RelayFeeReceiver.bind(this);
+    this.UnbondSwitch = this.UnbondSwitch.bind(this);
   }
   GetExchangeRate(
     request: QueryGetExchangeRateRequest
@@ -3970,6 +4111,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryRelayFeeReceiverResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  UnbondSwitch(
+    request: QueryUnbondSwitchRequest
+  ): Promise<QueryUnbondSwitchResponse> {
+    const data = QueryUnbondSwitchRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "UnbondSwitch",
+      data
+    );
+    return promise.then((data) =>
+      QueryUnbondSwitchResponse.decode(new _m0.Reader(data))
     );
   }
 }

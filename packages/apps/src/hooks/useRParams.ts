@@ -11,7 +11,7 @@ export function useRParams(denom: string) {
     (async () => {
       const result = await queryRParams(denom);
       if (result.rParams) {
-        setEraSeconds(result.rParams.eraSeconds);
+        setEraSeconds(result.rParams.eraSeconds.toString());
         const hoursPerEra = Math.round(
           Number(result.rParams.eraSeconds) / 3600
         );

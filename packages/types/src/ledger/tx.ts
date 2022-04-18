@@ -100,8 +100,8 @@ export interface MsgSetRParams {
   creator: string;
   denom: string;
   gasPrice: string;
-  eraSeconds: string;
-  offset: string;
+  eraSeconds: number;
+  offset: number;
   bondingDuration: number;
   leastBond: string;
   validators: string[];
@@ -128,9 +128,9 @@ export interface MsgSetRelayGasPriceResponse {}
 export interface MsgSetEraSeconds {
   creator: string;
   denom: string;
-  eraSeconds: string;
+  eraSeconds: number;
   bondingDuration: number;
-  offset: string;
+  offset: number;
 }
 
 export interface MsgSetEraSecondsResponse {}
@@ -152,6 +152,7 @@ export interface MsgMigrateInit {
   bond: string;
   unbond: string;
   exchangeRate: string;
+  totalProtocolFee: string;
 }
 
 export interface MsgMigrateInitResponse {}
@@ -163,6 +164,13 @@ export interface MsgMigrateUnbondings {
 }
 
 export interface MsgMigrateUnbondingsResponse {}
+
+export interface MsgToggleUnbondSwitch {
+  creator: string;
+  denom: string;
+}
+
+export interface MsgToggleUnbondSwitchResponse {}
 
 const baseMsgSetEraUnbondLimit: object = { creator: "", denom: "", limit: 0 };
 
@@ -1589,8 +1597,8 @@ const baseMsgSetRParams: object = {
   creator: "",
   denom: "",
   gasPrice: "",
-  eraSeconds: "",
-  offset: "",
+  eraSeconds: 0,
+  offset: 0,
   bondingDuration: 0,
   leastBond: "",
   validators: "",
@@ -1610,11 +1618,11 @@ export const MsgSetRParams = {
     if (message.gasPrice !== "") {
       writer.uint32(26).string(message.gasPrice);
     }
-    if (message.eraSeconds !== "") {
-      writer.uint32(34).string(message.eraSeconds);
+    if (message.eraSeconds !== 0) {
+      writer.uint32(32).uint32(message.eraSeconds);
     }
-    if (message.offset !== "") {
-      writer.uint32(42).string(message.offset);
+    if (message.offset !== 0) {
+      writer.uint32(40).int32(message.offset);
     }
     if (message.bondingDuration !== 0) {
       writer.uint32(48).uint32(message.bondingDuration);
@@ -1646,10 +1654,10 @@ export const MsgSetRParams = {
           message.gasPrice = reader.string();
           break;
         case 4:
-          message.eraSeconds = reader.string();
+          message.eraSeconds = reader.uint32();
           break;
         case 5:
-          message.offset = reader.string();
+          message.offset = reader.int32();
           break;
         case 6:
           message.bondingDuration = reader.uint32();
@@ -1684,12 +1692,12 @@ export const MsgSetRParams = {
         : "";
     message.eraSeconds =
       object.eraSeconds !== undefined && object.eraSeconds !== null
-        ? String(object.eraSeconds)
-        : "";
+        ? Number(object.eraSeconds)
+        : 0;
     message.offset =
       object.offset !== undefined && object.offset !== null
-        ? String(object.offset)
-        : "";
+        ? Number(object.offset)
+        : 0;
     message.bondingDuration =
       object.bondingDuration !== undefined && object.bondingDuration !== null
         ? Number(object.bondingDuration)
@@ -1725,8 +1733,8 @@ export const MsgSetRParams = {
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
     message.gasPrice = object.gasPrice ?? "";
-    message.eraSeconds = object.eraSeconds ?? "";
-    message.offset = object.offset ?? "";
+    message.eraSeconds = object.eraSeconds ?? 0;
+    message.offset = object.offset ?? 0;
     message.bondingDuration = object.bondingDuration ?? 0;
     message.leastBond = object.leastBond ?? "";
     message.validators = (object.validators ?? []).map((e) => e);
@@ -2052,9 +2060,9 @@ export const MsgSetRelayGasPriceResponse = {
 const baseMsgSetEraSeconds: object = {
   creator: "",
   denom: "",
-  eraSeconds: "",
+  eraSeconds: 0,
   bondingDuration: 0,
-  offset: "",
+  offset: 0,
 };
 
 export const MsgSetEraSeconds = {
@@ -2068,14 +2076,14 @@ export const MsgSetEraSeconds = {
     if (message.denom !== "") {
       writer.uint32(18).string(message.denom);
     }
-    if (message.eraSeconds !== "") {
-      writer.uint32(26).string(message.eraSeconds);
+    if (message.eraSeconds !== 0) {
+      writer.uint32(24).uint32(message.eraSeconds);
     }
     if (message.bondingDuration !== 0) {
       writer.uint32(32).uint32(message.bondingDuration);
     }
-    if (message.offset !== "") {
-      writer.uint32(42).string(message.offset);
+    if (message.offset !== 0) {
+      writer.uint32(40).int32(message.offset);
     }
     return writer;
   },
@@ -2094,13 +2102,13 @@ export const MsgSetEraSeconds = {
           message.denom = reader.string();
           break;
         case 3:
-          message.eraSeconds = reader.string();
+          message.eraSeconds = reader.uint32();
           break;
         case 4:
           message.bondingDuration = reader.uint32();
           break;
         case 5:
-          message.offset = reader.string();
+          message.offset = reader.int32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2122,16 +2130,16 @@ export const MsgSetEraSeconds = {
         : "";
     message.eraSeconds =
       object.eraSeconds !== undefined && object.eraSeconds !== null
-        ? String(object.eraSeconds)
-        : "";
+        ? Number(object.eraSeconds)
+        : 0;
     message.bondingDuration =
       object.bondingDuration !== undefined && object.bondingDuration !== null
         ? Number(object.bondingDuration)
         : 0;
     message.offset =
       object.offset !== undefined && object.offset !== null
-        ? String(object.offset)
-        : "";
+        ? Number(object.offset)
+        : 0;
     return message;
   },
 
@@ -2150,9 +2158,9 @@ export const MsgSetEraSeconds = {
     const message = { ...baseMsgSetEraSeconds } as MsgSetEraSeconds;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
-    message.eraSeconds = object.eraSeconds ?? "";
+    message.eraSeconds = object.eraSeconds ?? 0;
     message.bondingDuration = object.bondingDuration ?? 0;
-    message.offset = object.offset ?? "";
+    message.offset = object.offset ?? 0;
     return message;
   },
 };
@@ -2347,6 +2355,7 @@ const baseMsgMigrateInit: object = {
   bond: "",
   unbond: "",
   exchangeRate: "",
+  totalProtocolFee: "",
 };
 
 export const MsgMigrateInit = {
@@ -2377,6 +2386,9 @@ export const MsgMigrateInit = {
     }
     if (message.exchangeRate !== "") {
       writer.uint32(66).string(message.exchangeRate);
+    }
+    if (message.totalProtocolFee !== "") {
+      writer.uint32(74).string(message.totalProtocolFee);
     }
     return writer;
   },
@@ -2411,6 +2423,9 @@ export const MsgMigrateInit = {
           break;
         case 8:
           message.exchangeRate = reader.string();
+          break;
+        case 9:
+          message.totalProtocolFee = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2454,6 +2469,10 @@ export const MsgMigrateInit = {
       object.exchangeRate !== undefined && object.exchangeRate !== null
         ? String(object.exchangeRate)
         : "";
+    message.totalProtocolFee =
+      object.totalProtocolFee !== undefined && object.totalProtocolFee !== null
+        ? String(object.totalProtocolFee)
+        : "";
     return message;
   },
 
@@ -2469,6 +2488,8 @@ export const MsgMigrateInit = {
     message.unbond !== undefined && (obj.unbond = message.unbond);
     message.exchangeRate !== undefined &&
       (obj.exchangeRate = message.exchangeRate);
+    message.totalProtocolFee !== undefined &&
+      (obj.totalProtocolFee = message.totalProtocolFee);
     return obj;
   },
 
@@ -2482,6 +2503,7 @@ export const MsgMigrateInit = {
     message.bond = object.bond ?? "";
     message.unbond = object.unbond ?? "";
     message.exchangeRate = object.exchangeRate ?? "";
+    message.totalProtocolFee = object.totalProtocolFee ?? "";
     return message;
   },
 };
@@ -2670,6 +2692,128 @@ export const MsgMigrateUnbondingsResponse = {
   },
 };
 
+const baseMsgToggleUnbondSwitch: object = { creator: "", denom: "" };
+
+export const MsgToggleUnbondSwitch = {
+  encode(
+    message: MsgToggleUnbondSwitch,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgToggleUnbondSwitch {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgToggleUnbondSwitch } as MsgToggleUnbondSwitch;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.denom = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgToggleUnbondSwitch {
+    const message = { ...baseMsgToggleUnbondSwitch } as MsgToggleUnbondSwitch;
+    message.creator =
+      object.creator !== undefined && object.creator !== null
+        ? String(object.creator)
+        : "";
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    return message;
+  },
+
+  toJSON(message: MsgToggleUnbondSwitch): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgToggleUnbondSwitch>
+  ): MsgToggleUnbondSwitch {
+    const message = { ...baseMsgToggleUnbondSwitch } as MsgToggleUnbondSwitch;
+    message.creator = object.creator ?? "";
+    message.denom = object.denom ?? "";
+    return message;
+  },
+};
+
+const baseMsgToggleUnbondSwitchResponse: object = {};
+
+export const MsgToggleUnbondSwitchResponse = {
+  encode(
+    _: MsgToggleUnbondSwitchResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgToggleUnbondSwitchResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgToggleUnbondSwitchResponse,
+    } as MsgToggleUnbondSwitchResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgToggleUnbondSwitchResponse {
+    const message = {
+      ...baseMsgToggleUnbondSwitchResponse,
+    } as MsgToggleUnbondSwitchResponse;
+    return message;
+  },
+
+  toJSON(_: MsgToggleUnbondSwitchResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgToggleUnbondSwitchResponse>
+  ): MsgToggleUnbondSwitchResponse {
+    const message = {
+      ...baseMsgToggleUnbondSwitchResponse,
+    } as MsgToggleUnbondSwitchResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   SetEraUnbondLimit(
@@ -2708,10 +2852,13 @@ export interface Msg {
   SetEraSeconds(request: MsgSetEraSeconds): Promise<MsgSetEraSecondsResponse>;
   RmBondedPool(request: MsgRmBondedPool): Promise<MsgRmBondedPoolResponse>;
   MigrateInit(request: MsgMigrateInit): Promise<MsgMigrateInitResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   MigrateUnbondings(
     request: MsgMigrateUnbondings
   ): Promise<MsgMigrateUnbondingsResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  ToggleUnbondSwitch(
+    request: MsgToggleUnbondSwitch
+  ): Promise<MsgToggleUnbondSwitchResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -2736,6 +2883,7 @@ export class MsgClientImpl implements Msg {
     this.RmBondedPool = this.RmBondedPool.bind(this);
     this.MigrateInit = this.MigrateInit.bind(this);
     this.MigrateUnbondings = this.MigrateUnbondings.bind(this);
+    this.ToggleUnbondSwitch = this.ToggleUnbondSwitch.bind(this);
   }
   SetEraUnbondLimit(
     request: MsgSetEraUnbondLimit
@@ -2960,6 +3108,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgMigrateUnbondingsResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  ToggleUnbondSwitch(
+    request: MsgToggleUnbondSwitch
+  ): Promise<MsgToggleUnbondSwitchResponse> {
+    const data = MsgToggleUnbondSwitch.encode(request).finish();
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Msg",
+      "ToggleUnbondSwitch",
+      data
+    );
+    return promise.then((data) =>
+      MsgToggleUnbondSwitchResponse.decode(new _m0.Reader(data))
     );
   }
 }

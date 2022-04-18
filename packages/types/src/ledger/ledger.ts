@@ -1,7 +1,6 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Coin } from "../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "stafihub.stafihub.ledger";
 
@@ -9,9 +8,8 @@ export enum PoolBondState {
   ERA_UPDATED = 0,
   BOND_REPORTED = 1,
   ACTIVE_REPORTED = 2,
-  WITHDRAW_SKIPPED = 3,
-  WITHDRAW_REPORTED = 4,
-  TRANSFER_REPORTED = 5,
+  TRANSFER_SKIPPED = 3,
+  TRANSFER_REPORTED = 4,
   UNRECOGNIZED = -1,
 }
 
@@ -27,12 +25,9 @@ export function poolBondStateFromJSON(object: any): PoolBondState {
     case "ACTIVE_REPORTED":
       return PoolBondState.ACTIVE_REPORTED;
     case 3:
-    case "WITHDRAW_SKIPPED":
-      return PoolBondState.WITHDRAW_SKIPPED;
+    case "TRANSFER_SKIPPED":
+      return PoolBondState.TRANSFER_SKIPPED;
     case 4:
-    case "WITHDRAW_REPORTED":
-      return PoolBondState.WITHDRAW_REPORTED;
-    case 5:
     case "TRANSFER_REPORTED":
       return PoolBondState.TRANSFER_REPORTED;
     case -1:
@@ -50,10 +45,8 @@ export function poolBondStateToJSON(object: PoolBondState): string {
       return "BOND_REPORTED";
     case PoolBondState.ACTIVE_REPORTED:
       return "ACTIVE_REPORTED";
-    case PoolBondState.WITHDRAW_SKIPPED:
-      return "WITHDRAW_SKIPPED";
-    case PoolBondState.WITHDRAW_REPORTED:
-      return "WITHDRAW_REPORTED";
+    case PoolBondState.TRANSFER_SKIPPED:
+      return "TRANSFER_SKIPPED";
     case PoolBondState.TRANSFER_REPORTED:
       return "TRANSFER_REPORTED";
     default:
@@ -275,7 +268,6 @@ export interface BondSnapshot {
   pool: string;
   era: number;
   chunk?: LinkChunk;
-  lastVoter: string;
   bondState: PoolBondState;
 }
 
@@ -297,7 +289,7 @@ export interface EraExchangeRate {
 
 export interface UnbondRelayFee {
   denom: string;
-  value?: Coin;
+  value: string;
 }
 
 export interface Unbonding {
@@ -340,8 +332,8 @@ export interface Signature {
 export interface RParams {
   denom: string;
   gasPrice: string;
-  eraSeconds: string;
-  offset: string;
+  eraSeconds: number;
+  offset: number;
   bondingDuration: number;
   leastBond: string;
   validators: string[];
@@ -1030,13 +1022,7 @@ export const LinkChunk = {
   },
 };
 
-const baseBondSnapshot: object = {
-  denom: "",
-  pool: "",
-  era: 0,
-  lastVoter: "",
-  bondState: 0,
-};
+const baseBondSnapshot: object = { denom: "", pool: "", era: 0, bondState: 0 };
 
 export const BondSnapshot = {
   encode(
@@ -1054,9 +1040,6 @@ export const BondSnapshot = {
     }
     if (message.chunk !== undefined) {
       LinkChunk.encode(message.chunk, writer.uint32(34).fork()).ldelim();
-    }
-    if (message.lastVoter !== "") {
-      writer.uint32(42).string(message.lastVoter);
     }
     if (message.bondState !== 0) {
       writer.uint32(48).int32(message.bondState);
@@ -1082,9 +1065,6 @@ export const BondSnapshot = {
           break;
         case 4:
           message.chunk = LinkChunk.decode(reader, reader.uint32());
-          break;
-        case 5:
-          message.lastVoter = reader.string();
           break;
         case 6:
           message.bondState = reader.int32() as any;
@@ -1113,10 +1093,6 @@ export const BondSnapshot = {
       object.chunk !== undefined && object.chunk !== null
         ? LinkChunk.fromJSON(object.chunk)
         : undefined;
-    message.lastVoter =
-      object.lastVoter !== undefined && object.lastVoter !== null
-        ? String(object.lastVoter)
-        : "";
     message.bondState =
       object.bondState !== undefined && object.bondState !== null
         ? poolBondStateFromJSON(object.bondState)
@@ -1131,7 +1107,6 @@ export const BondSnapshot = {
     message.era !== undefined && (obj.era = message.era);
     message.chunk !== undefined &&
       (obj.chunk = message.chunk ? LinkChunk.toJSON(message.chunk) : undefined);
-    message.lastVoter !== undefined && (obj.lastVoter = message.lastVoter);
     message.bondState !== undefined &&
       (obj.bondState = poolBondStateToJSON(message.bondState));
     return obj;
@@ -1146,7 +1121,6 @@ export const BondSnapshot = {
       object.chunk !== undefined && object.chunk !== null
         ? LinkChunk.fromPartial(object.chunk)
         : undefined;
-    message.lastVoter = object.lastVoter ?? "";
     message.bondState = object.bondState ?? 0;
     return message;
   },
@@ -1357,7 +1331,7 @@ export const EraExchangeRate = {
   },
 };
 
-const baseUnbondRelayFee: object = { denom: "" };
+const baseUnbondRelayFee: object = { denom: "", value: "" };
 
 export const UnbondRelayFee = {
   encode(
@@ -1367,8 +1341,8 @@ export const UnbondRelayFee = {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
-    if (message.value !== undefined) {
-      Coin.encode(message.value, writer.uint32(18).fork()).ldelim();
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
     }
     return writer;
   },
@@ -1384,7 +1358,7 @@ export const UnbondRelayFee = {
           message.denom = reader.string();
           break;
         case 2:
-          message.value = Coin.decode(reader, reader.uint32());
+          message.value = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1402,26 +1376,22 @@ export const UnbondRelayFee = {
         : "";
     message.value =
       object.value !== undefined && object.value !== null
-        ? Coin.fromJSON(object.value)
-        : undefined;
+        ? String(object.value)
+        : "";
     return message;
   },
 
   toJSON(message: UnbondRelayFee): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
-    message.value !== undefined &&
-      (obj.value = message.value ? Coin.toJSON(message.value) : undefined);
+    message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
   fromPartial(object: DeepPartial<UnbondRelayFee>): UnbondRelayFee {
     const message = { ...baseUnbondRelayFee } as UnbondRelayFee;
     message.denom = object.denom ?? "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? Coin.fromPartial(object.value)
-        : undefined;
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -1927,8 +1897,8 @@ export const Signature = {
 const baseRParams: object = {
   denom: "",
   gasPrice: "",
-  eraSeconds: "",
-  offset: "",
+  eraSeconds: 0,
+  offset: 0,
   bondingDuration: 0,
   leastBond: "",
   validators: "",
@@ -1945,11 +1915,11 @@ export const RParams = {
     if (message.gasPrice !== "") {
       writer.uint32(18).string(message.gasPrice);
     }
-    if (message.eraSeconds !== "") {
-      writer.uint32(26).string(message.eraSeconds);
+    if (message.eraSeconds !== 0) {
+      writer.uint32(24).uint32(message.eraSeconds);
     }
-    if (message.offset !== "") {
-      writer.uint32(34).string(message.offset);
+    if (message.offset !== 0) {
+      writer.uint32(32).int32(message.offset);
     }
     if (message.bondingDuration !== 0) {
       writer.uint32(40).uint32(message.bondingDuration);
@@ -1978,10 +1948,10 @@ export const RParams = {
           message.gasPrice = reader.string();
           break;
         case 3:
-          message.eraSeconds = reader.string();
+          message.eraSeconds = reader.uint32();
           break;
         case 4:
-          message.offset = reader.string();
+          message.offset = reader.int32();
           break;
         case 5:
           message.bondingDuration = reader.uint32();
@@ -2012,12 +1982,12 @@ export const RParams = {
         : "";
     message.eraSeconds =
       object.eraSeconds !== undefined && object.eraSeconds !== null
-        ? String(object.eraSeconds)
-        : "";
+        ? Number(object.eraSeconds)
+        : 0;
     message.offset =
       object.offset !== undefined && object.offset !== null
-        ? String(object.offset)
-        : "";
+        ? Number(object.offset)
+        : 0;
     message.bondingDuration =
       object.bondingDuration !== undefined && object.bondingDuration !== null
         ? Number(object.bondingDuration)
@@ -2051,8 +2021,8 @@ export const RParams = {
     const message = { ...baseRParams } as RParams;
     message.denom = object.denom ?? "";
     message.gasPrice = object.gasPrice ?? "";
-    message.eraSeconds = object.eraSeconds ?? "";
-    message.offset = object.offset ?? "";
+    message.eraSeconds = object.eraSeconds ?? 0;
+    message.offset = object.offset ?? 0;
     message.bondingDuration = object.bondingDuration ?? 0;
     message.leastBond = object.leastBond ?? "";
     message.validators = (object.validators ?? []).map((e) => e);

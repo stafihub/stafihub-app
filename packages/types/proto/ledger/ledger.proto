@@ -2,7 +2,6 @@ syntax = "proto3";
 package stafihub.stafihub.ledger;
 
 import "gogoproto/gogo.proto";
-import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "github.com/stafihub/stafihub/x/ledger/types";
 
@@ -63,7 +62,6 @@ message BondSnapshot {
     string pool = 2;
     uint32 era = 3;
     LinkChunk chunk = 4 [(gogoproto.nullable) = false];
-    string last_voter = 5;
     PoolBondState bond_state = 6;
 }
 
@@ -73,9 +71,8 @@ enum PoolBondState {
     ERA_UPDATED = 0 [(gogoproto.enumvalue_customname) = "EraUpdated"];
     BOND_REPORTED = 1 [(gogoproto.enumvalue_customname) = "BondReported"];
     ACTIVE_REPORTED = 2 [(gogoproto.enumvalue_customname) = "ActiveReported"];
-    WITHDRAW_SKIPPED = 3 [(gogoproto.enumvalue_customname) = "WithdrawSkipped"];
-    WITHDRAW_REPORTED = 4 [(gogoproto.enumvalue_customname) = "WithdrawReported"];
-    TRANSFER_REPORTED = 5 [(gogoproto.enumvalue_customname) = "TransferReported"];
+    TRANSFER_SKIPPED = 3 [(gogoproto.enumvalue_customname) = "TransferSkipped"];
+    TRANSFER_REPORTED = 4 [(gogoproto.enumvalue_customname) = "TransferReported"];
 }
 
 enum BondAction {
@@ -107,7 +104,7 @@ message EraExchangeRate {
 
 message UnbondRelayFee {
     string denom = 1;
-    cosmos.base.v1beta1.Coin value = 2 [(gogoproto.nullable) = false];
+    string value = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
 }
 
 message Unbonding {
@@ -172,8 +169,8 @@ enum OriginalTxType {
 message RParams {
     string denom = 1;
     string gasPrice = 2;
-    string eraSeconds = 3;
-    string offset = 4;
+    uint32 eraSeconds = 3;
+    int32 offset = 4;
     uint32 bondingDuration = 5;
     string leastBond = 6;
     repeated string validators = 7;

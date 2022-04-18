@@ -38,7 +38,7 @@ export function useChainStakeStatus(chainId: string | undefined) {
         getRTokenDenom(chainId)
       );
       const rTokenBalance = atomicToHuman(result);
-      const stakedValue = Number(rTokenBalance) * Number(exchangeRate) * 0.06;
+      const stakedValue = Number(rTokenBalance) * Number(exchangeRate) * 20.1;
       const chainStakeStatus: ChainStakeStatus = {
         rTokenDenom: chainId,
         rTokenBalance,

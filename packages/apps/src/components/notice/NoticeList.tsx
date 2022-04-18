@@ -119,8 +119,6 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                 sx={{
                   transform: "scale(0.8)",
                   transformOrigin: "left center",
-                  textDecoration: "underline",
-                  cursor: "pointer",
                 }}
               >
                 {formatDate(notice.timestamp)}

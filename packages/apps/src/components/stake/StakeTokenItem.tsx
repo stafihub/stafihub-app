@@ -22,7 +22,7 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
     if (isNaN(Number(exchangeRate)) || isNaN(Number(supply))) {
       return "--";
     }
-    return Number(supply) * Number(exchangeRate) * 0.06;
+    return Number(supply) * Number(exchangeRate) * 20.1;
   }, [exchangeRate, supply]);
 
   return (

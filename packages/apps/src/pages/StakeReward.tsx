@@ -26,7 +26,7 @@ export const StakeReward = () => {
     ) {
       return "--";
     }
-    return Number(stakeStatus.rTokenBalance) * Number(exchangeRate) * 0.06;
+    return Number(stakeStatus.rTokenBalance) * Number(exchangeRate) * 20.1;
   }, [stakeStatus, exchangeRate]);
 
   return (

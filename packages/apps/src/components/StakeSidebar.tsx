@@ -224,7 +224,7 @@ export const StakeSidebar = () => {
       )}
 
       {/* 2. Minting */}
-      {stakeSidebarProps.mintingStatus && (
+      {Number(stakeSidebarProps.mintingStatus) > 0 && (
         <div className="mt-9 self-stretch">
           <div className="flex items-center">
             <div className="text-white text-[12px] w-4 h-4 rounded-full border-solid border-[0.5px] border-white flex items-center justify-center">
@@ -281,7 +281,7 @@ export const StakeSidebar = () => {
       )}
 
       {/* 3. Staking */}
-      {stakeSidebarProps.mintingStatus === 2 && (
+      {Number(stakeSidebarProps.mintingStatus) === 2 && (
         <div className="mt-9 self-stretch">
           <div className="flex items-center">
             <div className="text-white text-[12px] w-4 h-4 rounded-full border-solid border-[0.5px] border-white flex items-center justify-center">

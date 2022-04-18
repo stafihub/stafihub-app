@@ -65,21 +65,21 @@ export const RTokenDashboard = () => {
     if (!stakedAmount || isNaN(Number(stakedAmount))) {
       return "--";
     }
-    return Number(stakedAmount) * 0.06;
+    return Number(stakedAmount) * 20.1;
   }, [stakedAmount]);
 
   const rTokenValue = useMemo(() => {
     if (!stakeStatus || isNaN(Number(stakeStatus.rTokenBalance))) {
       return "--";
     }
-    return Number(stakeStatus.rTokenBalance) * 0.06;
+    return Number(stakeStatus.rTokenBalance) * 20.1;
   }, [stakeStatus]);
 
   const redeemableValue = useMemo(() => {
     if (!redeemableAmount || isNaN(Number(redeemableAmount))) {
       return "--";
     }
-    return Number(redeemableAmount) * 0.06;
+    return Number(redeemableAmount) * 20.1;
   }, [redeemableAmount]);
 
   return (

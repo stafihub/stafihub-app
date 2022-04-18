@@ -14,7 +14,11 @@ export function isFork(): boolean {
 }
 
 export function getStafiHubChainId(): string {
-  return "stafihub-testnet-1";
+  if (isDev()) {
+    return "stafihub-public-testnet-1";
+  } else {
+    return "stafihub-testnet-1";
+  }
 }
 
 export function getChainRestEndpoint(chainId: string | undefined): string {

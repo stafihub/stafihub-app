@@ -12,7 +12,8 @@ export function useUnbondRelayFee(chainId: string | undefined) {
       const result = await queryUnbondRelayFee(denom);
       if (result) {
         setRelayFee(
-          atomicToHuman(result.fee?.value, getChainDecimals(chainId)) || "--"
+          atomicToHuman(result.fee?.value?.amount, getChainDecimals(chainId)) ||
+            "--"
         );
       }
     })();

@@ -40,7 +40,7 @@ export function useApy(chainId: string | undefined) {
           ((Number(currentRate) - Number(oldRate)) * 365.25 * 100) /
           (annualizedDay * Math.pow(10, getChainDecimals(chainId)));
 
-        apy = apy == 0 ? 7 : apy
+        apy = apy === 0 ? 7 : apy;
 
         setApy(apy.toString());
       }

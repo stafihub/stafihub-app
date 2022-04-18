@@ -162,11 +162,11 @@ export const Header = () => {
         }}
       >
         <div className="w-[120px]">
-          <div className="h-8 flex items-center justify-center text-[12px] text-text-black1 cursor-pointer">
+          {/* <div className="h-8 flex items-center justify-center text-[12px] text-text-black1 cursor-pointer">
             Info
           </div>
 
-          <div className="h-[1px] bg-divider-light" />
+          <div className="h-[1px] bg-divider-light" /> */}
 
           <div
             className="h-8 flex items-center justify-center text-[12px] text-text-black1 cursor-pointer"

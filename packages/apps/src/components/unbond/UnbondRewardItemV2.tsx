@@ -67,7 +67,7 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
         )}
       </div>
 
-      <div className="basis-[16%] text-[16px] text-white">
+      <div className="basis-[16%] text-[12px] text-white">
         {getTokenDisplayName(chainId)}
       </div>
 

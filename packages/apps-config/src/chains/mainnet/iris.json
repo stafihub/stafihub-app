@@ -1,7 +1,7 @@
 {
-  "chainName": "Irisnet",
+  "chainName": "IRISnet",
   "chainId": "iris-stafi-1",
-  "displayHubName": "IrisHub",
+  "displayHubName": "IRISHub",
   "rpc": "https://test-iris-rpc1.stafihub.io",
   "restEndpoint": "https://test-iris-rest1.stafihub.io",
   "denom": "uiris",

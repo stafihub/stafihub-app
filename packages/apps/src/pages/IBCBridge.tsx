@@ -379,6 +379,7 @@ export const IBCBridge = () => {
             <BridgeTokenSelector
               selectedToken={selectedChannelToken}
               data={tokenChannelList}
+              canTriggerSelect={!isLoading}
               onChange={setSelectedChannelToken}
             />
           </div>

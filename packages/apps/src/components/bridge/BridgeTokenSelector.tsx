@@ -10,6 +10,7 @@ import { IBCChannelToken } from "../../types/interface";
 interface BridgeTokenSelectorProps {
   selectedToken: IBCChannelToken | undefined | null;
   data: IBCChannelToken[] | null;
+  canTriggerSelect: boolean;
   onChange: (token: IBCChannelToken) => void;
 }
 
@@ -20,10 +21,10 @@ export const BridgeTokenSelector = (props: BridgeTokenSelectorProps) => {
   });
 
   const trigger = useMemo(() => {
-    return props.data && props.data.length > 0
+    return props.data && props.data.length > 0 && props.canTriggerSelect
       ? { ...bindTrigger(selectPopupState) }
       : {};
-  }, [selectPopupState, props.data]);
+  }, [selectPopupState, props.data, props.canTriggerSelect]);
 
   return (
     <>

@@ -16,6 +16,7 @@ import {
 import { addNoticeInternal, updateNoticeInternal } from "../../utils/notice";
 import snackbarUtil from "../../utils/snackbarUtils";
 import {
+  clearNetworkAllowedFlag,
   saveNetworkAllowedFlag,
   saveStorage,
   STORAGE_KEY_SLIPPAGE,
@@ -155,6 +156,7 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
   } catch (err: unknown) {
     if ((err as Error).message === "Request rejected") {
       snackbarUtil.error("Cancelled");
+      clearNetworkAllowedFlag(chainId);
     }
     console.log(`connect ${chainId} error`, err);
     return null;

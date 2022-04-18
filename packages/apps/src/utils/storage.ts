@@ -7,6 +7,10 @@ export function saveNetworkAllowedFlag(network: string) {
   saveStorage(getNetworkAllowedKey(network), "1");
 }
 
+export function clearNetworkAllowedFlag(network: string) {
+  removeStorage(getNetworkAllowedKey(network));
+}
+
 export function isNetworkAllowed(network: string) {
   return getStorage(getNetworkAllowedKey(network));
 }

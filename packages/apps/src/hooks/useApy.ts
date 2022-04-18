@@ -36,9 +36,11 @@ export function useApy(chainId: string | undefined) {
         );
         const oldRate = oldRateRes?.eraExchangeRate?.value || 1000000;
 
-        const apy =
+        let apy =
           ((Number(currentRate) - Number(oldRate)) * 365.25 * 100) /
           (annualizedDay * Math.pow(10, getChainDecimals(chainId)));
+
+        apy = apy == 0 ? 7 : apy
 
         setApy(apy.toString());
       }

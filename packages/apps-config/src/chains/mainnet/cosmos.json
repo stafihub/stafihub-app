@@ -1,5 +1,5 @@
 {
-  "chainName": "StaFi-Cosmos-Devnet",
+  "chainName": "Cosmos",
   "chainId": "cosmos-stafi-1",
   "displayHubName": "CosmosHub",
   "rpc": "https://test-cosmos-rpc1.stafihub.io",

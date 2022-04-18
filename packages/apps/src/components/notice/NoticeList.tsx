@@ -98,31 +98,36 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
               <Typography
                 variant="bold"
                 fontSize="14px"
-                color="#434A52"
+                color="#23292F"
                 lineHeight={1}
               >
                 {getNoticeTitle(notice)}
               </Typography>
             </Box>
 
-            <Box mt="6px">
-              <Typography fontSize="13px" color="#8E8E8E" lineHeight={1}>
+            <Box mt="8px">
+              <Typography fontSize="12px" color="#8E8E8E" lineHeight={1}>
                 {getNoticeContent(notice)}
               </Typography>
             </Box>
 
-            <Stack direction="row" justifyContent="space-between" mt="6px">
+            <Stack direction="row" justifyContent="space-between" mt="8px">
               <Typography
-                mt="2px"
                 fontSize="12px"
                 color="#8E8E8E"
                 lineHeight={1}
+                sx={{
+                  transform: "scale(0.8)",
+                  transformOrigin: "left center",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
               >
                 {formatDate(notice.timestamp)}
               </Typography>
 
               <Typography
-                fontSize="13px"
+                fontSize="12px"
                 color="primary"
                 lineHeight={1}
                 sx={{

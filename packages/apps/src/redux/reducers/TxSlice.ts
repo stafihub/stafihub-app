@@ -173,8 +173,11 @@ export const stake =
             visible: true,
             explorerUrl: getExplorerUrl(chainId),
             chainId: chainId,
+            txHash: "",
             eraNumber,
             sendingStatus: 1,
+            mintingStatus: 0,
+            stakingStatus: 0,
           })
         );
 

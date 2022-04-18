@@ -1,17 +1,26 @@
 import { getRTokenDisplayName } from "@stafihub/apps-config";
 import { useMemo } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { StakeTokenCard } from "../components/stake/StakeTokenCard";
+import { useAccounts } from "../hooks/useAppSlice";
 import { useRTokenList } from "../hooks/useRTokenList";
+import { connectKeplr } from "../redux/reducers/AppSlice";
 
 export const RTokenV2StakeList = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const rTokenList = useRTokenList();
+  const accounts = useAccounts();
 
   const selectedTab = useMemo(() => {
     return searchParams.get("tab") === "dashboard" ? "dashboard" : "stake";
   }, [searchParams]);
+
+  const enterStakePage = (chainId: string) => {
+    navigate(`/rToken/${getRTokenDisplayName(chainId)}/stake`);
+  };
 
   return (
     <div className="mt-16 min-h-[500px] relative flex flex-col items-center">
@@ -29,9 +38,17 @@ export const RTokenV2StakeList = () => {
               originTokenName={rToken.tokenName}
               derivativeTokenName={rToken.rTokenName}
               onClickStake={() => {
-                navigate(
-                  `/rToken/${getRTokenDisplayName(rToken.chainId)}/stake`
-                );
+                if (!accounts[rToken.chainId]) {
+                  dispatch(
+                    connectKeplr(rToken.chainId, (connected) => {
+                      if (connected) {
+                        enterStakePage(rToken.chainId);
+                      }
+                    })
+                  );
+                } else {
+                  enterStakePage(rToken.chainId);
+                }
               }}
             />
           </div>

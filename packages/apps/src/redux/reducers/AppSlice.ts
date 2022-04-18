@@ -14,6 +14,7 @@ import {
   NoticeType,
 } from "../../types/notice";
 import { addNoticeInternal, updateNoticeInternal } from "../../utils/notice";
+import snackbarUtil from "../../utils/snackbarUtils";
 import {
   saveNetworkAllowedFlag,
   saveStorage,
@@ -91,13 +92,17 @@ export const updateMultiAccounts =
   };
 
 export const connectKeplr =
-  (chainId: string | undefined): AppThunk =>
+  (
+    chainId: string | undefined,
+    callback?: (connected: boolean) => void
+  ): AppThunk =>
   async (dispatch, getState) => {
     if (!chainId) {
       return;
     }
 
-    _connectkeplr(dispatch, chainId);
+    const result = await _connectkeplr(dispatch, chainId);
+    callback && callback(!!result);
   };
 
 export const connectKeplrChains =
@@ -127,7 +132,7 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
     const accountResult = await getKeplrAccount(chainId);
 
     if (!accountResult) {
-      return;
+      return null;
     }
 
     const account: KeplrAccount = {
@@ -148,6 +153,9 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
 
     return { network: chainId, account };
   } catch (err: unknown) {
+    if ((err as Error).message === "Request rejected") {
+      snackbarUtil.error("Cancelled");
+    }
     console.log(`connect ${chainId} error`, err);
     return null;
   }

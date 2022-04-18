@@ -14,6 +14,7 @@ import {
   FormatterText,
   TokenIcon,
 } from "@stafihub/react-components";
+import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -114,6 +115,9 @@ export const StakeV2 = () => {
   };
 
   const setConnectedStafiHubAddress = () => {
+    if (isLoading) {
+      return;
+    }
     if (!stafiHubAccount) {
       dispatch(connectKeplr(getStafiHubChainId()));
       return;
@@ -151,8 +155,14 @@ export const StakeV2 = () => {
 
           <div className="flex items-center">
             <div
-              className="text-primary text-[16px] cursor-pointer"
+              className={classNames(
+                "text-primary text-[16px]",
+                isLoading ? "cursor-default" : "cursor-pointer"
+              )}
               onClick={() => {
+                if (isLoading) {
+                  return;
+                }
                 if (
                   !isNaN(Number(transferrableAmount)) &&
                   Number(transferrableAmount) > 0.05
@@ -193,7 +203,10 @@ export const StakeV2 = () => {
         </div>
 
         <div
-          className="mx-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
+          className={classNames(
+            "mx-[10px] text-primary text-[12px] w-[63px] text-center",
+            isLoading ? "cursor-default" : "cursor-pointer"
+          )}
           onClick={setConnectedStafiHubAddress}
         >
           Connected Address
@@ -201,8 +214,8 @@ export const StakeV2 = () => {
       </div>
 
       <div className="mt-[10px] w-[494px] text-text-gray8 text-[12px]">
-        Note: Make sure you have the right address, otherwise you will not
-        receive the token if you provide a wrong address.
+        Note: Please ensure you have input the correct address. Failure to do so
+        may cause you to lose your tokens.
       </div>
 
       <div className="self-center mt-14 flex items-center">
@@ -262,14 +275,24 @@ export const StakeV2 = () => {
           bgPrimary
           type="rectangle"
           height={56}
-          onClick={() => setMemoNoticeModalVisible(true)}
+          onClick={() => {
+            if (!stafiHubAccount) {
+              dispatch(connectKeplr(getStafiHubChainId()));
+              return;
+            }
+            setMemoNoticeModalVisible(true);
+          }}
           disabled={
-            buttonDisabled || Number(inputAmount) > Number(transferrableAmount)
+            stafiHubAccount &&
+            (buttonDisabled ||
+              Number(inputAmount) > Number(transferrableAmount))
           }
           loading={isLoading}
         >
-          {Number(inputAmount) > 0 &&
-          Number(inputAmount) > Number(transferrableAmount) ? (
+          {!stafiHubAccount ? (
+            "Connect StaFi-Hub Wallet"
+          ) : Number(inputAmount) > 0 &&
+            Number(inputAmount) > Number(transferrableAmount) ? (
             "Insufficient Balance"
           ) : (
             <div>

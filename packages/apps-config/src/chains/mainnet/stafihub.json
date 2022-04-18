@@ -1,5 +1,5 @@
 {
-  "chainName": "stafiHub",
+  "chainName": "staFi-Hub",
   "chainId": "stafihub-testnet-1",
   "displayHubName": "StaFiHub",
   "rpc": "https://test-rpc1.stafihub.io",

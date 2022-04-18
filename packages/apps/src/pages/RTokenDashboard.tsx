@@ -217,7 +217,7 @@ export const RTokenDashboard = () => {
             <div className="mt-7 w-[290px] h-[0.5px] bg-divider" />
 
             <div className="mt-5 w-[240px] text-[#aaaaaa] text-[20px]">
-              Total Redeemable Reward since stake
+              Total Redeemable Reward
             </div>
 
             <div className="mt-7 flex items-center">

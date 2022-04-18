@@ -44,7 +44,14 @@ export const StakeRedeemV2 = () => {
     if (isNaN(Number(unbondCommission)) || isNaN(Number(inputAmount))) {
       return "--";
     }
-    return (Number(inputAmount) * Number(unbondCommission)).toString();
+    const cal = Number(inputAmount) * Number(unbondCommission);
+    if (cal < 0.01) {
+      return "<0.01";
+    } else {
+      return formatNumberToFixed(
+        Number(inputAmount) * Number(unbondCommission)
+      );
+    }
   }, [unbondCommission, inputAmount]);
 
   const willGetAmount = useMemo(() => {
@@ -180,7 +187,7 @@ export const StakeRedeemV2 = () => {
         inputAmount={inputAmount}
         receiveAddress={receivingAddress}
         willGetAmount={formatNumberToFixed(willGetAmount)}
-        commissionFee={formatNumberToFixed(commissionFee)}
+        commissionFee={commissionFee}
       />
     </div>
   );

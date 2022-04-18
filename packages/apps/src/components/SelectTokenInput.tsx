@@ -91,17 +91,15 @@ export const SelectTokenInput = (props: SelectTokenInputProps) => {
               </div>
             )}
 
-            {props.selectable && (
-              <Box
-                style={{
-                  alignSelf: "flex-end",
-                  marginBottom: "7px",
-                  marginLeft: "4px",
-                }}
-              >
-                <img src={downIcon} width="7px" height="4px" alt="down" />
-              </Box>
-            )}
+            <Box
+              style={{
+                alignSelf: "flex-end",
+                marginBottom: "7px",
+                marginLeft: "4px",
+              }}
+            >
+              <img src={downIcon} width="7px" height="4px" alt="down" />
+            </Box>
           </Stack>
         </Stack>
       </Stack>

@@ -1,4 +1,5 @@
 import { CustomInput } from "@stafihub/react-components";
+import classNames from "classnames";
 import { useDispatch } from "react-redux";
 import { useAccounts } from "../../hooks/useAppSlice";
 import { connectKeplr } from "../../redux/reducers/AppSlice";
@@ -46,7 +47,10 @@ export const SwapAddressInput = (props: SwapAddressInputProps) => {
 
         {props.chainId && (
           <div
-            className="mx-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
+            className={classNames(
+              "mx-[10px] text-primary text-[12px] w-[63px] text-center",
+              { "cursor-pointer": !props.disabled }
+            )}
             onClick={clickConnectedAddress}
           >
             Connected Address

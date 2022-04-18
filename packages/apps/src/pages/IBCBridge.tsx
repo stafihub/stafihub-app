@@ -12,6 +12,7 @@ import { queryChannel } from "@stafihub/apps-wallet";
 import { Button, CardContainer } from "@stafihub/react-components";
 import { State } from "@stafihub/types";
 import * as _ from "lodash";
+import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -342,14 +343,20 @@ export const IBCBridge = () => {
               <BridgeChainSelector
                 data={chainArr}
                 selectedChain={chainPair.src}
+                canTriggerSelect={!isLoading}
                 onChange={handleSrcChainChange}
               />
             </div>
             <img
               src={iconArrow}
-              className="w-7 h-7 z-10 cursor-pointer"
+              className={classNames("w-7 h-7 z-10", {
+                "cursor-pointer": !isLoading,
+              })}
               alt="switch"
               onClick={() => {
+                if (isLoading) {
+                  return;
+                }
                 setChainPair({
                   src: chainPair.dst,
                   dst: chainPair.src,
@@ -362,6 +369,7 @@ export const IBCBridge = () => {
               <BridgeChainSelector
                 data={chainArr}
                 selectedChain={chainPair.dst}
+                canTriggerSelect={!isLoading}
                 onChange={handleDstChainChange}
               />
             </div>

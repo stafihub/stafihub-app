@@ -7,11 +7,13 @@ import {
   bindTrigger,
   usePopupState,
 } from "material-ui-popup-state/hooks";
+import { useMemo } from "react";
 import iconDown from "../../assets/images/icon_down_gray.svg";
 
 interface BridgeChainSelectorProps {
   selectedChain: KeplrChainParams | null | undefined;
   data: KeplrChainParams[];
+  canTriggerSelect: boolean;
   onChange: (chain: KeplrChainParams) => void;
 }
 
@@ -21,11 +23,15 @@ export const BridgeChainSelector = (props: BridgeChainSelectorProps) => {
     popupId: "select",
   });
 
+  const trigger = useMemo(() => {
+    return props.canTriggerSelect ? { ...bindTrigger(selectPopupState) } : {};
+  }, [selectPopupState, props.canTriggerSelect]);
+
   return (
     <>
       <div
         className="rounded-[4px] bg-[#23292f] h-12 pl-8 pr-5 flex items-center justify-between cursor-pointer"
-        {...bindTrigger(selectPopupState)}
+        {...trigger}
       >
         {props.selectedChain ? (
           <div className="text-[16px] font-bold text-white">

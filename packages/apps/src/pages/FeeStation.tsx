@@ -65,7 +65,7 @@ export const FeeStation = (props: {}) => {
 
   const [buttonDisabled, buttonText]: [boolean, string] = useMemo(() => {
     if (selectedPool && !stafiHubAccount) {
-      return [false, `Connect StafiHub`];
+      return [false, `Connect StaFi-Hub Wallet`];
     }
     if (selectedPool && !chainAccount) {
       return [false, `Connect ${selectedPool.chainName}`];
@@ -226,7 +226,7 @@ export const FeeStation = (props: {}) => {
             disabled={!selectedPool || isLoading}
             value={inputAmount}
             handleValueChange={(v) => handleAmountChange(true, v)}
-            selectable
+            selectable={!isLoading}
             selectedToken={selectedPool}
             triggerSelect={() => setDisplayStatus(DisplayStatus.SelectInput)}
             onClickMax={() => {

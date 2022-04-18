@@ -68,7 +68,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[40px] text-text-gray4 text-[20px]">
-          -Date: around {bondingDays} D
+          -Date: around {bondingDays} {Number(bondingDays) > 1 ? "days" : "day"}
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">

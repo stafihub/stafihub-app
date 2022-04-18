@@ -7,7 +7,7 @@ import {
 } from "material-ui-popup-state/hooks";
 import { RTokenItem, useRTokenList } from "../../hooks/useRTokenList";
 import { useMatch, useParams, useNavigate } from "react-router-dom";
-import { TokenIcon, FormatterText, Icon } from "@stafihub/react-components";
+import { RTokenIcon, FormatterText, Icon } from "@stafihub/react-components";
 import iconClose from "../../assets/images/icon_close_dark.svg";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 
@@ -118,7 +118,7 @@ const TokenItem = (props: TokenItemProps) => {
         })}
       >
         <div className="flex items-center">
-          <TokenIcon tokenName={item.tokenName} size={36} withBorder />
+          <RTokenIcon rtokenName={item.rTokenName} size={36} withBorder />
 
           <div className={classNames("ml-[10px] text-[16px] text-text-black1")}>
             {item.rTokenName}

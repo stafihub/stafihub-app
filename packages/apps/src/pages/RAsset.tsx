@@ -57,10 +57,9 @@ export const RAsset = () => {
         ))}
 
         <div className="self-stretch mt-16 flex justify-end items-center">
-          <div className="text-[16px] text-text-gray3">
-            Total Staked Value ($)
-          </div>
+          <div className="text-[16px] text-text-gray3">Total Staked Value</div>
           <div className="ml-2 text-[20px] font-bold text-white">
+            {!isNaN(Number(totalStakedValue)) && "$"}{" "}
             <FormatterText value={totalStakedValue} decimals={2} />
           </div>
         </div>

@@ -126,7 +126,7 @@ export const StakeV2 = () => {
   };
 
   return (
-    <div className="w-[480px] pb-[45px] flex flex-col items-stretch">
+    <div className="w-[490px] pb-[45px] flex flex-col items-stretch">
       <div className="flex items-center self-center">
         <img src={iconStakeMenu} alt="menu" className="w-6 h-6" />
         <div className="ml-1 text-white font-bold text-[30px]">
@@ -213,7 +213,7 @@ export const StakeV2 = () => {
         </div>
       </div>
 
-      <div className="mt-[10px] w-[494px] text-text-gray8 text-[12px]">
+      <div className="mt-[10px] text-text-gray8 text-[12px]">
         Note: Please ensure you have input the correct address. Failure to do so
         may cause you to lose your tokens.
       </div>

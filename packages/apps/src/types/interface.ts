@@ -69,3 +69,20 @@ export interface PriceItem {
   denom: string;
   price: string;
 }
+
+export interface RTokenRewardData {
+  last24hReward: string;
+  lastEraReward: string;
+  totalReward: string;
+  eraRewardList: EraRewardItem[];
+  chartXData: string[];
+  chartYData: string[];
+}
+
+export interface EraRewardItem {
+  era: number;
+  rate: string;
+  stakeValue: string;
+  rTokenBalance: string;
+  reward: string;
+}

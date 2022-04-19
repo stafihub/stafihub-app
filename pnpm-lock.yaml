@@ -163,9 +163,10 @@ importers:
       '@testing-library/user-event': ^13.2.1
       autoprefixer: ^10.4.2
       classnames: ^2.3.1
+      echarts: ^5.3.2
+      echarts-for-react: ^3.0.2
       icomoon-react: ^2.0.19
       postcss: ^8.4.6
-      react-icomoon: ^2.5.3
       react-loading: ^2.0.3
       react-router-dom: '6'
       react-scripts: 5.0.0
@@ -179,8 +180,9 @@ importers:
       '@testing-library/react': 12.1.4_react-dom@17.0.2+react@17.0.2
       '@testing-library/user-event': 13.5.0
       classnames: 2.3.1
+      echarts: 5.3.2
+      echarts-for-react: 3.0.2_echarts@5.3.2+react@17.0.2
       icomoon-react: 2.0.19
-      react-icomoon: 2.5.3_react@17.0.2
       react-loading: 2.0.3_react@17.0.2
       react-router-dom: 6.2.2_react-dom@17.0.2+react@17.0.2
       react-scripts: 5.0.0_d6d4be9bc5e21444469c50dac1badcb4
@@ -5082,6 +5084,25 @@ packages:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
     dev: false
 
+  /echarts-for-react/3.0.2_echarts@5.3.2+react@17.0.2:
+    resolution: {integrity: sha512-DRwIiTzx8JfwPOVgGttDytBqdp5VzCSyMRIxubgU/g2n9y3VLUmF2FK7Icmg/sNVkv4+rktmrLN9w22U2yy3fA==}
+    peerDependencies:
+      echarts: ^3.0.0 || ^4.0.0 || ^5.0.0
+      react: ^15.0.0 || >=16.0.0
+    dependencies:
+      echarts: 5.3.2
+      fast-deep-equal: 3.1.3
+      react: 17.0.2
+      size-sensor: 1.0.1
+    dev: false
+
+  /echarts/5.3.2:
+    resolution: {integrity: sha512-LWCt7ohOKdJqyiBJ0OGBmE9szLdfA9sGcsMEi+GGoc6+Xo75C+BkcT/6NNGRHAWtnQl2fNow05AQjznpap28TQ==}
+    dependencies:
+      tslib: 2.3.0
+      zrender: 5.3.1
+    dev: false
+
   /ee-first/1.1.1:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: false
@@ -9146,14 +9167,6 @@ packages:
     resolution: {integrity: sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA==}
     dev: false
 
-  /react-icomoon/2.5.3_react@17.0.2:
-    resolution: {integrity: sha512-7qtBJg+rJu6YorDNB173mD9bJyoPr2dueH4QbBrKlU5x2K1TN1v3WVl6yMntyPqJ8nKb5P6a/IPgjQhHU9BPrg==}
-    peerDependencies:
-      react: ^16.4.1 || ^17.0.0
-    dependencies:
-      react: 17.0.2
-    dev: false
-
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -9921,6 +9934,10 @@ packages:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: false
 
+  /size-sensor/1.0.1:
+    resolution: {integrity: sha512-QTy7MnuugCFXIedXRpUSk9gUnyNiaxIdxGfUjr8xxXOqIB3QvBUYP9+b51oCg2C4dnhaeNk/h57TxjbvoJrJUA==}
+    dev: false
+
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -10516,6 +10533,10 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: false
+
+  /tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
     dev: false
 
   /tslib/2.3.1:
@@ -11238,4 +11259,10 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: false
+
+  /zrender/5.3.1:
+    resolution: {integrity: sha512-7olqIjy0gWfznKr6vgfnGBk7y4UtdMvdwFmK92vVQsQeDPyzkHW1OlrLEKg6GHz1W5ePf0FeN1q2vkl/HFqhXw==}
+    dependencies:
+      tslib: 2.3.0
     dev: false

@@ -2,6 +2,7 @@ import {
   getChainIdFromRTokenDisplayName,
   getDenom,
   getRTokenDenom,
+  getStafiHubChainId,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
 import {
@@ -9,35 +10,49 @@ import {
   FormatterText,
   RTokenIcon,
   TokenIcon,
+  EraRewardChart,
 } from "@stafihub/react-components";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import iconApy from "../assets/images/icon_apy.svg";
 import iconBarLine from "../assets/images/icon_bar_line.svg";
 import iconReward from "../assets/images/icon_rAsset_reward.svg";
 // import iconSwitch from "../assets/images/icon_switch.svg";
 import iconWaveLine from "../assets/images/icon_wave_line.svg";
+import nodata from "../assets/images/nodata.png";
 import { DashboardRecords } from "../components/stake/DashboardRecords";
+import { useAccountReward } from "../hooks/useAccountReward";
+import { useChainAccount, usePriceFromDenom } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
-import nodata from "../assets/images/nodata.png";
 import { TradeModal } from "../modals/TradeModal";
-import { usePriceFromDenom } from "../hooks/useAppSlice";
+import { updateRTokenReward } from "../redux/reducers/ChainSlice";
 
 export const RTokenDashboard = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const tokenName = getTokenDisplayName(chainId);
   const rTokenDenom = getRTokenDenom(chainId);
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const tokenPrice = usePriceFromDenom(getDenom(chainId));
   const rTokenPrice = usePriceFromDenom(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(chainId);
   const { exchangeRate, eraHours } = useStakePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
-
   const [tradeModalVisible, setTradeModalVisible] = useState(false);
+  const { last24hReward, lastEraReward, totalReward, chartXData, chartYData } =
+    useAccountReward(chainId);
+
+  useEffect(() => {
+    if (stafiHubAccount) {
+      // Update reward data.
+      dispatch(updateRTokenReward(rTokenDenom));
+    }
+  }, [dispatch, rTokenDenom, stafiHubAccount]);
 
   const stakedAmount = useMemo(() => {
     if (
@@ -223,7 +238,9 @@ export const RTokenDashboard = () => {
             </div>
 
             <div className="mt-7 flex items-center">
-              <div className="text-white font-bold text-[30px]">+ 0.00</div>
+              <div className="text-white font-bold text-[30px]">
+                + <FormatterText value={last24hReward} decimals={2} />
+              </div>
 
               <div className="ml-5">
                 <TokenIcon tokenName={getTokenDisplayName(chainId)} size={26} />
@@ -237,7 +254,9 @@ export const RTokenDashboard = () => {
             </div>
 
             <div className="mt-7 flex items-center">
-              <div className="text-white font-bold text-[30px]">+ 0.00</div>
+              <div className="text-white font-bold text-[30px]">
+                + <FormatterText value={totalReward} decimals={2} />
+              </div>
 
               <div className="ml-5">
                 <TokenIcon tokenName={getTokenDisplayName(chainId)} size={26} />
@@ -258,7 +277,7 @@ export const RTokenDashboard = () => {
 
                 <div className="mt-2 flex">
                   <div className="text-secondary text-[14px]">
-                    +0.00 {getTokenDisplayName(chainId)}
+                    +{lastEraReward} {getTokenDisplayName(chainId)}
                   </div>
 
                   <div className="ml-[4px] text-white text-[14px]">
@@ -271,13 +290,17 @@ export const RTokenDashboard = () => {
             <div className="mt-2 h-[0.5px] bg-divider" />
 
             <div className="mt-2 h-[320px]">
-              <div className="flex justify-center">
-                <img
-                  src={nodata}
-                  alt="no data"
-                  className="mt-[80px] w-[146px]"
-                />
-              </div>
+              {chartXData && chartXData.length > 0 ? (
+                <EraRewardChart xData={chartXData} yData={chartYData} />
+              ) : (
+                <div className="flex justify-center">
+                  <img
+                    src={nodata}
+                    alt="no data"
+                    className="mt-[80px] w-[146px]"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

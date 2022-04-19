@@ -1,15 +1,17 @@
 import { Decimal, Uint64 } from "@cosmjs/math";
 
 export function atomicToHuman(
-  atomics: string | undefined | null,
-  fractionalDigits: number = 6
+  atomics: string | number | undefined | null,
+  fractionalDigits: number = 6,
+  decimals: number = 2
 ): string {
+  console.log("atomics", atomics);
   if (!atomics || isNaN(Number(atomics))) {
     return "--";
   }
-  const decimal = Decimal.fromAtomics(atomics, fractionalDigits);
+  const decimal = Decimal.fromAtomics(atomics.toString(), fractionalDigits);
 
-  return formatNumberToFixed(decimal.toString());
+  return formatNumberToFixed(decimal.toString(), decimals);
 }
 
 export function humanToAtomic(

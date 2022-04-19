@@ -12,6 +12,8 @@
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
     "classnames": "^2.3.1",
+    "echarts": "^5.3.2",
+    "echarts-for-react": "^3.0.2",
     "icomoon-react": "^2.0.19",
     "react-loading": "^2.0.3",
     "react-router-dom": "6",

@@ -1,13 +1,19 @@
 import { Tooltip } from "@mui/material";
 import { FormatterText, RTokenIcon } from "@stafihub/react-components";
-import { getRTokenDenom } from "@stafihub/apps-config";
-import { useMemo, useState } from "react";
+import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
+import { useEffect, useMemo, useState } from "react";
 // import iconDown from "../../assets/images/icon_down_white.png";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 import { useApy } from "../../hooks/useApy";
 import { useNavigate } from "react-router-dom";
 import { TradeModal } from "../../modals/TradeModal";
+import { useAccountReward } from "../../hooks/useAccountReward";
+import { useChainAccount } from "../../hooks/useAppSlice";
+import { useDispatch } from "react-redux";
+import { updateRTokenReward } from "../../redux/reducers/ChainSlice";
+import { atomicToHuman } from "@stafihub/apps-util";
+import classNames from "classnames";
 
 interface RAssetItemProps {
   chainId: string;
@@ -16,12 +22,21 @@ interface RAssetItemProps {
 }
 
 export const RAssetItem = (props: RAssetItemProps) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const { stakeStatus } = useChainStakeStatus(props.chainId);
   const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
   const apy = useApy(props.chainId);
+  const { originLast24hReward } = useAccountReward(props.chainId);
 
   const [tradeModalVisible, setTradeModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (stafiHubAccount) {
+      dispatch(updateRTokenReward(getRTokenDenom(props.chainId)));
+    }
+  }, [props.chainId, dispatch, stafiHubAccount]);
 
   const myStakedAmount = useMemo(() => {
     if (
@@ -33,6 +48,34 @@ export const RAssetItem = (props: RAssetItemProps) => {
     }
     return Number(stakeStatus.rTokenBalance) * Number(exchangeRate);
   }, [stakeStatus, exchangeRate]);
+
+  const [rewardText, highlight, hasBorder] = useMemo(() => {
+    if (isNaN(Number(originLast24hReward))) {
+      return ["--", false, false];
+    }
+    if (Number(originLast24hReward) === 0) {
+      return ["0", false, false];
+    }
+    if (Number(originLast24hReward) <= -Math.pow(10, 4)) {
+      return ["-" + atomicToHuman(originLast24hReward, 6), true, true];
+    }
+    if (
+      Number(originLast24hReward) < 0 &&
+      Number(originLast24hReward) > -Math.pow(10, 4)
+    ) {
+      return ["-<0.01", true, true];
+    }
+    if (Number(originLast24hReward) >= -Math.pow(10, 4)) {
+      return ["+" + atomicToHuman(originLast24hReward, 6), true, true];
+    }
+    if (
+      Number(originLast24hReward) > 0 &&
+      Number(originLast24hReward) < Math.pow(10, 4)
+    ) {
+      return ["<0.01", true, true];
+    }
+    return ["--", false, false];
+  }, [originLast24hReward]);
 
   return (
     <>
@@ -57,8 +100,16 @@ export const RAssetItem = (props: RAssetItemProps) => {
               title="The increased amount of Staked ETH within the last 24h."
               placement="right"
             >
-              <div className="ml-1 text-[12px] text-secondary border-dashed border-b-[1px] border-secondary scale-[0.8] origin-center">
-                +0.00
+              <div
+                className={classNames(
+                  "ml-1 text-[12px] text-secondary border-dashed  border-secondary scale-[0.8] origin-center",
+                  { "border-b-[1px]": hasBorder },
+                  highlight
+                    ? "border-secondary text-secondary"
+                    : "text-text-gray2 border-text-gray2"
+                )}
+              >
+                {rewardText}
               </div>
             </Tooltip>
           </div>

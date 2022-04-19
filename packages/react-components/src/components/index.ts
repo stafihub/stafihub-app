@@ -9,3 +9,4 @@ export * from "./TokenIcon";
 export * from "./RTokenIcon";
 export * from "./TokenIconLarge";
 export * from "./Icon";
+export * from "./EraRewardChart";

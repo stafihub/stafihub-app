@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getRTokenDenom } from "@stafihub/apps-config";
+import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
 import { queryChainEra } from "@stafihub/apps-wallet";
-import { ChainStakeStatus } from "../../types/interface";
+import { ChainStakeStatus, RTokenRewardData } from "../../types/interface";
 import { AppThunk } from "../store";
 
 // { chainId:ChainStakeStatus }
@@ -9,14 +9,19 @@ type ChainStakeStatusMap = { [key: string]: ChainStakeStatus | undefined };
 
 type ChainEraMap = { [key: string]: number };
 
+// { uratom:ChainStakeStatus }
+type RTokenRewardStore = { [key: string]: RTokenRewardData | undefined };
+
 export interface ChainState {
   chainStakeStatusMap: ChainStakeStatusMap;
   chainEras: ChainEraMap;
+  rTokenRewardStore: RTokenRewardStore;
 }
 
 const initialState: ChainState = {
   chainStakeStatusMap: {},
   chainEras: {},
+  rTokenRewardStore: {},
 };
 
 export const chainSlice = createSlice({
@@ -32,10 +37,17 @@ export const chainSlice = createSlice({
     setChainEras: (state: ChainState, action: PayloadAction<ChainEraMap>) => {
       state.chainEras = action.payload;
     },
+    setRTokenRewardStore: (
+      state: ChainState,
+      action: PayloadAction<RTokenRewardStore>
+    ) => {
+      state.rTokenRewardStore = action.payload;
+    },
   },
 });
 
-export const { setChainStakeStatusMap, setChainEras } = chainSlice.actions;
+export const { setChainStakeStatusMap, setChainEras, setRTokenRewardStore } =
+  chainSlice.actions;
 
 export default chainSlice.reducer;
 
@@ -75,4 +87,47 @@ export const updateChainEras =
       ...eraMap,
     };
     dispatch(setChainEras(newChainEras));
+  };
+
+/**
+ * Query rToken rewards.
+ * @param denom uratom
+ */
+export const updateRTokenReward =
+  (denom: string): AppThunk =>
+  async (dispatch, getState) => {
+    const stafiHubAccount = getState().app.accounts[getStafiHubChainId()];
+    if (!stafiHubAccount) {
+      return;
+    }
+
+    const res = await fetch(
+      "https://test-rtoken-api.stafihub.io/rtokenInfo/webapi/rtoken/reward",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chainType: 80,
+          userAddress: stafiHubAccount.bech32Address,
+          rTokenDenom: denom,
+          pageIndex: 0,
+          pageCount: 10,
+        }),
+      }
+    );
+
+    const resJson = await res.json();
+    const rewardStore: RTokenRewardStore = {};
+
+    if (resJson.status === "80000" && resJson.data) {
+      rewardStore[denom] = resJson.data;
+    }
+
+    const newRewardStore = {
+      ...getState().chain.rTokenRewardStore,
+      ...rewardStore,
+    };
+    dispatch(setRTokenRewardStore(newRewardStore));
   };

@@ -241,7 +241,7 @@ export const FeeStation = (props: {}) => {
         </Box>
 
         <div className="mt-1 text-text-gray4 text-[12px] scale-[0.8] origin-center self-end">
-          Balance: <FormatterText value={transferrableBalance} decimals={2} />
+          Balance: <FormatterText value={transferrableBalance} />
         </div>
 
         <Box mt="-5px" alignSelf="center">
@@ -276,8 +276,7 @@ export const FeeStation = (props: {}) => {
             })}
           >
             1 {selectedPool?.symbol.slice(1).toUpperCase()} ={" "}
-            <FormatterText value={selectedPool?.formatSwapRate} decimals={2} />{" "}
-            FIS
+            <FormatterText value={selectedPool?.formatSwapRate} /> FIS
           </div>
         </Box>
 

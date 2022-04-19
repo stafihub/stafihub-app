@@ -58,7 +58,7 @@ export const StakeReward = () => {
         <div>Staked Value</div>
 
         <div>
-          $ <FormatterText value={myStakedValue} decimals={2} />
+          $ <FormatterText value={myStakedValue} />
         </div>
       </div>
 

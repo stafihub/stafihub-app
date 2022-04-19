@@ -50,7 +50,7 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
 
       <div className="basis-4/12 text-[14px]">
         {!isNaN(Number(liquidity)) && "$"}
-        <FormatterText value={liquidity} decimals={2} />
+        <FormatterText value={liquidity} />
       </div>
 
       <div className="basis-3/12 text-[14px]">

@@ -135,7 +135,7 @@ export const StakeV2 = () => {
       </div>
 
       <div className="self-center mt-[12px] text-text-gray4 text-[14px]">
-        <FormatterText value={totalStakedAmount} decimals={2} />{" "}
+        <FormatterText value={totalStakedAmount} />{" "}
         {getTokenDisplayName(chainId)} is currently staked
       </div>
 
@@ -168,7 +168,7 @@ export const StakeV2 = () => {
                   Number(transferrableAmount) > 0.05
                 ) {
                   setInputAmount(
-                    formatNumberToFixed(Number(transferrableAmount) - 0.05, 2)
+                    formatNumberToFixed(Number(transferrableAmount) - 0.05)
                   );
                 }
               }}
@@ -185,8 +185,7 @@ export const StakeV2 = () => {
         </div>
 
         <div className="mr-[60px] mt-[10px] text-white text-[12px]">
-          Transferable:{" "}
-          <FormatterText value={transferrableAmount} decimals={2} />
+          Transferable: <FormatterText value={transferrableAmount} />
         </div>
       </div>
 
@@ -296,7 +295,7 @@ export const StakeV2 = () => {
             "Insufficient Balance"
           ) : (
             <div>
-              You will get <FormatterText value={willGetAmount} decimals={2} />{" "}
+              You will get <FormatterText value={willGetAmount} />{" "}
               {getRTokenDisplayName(chainId)}
             </div>
           )}

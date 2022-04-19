@@ -19,10 +19,10 @@ export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
     if (Number(humanReward) === 0) {
       return ["0", false];
     }
-    if (Number(humanReward) > 0 && Number(humanReward) < 0.01) {
-      return ["<0.01", true];
+    if (Number(humanReward) > 0 && Number(humanReward) < 0.0001) {
+      return ["<0.0001", true];
     }
-    return ["+" + formatNumberToFixed(humanReward, 2), true];
+    return ["+" + formatNumberToFixed(humanReward), true];
   }, [eraReward]);
 
   return (
@@ -30,21 +30,15 @@ export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
       <div className="basis-3/12 text-white pl-5">{eraReward.era}</div>
 
       <div className="basis-4/12 text-white">
-        <FormatterText
-          value={atomicToHuman(eraReward.stakeValue, 6)}
-          decimals={2}
-        />
+        <FormatterText value={atomicToHuman(eraReward.stakeValue, 6)} />
       </div>
 
       <div className="basis-4/12 text-white">
-        <FormatterText value={atomicToHuman(eraReward.rate, 6)} decimals={2} />
+        <FormatterText value={atomicToHuman(eraReward.rate, 6)} />
       </div>
 
       <div className="basis-3/12 text-white">
-        <FormatterText
-          value={atomicToHuman(eraReward.rTokenBalance, 6)}
-          decimals={2}
-        />
+        <FormatterText value={atomicToHuman(eraReward.rTokenBalance, 6)} />
       </div>
 
       <div

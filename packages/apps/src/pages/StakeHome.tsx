@@ -124,7 +124,7 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-[12px] text-text-gray4 text-[14px]">
-        <FormatterText value={totalStakedAmount} decimals={2} />{" "}
+        <FormatterText value={totalStakedAmount} />{" "}
         {getTokenDisplayName(chainId)} is currently staked
       </div>
 
@@ -179,8 +179,7 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-[2px] font-bold text-primary text-[30px]">
-        <FormatterText value={willGetAmount} decimals={2} />{" "}
-        {getRTokenDisplayName(chainId)}
+        <FormatterText value={willGetAmount} /> {getRTokenDisplayName(chainId)}
       </div>
 
       <div className="mt-6 flex items-end">

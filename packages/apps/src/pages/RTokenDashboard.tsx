@@ -136,15 +136,11 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="mt-5 text-white font-bold text-[50px]">
-                <FormatterText
-                  value={stakeStatus?.rTokenBalance}
-                  decimals={2}
-                />
+                <FormatterText value={stakeStatus?.rTokenBalance} />
               </div>
 
               <div className="mt-4 text-text-gray7 text-[14px]">
-                <FormatterText value={stakedAmount} decimals={2} /> {tokenName}{" "}
-                staked
+                <FormatterText value={stakedAmount} /> {tokenName} staked
               </div>
             </div>
           </div>
@@ -153,7 +149,7 @@ export const RTokenDashboard = () => {
             <div className="flex items-center">
               <img src={iconWaveLine} alt="wave line" className="w-6 h-6" />
               <div className="ml-1 text-white font-bold text-[20px]">
-                $<FormatterText value={rTokenValue} decimals={2} />
+                $<FormatterText value={rTokenValue} />
               </div>
             </div>
 
@@ -178,7 +174,7 @@ export const RTokenDashboard = () => {
             <div className="flex items-center">
               <img src={iconBarLine} alt="bar line" className="w-6 h-6" />
               <div className="ml-1 text-white font-bold text-[20px]">
-                $<FormatterText value={redeemableValue} decimals={2} />
+                $<FormatterText value={redeemableValue} />
               </div>
             </div>
 
@@ -205,7 +201,7 @@ export const RTokenDashboard = () => {
               <img src={iconApy} alt="apy" className="w-6 h-6" />
 
               <div className="ml-1 text-white font-bold text-[20px]">
-                <FormatterText value={exchangeRate} decimals={2} />
+                <FormatterText value={exchangeRate} />
               </div>
             </div>
 
@@ -239,7 +235,7 @@ export const RTokenDashboard = () => {
 
             <div className="mt-7 flex items-center">
               <div className="text-white font-bold text-[30px]">
-                + <FormatterText value={last24hReward} decimals={2} />
+                + <FormatterText value={last24hReward} />
               </div>
 
               <div className="ml-5">
@@ -255,7 +251,7 @@ export const RTokenDashboard = () => {
 
             <div className="mt-7 flex items-center">
               <div className="text-white font-bold text-[30px]">
-                + <FormatterText value={totalReward} decimals={2} />
+                + <FormatterText value={totalReward} />
               </div>
 
               <div className="ml-5">
@@ -272,7 +268,7 @@ export const RTokenDashboard = () => {
 
               <div className="flex flex-col items-end">
                 <div className="text-[22px] font-bold text-white">
-                  $ <FormatterText value={stakedValue} decimals={2} />
+                  $ <FormatterText value={stakedValue} />
                 </div>
 
                 <div className="mt-2 flex">

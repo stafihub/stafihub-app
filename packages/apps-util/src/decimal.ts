@@ -3,9 +3,8 @@ import { Decimal, Uint64 } from "@cosmjs/math";
 export function atomicToHuman(
   atomics: string | number | undefined | null,
   fractionalDigits: number = 6,
-  decimals: number = 2
+  decimals: number = 4
 ): string {
-  console.log("atomics", atomics);
   if (!atomics || isNaN(Number(atomics))) {
     return "--";
   }
@@ -31,7 +30,7 @@ export function humanToAtomic(
 
 export function formatNumberToFixed(
   num: string | number | undefined,
-  decimals: number = 2
+  decimals: number = 4
 ) {
   if (num === undefined || num === "") {
     return "--";

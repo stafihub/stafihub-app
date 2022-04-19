@@ -128,7 +128,7 @@ const TokenItem = (props: TokenItemProps) => {
         <div
           className={classNames("mr-2 font-bold text-[16px] text-text-black1")}
         >
-          <FormatterText value={stakeStatus?.rTokenBalance} decimals={2} />
+          <FormatterText value={stakeStatus?.rTokenBalance} />
         </div>
       </div>
 

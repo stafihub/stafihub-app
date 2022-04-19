@@ -95,7 +95,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
 
         <div className="basis-4/12 text-[16px]">
           <div className="flex items-center">
-            <FormatterText value={myStakedAmount} decimals={2} />
+            <FormatterText value={myStakedAmount} />
             <Tooltip
               title="The increased amount of Staked ETH within the last 24h."
               placement="right"
@@ -116,7 +116,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
         </div>
 
         <div className="basis-3/12 text-[16px]">
-          <FormatterText value={stakeStatus?.rTokenBalance} decimals={2} />
+          <FormatterText value={stakeStatus?.rTokenBalance} />
         </div>
 
         <div className="basis-4/12 text-[16px]">

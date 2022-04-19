@@ -65,7 +65,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[20px]">
-          —Relay Fee: <FormatterText value={relayFee} decimals={2} /> FIS
+          —Relay Fee: <FormatterText value={relayFee} /> FIS
         </div>
 
         <div className="mt-[40px] text-text-gray4 text-[20px]">

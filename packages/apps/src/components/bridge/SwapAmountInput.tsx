@@ -13,7 +13,7 @@ export const SwapAmountInput = (props: SwapAmountInputProps) => {
       <div className="flex items-center text-text-gray7 justify-between">
         <div className="text-[16px]">Swap amount</div>
         <div className="text-[12px]">
-          Balance: <FormatterText value={props.balance} decimals={2} />
+          Balance: <FormatterText value={props.balance} />
         </div>
       </div>
 

@@ -60,10 +60,10 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
       </div>
 
       <div className="basis-[10%] text-[16px] text-white">
-        {!isNaN(Number(amount)) && Number(amount) < 0.01 ? (
-          "<0.01"
+        {!isNaN(Number(amount)) && Number(amount) < 0.0001 ? (
+          "<0.0001"
         ) : (
-          <FormatterText value={amount} decimals={2} />
+          <FormatterText value={amount} />
         )}
       </div>
 

@@ -10,7 +10,7 @@ export interface LocalNotice {
 
 export type NoticeType = "Fee Station" | "Stake" | "Unbond" | "IBC Bridge";
 
-export type NoticeStatus = "Pending" | "Error" | "Confimed";
+export type NoticeStatus = "Pending" | "Error" | "Confirmed";
 
 export interface NoticeTxDetail {
   sender: string;

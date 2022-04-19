@@ -210,7 +210,7 @@ export const stake =
                 })
               );
 
-              dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+              dispatch(updateNotice(txResponse.transactionHash, "Confirmed"));
               dispatch(updateAllTokenBalance());
               success = true;
               break;
@@ -403,7 +403,7 @@ export const stakeRecovery =
                 })
               );
 
-              dispatch(updateNotice(txHash, "Confimed"));
+              dispatch(updateNotice(txHash, "Confirmed"));
               success = true;
               break;
             }
@@ -505,7 +505,7 @@ export const unbond =
               unstakeAmount: inputAmount,
             },
             getExplorerUrl(getStafiHubChainId()),
-            "Confimed"
+            "Confirmed"
           )
         );
       }
@@ -634,7 +634,7 @@ export const feeStationSwap =
                   })
                 );
                 success = true;
-                dispatch(updateNotice(txResponse.transactionHash, "Confimed"));
+                dispatch(updateNotice(txResponse.transactionHash, "Confirmed"));
                 break;
               } else if (getUuidResJson.data?.swapStatus === 3) {
                 dispatch(
@@ -800,7 +800,7 @@ export const ibcBridgeSwap =
               outputChainName: getChainName(dstChainId),
             },
             getExplorerUrl(srcChainId),
-            "Confimed"
+            "Confirmed"
           )
         );
         callback(true);

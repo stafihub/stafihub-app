@@ -106,7 +106,7 @@ export const StakeSidebar = () => {
               })
             );
 
-            dispatch(updateNotice(stakeSidebarProps.txHash, "Confimed"));
+            dispatch(updateNotice(stakeSidebarProps.txHash, "Confirmed"));
             dispatch(updateAllTokenBalance());
           }
         }

@@ -148,7 +148,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                         mintingStatus:
                           notice.status === "Pending"
                             ? 1
-                            : notice.status === "Confimed"
+                            : notice.status === "Confirmed"
                             ? 2
                             : -1,
                       })

@@ -146,6 +146,7 @@ export const StakeV2 = () => {
           <div className="ml-5">
             <CustomNumberInput
               light
+              fontSize={16}
               disabled={isLoading}
               placeholder="STAKE AMOUNT"
               value={inputAmount}
@@ -194,8 +195,8 @@ export const StakeV2 = () => {
           <CustomInput
             light
             disabled={isLoading}
-            fontSize={14}
-            placeholder="RECEVING ADDRESS"
+            fontSize={16}
+            placeholder="RECEIVING ADDRESS"
             value={stafiHubAddress}
             handleValueChange={setStafiHubAddress}
           />

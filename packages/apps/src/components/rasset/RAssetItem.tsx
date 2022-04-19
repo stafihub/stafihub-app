@@ -1,6 +1,10 @@
 import { Tooltip } from "@mui/material";
 import { FormatterText, RTokenIcon } from "@stafihub/react-components";
-import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  getRTokenDenom,
+  getStafiHubChainId,
+  getTokenDisplayName,
+} from "@stafihub/apps-config";
 import { useEffect, useMemo, useState } from "react";
 // import iconDown from "../../assets/images/icon_down_white.png";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
@@ -80,24 +84,26 @@ export const RAssetItem = (props: RAssetItemProps) => {
   return (
     <>
       <div
-        className="w-[660px] h-[50px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center cursor-pointer"
+        className="w-[800px] h-[50px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center cursor-pointer"
         onClick={() => {
           navigate(`/rToken/${props.derivativeTokenName}/dashboard`);
         }}
       >
-        <div className="basis-5/12 font-bold text-[16px] flex items-center justify-start">
-          <div className="ml-9 mr-[10px]">
+        <div className="basis-4/12 font-bold text-[16px] flex items-center justify-start">
+          <div className="ml-5 mr-[10px]">
             <RTokenIcon rtokenName={props.derivativeTokenName} size={26} />
           </div>
 
           <div>{props.derivativeTokenName}</div>
         </div>
 
-        <div className="basis-4/12 text-[16px]">
-          <div className="flex items-center">
+        <div className="basis-5/12 text-[16px]">
+          <div className="flex items-end">
             <FormatterText value={myStakedAmount} />
             <Tooltip
-              title="The increased amount of Staked ETH within the last 24h."
+              title={`The increased amount of Staked ${getTokenDisplayName(
+                props.chainId
+              )} within the last 24h.`}
               placement="right"
             >
               <div
@@ -115,15 +121,15 @@ export const RAssetItem = (props: RAssetItemProps) => {
           </div>
         </div>
 
-        <div className="basis-3/12 text-[16px]">
+        <div className="basis-4/12 text-[16px]">
           <FormatterText value={stakeStatus?.rTokenBalance} />
         </div>
 
-        <div className="basis-4/12 text-[16px]">
+        <div className="basis-3/12 text-[16px]">
           <FormatterText value={apy} decimals={2} />%
         </div>
 
-        <div className="basis-5/12 text-[14px] flex items-center">
+        <div className="basis-4/12 text-[14px] flex items-center">
           <div
             className="w-[66px] h-[22px] text-white text-[12px] flex justify-center items-center border-white border-solid border-[0.5px] rounded-[3px] cursor-pointer"
             onClick={(e) => {

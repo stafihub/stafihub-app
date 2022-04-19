@@ -104,6 +104,7 @@ export const StakeRedeemV2 = () => {
         <div className="border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
           <div className="ml-5">
             <CustomNumberInput
+              fontSize={16}
               placeholder="AMOUNT"
               value={inputAmount}
               handleValueChange={setInputAmount}
@@ -148,7 +149,7 @@ export const StakeRedeemV2 = () => {
       <div className="ml-10 mt-2 border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
         <div className="ml-5 flex-1">
           <CustomInput
-            fontSize={14}
+            fontSize={16}
             placeholder={`${getChainAccountPrefix(chainId)}...`}
             value={receivingAddress}
             handleValueChange={setReceivingAddress}

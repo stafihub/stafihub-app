@@ -114,7 +114,7 @@ export const RTokenDashboard = () => {
   }, [redeemableAmount, tokenPrice]);
 
   return (
-    <div className="w-[1050px]">
+    <div className="w-[1090px]">
       <div className="pl-9 pb-[180px]">
         <div className="mt-6 flex items-center">
           <div className="text-[12px] text-text-gray4">rAsset on</div>
@@ -124,93 +124,97 @@ export const RTokenDashboard = () => {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap">
-          <div className="mt-8 min-w-[220px] flex items-start">
-            {params.rToken && (
-              <RTokenIcon rtokenName={params.rToken} size={60} />
-            )}
+        <div className="mt-4 flex flex-wrap justify-between">
+          <div className="mt-6 min-w-[220px]">
+            <div className="flex items-center">
+              {params.rToken && (
+                <RTokenIcon rtokenName={params.rToken} size={60} />
+              )}
 
-            <div className="ml-7">
-              <div className="text-white font-bold text-[30px]">
+              <div className="ml-[10px] text-white font-bold text-[30px]">
                 {params.rToken}
               </div>
+            </div>
 
-              <div className="mt-5 text-white font-bold text-[50px]">
+            <div className="mt-1">
+              <div className="text-white font-bold text-[50px]">
                 <FormatterText value={stakeStatus?.rTokenBalance} />
               </div>
 
-              <div className="mt-4 text-text-gray7 text-[14px]">
+              <div className="mt-3 text-text-gray7 text-[14px]">
                 <FormatterText value={stakedAmount} /> {tokenName} staked
               </div>
             </div>
           </div>
 
-          <div className="mt-3 ml-20 min-w-[185px] pt-7 pl-4 pr-6 pb-5 bg-[#111017] rounded-[4px]">
-            <div className="flex items-center">
-              <img src={iconWaveLine} alt="wave line" className="w-6 h-6" />
-              <div className="ml-1 text-white font-bold text-[20px]">
-                $<FormatterText value={rTokenValue} />
+          <div className="flex items-center">
+            <div className="mt-3 ml-20 min-w-[185px] pt-7 pl-4 pr-6 pb-5 bg-[#111017] rounded-[4px]">
+              <div className="flex items-center">
+                <img src={iconWaveLine} alt="wave line" className="w-6 h-6" />
+                <div className="ml-1 text-white font-bold text-[20px]">
+                  $<FormatterText value={rTokenValue} />
+                </div>
+              </div>
+
+              <div className="mt-3 text-text-gray7 text-[14px]">
+                {params.rToken} Value
+              </div>
+
+              <div className="mt-8 w-[110px]">
+                <Button
+                  bgPrimary
+                  textDark
+                  type="rectangle"
+                  size="small"
+                  onClick={() => setTradeModalVisible(true)}
+                >
+                  Trade {params.rToken}
+                </Button>
               </div>
             </div>
 
-            <div className="mt-3 text-text-gray7 text-[14px]">
-              {params.rToken} Value
-            </div>
+            <div className="mt-3 ml-12 min-w-[185px] pt-7 pl-4 pr-6 pb-5 bg-[#111017] rounded-[4px]">
+              <div className="flex items-center">
+                <img src={iconBarLine} alt="bar line" className="w-6 h-6" />
+                <div className="ml-1 text-white font-bold text-[20px]">
+                  $<FormatterText value={redeemableValue} />
+                </div>
+              </div>
 
-            <div className="mt-8 w-[110px]">
-              <Button
-                bgPrimary
-                textDark
-                type="rectangle"
-                size="small"
-                onClick={() => setTradeModalVisible(true)}
-              >
-                Trade {params.rToken}
-              </Button>
-            </div>
-          </div>
+              <div className="mt-3 text-text-gray7 text-[14px]">
+                Redeemable Value
+              </div>
 
-          <div className="mt-3 ml-12 min-w-[185px] pt-7 pl-4 pr-6 pb-5 bg-[#111017] rounded-[4px]">
-            <div className="flex items-center">
-              <img src={iconBarLine} alt="bar line" className="w-6 h-6" />
-              <div className="ml-1 text-white font-bold text-[20px]">
-                $<FormatterText value={redeemableValue} />
+              <div className="mt-8 w-[110px]">
+                <Button
+                  bgPrimary
+                  textDark
+                  type="rectangle"
+                  size="small"
+                  px={1}
+                  onClick={() => navigate(`/${params.rToken}/stake/redeem`)}
+                >
+                  Redeem {params.rToken}
+                </Button>
               </div>
             </div>
 
-            <div className="mt-3 text-text-gray7 text-[14px]">
-              Redeemable Value
-            </div>
+            <div className="mt-3 ml-12 min-w-[185px] pt-7 pl-4 pr-6 pb-5 bg-[#111017] rounded-[4px]">
+              <div className="flex items-center">
+                <img src={iconApy} alt="apy" className="w-6 h-6" />
 
-            <div className="mt-8 w-[110px]">
-              <Button
-                bgPrimary
-                textDark
-                type="rectangle"
-                size="small"
-                px={1}
-                onClick={() => navigate(`/${params.rToken}/stake/redeem`)}
-              >
-                Redeem {params.rToken}
-              </Button>
-            </div>
-          </div>
-
-          <div className="mt-3 ml-12 min-w-[185px] pt-7 pl-4 pr-6 pb-5 bg-[#111017] rounded-[4px]">
-            <div className="flex items-center">
-              <img src={iconApy} alt="apy" className="w-6 h-6" />
-
-              <div className="ml-1 text-white font-bold text-[20px]">
-                <FormatterText value={exchangeRate} />
+                <div className="ml-1 text-white font-bold text-[20px]">
+                  <FormatterText value={exchangeRate} />
+                </div>
               </div>
-            </div>
 
-            <div className="mt-3 text-text-gray7 text-[14px]">
-              {params.rToken} / {tokenName} Rate
-            </div>
+              <div className="mt-3 text-text-gray7 text-[14px]">
+                {params.rToken} / {tokenName} Rate
+              </div>
 
-            <div className="mt-12 text-text-gray7 text-[12px] scale-[0.85] origin-top-left">
-              Updated every {eraHours} hours
+              <div className="mt-12 text-text-gray7 text-[12px] scale-[0.85] origin-top-left">
+                Updated every {eraHours} hours
+              </div>
             </div>
           </div>
         </div>

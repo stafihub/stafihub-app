@@ -24,13 +24,30 @@ export const FormatterText = (props: FormatterTextProps) => {
       Math.pow(10, decimals)
     ).toFixed(decimals);
 
+    let finalNum = "";
     if (!props.skipSplit) {
-      var parts = newNum.split(".");
+      const parts = newNum.split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return parts.join(".");
+      finalNum = parts.join(".");
     } else {
-      return newNum;
+      finalNum = newNum;
     }
+
+    if (finalNum.indexOf(".") >= 0 && finalNum.length > 11) {
+      const parts = finalNum.split(".");
+      var overflowLength = finalNum.length - 11;
+      var newDecimals = parts[1].slice(
+        0,
+        Math.max(parts[1].length - overflowLength, 0)
+      );
+      if (newDecimals) {
+        finalNum = [parts[0], newDecimals].join(".");
+      } else {
+        finalNum = parts[0];
+      }
+    }
+
+    return finalNum;
   }, [props.value, props.decimals, props.skipSplit]);
 
   return <span>{formatNumber}</span>;

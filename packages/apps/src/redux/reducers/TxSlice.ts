@@ -112,6 +112,7 @@ export const stake =
     inputAmount: string,
     stafiHubAddress: string,
     poolAddress: string,
+    onTxSuccess: () => void,
     callback?: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
@@ -166,6 +167,7 @@ export const stake =
           )
         );
 
+        onTxSuccess();
         dispatch(updateTokenBalance(chainId));
 
         dispatch(

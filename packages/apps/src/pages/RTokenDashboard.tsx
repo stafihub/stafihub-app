@@ -163,7 +163,6 @@ export const RTokenDashboard = () => {
               <div className="mt-8 w-[110px]">
                 <Button
                   bgPrimary
-                  textDark
                   type="rectangle"
                   size="small"
                   onClick={() => setTradeModalVisible(true)}
@@ -188,7 +187,6 @@ export const RTokenDashboard = () => {
               <div className="mt-8 w-[110px]">
                 <Button
                   bgPrimary
-                  textDark
                   type="rectangle"
                   size="small"
                   px={1}

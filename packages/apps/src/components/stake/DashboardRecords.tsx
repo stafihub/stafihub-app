@@ -20,7 +20,7 @@ export const DashboardRecords = () => {
           className={classNames(
             "flex items-center justify-center w-[110px] h-[30px] font-bold text-[13px] rounded-[3px] cursor-pointer",
             tab === "reward"
-              ? "text-text-black1 bg-primary"
+              ? "text-white bg-primary"
               : "border-solid border-[1px] border-[#8F8F8F] text-[#8F8F8F]"
           )}
           onClick={() => setTab("reward")}
@@ -32,7 +32,7 @@ export const DashboardRecords = () => {
           className={classNames(
             "ml-[10px] flex items-center justify-center w-[110px] h-[30px] font-bold text-[13px] rounded-[3px] cursor-pointer",
             tab === "unbond"
-              ? "text-text-black1 bg-primary"
+              ? "text-white bg-primary"
               : "border-solid border-[1px] border-[#8F8F8F] text-[#8F8F8F]"
           )}
           onClick={() => setTab("unbond")}

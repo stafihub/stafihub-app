@@ -292,7 +292,7 @@ export const StakeSidebar = () => {
           <div className="mt-2 ml-6 text-primary font-bold text-[12px] scale-[0.8] origin-top-left">
             {stakingSuccess
               ? "Staking already handled"
-              : `Next staking circle in ${stakingRemainingHours}`}
+              : `Next staking cycle in ${stakingRemainingHours}`}
           </div>
         </div>
       )}

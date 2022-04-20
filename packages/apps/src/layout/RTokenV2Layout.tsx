@@ -26,12 +26,12 @@ export const RTokenV2Layout = () => {
       </div>
 
       <div
-        className="mt-8 pt-8 relative flex flex-col items-center"
+        className="self-stretch mt-8 pt-8 relative flex flex-col items-stretch"
         style={{
           height: "calc(100vh - 140px)",
         }}
       >
-        <div className="overflow-auto">
+        <div className="overflow-auto flex flex-col items-center">
           <Outlet />
         </div>
       </div>

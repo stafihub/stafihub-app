@@ -59,7 +59,7 @@ export const StakeRewardListV2 = () => {
       <div className="bg-[#111017] rounded-[10px] pt-5 px-7">
         <StakeRewardTableHeader chainId={chainId} />
 
-        <div className="min-h-[150px]">
+        <div className="min-h-[150px] pb-4">
           <div className="flex flex-col items-center">
             {!loading && !eraRewards.length && (
               <>

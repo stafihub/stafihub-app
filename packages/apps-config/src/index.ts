@@ -121,9 +121,9 @@ export function getExplorerAccountUrl(account: string | undefined) {
     return undefined;
   }
   if (isDev()) {
-    return `https://testnet-explorer.stafihub.io/stafi-hub-devnet/account/${account}`;
+    return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/account/${account}`;
   }
-  return `https://testnet-explorer.stafihub.io/stafi-hub-devnet/account/${account}`;
+  return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/account/${account}`;
 }
 
 export function getExplorerTransactionUrl(transactionHash: string | undefined) {
@@ -131,7 +131,7 @@ export function getExplorerTransactionUrl(transactionHash: string | undefined) {
     return undefined;
   }
   if (isDev()) {
-    return `https://testnet-explorer.stafihub.io/stafi-hub-devnet/tx/${transactionHash}`;
+    return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/tx/${transactionHash}`;
   }
-  return `https://testnet-explorer.stafihub.io/stafi-hub-devnet/tx/${transactionHash}`;
+  return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/tx/${transactionHash}`;
 }

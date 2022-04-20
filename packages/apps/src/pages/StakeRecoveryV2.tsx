@@ -70,7 +70,18 @@ export const StakeRecoveryV2 = () => {
     }
 
     dispatch(
-      stakeRecovery(selectedItem.chainId, stafiHubAddress, poolAddress, txHash)
+      stakeRecovery(
+        selectedItem.chainId,
+        stafiHubAddress,
+        poolAddress,
+        txHash,
+        (success) => {
+          if (success) {
+            setTxHash("");
+            setStafiHubAddress("");
+          }
+        }
+      )
     );
   };
 

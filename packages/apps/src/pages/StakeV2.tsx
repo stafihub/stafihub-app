@@ -22,7 +22,6 @@ import iconApy from "../assets/images/icon_apy.svg";
 import iconStakeMenu from "../assets/images/icon_stake_menu.svg";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { useApy } from "../hooks/useApy";
-import { useChainInfo } from "../hooks/useChainInfo";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
 import { MemoNoticeModal } from "../modals/MemoNoticeModal";
@@ -37,7 +36,6 @@ export const StakeV2 = () => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const isLoading = useIsLoading();
-  const chain = useChainInfo(chainId);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const chainAccount = useChainAccount(chainId);
   const apy = useApy(chainId);

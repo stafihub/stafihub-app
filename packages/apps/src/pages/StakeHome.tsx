@@ -91,21 +91,29 @@ export const StakeHome = () => {
     }
 
     dispatch(
-      stake(chainId, inputAmount, stafiHubAddress, poolAddress, (success) => {
-        if (success) {
-          snackbarUtil.success("Stake succeed");
+      stake(
+        chainId,
+        inputAmount,
+        stafiHubAddress,
+        poolAddress,
+        () => {
           setInputAmount("");
           setStafiHubAddress("");
-          setTimeout(() => {
-            dispatch(
-              setStakeSidebarProps({
-                visible: false,
-              })
-            );
-            navigate(`/${params.rToken}/stake/status`);
-          }, 3000);
+        },
+        (success) => {
+          if (success) {
+            snackbarUtil.success("Stake succeed");
+            setTimeout(() => {
+              dispatch(
+                setStakeSidebarProps({
+                  visible: false,
+                })
+              );
+              navigate(`/${params.rToken}/stake/status`);
+            }, 3000);
+          }
         }
-      })
+      )
     );
   };
 

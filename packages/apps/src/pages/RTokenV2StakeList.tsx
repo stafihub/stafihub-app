@@ -1,7 +1,7 @@
 import { getRTokenDisplayName } from "@stafihub/apps-config";
-import { useMemo } from "react";
+import classNames from "classnames";
 import { useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { StakeTokenCard } from "../components/stake/StakeTokenCard";
 import { useAccounts } from "../hooks/useAppSlice";
 import { useRTokenList } from "../hooks/useRTokenList";
@@ -10,13 +10,8 @@ import { connectKeplr } from "../redux/reducers/AppSlice";
 export const RTokenV2StakeList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const rTokenList = useRTokenList();
   const accounts = useAccounts();
-
-  const selectedTab = useMemo(() => {
-    return searchParams.get("tab") === "dashboard" ? "dashboard" : "stake";
-  }, [searchParams]);
 
   const enterStakePage = (chainId: string) => {
     navigate(`/rToken/${getRTokenDisplayName(chainId)}/stake`);
@@ -24,16 +19,16 @@ export const RTokenV2StakeList = () => {
 
   return (
     <div className="mt-16 min-h-[500px] relative flex flex-col items-center">
-      {/* <img
-        src={bridgeImage}
-        alt="background"
-        className="w-[1138px] h-[100px] opacity-20 top-[400px] absolute"
-      /> */}
-
-      <div className="w-[580px] flex flex-wrap">
+      <div
+        className={classNames(
+          "w-[580px] grid",
+          rTokenList && rTokenList.length > 1 ? "grid-cols-2" : "grid-cols-1"
+        )}
+      >
         {rTokenList.map((rToken) => (
-          <div key={rToken.chainId} className="mb-3 px-[30px] flex-1">
+          <div key={rToken.chainId} className="mb-3 px-[30px]">
             <StakeTokenCard
+              type={rTokenList && rTokenList.length > 1 ? "middle" : "large"}
               chainId={rToken.chainId}
               originTokenName={rToken.tokenName}
               derivativeTokenName={rToken.rTokenName}

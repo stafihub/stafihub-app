@@ -38,15 +38,21 @@ export function useAccountReward(chainId: string) {
       setLastEraReward(atomicToHuman(rTokenReward.lastEraReward));
       setTotalReward(atomicToHuman(rTokenReward.totalReward));
       setEraRewards(rTokenReward.eraRewardList);
-      const xData = [...rTokenReward.chartXData];
+      const xData = [...rTokenReward.chartXData.slice(0, 10)];
       _.reverse(xData);
       setChartXData(xData);
 
       setChartYData(
         _.reverse(
-          rTokenReward.chartYData.map((data) =>
-            atomicToHuman((Number(data) * Number(tokenPrice)).toFixed(0), 6, 4)
-          )
+          rTokenReward.chartYData
+            .slice(0, 10)
+            .map((data) =>
+              atomicToHuman(
+                (Number(data) * Number(tokenPrice)).toFixed(0),
+                6,
+                4
+              )
+            )
         )
       );
     }

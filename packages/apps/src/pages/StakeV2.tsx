@@ -24,6 +24,7 @@ import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { useApy } from "../hooks/useApy";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 import { MemoNoticeModal } from "../modals/MemoNoticeModal";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { setStakeSidebarProps, stake } from "../redux/reducers/TxSlice";
@@ -46,6 +47,7 @@ export const StakeV2 = () => {
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
   const [memoNoticeModalVisible, setMemoNoticeModalVisible] = useState(false);
+  const { height } = useWindowDimensions();
 
   const buttonDisabled = useMemo(() => {
     return Boolean(!poolAddress || !stafiHubAddress || !inputAmount);
@@ -99,13 +101,12 @@ export const StakeV2 = () => {
         inputAmount,
         stafiHubAddress,
         poolAddress,
-        () => {
-          setInputAmount("");
-          setStafiHubAddress("");
-        },
+        () => {},
         (success) => {
           if (success) {
             snackbarUtil.success("Stake succeed");
+            setInputAmount("");
+            setStafiHubAddress("");
             setTimeout(() => {
               dispatch(
                 setStakeSidebarProps({
@@ -276,7 +277,13 @@ export const StakeV2 = () => {
         </div>
       </div>
 
-      <div className="mt-14">
+      <div
+        className={classNames(
+          height < 830
+            ? "absolute w-[490px] bottom-0 bg-[#000002] shadow-[0_-5px_20px_15px_rgba(0,0,0,1)]"
+            : "mt-14"
+        )}
+      >
         <Button
           bgPrimary
           type="rectangle"
@@ -295,7 +302,12 @@ export const StakeV2 = () => {
           }
           loading={isLoading}
         >
-          {!stafiHubAccount ? (
+          {isLoading ? (
+            <div>
+              You will get <FormatterText value={willGetAmount} />{" "}
+              {getRTokenDisplayName(chainId)}
+            </div>
+          ) : !stafiHubAccount ? (
             "Connect StaFi-Hub Wallet"
           ) : Number(inputAmount) > 0 &&
             Number(inputAmount) > Number(transferrableAmount) ? (

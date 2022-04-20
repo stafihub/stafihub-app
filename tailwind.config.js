@@ -8,6 +8,7 @@ module.exports = {
       transparent: "#00000000",
       divider: "#3f3f3f",
       "divider-light": "#3f3f3f1a",
+      "shadow-color": "#0000000b",
       border: {
         main: "#979797",
       },

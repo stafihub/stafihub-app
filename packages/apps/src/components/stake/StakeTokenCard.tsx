@@ -4,6 +4,7 @@ import {
   RTokenIcon,
   TokenIconLarge,
 } from "@stafihub/react-components";
+import classNames from "classnames";
 import { useMemo } from "react";
 import { usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useApy } from "../../hooks/useApy";
@@ -14,6 +15,7 @@ interface StakeTokenCardProps {
   chainId: string;
   originTokenName: string;
   derivativeTokenName: string;
+  type: "middle" | "large";
   onClickStake: () => void;
 }
 
@@ -40,33 +42,40 @@ export const StakeTokenCard = (props: StakeTokenCardProps) => {
       <div className="mt-5 ml-4 text-[#ADADAD] text-[12px]">Staked Asset</div>
 
       <div className="mt-3 ml-4 text-[#494949] text-[20px] font-bold uppercase">
-        {props.originTokenName}
+        <FormatterText value={apy} decimals={2} />
+        {!isNaN(Number(apy)) && "%"}
       </div>
 
       <div className="mt-2 ml-4 text-[#646464] text-[12px] scale-[0.7] origin-top-left">
         Staked Value {!isNaN(Number(liquidity)) && "$"}
-        <FormatterText value={liquidity} />
-      </div>
-
-      <div className="mt-4 self-center">
-        <TokenIconLarge tokenName={props.originTokenName} size={120} />
-      </div>
-
-      <div className="self-end mr-5">
-        <RTokenIcon rtokenName={props.derivativeTokenName} size={26} />
+        <FormatterText value={liquidity} refineForBigNumber />
       </div>
 
       <div
-        className="mt-[10px] self-stretch h-12 bg-primary rounded-b-[4px] relative flex items-center justify-center cursor-pointer"
+        className={classNames(
+          "self-center",
+          props.type === "middle" ? "mt-4" : "mt-[-20px]"
+        )}
+      >
+        <TokenIconLarge tokenName={props.originTokenName} size={120} />
+      </div>
+
+      {props.type === "large" && (
+        <div className="self-end mr-32 mt-[-30px]">
+          <RTokenIcon
+            rtokenName={props.derivativeTokenName}
+            size={30}
+            withBorder
+          />
+        </div>
+      )}
+
+      <div
+        className="mt-[25px] self-stretch h-12 bg-primary rounded-b-[4px] relative flex items-center justify-center cursor-pointer shadow-[0_-2px_10px_2px_rgba(0,0,0,0.4)]"
         onClick={props.onClickStake}
       >
         <div className="text-white text-[20px] font-bold">
-          <FormatterText value={apy} decimals={2} />
-          {!isNaN(Number(apy)) && "%"}
-        </div>
-
-        <div className="absolute right-9 top-auto bottom-auto text-[12px] text-text-gray5">
-          APY
+          Stake {props.originTokenName}
         </div>
       </div>
     </div>

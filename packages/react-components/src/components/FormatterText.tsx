@@ -4,6 +4,7 @@ interface FormatterTextProps {
   value: string | number | undefined;
   decimals?: number;
   skipSplit?: boolean;
+  refineForBigNumber?: boolean;
 }
 
 export const FormatterText = (props: FormatterTextProps) => {
@@ -25,12 +26,22 @@ export const FormatterText = (props: FormatterTextProps) => {
     ).toFixed(decimals);
 
     let finalNum = "";
-    if (!props.skipSplit) {
-      const parts = newNum.split(".");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      finalNum = parts.join(".");
+
+    if (props.refineForBigNumber) {
+      if (Number(newNum) >= 1000000) {
+        const divide = Number(newNum) / 1000000;
+        finalNum = divide.toFixed(2) + "M";
+      } else {
+        finalNum = newNum;
+      }
     } else {
       finalNum = newNum;
+    }
+
+    if (!props.skipSplit) {
+      const parts = finalNum.split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      finalNum = parts.join(".");
     }
 
     if (finalNum.indexOf(".") >= 0 && finalNum.length > 11) {
@@ -48,7 +59,7 @@ export const FormatterText = (props: FormatterTextProps) => {
     }
 
     return finalNum;
-  }, [props.value, props.decimals, props.skipSplit]);
+  }, [props.value, props.decimals, props.skipSplit, props.refineForBigNumber]);
 
   return <span>{formatNumber}</span>;
 };

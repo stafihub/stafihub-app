@@ -96,13 +96,12 @@ export const StakeHome = () => {
         inputAmount,
         stafiHubAddress,
         poolAddress,
-        () => {
-          setInputAmount("");
-          setStafiHubAddress("");
-        },
+        () => {},
         (success) => {
           if (success) {
             snackbarUtil.success("Stake succeed");
+            setInputAmount("");
+            setStafiHubAddress("");
             setTimeout(() => {
               dispatch(
                 setStakeSidebarProps({

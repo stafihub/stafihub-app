@@ -1,4 +1,19 @@
 import { Pagination } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    color: "#ffffff",
+    "& .MuiPaginationItem-text": {
+      backgroundColor: "transparent",
+      color: "#818181",
+    },
+    "& .Mui-selected": {
+      backgroundColor: "transparent",
+      color: "#ffffff",
+    },
+  },
+});
 
 const COUNT_PER_PAGE = 10;
 
@@ -9,6 +24,7 @@ interface CustomPaginationProps {
 }
 
 export const CustomPagination = (props: CustomPaginationProps) => {
+  const classes = useStyles();
   const pageCount = Math.ceil(props.totalCount / COUNT_PER_PAGE);
 
   return (
@@ -17,11 +33,7 @@ export const CustomPagination = (props: CustomPaginationProps) => {
       count={pageCount}
       page={props.page}
       onChange={(_, page) => props.onChange(page)}
-      sx={{
-        "& .MuiPaginationItem-root": {
-          color: "white",
-        },
-      }}
+      className={classes.root}
     />
   );
 };

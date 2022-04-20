@@ -11,3 +11,4 @@ export * from "./TokenIconLarge";
 export * from "./Icon";
 export * from "./EraRewardChart";
 export * from "./ScrollToTop";
+export * from "./CustomPagination";

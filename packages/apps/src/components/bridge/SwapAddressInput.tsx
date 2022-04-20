@@ -30,7 +30,7 @@ export const SwapAddressInput = (props: SwapAddressInputProps) => {
   return (
     <div className="rounded-[4px] bg-[#23292f] pl-8 pr-5 py-4">
       <div className="flex items-center text-text-gray7 justify-between">
-        <div className="text-[16px]">Receving address</div>
+        <div className="text-[16px]">Receiving address</div>
       </div>
 
       <div className="h-[24px] mt-3 flex items-center justify-between">

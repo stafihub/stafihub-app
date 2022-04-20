@@ -115,23 +115,3 @@ export function getIBCChannels(chainId: string | undefined) {
   const chain = chains[chainId];
   return chain.stafihubIBCChannels;
 }
-
-export function getExplorerAccountUrl(account: string | undefined) {
-  if (!account) {
-    return undefined;
-  }
-  if (isDev()) {
-    return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/account/${account}`;
-  }
-  return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/account/${account}`;
-}
-
-export function getExplorerTransactionUrl(transactionHash: string | undefined) {
-  if (!transactionHash) {
-    return undefined;
-  }
-  if (isDev()) {
-    return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/tx/${transactionHash}`;
-  }
-  return `https://testnet-explorer.stafihub.io/stafi-hub-testnet/tx/${transactionHash}`;
-}

@@ -150,7 +150,7 @@ export async function sendLiquidityUnbondTx(
         amount: "1",
       },
     ],
-    gas: "280000",
+    gas: "500000",
   };
 
   const response = await client.signAndBroadcast(

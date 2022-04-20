@@ -32,7 +32,10 @@ export const Sidebar = () => {
         activeIcon={rTokenIconActive}
         title="rToken"
         targetUrl="/rToken"
-        match={location.pathname.includes("/rToken")}
+        match={
+          location.pathname.includes("/rToken") ||
+          location.pathname.includes("/stake/redeem")
+        }
       />
 
       <SidebarItem

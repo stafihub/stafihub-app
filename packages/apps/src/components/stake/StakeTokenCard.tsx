@@ -39,7 +39,7 @@ export const StakeTokenCard = (props: StakeTokenCardProps) => {
 
   return (
     <div className="w-full bg-white rounded-[4px] flex flex-col items-start">
-      <div className="mt-5 ml-4 text-[#ADADAD] text-[12px]">Staked Asset</div>
+      <div className="mt-5 ml-4 text-[#ADADAD] text-[12px]">Staked APY</div>
 
       <div className="mt-3 ml-4 text-[#494949] text-[20px] font-bold uppercase">
         <FormatterText value={apy} decimals={2} />

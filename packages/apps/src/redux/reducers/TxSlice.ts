@@ -510,10 +510,8 @@ export const unbond =
         );
       } else if (txResponse?.code === 20) {
         snackbarUtil.warning("The unbond limit of the pool has been reached in the current era, please wait for the next era!");
-        return;
       } else {
         snackbarUtil.warning("Something went wrong, please increase the gas and try again!");
-        return;
       }
       dispatch(updateTokenBalance(chainId));
       callback && callback(txResponse?.code === 0);

@@ -185,7 +185,6 @@ export const updateTokenBalance =
   async (dispatch, getState) => {
     try {
       const account = getState().app.accounts[chainId];
-      // console.log("account1", account);
       if (!account) {
         return;
       }
@@ -215,7 +214,6 @@ export const updateAllTokenBalance =
       return (async () => {
         try {
           const account = getState().app.accounts[chainId];
-          // console.log("account1", account);
           if (!account) {
             return;
           }

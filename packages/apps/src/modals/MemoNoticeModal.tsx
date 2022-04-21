@@ -26,7 +26,7 @@ export const MemoNoticeModal = (props: ClaimMintRewardModalProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          marginLeft: "40px",
+          marginLeft: "80px",
         }}
       >
         <div className="flex justify-center">

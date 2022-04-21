@@ -1,5 +1,5 @@
 import { Box, Modal } from "@mui/material";
-import { Button, Icon } from "@stafihub/react-components";
+import { Icon } from "@stafihub/react-components";
 import rdex from "../assets/images/rdex.png";
 
 interface TradeModalProps {
@@ -27,7 +27,7 @@ export const TradeModal = (props: TradeModalProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          marginLeft: "40px",
+          marginLeft: "80px",
         }}
       >
         <div className="flex justify-center relative">

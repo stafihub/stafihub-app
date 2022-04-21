@@ -2,7 +2,6 @@ import { Box, Modal } from "@mui/material";
 import { Button, CustomNumberInput } from "@stafihub/react-components";
 import { useState } from "react";
 import iconClose from "../assets/images/icon_close_bold.svg";
-import { useIsLoading } from "../hooks/useAppSlice";
 
 interface ClaimMintRewardModalProps {
   visible: boolean;
@@ -10,7 +9,6 @@ interface ClaimMintRewardModalProps {
 }
 
 export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
-  const isLoading = useIsLoading();
   const [inputAmount, setInputAmount] = useState("");
 
   return (
@@ -32,7 +30,7 @@ export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          marginLeft: "40px",
+          marginLeft: "80px",
         }}
       >
         <div className="flex items-center justify-between">

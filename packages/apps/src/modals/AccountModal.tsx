@@ -40,7 +40,7 @@ export const AccountModal = (props: UnbondModalProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          marginLeft: "40px",
+          marginLeft: "80px",
         }}
       >
         <div className="mb-2 text-white font-bold text-[30px]">

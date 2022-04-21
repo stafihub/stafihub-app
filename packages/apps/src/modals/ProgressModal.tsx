@@ -69,7 +69,7 @@ export const ProgressModal = (props: ProgressModalProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          marginLeft: "40px",
+          marginLeft: "80px",
         }}
       >
         <img

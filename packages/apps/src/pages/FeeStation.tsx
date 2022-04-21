@@ -34,7 +34,7 @@ export const FeeStation = (props: {}) => {
   const slippage = useSlippage();
   const isLoading = useIsLoading();
 
-  const { poolList, swapMinLimit, swapMaxLimit, loadingPools } =
+  const { poolList, swapMinLimit, swapMaxLimit, loadingPools, payerAddress } =
     useFeeStationPools();
 
   const [selectedChainName, setSelectedChainName] = useState("");
@@ -154,6 +154,7 @@ export const FeeStation = (props: {}) => {
         outputAmount,
         minReceive,
         selectedPool,
+        payerAddress,
         (success) => {
           if (success) {
             setAmounts(["", ""]);
@@ -171,6 +172,7 @@ export const FeeStation = (props: {}) => {
     outputAmount,
     swapMinLimit,
     swapMaxLimit,
+    payerAddress,
   ]);
 
   const renderContent = useCallback(() => {

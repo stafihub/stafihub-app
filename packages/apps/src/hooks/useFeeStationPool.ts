@@ -9,6 +9,7 @@ import { useAccounts } from "./useAppSlice";
 export function useFeeStationPools() {
   const accounts = useAccounts();
   const [loadingPools, setLoadingPools] = useState(true);
+  const [payerAddress, setPayerAddress] = useState("");
   const [serverPoolList, setServerPoolList] = useState<FeeStationPool[]>([]);
   const [swapMinLimit, setSwapMinLimit] = useState("--");
   const [swapMaxLimit, setSwapMaxLimit] = useState("--");
@@ -41,6 +42,7 @@ export function useFeeStationPools() {
           setSwapMinLimit(
             atomicToHuman(resJson.data.swapMinLimit, STAFIHUB_DECIMALS)
           );
+          setPayerAddress(resJson.data.payerAddress);
         }
       })
       .catch((err: Error) => {
@@ -78,5 +80,5 @@ export function useFeeStationPools() {
     return _.compact(formatPools);
   }, [serverPoolList, accounts]);
 
-  return { poolList, swapMinLimit, swapMaxLimit, loadingPools };
+  return { poolList, swapMinLimit, swapMaxLimit, loadingPools, payerAddress };
 }

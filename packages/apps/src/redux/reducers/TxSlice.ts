@@ -11,7 +11,7 @@ import {
   getTokenDisplayName,
   STAFIHUB_DECIMALS,
 } from "@stafihub/apps-config";
-import { humanToAtomic } from "@stafihub/apps-util";
+import { humanToAtomic, atomicToHuman } from "@stafihub/apps-util";
 import {
   checkAddress,
   queryBondRecord,
@@ -21,6 +21,7 @@ import {
   sendLiquidityUnbondTx,
   sendRecoveryTx,
   sendStakeTx,
+  queryAccountBalance,
 } from "@stafihub/apps-wallet";
 import { LiquidityBondState } from "@stafihub/types";
 import { FeeStationPool } from "../../types/interface";
@@ -530,6 +531,7 @@ export const feeStationSwap =
     outAmount: string,
     minOutAmount: string,
     poolInfo: FeeStationPool,
+    payerAddress: string,
     callback?: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
@@ -547,7 +549,33 @@ export const feeStationSwap =
         return;
       }
 
+      if (!payerAddress) {
+        snackbarUtil.error(
+          "Fee Station account not initialized, please try again later!"
+        );
+        return;
+      }
+
       dispatch(setIsLoading(true));
+
+      const payerAddressBalanceResult = await queryAccountBalance(
+        getStafiHubChainId(),
+        getDenom(getStafiHubChainId()),
+        payerAddress
+      );
+
+      const feeStationBalance = Number(
+        atomicToHuman(payerAddressBalanceResult?.amount)
+      );
+
+      // console.log("fee station balance: ", feeStationBalance);
+
+      if (isNaN(feeStationBalance) || feeStationBalance < Number(outAmount)) {
+        snackbarUtil.error(
+          "Insufficient FIS balance of Fee Station, please try again later!"
+        );
+        return;
+      }
 
       const postData = {
         stafihubAddress: stafiHubAccount.bech32Address,

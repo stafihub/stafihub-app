@@ -47,6 +47,20 @@ export async function queryTx(
   }
 }
 
+export async function queryAccountBalance(
+  chainId: string,
+  denom: string,
+  address: string
+): Promise<Coin | null> {
+  const client = await createCosmosClient(chainId);
+  if (!client) {
+    return null;
+  }
+
+  const result = await client.getBalance(address, denom);
+  return result;
+}
+
 export async function queryAccountBalances(
   chainId: string,
   address: string

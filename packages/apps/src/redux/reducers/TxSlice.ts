@@ -682,6 +682,7 @@ export const showFeeStationSwapLoadingModal =
             );
             snackbarUtil.error("InAmountNotMatch");
             dispatch(updateNotice(txHash, "Error"));
+            break;
           } else if (getUuidResJson.data?.swapStatus === 4) {
             dispatch(
               setSwapProgressModalProps({
@@ -690,6 +691,7 @@ export const showFeeStationSwapLoadingModal =
             );
             snackbarUtil.error("StafiAddressNotMatch");
             dispatch(updateNotice(txHash, "Error"));
+            break;
           }
         }
 

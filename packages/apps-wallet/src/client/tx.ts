@@ -156,8 +156,7 @@ export async function sendLiquidityUnbondTx(
   const response = await client.signAndBroadcast(
     stafiHubAddress,
     [message],
-    fee,
-    "use your power wisely"
+    fee
   );
 
   return response;
@@ -224,8 +223,7 @@ export async function sendIBCTransferTx(
   const response = await client.signAndBroadcast(
     sender,
     [message],
-    fee,
-    "use your power wisely"
+    fee
   );
 
   // console.log("message", message);

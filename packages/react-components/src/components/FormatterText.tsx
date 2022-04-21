@@ -21,7 +21,7 @@ export const FormatterText = (props: FormatterTextProps) => {
     }
     const decimals = props.decimals === undefined ? 4 : props.decimals;
     const newNum = (
-      (Number(props.value) * Math.pow(10, decimals)) /
+      Math.floor(Number(props.value) * Math.pow(10, decimals)) /
       Math.pow(10, decimals)
     ).toFixed(decimals);
 

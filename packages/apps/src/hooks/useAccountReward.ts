@@ -46,12 +46,14 @@ export function useAccountReward(chainId: string) {
         _.reverse(
           rTokenReward.chartYData
             .slice(0, 10)
-            .map((data) =>
-              atomicToHuman(
-                (Number(data) * Number(tokenPrice)).toFixed(0),
-                6,
-                4
-              )
+            .map(
+              (data) =>
+                Math.floor(
+                  ((Number(data) * Number(tokenPrice)) / 1000000) *
+                    Math.pow(10, 4)
+                ) /
+                  Math.pow(10, 4) +
+                ""
             )
         )
       );

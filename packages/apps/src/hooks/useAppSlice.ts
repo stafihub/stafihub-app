@@ -65,7 +65,7 @@ export function usePriceFromDenom(denom: string) {
   const price = useSelector((state: RootState) => {
     const matched = state.app.priceList.find((price) => price.denom === denom);
     if (matched) {
-      return atomicToHuman(matched?.price, 6);
+      return atomicToHuman(matched.price, 6, 6);
     } else {
       return "--";
     }

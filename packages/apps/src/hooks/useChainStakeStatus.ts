@@ -36,7 +36,7 @@ export function useChainStakeStatus(chainId: string | undefined) {
       }
 
       const poolInfoResult = await queryStakePoolInfo(getRTokenDenom(chainId));
-      const exchangeRate = atomicToHuman(poolInfoResult.exchangeRate);
+      const exchangeRate = atomicToHuman(poolInfoResult.exchangeRate, 6, 6);
 
       if (isNaN(Number(exchangeRate))) {
         return;
@@ -46,19 +46,24 @@ export function useChainStakeStatus(chainId: string | undefined) {
         stafiHubAccount.bech32Address,
         getRTokenDenom(chainId)
       );
-      const rTokenBalance = atomicToHuman(result);
+      const rTokenBalance = atomicToHuman(result, 6, 6);
+
       const matched = priceList.find(
         (price) => price.denom === getDenom(chainId)
       );
       let tokenPrice = "--";
       if (matched) {
-        tokenPrice = atomicToHuman(matched?.price, 6);
+        tokenPrice = atomicToHuman(matched.price, 6, 6);
       }
-      const stakedValue =
-        Number(rTokenBalance) * Number(exchangeRate) * Number(tokenPrice);
+      const stakedAmount =
+        (Number(result) / 1000000) *
+          (Number(poolInfoResult.exchangeRate) / 1000000) +
+        "";
+      const stakedValue = Number(stakedAmount) * Number(tokenPrice);
       const chainStakeStatus: ChainStakeStatus = {
         rTokenDenom: chainId,
         rTokenBalance,
+        stakedAmount,
         stakedValue: stakedValue.toString(),
       };
       dispatch(updateChainStakeStatus(chainId, chainStakeStatus));

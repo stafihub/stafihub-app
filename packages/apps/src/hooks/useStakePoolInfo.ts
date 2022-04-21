@@ -5,6 +5,7 @@ import { atomicToHuman } from "@stafihub/apps-util";
 export function useStakePoolInfo(denom: string) {
   const [poolAddress, setPoolAddress] = useState("--");
   const [exchangeRate, setExchangeRate] = useState("--");
+  const [originExchangeRate, setOriginExchangeRate] = useState("--");
   const [leastBond, setLeastBond] = useState("--");
   const [eraHours, setEraHours] = useState("--");
 
@@ -12,7 +13,8 @@ export function useStakePoolInfo(denom: string) {
     (async () => {
       const result = await queryStakePoolInfo(denom);
       if (result.exchangeRate) {
-        setExchangeRate(atomicToHuman(result.exchangeRate));
+        setExchangeRate(atomicToHuman(result.exchangeRate, 6, 6));
+        setOriginExchangeRate(atomicToHuman(result.exchangeRate));
       }
       if (result.leastBond) {
         setLeastBond(atomicToHuman(result.leastBond));
@@ -24,5 +26,5 @@ export function useStakePoolInfo(denom: string) {
     })();
   }, [denom]);
 
-  return { poolAddress, exchangeRate, leastBond, eraHours };
+  return { poolAddress, exchangeRate, originExchangeRate, leastBond, eraHours };
 }

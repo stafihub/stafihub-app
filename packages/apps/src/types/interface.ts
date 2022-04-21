@@ -37,6 +37,7 @@ export interface FeeStationPool {
 export interface ChainStakeStatus {
   rTokenDenom: string;
   rTokenBalance: string;
+  stakedAmount: string;
   stakedValue: string;
 }
 

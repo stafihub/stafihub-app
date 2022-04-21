@@ -52,17 +52,6 @@ export const RTokenDashboard = () => {
     dispatch(updateRTokenReward(rTokenDenom));
   }, [dispatch, rTokenDenom, stafiHubAccount?.bech32Address]);
 
-  const stakedAmount = useMemo(() => {
-    if (
-      !stakeStatus ||
-      isNaN(Number(exchangeRate)) ||
-      isNaN(Number(stakeStatus.rTokenBalance))
-    ) {
-      return "--";
-    }
-    return Number(stakeStatus.rTokenBalance) * Number(exchangeRate);
-  }, [exchangeRate, stakeStatus]);
-
   const redeemableAmount = useMemo(() => {
     if (
       isNaN(Number(exchangeRate)) ||
@@ -77,17 +66,6 @@ export const RTokenDashboard = () => {
       Number(exchangeRate)
     );
   }, [unbondCommission, exchangeRate, stakeStatus]);
-
-  const stakedValue = useMemo(() => {
-    if (
-      !stakedAmount ||
-      isNaN(Number(stakedAmount)) ||
-      isNaN(Number(tokenPrice))
-    ) {
-      return "--";
-    }
-    return Number(stakedAmount) * Number(tokenPrice);
-  }, [stakedAmount, tokenPrice]);
 
   const rTokenValue = useMemo(() => {
     if (
@@ -140,7 +118,8 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="mt-3 text-text-gray7 text-[14px]">
-                <FormatterText value={stakedAmount} /> {tokenName} staked
+                <FormatterText value={stakeStatus?.stakedAmount} /> {tokenName}{" "}
+                staked
               </div>
             </div>
           </div>
@@ -268,7 +247,7 @@ export const RTokenDashboard = () => {
 
               <div className="flex flex-col items-end">
                 <div className="text-[22px] font-bold text-white">
-                  $ <FormatterText value={stakedValue} />
+                  $ <FormatterText value={stakeStatus?.stakedValue} />
                 </div>
 
                 <div className="mt-2 flex">

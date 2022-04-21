@@ -15,7 +15,7 @@ export const CustomNumberInput = (props: CustomInputProps) => {
     <input
       disabled={props.disabled}
       className={classNames(
-        "bg-transparent border-none outline-none  font-bold ",
+        "bg-transparent border-none outline-none font-bold",
         props.light
           ? "text-text-black1 placeholder:text-[#cacaca]"
           : props.primary
@@ -28,14 +28,14 @@ export const CustomNumberInput = (props: CustomInputProps) => {
       value={props.value}
       placeholder={props.placeholder}
       onChange={(e) => {
-        let value = e.target.value.replace(/[^\d\.]/g, "");
+        let value = e.target.value.replace(/[^\d.]/g, "");
         // value = value.replace(/^\./g, "");
         value = value.replace(/\.{2,}/g, ".");
         value = value
           .replace(".", "$#$")
           .replace(/\./g, "")
           .replace("$#$", ".");
-        value = value.replace(/^(\-)*(\d+)\.(\d\d\d\d\d\d).*$/, "$1$2.$3");
+        value = value.replace(/^(-)*(\d*)\.(\d\d\d\d\d\d).*$/, "$1$2.$3");
         props.handleValueChange(value);
       }}
     />

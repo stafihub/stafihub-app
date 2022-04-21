@@ -50,10 +50,12 @@ export const UnbondModal = (props: UnbondModalProps) => {
           backgroundColor: "#000002",
           width: "520px",
           borderRadius: "20px",
-          margin: "auto",
-          marginTop: "140px",
           outline: "none",
-          transform: "translateX(80px)",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          marginLeft: "40px",
         }}
       >
         <div className="text-white font-bold text-[30px]">

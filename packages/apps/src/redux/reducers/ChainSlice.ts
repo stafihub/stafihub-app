@@ -52,7 +52,7 @@ export const { setChainStakeStatusMap, setChainEras, setRTokenRewardStore } =
 export default chainSlice.reducer;
 
 export const updateChainStakeStatus =
-  (chainId: string, stakeStatus: ChainStakeStatus): AppThunk =>
+  (chainId: string, stakeStatus: ChainStakeStatus | undefined): AppThunk =>
   async (dispatch, getState) => {
     const newMap = {
       ...getState().chain.chainStakeStatusMap,
@@ -98,6 +98,13 @@ export const updateRTokenReward =
   async (dispatch, getState) => {
     const stafiHubAccount = getState().app.accounts[getStafiHubChainId()];
     if (!stafiHubAccount) {
+      const rewardStore: RTokenRewardStore = {};
+      rewardStore[denom] = undefined;
+      const newRewardStore = {
+        ...getState().chain.rTokenRewardStore,
+        ...rewardStore,
+      };
+      dispatch(setRTokenRewardStore(newRewardStore));
       return;
     }
 

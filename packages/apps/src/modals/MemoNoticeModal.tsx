@@ -21,10 +21,12 @@ export const MemoNoticeModal = (props: ClaimMintRewardModalProps) => {
           backgroundColor: "#ffffff",
           width: "660px",
           borderRadius: "6px",
-          margin: "auto",
-          marginTop: "190px",
           outline: "none",
-          transform: "translateX(80px)",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          marginLeft: "40px",
         }}
       >
         <div className="flex justify-center">

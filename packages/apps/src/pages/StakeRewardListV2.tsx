@@ -25,6 +25,8 @@ export const StakeRewardListV2 = () => {
   useEffect(() => {
     (async () => {
       if (!stafiHubAccount?.bech32Address) {
+        setEraRewards([]);
+        setTotalCount(0);
         return;
       }
       const res = await fetch(

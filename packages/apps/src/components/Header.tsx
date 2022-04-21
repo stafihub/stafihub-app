@@ -17,8 +17,8 @@ import { useNavigate } from "react-router-dom";
 import iconMore from "../assets/images/icon_more.svg";
 import iconNotice from "../assets/images/icon_notice.svg";
 import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
+import { AccountModal } from "../modals/AccountModal";
 import { getHumanAccountBalance } from "../utils/common";
-import { AccountModal } from "./AccountModal";
 import { NoticeList } from "./notice/NoticeList";
 
 const STAFIHUB_CHAIN_ID = getStafiHubChainId();

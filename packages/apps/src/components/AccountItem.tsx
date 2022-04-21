@@ -6,7 +6,8 @@ import {
 import { FormatterText } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import iconArrowRight from "../assets/images/icon_arrow_right.svg";
-import { connectKeplr } from "../redux/reducers/AppSlice";
+import iconDisconnect from "../assets/images/icon_disconnect.svg";
+import { connectKeplr, disconnectKeplr } from "../redux/reducers/AppSlice";
 import { KeplrAccount } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 
@@ -21,11 +22,28 @@ export const AccountItem = (props: AccountItemProps) => {
   return (
     <div className="">
       {props.chainAccount ? (
-        <div className="mt-7 mb-3 flex items-center cursor-pointer">
-          <img src={iconArrowRight} className="w-[7px] h-[13px]" alt="arrow" />
+        <div className="mt-7 mb-3 flex items-center justify-between">
+          <div className="flex items-center">
+            <img
+              src={iconArrowRight}
+              className="w-[7px] h-[13px]"
+              alt="arrow"
+            />
 
-          <div className="ml-1 text-primary text-[16px] font-bold">
-            {props.chain.chainName}
+            <div className="ml-1 text-primary text-[16px] font-bold">
+              {props.chain.chainName}
+            </div>
+          </div>
+
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => {
+              dispatch(disconnectKeplr(props.chain.chainId));
+            }}
+          >
+            <img src={iconDisconnect} className="h-[20px]" alt="disconnect" />
+
+            <div className="ml-1 text-white text-[14px]">Disconnect</div>
           </div>
         </div>
       ) : (

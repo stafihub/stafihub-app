@@ -64,10 +64,12 @@ export const ProgressModal = (props: ProgressModalProps) => {
           backgroundColor: "#252525",
           width: "850px",
           borderRadius: "2px",
-          margin: "auto",
-          marginTop: "120px",
           outline: "none",
-          transform: "translateX(80px)",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          marginLeft: "40px",
         }}
       >
         <img

@@ -22,10 +22,12 @@ export const TradeModal = (props: TradeModalProps) => {
           backgroundColor: "#ffffff",
           width: "400px",
           borderRadius: "6px",
-          margin: "auto",
-          marginTop: "120px",
           outline: "none",
-          transform: "translateX(80px)",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          marginLeft: "40px",
         }}
       >
         <div className="flex justify-center relative">

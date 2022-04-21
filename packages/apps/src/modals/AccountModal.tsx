@@ -4,7 +4,7 @@ import { Button } from "@stafihub/react-components";
 import * as _ from "lodash";
 import { useMemo } from "react";
 import { useAccounts } from "../hooks/useAppSlice";
-import { AccountItem } from "./AccountItem";
+import { AccountItem } from "../components/AccountItem";
 
 interface UnbondModalProps {
   visible: boolean;
@@ -35,10 +35,12 @@ export const AccountModal = (props: UnbondModalProps) => {
           backgroundColor: "#151515",
           width: "680px",
           borderRadius: "20px",
-          margin: "auto",
-          marginTop: "120px",
           outline: "none",
-          transform: "translateX(80px)",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          marginLeft: "40px",
         }}
       >
         <div className="mb-2 text-white font-bold text-[30px]">

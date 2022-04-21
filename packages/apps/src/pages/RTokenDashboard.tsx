@@ -48,10 +48,8 @@ export const RTokenDashboard = () => {
     useAccountReward(chainId);
 
   useEffect(() => {
-    if (stafiHubAccount?.bech32Address) {
-      // Update reward data.
-      dispatch(updateRTokenReward(rTokenDenom));
-    }
+    // Update reward data.
+    dispatch(updateRTokenReward(rTokenDenom));
   }, [dispatch, rTokenDenom, stafiHubAccount?.bech32Address]);
 
   const stakedAmount = useMemo(() => {

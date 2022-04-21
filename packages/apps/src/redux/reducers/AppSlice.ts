@@ -79,7 +79,7 @@ export const {
 } = appSlice.actions;
 
 export const updateAccounts =
-  (network: string, account: KeplrAccount): AppThunk =>
+  (network: string, account: KeplrAccount | undefined): AppThunk =>
   async (dispatch, getState) => {
     const newAccounts = {
       ...getState().app.accounts,
@@ -169,25 +169,41 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
   }
 };
 
+export const disconnectKeplr =
+  (chainId: string | undefined): AppThunk =>
+  async (dispatch, getState) => {
+    if (!chainId) {
+      return;
+    }
+
+    dispatch(updateAccounts(chainId, undefined));
+    clearNetworkAllowedFlag(chainId);
+  };
+
 export const updateTokenBalance =
-  (network: string): AppThunk =>
+  (chainId: string): AppThunk =>
   async (dispatch, getState) => {
     try {
-      const account = getState().app.accounts[network];
+      const account = getState().app.accounts[chainId];
       // console.log("account1", account);
       if (!account) {
         return;
       }
       const newAccount = { ...account };
       const balances = await queryAccountBalances(
-        network,
+        chainId,
         newAccount.bech32Address
       );
       newAccount.allBalances = balances;
 
-      dispatch(updateAccounts(network, newAccount));
+      // Prevent disconnect conflict.
+      if (!getState().app.accounts[chainId]) {
+        return;
+      }
+
+      dispatch(updateAccounts(chainId, newAccount));
     } catch (err: unknown) {
-      console.log(`updateTokenBalance ${network} error`, err);
+      console.log(`updateTokenBalance ${chainId} error`, err);
     }
   };
 
@@ -210,6 +226,10 @@ export const updateAllTokenBalance =
           );
           newAccount.allBalances = balances;
 
+          // Prevent disconnect conflict.
+          if (!getState().app.accounts[chainId]) {
+            return;
+          }
           return { network: chainId, account: newAccount };
         } catch (err: unknown) {
           console.log(`updateTokenBalance ${chainId} error`, err);

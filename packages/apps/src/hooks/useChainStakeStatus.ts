@@ -27,7 +27,11 @@ export function useChainStakeStatus(chainId: string | undefined) {
 
   const updateStakeStatus = useCallback(
     async (chainId: string | undefined) => {
-      if (!chainId || !stafiHubAccount) {
+      if (!chainId) {
+        return;
+      }
+      if (!stafiHubAccount) {
+        dispatch(updateChainStakeStatus(chainId, undefined));
         return;
       }
 

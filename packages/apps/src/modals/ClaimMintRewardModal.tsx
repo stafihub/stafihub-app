@@ -27,10 +27,12 @@ export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
           backgroundColor: "#000002",
           width: "620px",
           borderRadius: "20px",
-          margin: "auto",
-          marginTop: "190px",
           outline: "none",
-          transform: "translateX(80px)",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          marginLeft: "40px",
         }}
       >
         <div className="flex items-center justify-between">

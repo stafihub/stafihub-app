@@ -651,7 +651,7 @@ export const showFeeStationSwapLoadingModal =
         })
       );
 
-      const MAX_COUNT = 6;
+      const MAX_COUNT = 100;
       let timeCount = 0;
       while (timeCount <= MAX_COUNT) {
         if (timeCount % 5 === 0) {

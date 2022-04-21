@@ -104,9 +104,9 @@ export const StakeRecoveryV2 = () => {
       </div>
 
       <div className="ml-10 mt-[10px] text-white text-[14px] leading-tight">
-        Under certain circumstances such as the sudden shutdown of your computer
-        after staking your PoS Tokens, you may not receive your rTokens due to
-        being unable to sign the staking authorization transaction.
+        Under certain circumstances such as providing a worng address format in
+        the memo when staking your PoS Tokens, you may not receive your rTokens
+        due to being unable to sign the staking authorization transaction.
       </div>
 
       <div className="ml-10 mt-[10px] text-white text-[14px] leading-tight">

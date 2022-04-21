@@ -138,6 +138,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                   cursor: "pointer",
                 }}
                 onClick={() => {
+                  props.onClose();
                   if (notice.type === "Stake") {
                     const stakeData = notice.data as NoticeStakeData;
                     dispatch(
@@ -156,23 +157,26 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                             : -1,
                       })
                     );
-                  } else if (
+                    return;
+                  }
+                  if (
                     notice.type === "Fee Station" &&
                     notice.status === "Pending"
                   ) {
                     const feeStationData = notice.data as NoticeFeeStationData;
-                    dispatch(
-                      showFeeStationSwapLoadingModal(
-                        notice.txDetail.transactionHash,
-                        notice.txDetail.address,
-                        feeStationData.uuid,
-                        feeStationData.outputAmount
-                      )
-                    );
-                  } else {
-                    openLink(getNoticeUrl(notice));
+                    if (feeStationData.uuid) {
+                      dispatch(
+                        showFeeStationSwapLoadingModal(
+                          notice.txDetail.transactionHash,
+                          notice.txDetail.address,
+                          feeStationData.uuid,
+                          feeStationData.outputAmount
+                        )
+                      );
+                      return;
+                    }
                   }
-                  props.onClose();
+                  openLink(getNoticeUrl(notice));
                 }}
               >
                 {notice.status}

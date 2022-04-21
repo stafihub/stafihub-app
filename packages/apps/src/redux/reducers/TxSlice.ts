@@ -726,7 +726,7 @@ export const showFeeStationSwapLoadingModal =
         timeCount++;
         dispatch(
           setSwapProgressModalProps({
-            progress: Math.min(99, timeCount),
+            progress: Math.min(99, timeCount * 4),
           })
         );
 

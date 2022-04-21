@@ -45,9 +45,9 @@ export const StakeRecovery = () => {
       </div>
 
       <div className="mt-[10px] text-white text-[14px] leading-tight">
-        Under certain circumstances such as providing a worng address format in
+        Under certain circumstances such as providing a wrong address format in
         the memo when staking your PoS Tokens, you may not receive your rTokens
-        due to being unable to sign the staking authorization transaction.
+        due to being unable to resolve a valid StaFiHub address.
       </div>
 
       <div className="mt-[10px] text-white text-[14px] leading-tight">

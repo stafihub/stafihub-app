@@ -30,6 +30,7 @@ export interface NoticeFeeStationData {
   outputTokenName: string;
   inputAmount: string;
   outputAmount: string;
+  uuid: string;
 }
 
 export interface NoticeStakeData {

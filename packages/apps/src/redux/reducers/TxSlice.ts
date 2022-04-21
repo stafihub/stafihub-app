@@ -534,7 +534,6 @@ export const feeStationSwap =
   ): AppThunk =>
   async (dispatch, getState) => {
     try {
-      let success = false;
       const stafiHubAccount = getState().app.accounts[getStafiHubChainId()];
       const chainAccount = getState().app.accounts[poolInfo.chainId];
 
@@ -596,89 +595,24 @@ export const feeStationSwap =
                 inputAmount: inAmount,
                 outputTokenName: "FIS",
                 outputAmount: outAmount,
+                uuid,
               },
               getExplorerUrl(getStafiHubChainId())
             )
           );
+
           dispatch(setIsLoading(false));
+
+          callback && callback(true);
+
           dispatch(
-            setSwapProgressModalProps({
-              visible: true,
-              progress: 0,
-              txDetail: {
-                amount: outAmount,
-                symbol: "FIS",
-                stafihubAddress: stafiHubAccount.bech32Address,
-              },
-            })
+            showFeeStationSwapLoadingModal(
+              txResponse.transactionHash,
+              stafiHubAccount.bech32Address,
+              uuid,
+              outAmount
+            )
           );
-
-          const MAX_COUNT = 100;
-          let timeCount = 0;
-          while (timeCount <= MAX_COUNT) {
-            if (timeCount % 5 === 0) {
-              const getUuidRes = await fetch(
-                `https://test-rtoken-api.stafihub.io/feeStation/api/v1/station/swapInfo?uuid=${uuid}`,
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
-              const getUuidResJson = await getUuidRes.json();
-              if (getUuidResJson.data?.swapStatus === 2) {
-                // Success.
-                dispatch(
-                  setSwapProgressModalProps({
-                    progress: 100,
-                  })
-                );
-                success = true;
-                dispatch(updateNotice(txResponse.transactionHash, "Confirmed"));
-                break;
-              } else if (getUuidResJson.data?.swapStatus === 3) {
-                dispatch(
-                  setSwapProgressModalProps({
-                    visible: false,
-                  })
-                );
-                snackbarUtil.error("InAmountNotMatch");
-                dispatch(updateNotice(txResponse.transactionHash, "Error"));
-              } else if (getUuidResJson.data?.swapStatus === 4) {
-                dispatch(
-                  setSwapProgressModalProps({
-                    visible: false,
-                  })
-                );
-                snackbarUtil.error("StafiAddressNotMatch");
-                dispatch(updateNotice(txResponse.transactionHash, "Error"));
-              }
-            }
-
-            timeCount++;
-            dispatch(
-              setSwapProgressModalProps({
-                progress: Math.min(99, timeCount),
-              })
-            );
-
-            if (timeCount > MAX_COUNT) {
-              snackbarUtil.warning(
-                "Transaction in progress, please check your wallet later"
-              );
-              dispatch(
-                setSwapProgressModalProps({
-                  visible: false,
-                })
-              );
-            }
-
-            await timeout(1000);
-          }
-
-          dispatch(updateAllTokenBalance());
-          callback && callback(success);
         }
       } else {
         snackbarUtil.error(postSwapInfoResJson.message);
@@ -693,6 +627,96 @@ export const feeStationSwap =
       }
     } finally {
       dispatch(setIsLoading(false));
+    }
+  };
+
+export const showFeeStationSwapLoadingModal =
+  (
+    txHash: string,
+    stafihubAddress: string,
+    uuid: string,
+    outAmount: string
+  ): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      dispatch(
+        setSwapProgressModalProps({
+          visible: true,
+          progress: 0,
+          txDetail: {
+            amount: outAmount,
+            symbol: "FIS",
+            stafihubAddress: stafihubAddress,
+          },
+        })
+      );
+
+      const MAX_COUNT = 6;
+      let timeCount = 0;
+      while (timeCount <= MAX_COUNT) {
+        if (timeCount % 5 === 0) {
+          const getUuidRes = await fetch(
+            `https://test-rtoken-api.stafihub.io/feeStation/api/v1/station/swapInfo?uuid=${uuid}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const getUuidResJson = await getUuidRes.json();
+          if (getUuidResJson.data?.swapStatus === 2) {
+            // Success.
+            dispatch(
+              setSwapProgressModalProps({
+                progress: 100,
+              })
+            );
+            dispatch(updateNotice(txHash, "Confirmed"));
+            break;
+          } else if (getUuidResJson.data?.swapStatus === 3) {
+            dispatch(
+              setSwapProgressModalProps({
+                visible: false,
+              })
+            );
+            snackbarUtil.error("InAmountNotMatch");
+            dispatch(updateNotice(txHash, "Error"));
+          } else if (getUuidResJson.data?.swapStatus === 4) {
+            dispatch(
+              setSwapProgressModalProps({
+                visible: false,
+              })
+            );
+            snackbarUtil.error("StafiAddressNotMatch");
+            dispatch(updateNotice(txHash, "Error"));
+          }
+        }
+
+        timeCount++;
+        dispatch(
+          setSwapProgressModalProps({
+            progress: Math.min(99, timeCount),
+          })
+        );
+
+        if (timeCount > MAX_COUNT) {
+          snackbarUtil.warning(
+            "Transaction in progress, please check your wallet later"
+          );
+          dispatch(
+            setSwapProgressModalProps({
+              visible: false,
+            })
+          );
+        }
+
+        await timeout(1000);
+      }
+
+      dispatch(updateAllTokenBalance());
+    } catch (err: unknown) {
+      snackbarUtil.error((err as Error).message);
     }
   };
 

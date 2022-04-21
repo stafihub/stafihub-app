@@ -2,7 +2,10 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUnreadNoticeFlag } from "../../redux/reducers/AppSlice";
-import { setStakeSidebarProps } from "../../redux/reducers/TxSlice";
+import {
+  setStakeSidebarProps,
+  showFeeStationSwapLoadingModal,
+} from "../../redux/reducers/TxSlice";
 import {
   LocalNotice,
   NoticeFeeStationData,
@@ -152,6 +155,19 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                             ? 2
                             : -1,
                       })
+                    );
+                  } else if (
+                    notice.type === "Fee Station" &&
+                    notice.status === "Pending"
+                  ) {
+                    const feeStationData = notice.data as NoticeFeeStationData;
+                    dispatch(
+                      showFeeStationSwapLoadingModal(
+                        notice.txDetail.transactionHash,
+                        notice.txDetail.address,
+                        feeStationData.uuid,
+                        feeStationData.outputAmount
+                      )
                     );
                   } else {
                     openLink(getNoticeUrl(notice));

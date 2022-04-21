@@ -78,21 +78,14 @@ export const StakeV2 = () => {
     return Number(inputAmount) / Number(exchangeRate);
   }, [inputAmount, exchangeRate]);
 
+  console.log("leastBond", leastBond);
+
   const clickStake = async () => {
     if (!poolAddress || !stafiHubAddress) {
       return;
     }
     if (!chainAccount) {
       dispatch(connectKeplr(chainId));
-    }
-
-    if (Number(inputAmount) < Number(leastBond)) {
-      snackbarUtil.warning(
-        `The stake amount is less than the minimum stake size: ${leastBond} ${getTokenDisplayName(
-          chainId
-        )}`
-      );
-      return;
     }
 
     dispatch(
@@ -291,6 +284,14 @@ export const StakeV2 = () => {
           onClick={() => {
             if (!stafiHubAccount) {
               dispatch(connectKeplr(getStafiHubChainId()));
+              return;
+            }
+            if (Number(inputAmount) < Number(leastBond)) {
+              snackbarUtil.warning(
+                `The stake amount is less than the minimum stake size: ${leastBond} ${getTokenDisplayName(
+                  chainId
+                )}`
+              );
               return;
             }
             setMemoNoticeModalVisible(true);

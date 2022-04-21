@@ -17,6 +17,7 @@ import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { RTokenItem, useRTokenList } from "../hooks/useRTokenList";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { stakeRecovery } from "../redux/reducers/TxSlice";
+import { openLink } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 
 export const StakeRecoveryV2 = () => {
@@ -132,7 +133,14 @@ export const StakeRecoveryV2 = () => {
       <div className="ml-10 mt-[40px] flex justify-between">
         <div className="text-white text-[12px]">TxHash</div>
 
-        <div className="text-[#ededed] text-[12px] underline cursor-pointer">
+        <div
+          className="text-[#ededed] text-[12px] underline cursor-pointer"
+          onClick={() =>
+            openLink(
+              "https://docs.stafihub.io/welcome-to-stafihub/user/testing-guide#the-way-to-get-txhash"
+            )
+          }
+        >
           How to get TxHash?
         </div>
       </div>

@@ -24,7 +24,7 @@ export const StakeRewardListV2 = () => {
 
   useEffect(() => {
     (async () => {
-      if (!stafiHubAccount) {
+      if (!stafiHubAccount?.bech32Address) {
         return;
       }
       const res = await fetch(
@@ -52,7 +52,7 @@ export const StakeRewardListV2 = () => {
         setTotalCount(resJson.data.totalCount);
       }
     })();
-  }, [stafiHubAccount, page, chainId]);
+  }, [stafiHubAccount?.bech32Address, page, chainId]);
 
   return (
     <div className="">

@@ -40,7 +40,6 @@ export async function queryTx(
 
   try {
     const result = await client.getTx(txHash);
-    // console.log("queryTx result", result);
     return result;
   } catch {
     return null;
@@ -73,7 +72,6 @@ export async function queryAccountBalances(
   try {
     // const result = await client.getBalance(address, chains[chainId].denom);
     const allBalancesResult = await client.getAllBalances(address);
-    // console.log("account allBalancesResult", allBalancesResult);
     return [...allBalancesResult];
   } catch {
     return [];
@@ -95,8 +93,6 @@ export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
     }),
   ]);
 
-  // console.log("result", results);
-
   return {
     poolAddress: results[0].addrs[0],
     exchangeRate: results[1].exchangeRate?.value,
@@ -117,8 +113,6 @@ export async function queryRParams(
   const result = await queryService.GetRParams({
     denom: tokenDenom,
   });
-
-  // console.log(`queryRParams ${tokenDenom} result`, result);
 
   return result;
 }
@@ -142,7 +136,6 @@ export async function queryPoolByDenom(
   const result = await queryService.BondedPoolsByDenom({
     denom: tokenDenom,
   });
-  // console.log("result", result);
   return result;
 }
 
@@ -156,7 +149,6 @@ export async function queryPoolDetail(
     denom: tokenDenom,
     pool: poolAddress,
   });
-  // console.log("result", result);
   return result;
 }
 
@@ -170,7 +162,6 @@ export async function queryTokenSupply(
     const result = await queryService.SupplyOf({
       denom,
     });
-    // console.log("queryBondRecord result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryrTokenSupply err", denom, err);
@@ -188,7 +179,6 @@ export async function queryrTokenBalance(
   }
 
   const result = await client.getBalance(stafiHubAddress, tokenDenom);
-  // console.log("rToken balance result", result);
   return result.amount;
 }
 
@@ -202,7 +192,6 @@ export async function queryBondRecord(
       denom,
       txhash,
     });
-    // console.log("queryBondRecord result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryBondRecord err", denom, txhash, err);
@@ -220,7 +209,6 @@ export async function queryAccountUnbond(
       denom: tokenDenom,
       unbonder: stafiHubAddress,
     });
-    // console.log("queryAccountUnbond result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryAccountUnbond err", err);
@@ -236,7 +224,6 @@ export async function queryUnbondCommission(
     const result = await queryService.GetUnbondCommission({
       denom: tokenDenom,
     });
-    // console.log("queryUnbondCommission result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryUnbondCommission err", err);
@@ -252,7 +239,6 @@ export async function queryChainEra(
     const result = await queryService.GetChainEra({
       denom,
     });
-    // console.log("queryChainEra result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryChainEra err", denom, err);
@@ -270,11 +256,8 @@ export async function queryEraExchangeRate(
       era,
       denom,
     });
-    // console.log("queryEraExchangeRate result", result);
     return result;
-  } catch (err: unknown) {
-    console.log("queryEraExchangeRate err", era, denom, err);
-  }
+  } catch (err: unknown) {}
   return null;
 }
 
@@ -286,7 +269,6 @@ export async function queryUnbondRelayFee(
     const result = await queryService.GetUnbondRelayFee({
       denom,
     });
-    // console.log("queryUnbondRelayFee result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryUnbondRelayFee err", denom, err);
@@ -300,7 +282,6 @@ export async function queryChainParams(
   try {
     const queryService = await createCosmosStakingQueryService(chainId);
     const result = await queryService.Params({});
-    // console.log("queryChainParams result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryChainParams err", chainId, err);
@@ -318,7 +299,6 @@ export async function queryDenomTrace(
     const result = await queryService.DenomTrace({
       hash: ibcDenom.split("/")[1],
     });
-    // console.log("queryDenomTrace result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryDenomTrace err", chainId, err);
@@ -336,7 +316,6 @@ export async function queryChannel(
       portId: "transfer",
       channelId: channelName,
     });
-    // console.log("queryChannel result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryChannel err", chainId, err);

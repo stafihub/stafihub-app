@@ -509,9 +509,21 @@ export const unbond =
             "Confirmed"
           )
         );
+      } else if (txResponse?.code === 1101) {
+        snackbarUtil.warning(
+          "Insufficient balance of your account, please check!"
+        );
+      } else if (txResponse?.code === 39) {
+        snackbarUtil.warning(
+          "The unbond function is temporarily unavailable because the system is being upgraded, please try again later!"
+        );
       } else if (txResponse?.code === 20) {
         snackbarUtil.warning(
           "The unbond limit of the pool has been reached in the current era, please wait for the next era!"
+        );
+      } else if (txResponse?.code === 37) {
+        snackbarUtil.warning(
+          "The unbond limit of your account has been reached, please wait for your previous unbonding records to end!"
         );
       } else {
         snackbarUtil.warning(

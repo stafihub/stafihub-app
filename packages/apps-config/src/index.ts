@@ -13,6 +13,14 @@ export function isFork(): boolean {
   return process.env.REACT_APP_CHAIN_ID !== getStafiHubChainId();
 }
 
+export function getApiHost(): string {
+  if (isDev()) {
+    return "https://test-rtoken-api.stafihub.io";
+  } else {
+    return "https://test-rtoken-api.stafihub.io";
+  }
+}
+
 export function getStafiHubChainId(): string {
   if (isDev()) {
     return "stafihub-public-testnet-1";

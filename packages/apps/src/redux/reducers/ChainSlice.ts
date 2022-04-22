@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  getApiHost,
+  getRTokenDenom,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import { queryChainEra } from "@stafihub/apps-wallet";
 import { ChainStakeStatus, RTokenRewardData } from "../../types/interface";
 import { AppThunk } from "../store";
@@ -108,22 +112,19 @@ export const updateRTokenReward =
       return;
     }
 
-    const res = await fetch(
-      "https://test-rtoken-api.stafihub.io/rtokenInfo/webapi/rtoken/reward",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chainType: 80,
-          userAddress: stafiHubAccount.bech32Address,
-          rTokenDenom: denom,
-          pageIndex: 0,
-          pageCount: 10,
-        }),
-      }
-    );
+    const res = await fetch(`${getApiHost()}/rtokenInfo/webapi/rtoken/reward`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chainType: 80,
+        userAddress: stafiHubAccount.bech32Address,
+        rTokenDenom: denom,
+        pageIndex: 0,
+        pageCount: 10,
+      }),
+    });
 
     const resJson = await res.json();
     const rewardStore: RTokenRewardStore = {};

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  getApiHost,
   getChainAccountPrefix,
   getChainDecimals,
   getChainName,
@@ -509,9 +510,13 @@ export const unbond =
           )
         );
       } else if (txResponse?.code === 20) {
-        snackbarUtil.warning("The unbond limit of the pool has been reached in the current era, please wait for the next era!");
+        snackbarUtil.warning(
+          "The unbond limit of the pool has been reached in the current era, please wait for the next era!"
+        );
       } else {
-        snackbarUtil.warning("Something went wrong, please increase the gas and try again!");
+        snackbarUtil.warning(
+          "Something went wrong, please increase the gas and try again!"
+        );
       }
       dispatch(updateTokenBalance(chainId));
       callback && callback(txResponse?.code === 0);
@@ -587,7 +592,7 @@ export const feeStationSwap =
         minOutAmount: humanToAtomic(minOutAmount, 6),
       };
       const postSwapInfoRes = await fetch(
-        `https://test-rtoken-api.stafihub.io/feeStation/api/v1/station/swapInfo`,
+        `${getApiHost()}/feeStation/api/v1/station/swapInfo`,
         {
           method: "POST",
           headers: {
@@ -686,7 +691,7 @@ export const showFeeStationSwapLoadingModal =
       while (timeCount <= MAX_COUNT) {
         if (timeCount % 5 === 0) {
           const getUuidRes = await fetch(
-            `https://test-rtoken-api.stafihub.io/feeStation/api/v1/station/swapInfo?uuid=${uuid}`,
+            `${getApiHost()}/feeStation/api/v1/station/swapInfo?uuid=${uuid}`,
             {
               method: "GET",
               headers: {

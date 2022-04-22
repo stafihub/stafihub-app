@@ -5,10 +5,10 @@ if (isDev()) {
   configs = require.context("./testnet", false, /\.json$/);
 }
 
-const update = {};
+const update: NetworkConfig = {};
 configs.keys().forEach((k) => {
   const c = configs(k);
   (update as any)[c.chainId] = c;
 });
 
-export const chains: NetworkConfig = update;
+export const chains = update;

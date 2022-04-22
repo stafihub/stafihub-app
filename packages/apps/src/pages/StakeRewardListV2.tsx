@@ -1,4 +1,5 @@
 import {
+  getApiHost,
   getChainIdFromRTokenDisplayName,
   getRTokenDenom,
   getStafiHubChainId,
@@ -30,7 +31,7 @@ export const StakeRewardListV2 = () => {
         return;
       }
       const res = await fetch(
-        "https://test-rtoken-api.stafihub.io/rtokenInfo/webapi/rtoken/reward",
+        `${getApiHost()}/rtokenInfo/webapi/rtoken/reward`,
         {
           method: "POST",
           headers: {

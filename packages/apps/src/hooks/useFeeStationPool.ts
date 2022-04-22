@@ -1,4 +1,9 @@
-import { chains, getDenom, STAFIHUB_DECIMALS } from "@stafihub/apps-config";
+import {
+  chains,
+  getApiHost,
+  getDenom,
+  STAFIHUB_DECIMALS,
+} from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
 import * as _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
@@ -17,16 +22,13 @@ export function useFeeStationPools() {
   useEffect(() => {
     const abortController = new AbortController();
 
-    fetch(
-      "https://test-rtoken-api.stafihub.io/feeStation/api/v1/station/poolInfo",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        signal: abortController.signal,
-      }
-    )
+    fetch(`${getApiHost()}/feeStation/api/v1/station/poolInfo`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: abortController.signal,
+    })
       .then((response) => {
         return response.json();
       })

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { chains, getStafiHubChainId } from "@stafihub/apps-config";
+import { chains, getApiHost, getStafiHubChainId } from "@stafihub/apps-config";
 import {
   connectAtomjs,
   getKeplrAccount,
@@ -275,7 +275,7 @@ export const updateNotice =
   };
 
 export const updatePriceList = (): AppThunk => async (dispatch, getState) => {
-  fetch("https://test-rtoken-api.stafihub.io/rtokenInfo/webapi/priceList", {
+  fetch(`${getApiHost()}/rtokenInfo/webapi/priceList`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

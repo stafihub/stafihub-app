@@ -14,8 +14,6 @@ export function atomicToHuman(
     .shiftedBy(-fractionalDigits)
     .dp(decimals, BigNumber.ROUND_FLOOR);
 
-  console.log(bn.toString());
-
   return bn.toString();
 }
 

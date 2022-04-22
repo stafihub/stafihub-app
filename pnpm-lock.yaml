@@ -128,8 +128,10 @@ importers:
   packages/apps-util:
     specifiers:
       '@cosmjs/math': 0.27.1
+      bignumber.js: ^9.0.2
     dependencies:
       '@cosmjs/math': 0.27.1
+      bignumber.js: 9.0.2
 
   packages/apps-wallet:
     specifiers:
@@ -3933,6 +3935,10 @@ packages:
 
   /big.js/5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
+    dev: false
+
+  /bignumber.js/9.0.2:
+    resolution: {integrity: sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==}
     dev: false
 
   /binary-extensions/2.2.0:

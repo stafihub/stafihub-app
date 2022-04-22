@@ -1,16 +1,22 @@
 import { Decimal, Uint64 } from "@cosmjs/math";
+import BigNumber from "bignumber.js";
+BigNumber.config({ EXPONENTIAL_AT: [-12, 20] });
 
 export function atomicToHuman(
   atomics: string | number | undefined | null,
   fractionalDigits: number = 6,
-  decimals: number = 4
+  decimals: number = 6
 ): string {
   if (!atomics || isNaN(Number(atomics))) {
     return "--";
   }
-  const decimal = Decimal.fromAtomics(atomics.toString(), fractionalDigits);
+  const bn = new BigNumber(atomics)
+    .shiftedBy(-fractionalDigits)
+    .dp(decimals, BigNumber.ROUND_FLOOR);
 
-  return formatNumberToFixed(decimal.toString(), decimals);
+  console.log(bn.toString());
+
+  return bn.toString();
 }
 
 export function humanToAtomic(

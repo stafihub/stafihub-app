@@ -123,3 +123,11 @@ export function getIBCChannels(chainId: string | undefined) {
   const chain = chains[chainId];
   return chain.stafihubIBCChannels;
 }
+
+export function getDefaultApy(chainId: string | undefined) {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.defaultApy;
+}

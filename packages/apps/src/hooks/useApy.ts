@@ -1,4 +1,8 @@
-import { getChainDecimals, getRTokenDenom } from "@stafihub/apps-config";
+import {
+  getChainDecimals,
+  getDefaultApy,
+  getRTokenDenom,
+} from "@stafihub/apps-config";
 import { queryEraExchangeRate } from "@stafihub/apps-wallet";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -40,7 +44,23 @@ export function useApy(chainId: string | undefined) {
           ((Number(currentRate) - Number(oldRate)) * 365.25 * 100) /
           (annualizedDay * Number(oldRate));
 
-        apy = apy === 0 ? 7 : apy;
+        if (apy === 0) {
+          const left1RateRes = await queryEraExchangeRate(
+            Math.max(0, currentEra - 1),
+            getRTokenDenom(chainId)
+          );
+          const left1Rate = left1RateRes?.eraExchangeRate?.value || 1000000;
+          apy =
+            ((Number(currentRate) - Number(left1Rate)) * 365.25 * 100) /
+            (annualizedDay * Number(left1Rate));
+        }
+
+        let defaultApy = 7;
+        let configDefaultApy = getDefaultApy(chainId);
+        if (configDefaultApy && !isNaN(Number(configDefaultApy))) {
+          defaultApy = Number(configDefaultApy);
+        }
+        apy = apy === 0 ? defaultApy : apy;
 
         setApy(apy.toString());
       }

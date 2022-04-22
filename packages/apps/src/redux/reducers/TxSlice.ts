@@ -249,6 +249,10 @@ export const stake =
             break;
           }
         }
+      } else {
+        snackbarUtil.warning(
+          "Something went wrong, please increase the gas and try again!"
+        );
       }
 
       callback && callback(success);
@@ -430,6 +434,10 @@ export const stakeRecovery =
             break;
           }
         }
+      } else {
+        snackbarUtil.warning(
+          "Something went wrong, please increase the gas and try again!"
+        );
       }
 
       callback && callback(success);
@@ -660,6 +668,10 @@ export const feeStationSwap =
               uuid,
               outAmount
             )
+          );
+        } else {
+          snackbarUtil.warning(
+            "Something went wrong, please increase the gas and try again!"
           );
         }
       } else {

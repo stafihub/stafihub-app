@@ -15,5 +15,6 @@ export interface KeplrChainParams {
   decimals: number;
   bech32Config: any;
   explorerUrl: string;
+  defaultApy?: string;
   stafihubIBCChannels?: string[];
 }

@@ -43,6 +43,7 @@ interface TxDetail {
   amount: string;
   symbol: string;
   stafihubAddress: string;
+  payTxHash?: string;
 }
 
 interface SwapProgressModalProps {
@@ -700,14 +701,27 @@ export const showFeeStationSwapLoadingModal =
             }
           );
           const getUuidResJson = await getUuidRes.json();
-          if (getUuidResJson.data?.swapStatus === 2) {
+          if (
+            getUuidResJson.data?.swapStatus === 2 &&
+            getUuidResJson.data?.payTxHash
+          ) {
             // Success.
             dispatch(
               setSwapProgressModalProps({
                 progress: 100,
+                txDetail: {
+                  amount: outAmount,
+                  symbol: "FIS",
+                  stafihubAddress: stafihubAddress,
+                  payTxHash: getUuidResJson.data.payTxHash,
+                },
               })
             );
-            dispatch(updateNotice(txHash, "Confirmed"));
+            dispatch(
+              updateNotice(txHash, "Confirmed", {
+                payTxHash: getUuidResJson.data.payTxHash,
+              })
+            );
             break;
           } else if (getUuidResJson.data?.swapStatus === 3) {
             dispatch(

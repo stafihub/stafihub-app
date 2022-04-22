@@ -61,7 +61,12 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
 
   const getNoticeUrl = (notice: LocalNotice): string | undefined => {
     try {
+      let data;
       if (notice.type === "Fee Station") {
+        data = notice.data as NoticeFeeStationData;
+        if (data.payTxHash) {
+          return `${notice.explorerUrl}/tx/${data.payTxHash}`;
+        }
         return `${notice.explorerUrl}/account/${notice.txDetail.address}`;
       } else {
         console.log(

@@ -268,9 +268,13 @@ export const addNotice =
  * Update notice status.
  */
 export const updateNotice =
-  (id: string, newStatus: NoticeStatus): AppThunk =>
+  (
+    id: string,
+    newStatus: NoticeStatus,
+    newData?: Partial<NoticeDataType>
+  ): AppThunk =>
   async (dispatch, getState) => {
-    updateNoticeInternal(id, newStatus);
+    updateNoticeInternal(id, newStatus, newData);
     dispatch(setUnreadNoticeFlag(true));
   };
 

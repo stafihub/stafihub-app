@@ -31,6 +31,7 @@ export interface NoticeFeeStationData {
   inputAmount: string;
   outputAmount: string;
   uuid: string;
+  payTxHash?: string;
 }
 
 export interface NoticeStakeData {

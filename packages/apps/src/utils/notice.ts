@@ -42,7 +42,11 @@ export function addNoticeInternal(
   saveStorage(STORAGE_KEY_UNREAD_NOTICE, "1");
 }
 
-export function updateNoticeInternal(id: string, newStatus: NoticeStatus) {
+export function updateNoticeInternal(
+  id: string,
+  newStatus: NoticeStatus,
+  newData?: Partial<NoticeDataType>
+) {
   const noticeList = getNoticeList();
 
   const targetNotice = _.remove(noticeList, (value) => {
@@ -50,8 +54,19 @@ export function updateNoticeInternal(id: string, newStatus: NoticeStatus) {
   });
 
   if (targetNotice.length === 1) {
+    let matched = targetNotice[0];
+    if (newData) {
+      matched = {
+        ...matched,
+        data: {
+          ...matched.data,
+          ...newData,
+        },
+      };
+    }
+
     noticeList.unshift({
-      ...targetNotice[0],
+      ...matched,
       status: newStatus,
     });
 

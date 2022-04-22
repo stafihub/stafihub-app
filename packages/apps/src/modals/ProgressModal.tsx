@@ -35,9 +35,13 @@ export const ProgressModal = (props: ProgressModalProps) => {
           className="mt-12 mb-24 h-12 px-6 flex items-center justify-center font-bold text-white text-[22px] bg-secondary rounded-sm cursor-pointer"
           onClick={() => {
             openLink(
-              `${getExplorerUrl(getStafiHubChainId())}/account/${
-                swapProgressModalProps?.txDetail?.stafihubAddress
-              }`
+              swapProgressModalProps?.txDetail?.payTxHash
+                ? `${getExplorerUrl(getStafiHubChainId())}/tx/${
+                    swapProgressModalProps?.txDetail?.payTxHash
+                  }`
+                : `${getExplorerUrl(getStafiHubChainId())}/account/${
+                    swapProgressModalProps?.txDetail?.stafihubAddress
+                  }`
             );
           }}
         >

@@ -43,7 +43,7 @@ interface TxDetail {
   amount: string;
   symbol: string;
   stafihubAddress: string;
-  payTxHash?: string;
+  feeStationPayTxHash?: string;
 }
 
 interface SwapProgressModalProps {
@@ -725,7 +725,7 @@ export const showFeeStationSwapLoadingModal =
                   amount: outAmount,
                   symbol: "FIS",
                   stafihubAddress: stafihubAddress,
-                  payTxHash: getUuidResJson.data.payTxHash,
+                  feeStationPayTxHash: getUuidResJson.data.payTxHash,
                 },
               })
             );

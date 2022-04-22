@@ -12,6 +12,7 @@ import {
   CustomInput,
   CustomNumberInput,
   RTokenIcon,
+  FormatterText,
 } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -138,7 +139,11 @@ export const StakeRedeemV2 = () => {
 
         <div className="mt-[10px] text-text-gray4 text-[12px] self-end mr-[60px]">
           {getRTokenDisplayName(chainId)} balance:{" "}
-          {stakeStatus ? stakeStatus.rTokenBalance : "--"}
+          {stakeStatus ? (
+            <FormatterText value={stakeStatus.rTokenBalance} />
+          ) : (
+            "--"
+          )}
         </div>
       </div>
 

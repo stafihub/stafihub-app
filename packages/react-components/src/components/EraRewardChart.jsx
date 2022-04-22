@@ -17,12 +17,18 @@ export const EraRewardChart = (props) => {
         },
         formatter: (params) => {
           if (params && params.length > 0) {
+            const stakedValue = params[0].data;
+            let formatStakedValue = stakedValue;
+            const parts = formatStakedValue.split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            formatStakedValue = parts.join(".");
+
             return `<div>
             <div>era: ${params[0].axisValue}</div>
-            <div >Staked Value: <span style="color:#23292F;font-weight:bold;">$${params[0].data}<span></div>
+            <div >Staked Value: <span style="color:#23292F;font-weight:bold;">$${formatStakedValue}<span></div>
           </div>`;
           }
-          console.log(params, "======params");
+          // console.log(params, "======params");
         },
       },
       xAxis: [

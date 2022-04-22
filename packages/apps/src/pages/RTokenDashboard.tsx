@@ -247,12 +247,13 @@ export const RTokenDashboard = () => {
 
               <div className="flex flex-col items-end">
                 <div className="text-[22px] font-bold text-white">
-                  $ <FormatterText value={stakeStatus?.stakedValue} />
+                  $<FormatterText value={stakeStatus?.stakedValue} />
                 </div>
 
                 <div className="mt-2 flex">
                   <div className="text-secondary text-[14px]">
-                    +{lastEraReward} {getTokenDisplayName(chainId)}
+                    +<FormatterText value={lastEraReward} />{" "}
+                    {getTokenDisplayName(chainId)}
                   </div>
 
                   <div className="ml-[4px] text-white text-[14px]">

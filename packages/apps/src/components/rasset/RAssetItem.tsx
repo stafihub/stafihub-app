@@ -61,22 +61,22 @@ export const RAssetItem = (props: RAssetItemProps) => {
       return ["0", false, false];
     }
     if (Number(originLast24hReward) <= -Math.pow(10, 4)) {
-      return ["-" + atomicToHuman(originLast24hReward, 6), true, true];
+      return ["-" + atomicToHuman(originLast24hReward, 6, 4), true, true];
     }
     if (
       Number(originLast24hReward) < 0 &&
       Number(originLast24hReward) > -Math.pow(10, 4)
     ) {
-      return ["-<0.01", true, true];
+      return ["-<0.0001", true, true];
     }
     if (Number(originLast24hReward) >= -Math.pow(10, 4)) {
-      return ["+" + atomicToHuman(originLast24hReward, 6), true, true];
+      return ["+" + atomicToHuman(originLast24hReward, 6, 4), true, true];
     }
     if (
       Number(originLast24hReward) > 0 &&
       Number(originLast24hReward) < Math.pow(10, 4)
     ) {
-      return ["<0.01", true, true];
+      return ["<0.0001", true, true];
     }
     return ["--", false, false];
   }, [originLast24hReward]);

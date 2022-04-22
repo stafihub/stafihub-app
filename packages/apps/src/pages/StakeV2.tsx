@@ -78,8 +78,6 @@ export const StakeV2 = () => {
     return Number(inputAmount) / Number(exchangeRate);
   }, [inputAmount, exchangeRate]);
 
-  console.log("leastBond", leastBond);
-
   const clickStake = async () => {
     if (!poolAddress || !stafiHubAddress) {
       return;

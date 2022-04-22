@@ -488,8 +488,6 @@ export const unbond =
         poolAddress
       );
 
-      // console.log("unbond txResponse", txResponse);
-
       if (txResponse?.code === 0) {
         snackbarUtil.success("Unbond succeed");
         dispatch(
@@ -510,6 +508,10 @@ export const unbond =
             "Confirmed"
           )
         );
+      } else if (txResponse?.code === 20) {
+        snackbarUtil.warning("The unbond limit of the pool has been reached in the current era, please wait for the next era!");
+      } else {
+        snackbarUtil.warning("Something went wrong, please increase the gas and try again!");
       }
       dispatch(updateTokenBalance(chainId));
       callback && callback(txResponse?.code === 0);

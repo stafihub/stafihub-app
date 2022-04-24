@@ -56,11 +56,19 @@ export const StakeRedeemV2 = () => {
   }, [unbondCommission, inputAmount]);
 
   const willGetAmount = useMemo(() => {
-    if (isNaN(Number(inputAmount)) || isNaN(Number(exchangeRate))) {
+    if (
+      isNaN(Number(inputAmount)) ||
+      isNaN(Number(exchangeRate)) ||
+      isNaN(Number(unbondCommission))
+    ) {
       return "--";
     }
-    return (Number(inputAmount) * Number(exchangeRate)).toString();
-  }, [inputAmount, exchangeRate]);
+    return (
+      Number(inputAmount) *
+      (1 - Number(unbondCommission)) *
+      Number(exchangeRate)
+    ).toString();
+  }, [inputAmount, exchangeRate, unbondCommission]);
 
   const buttonDisabled = useMemo(() => {
     if (Number(inputAmount) <= 0) {

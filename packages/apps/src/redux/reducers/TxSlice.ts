@@ -456,6 +456,7 @@ export const unbond =
   (
     chainId: string | undefined,
     inputAmount: string,
+    willGetAmount: string,
     poolAddress: string,
     relayFee: string,
     callback?: (success: boolean) => void
@@ -511,8 +512,10 @@ export const unbond =
               chainId,
             },
             {
-              rTokenName: getTokenDisplayName(chainId),
+              tokenName: getTokenDisplayName(chainId),
+              rTokenName: getRTokenDisplayName(chainId),
               unstakeAmount: inputAmount,
+              willGetAmount,
             },
             getExplorerUrl(getStafiHubChainId()),
             "Confirmed"

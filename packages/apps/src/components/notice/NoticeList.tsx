@@ -48,7 +48,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
       }
       if (notice.type === "Unbond") {
         data = notice.data as NoticeUnbondData;
-        return `Unbond ${data.unstakeAmount} ${data.rTokenName}.`;
+        return `Unbond ${data.willGetAmount || "--"} ${data.tokenName}.`;
       }
       if (notice.type === "IBC Bridge") {
         data = notice.data as NoticeIBCBridgeData;

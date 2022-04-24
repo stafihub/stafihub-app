@@ -93,6 +93,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
                 unbond(
                   chainId,
                   props.inputAmount,
+                  props.willGetAmount,
                   poolAddress,
                   relayFee,
                   (success) => {

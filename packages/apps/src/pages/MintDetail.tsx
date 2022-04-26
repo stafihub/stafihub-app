@@ -5,7 +5,10 @@ import {
   Button,
   FormatterText,
 } from "@stafihub/react-components";
-import { getChainIdFromRTokenDisplayName } from "@stafihub/apps-config";
+import {
+  getChainIdFromRTokenDisplayName,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import iconDown from "../assets/images/icon_down_white.png";
@@ -16,10 +19,12 @@ import iconMyReward from "../assets/images/icon_my_reward.svg";
 import iconVesting from "../assets/images/icon_mint_vesting.svg";
 import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
+import { useChainAccount } from "../hooks/useAppSlice";
 
 export const MintDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const { rToken, cycle } = params;
   const [claimModalVisible, setClaimModalVisible] = useState(false);
   const { actDetail, mintedValue, userMintInfo, vesting, updateUserActDetail } =
@@ -167,6 +172,7 @@ export const MintDetail = () => {
 
                 <div className="ml-5 w-[184px]">
                   <Button
+                    disabled={!stafiHubAccount}
                     type="rectangle"
                     height={35}
                     onClick={() => setClaimModalVisible(true)}

@@ -62,10 +62,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
       <div className="basis-[15%] text-[14px]">
         {data.tokenRewardInfos.map((rewardInfo, index) => (
           <div key={index} className="my-1 flex items-end justify-start">
-            <div className="w-[50px]">
+            <div className="w-[64px]">
               <FormatterText
                 value={rewardInfo.totalRewardAmount}
-                decimals={0}
+                decimals={2}
               />
             </div>
 
@@ -79,8 +79,8 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
       <div className="basis-[20%] text-[14px]">
         {data.tokenRewardInfos.map((rewardInfo, index) => (
           <div key={index} className="my-1 flex items-end justify-start">
-            <div className="w-[50px]">
-              <FormatterText value={rewardInfo.leftRewardAmount} decimals={0} />
+            <div className="w-[64px]">
+              <FormatterText value={rewardInfo.leftRewardAmount} decimals={2} />
             </div>
 
             <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
@@ -96,7 +96,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
 
       <div className="basis-[25%] text-[14px] flex items-end">
         <div>{data.durationDays}D</div>
-        <div className="mb-[1px] ml-1 text-[12px] scale-[0.7] origin-bottom-left">
+        <div className="ml-1 text-[14px] origin-bottom-left">
           ({remainingDisplayTime})
         </div>
       </div>

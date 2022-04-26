@@ -13,6 +13,7 @@ import iconRewardToken from "../assets/images/icon_mint_reward_token.svg";
 import iconMintValue from "../assets/images/icon_mint_value.svg";
 import iconMyMint from "../assets/images/icon_my_mint.svg";
 import iconMyReward from "../assets/images/icon_my_reward.svg";
+import iconVesting from "../assets/images/icon_mint_vesting.svg";
 import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
 
@@ -21,7 +22,7 @@ export const MintDetail = () => {
   const params = useParams();
   const { rToken, cycle } = params;
   const [claimModalVisible, setClaimModalVisible] = useState(false);
-  const { actDetail, mintedValue, userMintInfo, updateUserActDetail } =
+  const { actDetail, mintedValue, userMintInfo, vesting, updateUserActDetail } =
     useMintProgram(getChainIdFromRTokenDisplayName(rToken), Number(cycle));
 
   if (!rToken) {
@@ -99,7 +100,7 @@ export const MintDetail = () => {
 
                 <div className="ml-20 flex">
                   <div className="text-white text-[15.5px] font-bold">
-                    $<FormatterText value={mintedValue} />
+                    $<FormatterText value={mintedValue} decimals={2} />
                   </div>
                 </div>
               </div>
@@ -139,6 +140,20 @@ export const MintDetail = () => {
                 </div>
               </div>
 
+              <div className="mt-4 flex items-center">
+                <img src={iconVesting} className="w-5" alt="icon" />
+
+                <div className="w-[105px] ml-2 text-[15.5px] text-text-gray2">
+                  Vesting
+                </div>
+
+                <div className="ml-20 flex">
+                  <div className="text-white text-[15.5px] font-bold">
+                    {vesting}
+                  </div>
+                </div>
+              </div>
+
               <div className="mt-12 flex">
                 <div className="w-[184px]">
                   <Button
@@ -159,10 +174,6 @@ export const MintDetail = () => {
                     Claim
                   </Button>
                 </div>
-              </div>
-
-              <div className="mt-7 text-text-gray2 text-[14px]">
-                rETH reward is calculated every 20 minutes
               </div>
             </div>
           </div>

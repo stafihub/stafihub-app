@@ -140,6 +140,13 @@ export function useMintProgram(chainId: string, cycle: number) {
     return Number(tokenPrice) * Number(actDetail.totalNativeTokenAmount);
   }, [actDetail, tokenPrice]);
 
+  const vesting = useMemo(() => {
+    if (!actDetail) {
+      return "--";
+    }
+    return Math.ceil((actDetail.lockedBlocks * 6) / (60 * 60 * 24)) + "D";
+  }, [actDetail]);
+
   const updateActDetail = useCallback(async () => {
     const chainActDetailList = await getActDetailList(chainId);
 
@@ -275,7 +282,7 @@ export function useMintProgram(chainId: string, cycle: number) {
     updateUserActDetail();
   }, [updateUserActDetail]);
 
-  return { actDetail, mintedValue, userMintInfo, updateUserActDetail };
+  return { actDetail, mintedValue, userMintInfo, vesting, updateUserActDetail };
 }
 
 async function getActDetailList(

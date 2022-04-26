@@ -33,7 +33,7 @@ export const MintPrograms = () => {
             Total minted value
           </div>
           <div className="self-end mt-4 mr-3 text-white text-[20px] font-bold">
-            $<FormatterText value={totalMintedValue} />
+            $<FormatterText value={totalMintedValue} decimals={2} />
           </div>
         </div>
 
@@ -42,7 +42,7 @@ export const MintPrograms = () => {
             Total Reward FIS
           </div>
           <div className="self-end mt-4 mr-3 text-white text-[20px] font-bold">
-            <FormatterText value={totalRewardFis} decimals={0} />
+            <FormatterText value={totalRewardFis} decimals={2} />
           </div>
         </div>
       </div>

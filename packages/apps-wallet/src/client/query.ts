@@ -1,24 +1,28 @@
 import { IndexedTx } from "@cosmjs/stargate";
 import { getStafiHubChainId } from "@stafihub/apps-config";
 import type {
+  GetLatestBlockResponse,
+  QueryActDetailResponse,
+  QueryActLatestCycleResponse,
   QueryBondedPoolsByDenomResponse,
   QueryChannelResponse,
   QueryGetBondRecordResponse,
   QueryGetChainEraResponse,
   QueryGetEraExchangeRateResponse,
   QueryGetPoolDetailResponse,
+  QueryGetRParamsResponse,
   QueryGetUnbondCommissionResponse,
   QueryGetUnbondRelayFeeResponse,
   QueryParamsResponse,
   QuerySupplyOfResponse,
-  QueryGetRParamsResponse,
-  GetLatestBlockResponse,
+  UserClaimInfo,
 } from "@stafihub/types";
 import {
   QueryDenomTraceResponse,
   QueryGetAccountUnbondResponse,
 } from "@stafihub/types";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { GetBlockByHeightResponse } from "packages/types/src/cosmos/base/tendermint/v1beta1/query";
 import {
   createCosmosBankQueryService,
   createCosmosBaseQueryService,
@@ -27,6 +31,7 @@ import {
   createIBCApplicationsQueryService,
   createIBCCoreConnectionQueryService,
   createQueryService,
+  createRMintRewardQueryService,
 } from ".";
 
 export async function queryTx(
@@ -124,7 +129,22 @@ export async function queryLatestBlock(
 
   const result = await queryService.GetLatestBlock({});
 
-  console.log(`queryLatestBlock ${chainId} result`, result);
+  // console.log(`queryLatestBlock ${chainId} result`, result);
+
+  return result;
+}
+
+export async function queryBlockByHeight(
+  chainId: string,
+  height: Long
+): Promise<GetBlockByHeightResponse | null> {
+  const queryService = await createCosmosBaseQueryService(chainId);
+
+  const result = await queryService.GetBlockByHeight({
+    height,
+  });
+
+  // console.log(`queryBlockByHeight ${chainId} ${height} result`, result);
 
   return result;
 }
@@ -321,4 +341,86 @@ export async function queryChannel(
     console.log("queryChannel err", chainId, err);
   }
   return;
+}
+
+export async function queryActLatestCycle(
+  chainId: string,
+  denom: string
+): Promise<QueryActLatestCycleResponse> {
+  const queryService = await createRMintRewardQueryService(chainId);
+  const result = await queryService.ActLatestCycle({
+    denom,
+  });
+
+  // console.log(`queryActLatestCycle ${chainId} ${denom} result`, result);
+
+  return result;
+}
+
+export async function queryActDetail(
+  chainId: string,
+  denom: string,
+  cycle: Long
+): Promise<QueryActDetailResponse> {
+  const queryService = await createRMintRewardQueryService(chainId);
+  const result = await queryService.ActDetail({
+    denom,
+    cycle,
+  });
+
+  // console.log(`queryActDetail ${chainId} ${denom} ${cycle} result`, result);
+
+  return result;
+}
+
+export async function queryUserMintCount(
+  chainId: string,
+  userAddress: string,
+  denom: string,
+  cycle: Long
+): Promise<Long | undefined> {
+  try {
+    const queryService = await createRMintRewardQueryService(chainId);
+    const result = await queryService.UserMintCount({
+      address: userAddress,
+      denom,
+      cycle,
+    });
+
+    // console.log(
+    //   `queryUserMintCount ${chainId} ${userAddress} ${denom} ${cycle} result`,
+    //   result
+    // );
+
+    return result.count;
+  } catch {
+    return undefined;
+  }
+}
+
+export async function queryUserClaimInfoDetail(
+  chainId: string,
+  userAddress: string,
+  denom: string,
+  cycle: Long,
+  mintIndex: Long
+): Promise<UserClaimInfo | undefined> {
+  try {
+    const queryService = await createRMintRewardQueryService(chainId);
+    const result = await queryService.ClaimInfoDetail({
+      address: userAddress,
+      denom,
+      cycle,
+      mintIndex,
+    });
+
+    // console.log(
+    //   `queryUserClaimInfoDetail ${chainId} ${userAddress} ${denom} ${cycle} result`,
+    //   result
+    // );
+
+    return result.claimInfo;
+  } catch {
+    return undefined;
+  }
 }

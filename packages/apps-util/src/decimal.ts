@@ -7,8 +7,11 @@ export function atomicToHuman(
   fractionalDigits: number = 6,
   decimals: number = 6
 ): string {
-  if (!atomics || isNaN(Number(atomics))) {
+  if (atomics === undefined || atomics === null || isNaN(Number(atomics))) {
     return "--";
+  }
+  if (Number(atomics) === 0) {
+    return "0";
   }
   const bn = new BigNumber(atomics)
     .shiftedBy(-fractionalDigits)
@@ -21,8 +24,11 @@ export function humanToAtomic(
   input: string | undefined | null,
   fractionalDigits: number = 6
 ): string {
-  if (!input || isNaN(Number(input))) {
+  if (input === undefined || input === null || isNaN(Number(input))) {
     return "--";
+  }
+  if (Number(input) === 0) {
+    return "0";
   }
   let decimal = Decimal.fromUserInput(input, fractionalDigits);
   decimal = decimal.multiply(

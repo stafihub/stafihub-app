@@ -32,6 +32,7 @@ export interface AppState {
   slippage: string;
   unreadNoticeFlag: boolean;
   priceList: PriceItem[];
+  latestBlock: number | undefined;
 }
 
 const initialState: AppState = {
@@ -41,6 +42,7 @@ const initialState: AppState = {
   slippage: "1",
   unreadNoticeFlag: false,
   priceList: [],
+  latestBlock: undefined,
 };
 
 export const appSlice = createSlice({
@@ -66,6 +68,9 @@ export const appSlice = createSlice({
     setPriceList: (state: AppState, action: PayloadAction<PriceItem[]>) => {
       state.priceList = action.payload;
     },
+    setLatestBlock: (state: AppState, action: PayloadAction<number>) => {
+      state.latestBlock = action.payload;
+    },
   },
 });
 
@@ -76,6 +81,7 @@ export const {
   setSlippage,
   setUnreadNoticeFlag,
   setPriceList,
+  setLatestBlock,
 } = appSlice.actions;
 
 export const updateAccounts =

@@ -105,7 +105,7 @@ function App() {
               <Route path="liquidity" element={<LiquidityPrograms />} />
             </Route>
 
-            <Route path="/mint/:id" element={<MintDetail />} />
+            <Route path="/mint/:rToken/:cycle" element={<MintDetail />} />
 
             <Route path="/" element={<Navigate replace to="/rToken" />} />
           </Route>

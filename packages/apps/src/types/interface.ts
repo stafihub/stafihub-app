@@ -47,25 +47,6 @@ export interface IBCChannelToken {
   channelName: string;
 }
 
-export interface MintProgramsData {
-  portalOn: string;
-  derivativeTokenName: string;
-  apyList: MintProgramsApy[];
-  rewardList: MintProgramsReward[];
-  mintedValue: string;
-  duration: string;
-}
-
-export interface MintProgramsApy {
-  unit: string;
-  ratio: string;
-}
-
-export interface MintProgramsReward {
-  unit: string;
-  amount: string;
-}
-
 export interface PriceItem {
   denom: string;
   price: string;
@@ -86,4 +67,39 @@ export interface EraRewardItem {
   stakeValue: string;
   rTokenBalance: string;
   reward: string;
+}
+
+export interface FormatMintRewardAct {
+  cycle: number;
+  chainId: string;
+  rTokenDisplayName: string;
+  rTokenDenom: string;
+  durationDays: string;
+  totalNativeTokenAmount: string;
+  tokenRewardInfos: FormatTokenRewardInfo[];
+  begin: number;
+  end: number;
+  current: number;
+  remainingSeconds: number;
+  endTimestamp: number;
+  lockedBlocks: number;
+}
+
+export interface FormatTokenRewardInfo {
+  denom: string;
+  apy: string;
+  totalRewardAmount: string;
+  leftRewardAmount: string;
+}
+
+export interface FormatUserMintInfo {
+  // mintedValue: string;
+  denom: string;
+  claimMintIndexs: number[];
+  nativeTokenAmount: string;
+  percentage: string;
+  userTotalRewardValue: string;
+  userTotalRewardAmount: string;
+  userTotalClaimableAmount: string;
+  userTotalLockedAmount: string;
 }

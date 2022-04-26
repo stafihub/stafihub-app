@@ -7,7 +7,7 @@ interface CustomInputProps {
   value: string;
   primary?: boolean;
   light?: boolean;
-  handleValueChange: (value: string) => void;
+  handleValueChange?: (value: string) => void;
 }
 
 export const CustomNumberInput = (props: CustomInputProps) => {
@@ -36,7 +36,7 @@ export const CustomNumberInput = (props: CustomInputProps) => {
           .replace(/\./g, "")
           .replace("$#$", ".");
         value = value.replace(/^(-)*(\d*)\.(\d\d\d\d\d\d).*$/, "$1$2.$3");
-        props.handleValueChange(value);
+        props.handleValueChange && props.handleValueChange(value);
       }}
     />
   );

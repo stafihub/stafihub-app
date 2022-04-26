@@ -8,14 +8,19 @@ export interface LocalNotice {
   status: NoticeStatus;
 }
 
-export type NoticeType = "Fee Station" | "Stake" | "Unbond" | "IBC Bridge";
+export type NoticeType =
+  | "Fee Station"
+  | "Stake"
+  | "Unbond"
+  | "IBC Bridge"
+  | "Claim Mint Reward";
 
 export type NoticeStatus = "Pending" | "Error" | "Confirmed";
 
 export interface NoticeTxDetail {
   sender: string;
   transactionHash: string;
-  address: string;
+  address?: string;
   chainId: string;
 }
 
@@ -23,7 +28,8 @@ export type NoticeDataType =
   | NoticeFeeStationData
   | NoticeStakeData
   | NoticeUnbondData
-  | NoticeIBCBridgeData;
+  | NoticeIBCBridgeData
+  | NoticeClaimMintRewardData;
 
 export interface NoticeFeeStationData {
   inputTokenName: string;
@@ -52,4 +58,10 @@ export interface NoticeIBCBridgeData {
   inputChainName: string;
   outputChainName: string;
   amount: string;
+}
+
+export interface NoticeClaimMintRewardData {
+  rewardTokenName: string;
+  rewardTokenDenom: string;
+  rewardAmount: string;
 }

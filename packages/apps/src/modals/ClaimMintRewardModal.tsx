@@ -1,15 +1,53 @@
 import { Box, Modal } from "@mui/material";
-import { Button, CustomNumberInput } from "@stafihub/react-components";
-import { useState } from "react";
+import {
+  getChainIdFromRTokenDisplayName,
+  getRTokenDenom,
+} from "@stafihub/apps-config";
+import {
+  Button,
+  CustomNumberInput,
+  FormatterText,
+} from "@stafihub/react-components";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import iconClose from "../assets/images/icon_close_bold.svg";
+import { useIsLoading } from "../hooks/useAppSlice";
+import { claimMintRewards } from "../redux/reducers/TxSlice";
+import { FormatUserMintInfo } from "../types/interface";
 
 interface ClaimMintRewardModalProps {
+  userMintInfo: FormatUserMintInfo | null;
   visible: boolean;
   onClose: () => void;
 }
 
 export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
-  const [inputAmount, setInputAmount] = useState("");
+  const dispatch = useDispatch();
+  const isLoading = useIsLoading();
+  const params = useParams();
+  const { rToken, cycle } = params;
+  const { userMintInfo } = props;
+
+  const clickClaim = () => {
+    if (!userMintInfo) {
+      return;
+    }
+
+    dispatch(
+      claimMintRewards(
+        getRTokenDenom(getChainIdFromRTokenDisplayName(rToken)),
+        Number(cycle),
+        userMintInfo.claimMintIndexs,
+        userMintInfo.userTotalClaimableAmount,
+        userMintInfo.denom,
+        (success) => {
+          if (success) {
+            props.onClose();
+          }
+        }
+      )
+    );
+  };
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>
@@ -48,15 +86,24 @@ export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
           <div className="h-[50px] pl-7 border-[1px] border-solid border-[#525252] flex items-center">
             <div className="w-[387px]">
               <CustomNumberInput
+                disabled
                 fontSize={22}
-                value={inputAmount}
-                handleValueChange={setInputAmount}
+                value={userMintInfo?.userTotalClaimableAmount || "0"}
               />
             </div>
           </div>
 
           <div className="ml-[10px]">
-            <Button>Claim</Button>
+            <Button
+              loading={isLoading}
+              disabled={
+                isNaN(Number(userMintInfo?.userTotalClaimableAmount)) ||
+                Number(userMintInfo?.userTotalClaimableAmount) <= 0
+              }
+              onClick={clickClaim}
+            >
+              Claim
+            </Button>
           </div>
         </div>
 
@@ -66,7 +113,7 @@ export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
           </div>
 
           <div className="w-[208px] text-text-gray2 text-[20px] font-bold">
-            1.0323 FIS
+            <FormatterText value={userMintInfo?.userTotalRewardAmount} /> FIS
           </div>
         </div>
 
@@ -76,7 +123,7 @@ export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
           </div>
 
           <div className="w-[208px] text-text-gray2 text-[20px] font-bold">
-            1.0323 FIS
+            <FormatterText value={userMintInfo?.userTotalClaimableAmount} /> FIS
           </div>
         </div>
 
@@ -86,7 +133,7 @@ export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
           </div>
 
           <div className="w-[208px] text-text-gray2 text-[20px] font-bold">
-            1.0323 FIS
+            <FormatterText value={userMintInfo?.userTotalLockedAmount} /> FIS
           </div>
         </div>
       </Box>

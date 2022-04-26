@@ -27,7 +27,7 @@ export const RPoolLayout = () => {
 
           <div
             className={classNames(
-              "ml-10 text-[20px] font-bold cursor-pointer pb-1",
+              "ml-10 text-[20px] font-bold cursor-pointer pb-1 invisible",
               matchLiquidity
                 ? "text-primary border-b-[2px] border-primary border-solid"
                 : "text-text-gray3"

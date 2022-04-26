@@ -11,7 +11,11 @@ import {
   getStafiHubChainId,
 } from "@stafihub/apps-config";
 import { humanToAtomic } from "@stafihub/apps-util";
-import { IBCMsgTransfer, MsgLiquidityUnbond } from "@stafihub/types";
+import {
+  IBCMsgTransfer,
+  MsgLiquidityUnbond,
+  MsgClaimMintReward,
+} from "@stafihub/types";
 import { createCosmosClient } from "./connection";
 
 declare const window: any;
@@ -220,15 +224,62 @@ export async function sendIBCTransferTx(
     gas: "180000",
   };
 
-  const response = await client.signAndBroadcast(
-    sender,
-    [message],
-    fee
-  );
+  const response = await client.signAndBroadcast(sender, [message], fee);
 
   // console.log("message", message);
-
   // console.log("response", response);
+
+  return response;
+}
+
+export async function sendClaimMintRewardTx(
+  chainId: string,
+  sender: string,
+  denom: string,
+  cycle: Long,
+  mintIndexes: Long[]
+): Promise<DeliverTxResponse | undefined> {
+  // console.log("sendClaimRewardTx arguments:", arguments);
+  if (!window.getOfflineSigner) {
+    return;
+  }
+
+  const myRegistry = new Registry(defaultStargateTypes);
+  const msgTypeUrl = "/stafihub.stafihub.rmintreward.MsgClaimMintReward";
+  myRegistry.register(msgTypeUrl, MsgClaimMintReward);
+
+  const offlineSigner = window.getOfflineSigner(chainId);
+
+  const client = await SigningStargateClient.connectWithSigner(
+    chains[chainId].rpc,
+    offlineSigner,
+    { registry: myRegistry }
+  );
+
+  const messages = mintIndexes.map((mintIndex) => ({
+    typeUrl: msgTypeUrl,
+    value: MsgClaimMintReward.fromPartial({
+      creator: sender,
+      denom,
+      cycle,
+      mintIndex,
+    }),
+  }));
+
+  const fee = {
+    amount: [
+      {
+        denom: chains[chainId].denom,
+        amount: "1",
+      },
+    ],
+    gas: "180000",
+  };
+
+  const response = await client.signAndBroadcast(sender, messages, fee);
+
+  console.log("sendClaimRewardTx message", messages);
+  console.log("sendClaimRewardTx response", response);
 
   return response;
 }

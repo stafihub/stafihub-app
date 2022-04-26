@@ -8,6 +8,7 @@ import {
 } from "../../redux/reducers/TxSlice";
 import {
   LocalNotice,
+  NoticeClaimMintRewardData,
   NoticeFeeStationData,
   NoticeIBCBridgeData,
   NoticeStakeData,
@@ -53,6 +54,10 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
       if (notice.type === "IBC Bridge") {
         data = notice.data as NoticeIBCBridgeData;
         return `Swap ${data.amount} ${data.tokenName} from ${data.inputChainName} to ${data.outputChainName}.`;
+      }
+      if (notice.type === "Claim Mint Reward") {
+        data = notice.data as NoticeClaimMintRewardData;
+        return `Claim ${data.rewardAmount} ${data.rewardTokenName}.`;
       }
     } catch (err: unknown) {}
 
@@ -173,7 +178,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
                       dispatch(
                         showFeeStationSwapLoadingModal(
                           notice.txDetail.transactionHash,
-                          notice.txDetail.address,
+                          notice.txDetail.address || "",
                           feeStationData.uuid,
                           feeStationData.outputAmount
                         )

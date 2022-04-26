@@ -73,3 +73,11 @@ export function usePriceFromDenom(denom: string) {
 
   return price;
 }
+
+export function useLatestBlock() {
+  const latestBlock = useSelector((state: RootState) => {
+    return state.app.latestBlock;
+  });
+
+  return latestBlock;
+}

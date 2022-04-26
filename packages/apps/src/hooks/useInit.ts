@@ -1,10 +1,12 @@
 import { chains, getStafiHubChainId, isFork } from "@stafihub/apps-config";
 import * as _ from "lodash";
+import { queryLatestBlock } from "@stafihub/apps-wallet";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   connectKeplrChains,
   setIsFork,
+  setLatestBlock,
   updateAllTokenBalance,
   updatePriceList,
 } from "../redux/reducers/AppSlice";
@@ -53,10 +55,17 @@ export function useInit() {
     dispatch(updatePriceList());
   }, [dispatch]);
 
+  const updateLatestBlock = useCallback(async () => {
+    const latestBlockResult = await queryLatestBlock(getStafiHubChainId());
+    const height = latestBlockResult?.block?.header?.height || 0;
+    dispatch(setLatestBlock(height ? height.toInt() : 0));
+  }, [dispatch]);
+
   useEffect(() => {
     updateEras();
     updatePrices();
-  }, [updateEras, updatePrices]);
+    updateLatestBlock();
+  }, [updateEras, updatePrices, updateLatestBlock]);
 
   // Update eras every 10min.
   useInterval(() => {
@@ -71,6 +80,11 @@ export function useInit() {
   // Update balances every 6s.
   useInterval(() => {
     dispatch(updateAllTokenBalance());
+  }, 6000);
+
+  // Update block every 6s.
+  useInterval(() => {
+    updateLatestBlock();
   }, 6000);
 
   // Update IBC channels.

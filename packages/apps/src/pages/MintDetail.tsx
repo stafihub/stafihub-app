@@ -3,7 +3,9 @@ import {
   RTokenIcon,
   TokenIcon,
   Button,
+  FormatterText,
 } from "@stafihub/react-components";
+import { getChainIdFromRTokenDisplayName } from "@stafihub/apps-config";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import iconDown from "../assets/images/icon_down_white.png";
@@ -11,12 +13,20 @@ import iconRewardToken from "../assets/images/icon_mint_reward_token.svg";
 import iconMintValue from "../assets/images/icon_mint_value.svg";
 import iconMyMint from "../assets/images/icon_my_mint.svg";
 import iconMyReward from "../assets/images/icon_my_reward.svg";
+import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
 
 export const MintDetail = () => {
-  const params = useParams();
   const navigate = useNavigate();
+  const params = useParams();
+  const { rToken, cycle } = params;
   const [claimModalVisible, setClaimModalVisible] = useState(false);
+  const { actDetail, mintedValue, userMintInfo, updateUserActDetail } =
+    useMintProgram(getChainIdFromRTokenDisplayName(rToken), Number(cycle));
+
+  if (!rToken) {
+    return null;
+  }
 
   return (
     <div className="flex justify-center pt-[55px]">
@@ -39,18 +49,24 @@ export const MintDetail = () => {
 
           <div className="mt-11 flex">
             <div className="ml-[46px]">
-              <RTokenIcon rtokenName="rATOM" size={60} />
+              <RTokenIcon rtokenName={rToken} size={60} />
             </div>
 
             <div className="ml-[80px]">
-              <div className="text-white text-[20px] font-bold">Mint rATOM</div>
-
-              <div className="mt-6 text-primary text-[20px] font-bold">
-                1 ETH : 0.001 ETH
+              <div className="text-white text-[20px] font-bold">
+                Mint {rToken}
               </div>
 
-              <div className="mt-2 text-primary text-[20px] font-bold">
-                1 ETH : 2312 FIS
+              <div className="mt-4">
+                {actDetail?.tokenRewardInfos.map((rewardInfo, index) => (
+                  <div
+                    key={index}
+                    className="mt-2 text-primary text-[20px] font-bold"
+                  >
+                    1 {rToken.slice(1)} : {rewardInfo.apy}{" "}
+                    {rewardInfo.denom.slice(1).toUpperCase()}
+                  </div>
+                ))}
               </div>
 
               <div className="my-4 h-[1px] bg-divider w-[280px]" />
@@ -63,13 +79,14 @@ export const MintDetail = () => {
                 </div>
 
                 <div className="ml-20 flex">
-                  <div className="mr-[10px]">
-                    <TokenIcon tokenName="ATOM" size={20} />
-                  </div>
-
-                  <div className="mr-[10px]">
-                    <TokenIcon tokenName="IRIS" size={20} />
-                  </div>
+                  {actDetail?.tokenRewardInfos.map((rewardInfo, index) => (
+                    <div key={index} className="mr-[10px]">
+                      <TokenIcon
+                        tokenName={rewardInfo.denom.slice(1).toUpperCase()}
+                        size={20}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -82,7 +99,7 @@ export const MintDetail = () => {
 
                 <div className="ml-20 flex">
                   <div className="text-white text-[15.5px] font-bold">
-                    $2,334.23
+                    $<FormatterText value={mintedValue} />
                   </div>
                 </div>
               </div>
@@ -96,7 +113,13 @@ export const MintDetail = () => {
 
                 <div className="ml-20 flex">
                   <div className="text-white text-[15.5px] font-bold">
-                    0(0%)
+                    <FormatterText value={userMintInfo?.nativeTokenAmount} />
+                    (
+                    <FormatterText
+                      value={userMintInfo?.percentage}
+                      decimals={2}
+                    />
+                    %)
                   </div>
                 </div>
               </div>
@@ -110,14 +133,19 @@ export const MintDetail = () => {
 
                 <div className="ml-20 flex">
                   <div className="text-white text-[15.5px] font-bold">
-                    $83.23
+                    $
+                    <FormatterText value={userMintInfo?.userTotalRewardValue} />
                   </div>
                 </div>
               </div>
 
               <div className="mt-12 flex">
                 <div className="w-[184px]">
-                  <Button type="rectangle" height={35}>
+                  <Button
+                    type="rectangle"
+                    height={35}
+                    onClick={() => navigate(`/rToken/${rToken}/stake`)}
+                  >
                     Mint
                   </Button>
                 </div>
@@ -142,8 +170,12 @@ export const MintDetail = () => {
       </CardContainer>
 
       <ClaimMintRewardModal
+        userMintInfo={userMintInfo}
         visible={claimModalVisible}
-        onClose={() => setClaimModalVisible(false)}
+        onClose={() => {
+          setClaimModalVisible(false);
+          updateUserActDetail();
+        }}
       />
     </div>
   );

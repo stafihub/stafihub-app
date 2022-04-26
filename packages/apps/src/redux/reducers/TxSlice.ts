@@ -23,8 +23,10 @@ import {
   sendRecoveryTx,
   sendStakeTx,
   queryAccountBalance,
+  sendClaimMintRewardTx,
 } from "@stafihub/apps-wallet";
 import { LiquidityBondState } from "@stafihub/types";
+import Long from "long";
 import { FeeStationPool } from "../../types/interface";
 import { getHumanAccountBalance, timeout } from "../../utils/common";
 import snackbarUtil from "../../utils/snackbarUtils";
@@ -907,6 +909,78 @@ export const ibcBridgeSwap =
           )
         );
         callback(true);
+      } else {
+        snackbarUtil.error(`Swap failure ${txResponse?.rawLog}`);
+      }
+    } catch (err: unknown) {
+      if ((err as Error).message === "Request rejected") {
+        snackbarUtil.error(`Cancelled`);
+      } else {
+        snackbarUtil.error((err as Error).message);
+      }
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+
+/**
+ * Claim mint rewards.
+ */
+export const claimMintRewards =
+  (
+    denom: string,
+    cycle: number,
+    mintIndexes: number[],
+    claimableRewardTokenAmount: string,
+    rewardTokenDenom: string,
+    callback: (success: boolean) => void
+  ): AppThunk =>
+  async (dispatch, getState) => {
+    // Check wallet connections.
+    const stafiHubAccount = getState().app.accounts[getStafiHubChainId()];
+    if (!stafiHubAccount) {
+      dispatch(connectKeplr(getStafiHubChainId()));
+      return;
+    }
+
+    try {
+      dispatch(setIsLoading(true));
+
+      // console.log("transferDenom", transferDenom);
+
+      const txResponse = await sendClaimMintRewardTx(
+        getStafiHubChainId(),
+        stafiHubAccount.bech32Address,
+        denom,
+        Long.fromInt(cycle),
+        mintIndexes.map((index) => Long.fromInt(index))
+      );
+
+      if (txResponse?.code === 0) {
+        snackbarUtil.success("Claim succeed");
+        dispatch(
+          addNotice(
+            txResponse.transactionHash,
+            "Claim Mint Reward",
+            {
+              sender: stafiHubAccount.bech32Address,
+              transactionHash: txResponse.transactionHash,
+              chainId: getStafiHubChainId(),
+            },
+            {
+              rewardTokenName: rewardTokenDenom.slice(1).toUpperCase(),
+              rewardTokenDenom: rewardTokenDenom,
+              rewardAmount: claimableRewardTokenAmount,
+            },
+            getExplorerUrl(getStafiHubChainId()),
+            "Confirmed"
+          )
+        );
+        callback(true);
+      } else if (txResponse?.code === 5) {
+        snackbarUtil.error(
+          "Insufficient rewards in the pool. The Foundation will fund the pool. Please try again later."
+        );
       } else {
         snackbarUtil.error(`Swap failure ${txResponse?.rawLog}`);
       }

@@ -1,15 +1,29 @@
+import { FormatterText } from "@stafihub/react-components";
 import classNames from "classnames";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { MintProgramsItem } from "../components/mint/MintProgramsItem";
 import { MintProgramsTableHeader } from "../components/mint/MintProgramsTableHeader";
+import { useLatestBlock } from "../hooks/useAppSlice";
 import { useMintPrograms } from "../hooks/useMintPrograms";
 
 export const MintPrograms = () => {
-  const mintPrograms = useMintPrograms();
+  const latestBlock = useLatestBlock();
+  const { actDetails, totalMintedValue, totalRewardFis } = useMintPrograms();
 
   const [programStatus, setProgramStatus] = useState<
     "In Progress" | "Completed"
   >("In Progress");
+
+  const displayList = useMemo(() => {
+    if (!latestBlock) {
+      return [];
+    }
+    return actDetails.filter((actDetail) => {
+      return programStatus === "In Progress"
+        ? actDetail.end > latestBlock
+        : actDetail.end <= latestBlock;
+    });
+  }, [latestBlock, programStatus, actDetails]);
 
   return (
     <div>
@@ -19,16 +33,16 @@ export const MintPrograms = () => {
             Total minted value
           </div>
           <div className="self-end mt-4 mr-3 text-white text-[20px] font-bold">
-            $232,236,774
+            $<FormatterText value={totalMintedValue} />
           </div>
         </div>
 
         <div className="ml-7 w-[217px] h-20 rounded-[4px] bg-black-700 flex flex-col">
           <div className="mt-4 ml-5 text-white text-[12px]">
-            Farming APY. avg
+            Total Reward FIS
           </div>
           <div className="self-end mt-4 mr-3 text-white text-[20px] font-bold">
-            234.234%
+            <FormatterText value={totalRewardFis} decimals={0} />
           </div>
         </div>
       </div>
@@ -62,8 +76,8 @@ export const MintPrograms = () => {
       </div>
 
       <div>
-        {mintPrograms.map((mintProgram) => (
-          <MintProgramsItem data={mintProgram} />
+        {displayList.map((actDetail, index) => (
+          <MintProgramsItem key={index} data={actDetail} />
         ))}
       </div>
     </div>

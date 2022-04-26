@@ -68,7 +68,7 @@ export const Sidebar = () => {
         </div>
       </div>
 
-      {/* <SidebarItem
+      <SidebarItem
         defaultIcon={rPoolIcon}
         activeIcon={rPoolIconActive}
         title="rPool"
@@ -77,7 +77,7 @@ export const Sidebar = () => {
           location.pathname.includes("/rPool") ||
           location.pathname.includes("/mint")
         }
-      /> */}
+      />
 
       <div className="absolute bottom-5 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
         <div>Need FIS for fees?</div>

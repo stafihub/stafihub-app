@@ -91,7 +91,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
       </div>
 
       <div className="basis-[20%] text-[14px]">
-        $<FormatterText value={mintedValue} decimals={0} />
+        $<FormatterText value={mintedValue} decimals={2} />
       </div>
 
       <div className="basis-[25%] text-[14px] flex items-end">

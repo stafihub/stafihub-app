@@ -146,6 +146,7 @@ importers:
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
       '@stafihub/apps-config': workspace:0.1.0
+      '@stafihub/apps-util': workspace:0.1.0
       '@stafihub/types': workspace:0.1.0
       bech32: ^2.0.0
     dependencies:
@@ -156,6 +157,7 @@ importers:
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
       '@stafihub/apps-config': link:../apps-config
+      '@stafihub/apps-util': link:../apps-util
       '@stafihub/types': link:../types
       bech32: 2.0.0
 

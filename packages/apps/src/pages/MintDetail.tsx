@@ -119,7 +119,7 @@ export const MintDetail = () => {
 
                 <div className="ml-20 flex">
                   <div className="text-white text-[15.5px] font-bold">
-                    <FormatterText value={userMintInfo?.nativeTokenAmount} />
+                    <FormatterText value={userMintInfo?.mintRTokenAmount} />
                     (
                     <FormatterText
                       value={userMintInfo?.percentage}

@@ -189,6 +189,7 @@ export function useMintProgram(chainId: string, cycle: number) {
 
     const claimInfoResponses = await Promise.all(claimInfoRequests);
     let userNativeTokenAmount = 0;
+    let userRTokenAmount = 0;
     let userTotalRewardValue = 0;
     let userTotalRewardAmount = 0;
     let userTotalClaimableAmount = 0;
@@ -200,6 +201,7 @@ export function useMintProgram(chainId: string, cycle: number) {
     claimInfoResponses.forEach((claimInfo, mintIndex) => {
       if (claimInfo) {
         userNativeTokenAmount += Number(claimInfo.nativeTokenAmount);
+        userRTokenAmount += Number(claimInfo.mintRTokenAmount);
         claimInfo.TokenClaimInfos.forEach((tokenClaimInfo) => {
           const priceItem = priceList.find(
             (item) => item.denom === tokenClaimInfo.denom
@@ -248,17 +250,18 @@ export function useMintProgram(chainId: string, cycle: number) {
     //   : atomicToHuman(Number(userNativeTokenAmount) * Number(tokenPrice));
 
     const userPercentage =
-      Number(actDetail.totalNativeTokenAmount) === 0
+      Number(actDetail.totalRTokenAmount) === 0
         ? "0"
         : (
-            (Number(atomicToHuman(userNativeTokenAmount)) * 100) /
-            Number(actDetail.totalNativeTokenAmount)
+            (Number(atomicToHuman(userRTokenAmount)) * 100) /
+            Number(actDetail.totalRTokenAmount)
           ).toString();
 
     setUserMintInfo({
       denom: "ufis",
       claimMintIndexs,
       nativeTokenAmount: atomicToHuman(userNativeTokenAmount),
+      mintRTokenAmount: atomicToHuman(userRTokenAmount),
       percentage: userPercentage,
       userTotalRewardValue: atomicToHuman(userTotalRewardValue),
       userTotalRewardAmount: atomicToHuman(userTotalRewardAmount, 6, 4),
@@ -347,6 +350,7 @@ async function getActDetailList(
               totalNativeTokenAmount: atomicToHuman(
                 actDetail.totalNativeTokenAmount
               ),
+              totalRTokenAmount: atomicToHuman(actDetail.totalRTokenAmount),
               tokenRewardInfos: formatTokenRewardInfos,
               begin: actDetail.begin.toInt(),
               end: actDetail.end.toInt(),

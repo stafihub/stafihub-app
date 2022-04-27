@@ -76,6 +76,7 @@ export interface FormatMintRewardAct {
   rTokenDenom: string;
   durationDays: string;
   totalNativeTokenAmount: string;
+  totalRTokenAmount: string;
   tokenRewardInfos: FormatTokenRewardInfo[];
   begin: number;
   end: number;
@@ -97,6 +98,7 @@ export interface FormatUserMintInfo {
   denom: string;
   claimMintIndexs: number[];
   nativeTokenAmount: string;
+  mintRTokenAmount: string;
   percentage: string;
   userTotalRewardValue: string;
   userTotalRewardAmount: string;

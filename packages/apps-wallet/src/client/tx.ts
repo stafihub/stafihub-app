@@ -147,6 +147,12 @@ export async function sendLiquidityUnbondTx(
     }),
   };
 
+  const simulateResponse = await client.simulate(
+    stafiHubAddress,
+    [message],
+    ""
+  );
+
   const fee = {
     amount: [
       {
@@ -154,7 +160,8 @@ export async function sendLiquidityUnbondTx(
         amount: "1",
       },
     ],
-    gas: "2000000",
+    // gas: "2000000",
+    gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
   const response = await client.signAndBroadcast(
@@ -214,6 +221,8 @@ export async function sendIBCTransferTx(
     }),
   };
 
+  const simulateResponse = await client.simulate(sender, [message], "");
+
   const fee = {
     amount: [
       {
@@ -221,7 +230,7 @@ export async function sendIBCTransferTx(
         amount: "1",
       },
     ],
-    gas: "180000",
+    gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
   const response = await client.signAndBroadcast(sender, [message], fee);
@@ -266,6 +275,8 @@ export async function sendClaimMintRewardTx(
     }),
   }));
 
+  const simulateResponse = await client.simulate(sender, messages, "");
+
   const fee = {
     amount: [
       {
@@ -273,13 +284,13 @@ export async function sendClaimMintRewardTx(
         amount: "1",
       },
     ],
-    gas: "180000",
+    gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
   const response = await client.signAndBroadcast(sender, messages, fee);
 
-  console.log("sendClaimRewardTx message", messages);
-  console.log("sendClaimRewardTx response", response);
+  // console.log("sendClaimRewardTx message", messages);
+  // console.log("sendClaimRewardTx response", response);
 
   return response;
 }

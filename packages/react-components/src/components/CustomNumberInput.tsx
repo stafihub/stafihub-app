@@ -35,7 +35,7 @@ export const CustomNumberInput = (props: CustomInputProps) => {
           .replace(".", "$#$")
           .replace(/\./g, "")
           .replace("$#$", ".");
-        value = value.replace(/^(-)*(\d*)\.(\d\d\d\d\d\d).*$/, "$1$2.$3");
+        value = value.replace(/^(-)*(\d*)\.(\d\d\d\d).*$/, "$1$2.$3");
         props.handleValueChange && props.handleValueChange(value);
       }}
     />

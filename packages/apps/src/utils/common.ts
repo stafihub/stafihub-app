@@ -19,12 +19,12 @@ export function openLink(url: string | undefined | null) {
 export function getHumanAccountBalance(
   balances: Coin[] | undefined,
   denom: string | undefined,
-  decimals: number = 6
+  decimals: number = 4
 ): string {
   // console.log("balances", balances);
   if (!balances || !denom) {
     return "--";
   }
   const target = balances.find((coin) => coin.denom === denom);
-  return target ? atomicToHuman(target.amount, decimals) : "0";
+  return target ? atomicToHuman(target.amount, 6, decimals) : "0";
 }

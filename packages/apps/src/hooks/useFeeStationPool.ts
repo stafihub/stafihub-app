@@ -70,8 +70,7 @@ export function useFeeStationPools() {
           chainId: chain.chainId,
           formatBalance: getHumanAccountBalance(
             accounts[chain.chainId]?.allBalances,
-            getDenom(chain.chainId),
-            pool.decimals
+            getDenom(chain.chainId)
           ),
           formatSwapRate: atomicToHuman(pool.swapRate, pool.decimals),
         } as FeeStationPool;

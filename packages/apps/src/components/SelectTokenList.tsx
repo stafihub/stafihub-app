@@ -1,5 +1,9 @@
 import { Box, Stack } from "@mui/material";
-import { CustomLoading, TokenIcon } from "@stafihub/react-components";
+import {
+  CustomLoading,
+  TokenIcon,
+  FormatterText,
+} from "@stafihub/react-components";
 import { getTokenDisplayName } from "@stafihub/apps-config";
 import { FeeStationPool } from "../types/interface";
 import { BackIcon } from "./icons/BackIcon";
@@ -104,7 +108,7 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
                 </Stack>
 
                 <div className="text-[16px] text-white font-bold">
-                  {item.formatBalance}
+                  <FormatterText value={item.formatBalance} />
                 </div>
               </Stack>
             );

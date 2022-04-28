@@ -22,7 +22,6 @@ import {
   QueryGetAccountUnbondResponse,
 } from "@stafihub/types";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { GetBlockByHeightResponse } from "packages/types/src/cosmos/base/tendermint/v1beta1/query";
 import {
   createCosmosBankQueryService,
   createCosmosBaseQueryService,
@@ -130,21 +129,6 @@ export async function queryLatestBlock(
   const result = await queryService.GetLatestBlock({});
 
   // console.log(`queryLatestBlock ${chainId} result`, result);
-
-  return result;
-}
-
-export async function queryBlockByHeight(
-  chainId: string,
-  height: Long
-): Promise<GetBlockByHeightResponse | null> {
-  const queryService = await createCosmosBaseQueryService(chainId);
-
-  const result = await queryService.GetBlockByHeight({
-    height,
-  });
-
-  // console.log(`queryBlockByHeight ${chainId} ${height} result`, result);
 
   return result;
 }

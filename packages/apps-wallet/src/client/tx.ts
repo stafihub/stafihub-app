@@ -160,7 +160,6 @@ export async function sendLiquidityUnbondTx(
         amount: "1",
       },
     ],
-    // gas: "2000000",
     gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
@@ -213,7 +212,6 @@ export async function sendIBCTransferTx(
       },
       sender,
       receiver,
-      // timeoutTimestamp: (new Date().valueOf() + 10000) * 1000000,
       timeoutHeight: {
         revisionHeight: currentHeight,
         revisionNumber: currentHeight + 100,

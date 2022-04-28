@@ -101,3 +101,23 @@ export async function createRMintRewardQueryService(chainId: string) {
 
   return queryService;
 }
+
+type QueryClientImplType = IBCCoreChannelQueryClientImpl;
+
+// export type Constructor<T = {}> = new (...args: any[]) => T;
+export type Constructor = new (rpc: any) => QueryClientImplType;
+
+export async function createQueryService2<T extends Constructor>(
+  chainId: string,
+  clientType: T
+): Promise<QueryClientImplType> {
+  const tendermintClient = await Tendermint34Client.connect(
+    chains[chainId].rpc
+  );
+
+  const queryClient = new QueryClient(tendermintClient);
+  const rpcClient = createProtobufRpcClient(queryClient);
+  const queryService = new clientType(rpcClient);
+
+  return queryService;
+}

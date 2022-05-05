@@ -1,8 +1,10 @@
 import { chains } from "./chains";
+import { ibcConfigs } from "./ibc";
 import * as _ from "lodash";
 
 export * from "./types";
 export * from "./chains";
+export * from "./ibc";
 
 export function isDev(): boolean {
   // console.log("REACT_APP_ENV", process.env.REACT_APP_ENV);
@@ -116,12 +118,19 @@ export function getExplorerUrl(chainId: string | undefined) {
   return chain.explorerUrl;
 }
 
-export function getIBCChannels(chainId: string | undefined) {
-  if (!chainId || !chains[chainId]) {
-    throw new Error(`Invalid chainId: ${chainId}`);
+export function getIBCConfig(
+  srcChainId: string | undefined,
+  dstChainId: string | undefined
+) {
+  if (
+    !srcChainId ||
+    !dstChainId ||
+    !ibcConfigs[`${srcChainId}:${dstChainId}`]
+  ) {
+    throw new Error(`Invalid chainIdPair: ${srcChainId}:${dstChainId}`);
   }
-  const chain = chains[chainId];
-  return chain.stafihubIBCChannels;
+  const ibcConfig = ibcConfigs[`${srcChainId}:${dstChainId}`];
+  return ibcConfig;
 }
 
 export function getDefaultApy(chainId: string | undefined) {

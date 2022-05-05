@@ -18,3 +18,18 @@ export interface KeplrChainParams {
   defaultApy?: string;
   stafihubIBCChannels?: string[];
 }
+
+export type IbcConfig = { [key: string]: IbcConfigParams };
+
+export interface IbcConfigParams {
+  chainIdPair: string;
+  srcName: string;
+  dstName: string;
+  channels: string[];
+  assets: IbcAsset[];
+}
+
+export interface IbcAsset {
+  denom: string;
+  displayName: string;
+}

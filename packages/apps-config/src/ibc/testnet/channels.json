@@ -1,0 +1,22 @@
+[
+  {
+    "chainIdPair": "stafihub-public-testnet-1:cosmos-stafi-1",
+    "srcName": "StaFiHub",
+    "dstName": "CosmosHub",
+    "channels": ["channel-0"],
+    "assets": [
+      { "denom": "uratom", "displayName": "rATOM" },
+      { "denom": "uatom", "displayName": "ATOM" }
+    ]
+  },
+  {
+    "chainIdPair": "cosmos-stafi-1:stafihub-public-testnet-1",
+    "srcName": "CosmosHub",
+    "dstName": "StaFiHub",
+    "channels": ["channel-0"],
+    "assets": [
+      { "denom": "uratom", "displayName": "rATOM" },
+      { "denom": "uatom", "displayName": "ATOM" }
+    ]
+  }
+]

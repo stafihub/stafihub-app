@@ -1,7 +1,7 @@
 import {
   chains,
   getDenom,
-  getIBCChannels,
+  getIBCConfig,
   getRTokenDenom,
   getRTokenDisplayName,
   getStafiHubChainId,
@@ -23,7 +23,10 @@ import { SwapAddressInput } from "../components/bridge/SwapAddressInput";
 import { SwapAmountInput } from "../components/bridge/SwapAmountInput";
 import { useAccounts, useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
-import { connectKeplr } from "../redux/reducers/AppSlice";
+import {
+  connectKeplr,
+  updateAllTokenBalance,
+} from "../redux/reducers/AppSlice";
 import { getIBCBalanceInChannel } from "../redux/reducers/IBCSlice";
 import { ibcBridgeSwap } from "../redux/reducers/TxSlice";
 import { RootState } from "../redux/store";
@@ -145,11 +148,6 @@ export const IBCBridge = () => {
           selectedChannelToken.denom,
           selectedChannelToken.channelName
         );
-        // return getHumanAccountBalance(
-        //   accounts[chainPair.src.chainId]?.allBalances,
-        //   // chainPair.src.denom
-        //   selectedChannelToken.denom
-        // );
       }
     } else {
       if (chainPair.src.chainId === getStafiHubChainId()) {
@@ -219,16 +217,19 @@ export const IBCBridge = () => {
           ? chainPair.dst.chainId
           : chainPair.src.chainId;
 
-      const configChannels = getIBCChannels(otherChainId);
+      const ibcConfig = getIBCConfig(
+        chainPair.src.chainId,
+        chainPair.dst.chainId
+      );
 
-      if (!configChannels) {
+      if (!ibcConfig) {
         setTokenChannelList([]);
         setSelectedChannelToken(null);
         return;
       }
 
       // Check channel status.
-      const requests = configChannels.map((channelName) => {
+      const requests = ibcConfig.channels.map((channelName) => {
         return (async () => {
           const channelRes = await queryChannel(otherChainId, channelName);
           return channelRes?.channel?.state === State.STATE_OPEN;
@@ -240,20 +241,16 @@ export const IBCBridge = () => {
       const tokenChannelList: IBCChannelToken[] = [];
 
       (
-        configChannels?.filter((item, index) => {
+        ibcConfig.channels.filter((item, index) => {
           return activeResponses[index];
         }) || []
       ).forEach((channelName) => {
-        tokenChannelList.push({
-          denom: getDenom(otherChainId),
-          channelName,
-          displayTokenName: getTokenDisplayName(otherChainId),
-        });
-
-        tokenChannelList.push({
-          denom: getRTokenDenom(otherChainId),
-          channelName,
-          displayTokenName: getRTokenDisplayName(otherChainId),
+        ibcConfig.assets.forEach((asset) => {
+          tokenChannelList.push({
+            denom: asset.denom,
+            channelName,
+            displayTokenName: asset.displayName,
+          });
         });
       });
 
@@ -312,6 +309,7 @@ export const IBCBridge = () => {
         dstAddress,
         (success) => {
           if (success) {
+            dispatch(updateAllTokenBalance());
             setInputAmount("");
             setDstAddress("");
           }

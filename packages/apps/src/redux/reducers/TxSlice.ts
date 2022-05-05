@@ -885,6 +885,7 @@ export const ibcBridgeSwap =
       );
 
       if (txResponse?.code === 0) {
+        await timeout(6000);
         snackbarUtil.success("Swap succeed");
         dispatch(
           addNotice(

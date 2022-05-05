@@ -1,19 +1,15 @@
 import {
   chains,
-  getDenom,
   getIBCConfig,
-  getRTokenDenom,
-  getRTokenDisplayName,
   getStafiHubChainId,
-  getTokenDisplayName,
   ibcConfigs,
   KeplrChainParams,
 } from "@stafihub/apps-config";
 import { queryChannel } from "@stafihub/apps-wallet";
 import { Button, CardContainer } from "@stafihub/react-components";
 import { State } from "@stafihub/types";
-import * as _ from "lodash";
 import classNames from "classnames";
+import * as _ from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

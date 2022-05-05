@@ -1,6 +1,7 @@
-import { FormatterText } from "@stafihub/react-components";
+import { FormatterText, CustomLoading } from "@stafihub/react-components";
 import classNames from "classnames";
 import { useMemo, useState } from "react";
+import nodata from "../assets/images/nodata.png";
 import { MintProgramsItem } from "../components/mint/MintProgramsItem";
 import { MintProgramsTableHeader } from "../components/mint/MintProgramsTableHeader";
 import { useLatestBlock } from "../hooks/useAppSlice";
@@ -8,7 +9,8 @@ import { useMintPrograms } from "../hooks/useMintPrograms";
 
 export const MintPrograms = () => {
   const latestBlock = useLatestBlock();
-  const { actDetails, totalMintedValue, totalRewardFis } = useMintPrograms();
+  const { actDetails, totalMintedValue, totalRewardFis, loading } =
+    useMintPrograms();
 
   const [programStatus, setProgramStatus] = useState<
     "In Progress" | "Completed"
@@ -80,6 +82,20 @@ export const MintPrograms = () => {
           <MintProgramsItem key={index} data={actDetail} />
         ))}
       </div>
+
+      {!loading && !displayList.length && (
+        <div className="flex flex-col items-center">
+          <img src={nodata} alt="nodata" className="mt-14 w-20" />
+
+          <div className="mt-3 text-text-gray4 text-[12px]">No Data</div>
+        </div>
+      )}
+
+      {loading && (
+        <div className="mt-14 flex flex-col items-center">
+          <CustomLoading color="#FF7FA7" size={40} />
+        </div>
+      )}
     </div>
   );
 };

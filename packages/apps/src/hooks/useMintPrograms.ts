@@ -34,6 +34,7 @@ import {
 export function useMintPrograms() {
   const dispatch = useDispatch();
   const priceList = usePriceList();
+  const [loading, setLoading] = useState(true);
 
   const actDetails: FormatMintRewardAct[] = useSelector((state: RootState) => {
     const arr = _.values(state.rPool.actDetailStore);
@@ -98,13 +99,14 @@ export function useMintPrograms() {
     });
 
     dispatch(setActDetailStore(actDetailStore));
+    setLoading(false);
   }, [dispatch]);
 
   useEffect(() => {
     updateActDetails();
   }, [updateActDetails]);
 
-  return { actDetails, totalMintedValue, totalRewardFis };
+  return { actDetails, totalMintedValue, totalRewardFis, loading };
 }
 
 export function useMintProgram(chainId: string, cycle: number) {

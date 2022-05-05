@@ -23,7 +23,6 @@ export type IbcConfig = { [key: string]: IbcConfigParams };
 export interface IbcConfigParams {
   srcChainId: string;
   dstChainId: string;
-  dstName: string;
   srcChannel: string;
   dstChannel: string;
   assets: IbcAsset[];

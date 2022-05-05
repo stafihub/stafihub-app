@@ -2,7 +2,6 @@
   {
     "srcChainId": "stafihub-public-testnet-1",
     "dstChainId": "cosmos-stafi-1",
-    "dstName": "CosmosHub",
     "srcChannel": "channel-0",
     "dstChannel": "channel-0",
     "assets": [

@@ -9,7 +9,7 @@ const update: IbcConfig = {};
 jsonConfigs.keys().forEach((k) => {
   const list = jsonConfigs(k);
   list.forEach((config: any) => {
-    (update as any)[config.chainIdPair] = config;
+    (update as any)[config.dstChainId] = config;
   });
 });
 

@@ -16,6 +16,5 @@
     "bech32PrefixConsPub": "cosmosvalconspub"
   },
   "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-cosmos-devnet",
-  "defaultApy": "7",
-  "stafihubIBCChannels": ["channel-2"]
+  "defaultApy": "7"
 }

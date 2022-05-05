@@ -6,6 +6,7 @@ import {
   getRTokenDisplayName,
   getStafiHubChainId,
   getTokenDisplayName,
+  ibcConfigs,
   KeplrChainParams,
 } from "@stafihub/apps-config";
 import { queryChannel } from "@stafihub/apps-wallet";
@@ -108,7 +109,7 @@ export const IBCBridge = () => {
     return _.values(chains)
       .filter((item) => {
         return (
-          item.chainId === getStafiHubChainId() || item.stafihubIBCChannels
+          item.chainId === getStafiHubChainId() || ibcConfigs[item.chainId]
         );
       })
       .sort((one, two) => {
@@ -217,10 +218,7 @@ export const IBCBridge = () => {
           ? chainPair.dst.chainId
           : chainPair.src.chainId;
 
-      const ibcConfig = getIBCConfig(
-        chainPair.src.chainId,
-        chainPair.dst.chainId
-      );
+      const ibcConfig = getIBCConfig(otherChainId);
 
       if (!ibcConfig) {
         setTokenChannelList([]);
@@ -228,8 +226,14 @@ export const IBCBridge = () => {
         return;
       }
 
+      const channels = [
+        chainPair.src.chainId === ibcConfig.srcChainId
+          ? ibcConfig.srcChannel
+          : ibcConfig.dstChannel,
+      ];
+
       // Check channel status.
-      const requests = ibcConfig.channels.map((channelName) => {
+      const requests = channels.map((channelName) => {
         return (async () => {
           const channelRes = await queryChannel(otherChainId, channelName);
           return channelRes?.channel?.state === State.STATE_OPEN;
@@ -241,7 +245,7 @@ export const IBCBridge = () => {
       const tokenChannelList: IBCChannelToken[] = [];
 
       (
-        ibcConfig.channels.filter((item, index) => {
+        channels.filter((item, index) => {
           return activeResponses[index];
         }) || []
       ).forEach((channelName) => {

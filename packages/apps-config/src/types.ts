@@ -16,16 +16,16 @@ export interface KeplrChainParams {
   bech32Config: any;
   explorerUrl: string;
   defaultApy?: string;
-  stafihubIBCChannels?: string[];
 }
 
 export type IbcConfig = { [key: string]: IbcConfigParams };
 
 export interface IbcConfigParams {
-  chainIdPair: string;
-  srcName: string;
+  srcChainId: string;
+  dstChainId: string;
   dstName: string;
-  channels: string[];
+  srcChannel: string;
+  dstChannel: string;
   assets: IbcAsset[];
 }
 

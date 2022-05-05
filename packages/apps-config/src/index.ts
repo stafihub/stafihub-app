@@ -118,18 +118,11 @@ export function getExplorerUrl(chainId: string | undefined) {
   return chain.explorerUrl;
 }
 
-export function getIBCConfig(
-  srcChainId: string | undefined,
-  dstChainId: string | undefined
-) {
-  if (
-    !srcChainId ||
-    !dstChainId ||
-    !ibcConfigs[`${srcChainId}:${dstChainId}`]
-  ) {
-    throw new Error(`Invalid chainIdPair: ${srcChainId}:${dstChainId}`);
+export function getIBCConfig(otherChainId: string | undefined) {
+  if (!otherChainId || !ibcConfigs[otherChainId]) {
+    throw new Error(`Invalid otherChainId: ${otherChainId}`);
   }
-  const ibcConfig = ibcConfigs[`${srcChainId}:${dstChainId}`];
+  const ibcConfig = ibcConfigs[otherChainId];
   return ibcConfig;
 }
 

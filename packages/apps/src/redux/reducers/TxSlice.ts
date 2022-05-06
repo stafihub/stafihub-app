@@ -615,6 +615,7 @@ export const feeStationSwap =
         symbol: poolInfo.symbol,
         poolAddress: poolInfo.poolAddress,
         inAmount: humanToAtomic(inAmount, poolInfo.decimals),
+        outAmount: humanToAtomic(outAmount, 6),
         minOutAmount: humanToAtomic(minOutAmount, 6),
       };
       const postSwapInfoRes = await fetch(

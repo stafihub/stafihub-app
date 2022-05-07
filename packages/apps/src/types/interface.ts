@@ -105,3 +105,15 @@ export interface FormatUserMintInfo {
   userTotalClaimableAmount: string;
   userTotalLockedAmount: string;
 }
+
+export interface UserUnbondRecord {
+  txHash: string;
+  hasReceived?: boolean;
+  lockLeftTime: number;
+  lockTotalTime?: number;
+  poolAddress?: string;
+  rTokenDenom: string;
+  rTokenUnbondAmount?: string;
+  receiveAddress: string;
+  tokenAmount: string;
+}

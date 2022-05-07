@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export function useRParams(denom: string) {
   const [eraSeconds, setEraSeconds] = useState("--");
   const [eraHours, setEraHours] = useState("--");
-  // const [bondingDuration, setBondingDuration] = useState("--");
+  const [bondingHours, setBondingHours] = useState("--");
   const [bondingDays, setBondingDays] = useState("--");
 
   useEffect(() => {
@@ -16,7 +16,9 @@ export function useRParams(denom: string) {
           Number(result.rParams.eraSeconds) / 3600
         );
         setEraHours(hoursPerEra.toString());
-        // setBondingDuration(result.rParams.bondingDuration.toString());
+        setBondingHours(
+          (result.rParams.bondingDuration * hoursPerEra).toString()
+        );
         setBondingDays(
           Math.round(
             (result.rParams.bondingDuration * hoursPerEra) / 24
@@ -26,5 +28,5 @@ export function useRParams(denom: string) {
     })();
   }, [denom]);
 
-  return { eraSeconds, eraHours, bondingDays };
+  return { eraSeconds, eraHours, bondingDays, bondingHours };
 }

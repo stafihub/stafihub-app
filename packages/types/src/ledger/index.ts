@@ -4,7 +4,6 @@ export type {
   QueryBondedPoolsByDenomResponse,
   QueryGetExchangeRateResponse,
   QueryGetPoolDetailResponse,
-  QueryGetAccountUnbondResponse,
   QueryGetUnbondCommissionResponse,
   QueryGetBondRecordRequest,
   QueryGetBondRecordResponse,

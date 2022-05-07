@@ -49,8 +49,10 @@ export interface NoticeStakeData {
 export interface NoticeUnbondData {
   tokenName: string;
   rTokenName: string;
+  rTokenDenom: string;
   unstakeAmount: string;
   willGetAmount: string;
+  completeTimestamp: number;
 }
 
 export interface NoticeIBCBridgeData {

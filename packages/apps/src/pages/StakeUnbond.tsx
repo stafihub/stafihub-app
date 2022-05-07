@@ -6,7 +6,6 @@ import { CustomLoading } from "@stafihub/react-components";
 import { useParams } from "react-router-dom";
 import nodata from "../assets/images/nodata.png";
 import { UnbondRecordTableHeader } from "../components/unbond/UnbondRecordTableHeader";
-import { UnbondRewardItem } from "../components/unbond/UnbondRewardItem";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useRParams } from "../hooks/useRParams";
 
@@ -41,13 +40,13 @@ export const StakeUnbond = () => {
             </div>
           )}
 
-          {unbondRecords.map((record, index) => (
+          {/* {unbondRecords.map((record, index) => (
             <UnbondRewardItem
               key={index}
               item={record}
               unbondingDays={bondingDays}
             />
-          ))}
+          ))} */}
         </div>
       </div>
 

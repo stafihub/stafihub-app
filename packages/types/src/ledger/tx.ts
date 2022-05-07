@@ -4,7 +4,7 @@ import _m0 from "protobufjs/minimal";
 import { Coin } from "../cosmos/base/v1beta1/coin";
 import {
   OriginalTxType,
-  PoolUnbond,
+  Unbonding,
   originalTxTypeFromJSON,
   originalTxTypeToJSON,
 } from "../ledger/ledger";
@@ -160,7 +160,9 @@ export interface MsgMigrateInitResponse {}
 export interface MsgMigrateUnbondings {
   creator: string;
   denom: string;
-  poolUnbonds: PoolUnbond[];
+  pool: string;
+  era: number;
+  unbondings: Unbonding[];
 }
 
 export interface MsgMigrateUnbondingsResponse {}
@@ -2552,7 +2554,12 @@ export const MsgMigrateInitResponse = {
   },
 };
 
-const baseMsgMigrateUnbondings: object = { creator: "", denom: "" };
+const baseMsgMigrateUnbondings: object = {
+  creator: "",
+  denom: "",
+  pool: "",
+  era: 0,
+};
 
 export const MsgMigrateUnbondings = {
   encode(
@@ -2565,8 +2572,14 @@ export const MsgMigrateUnbondings = {
     if (message.denom !== "") {
       writer.uint32(18).string(message.denom);
     }
-    for (const v of message.poolUnbonds) {
-      PoolUnbond.encode(v!, writer.uint32(26).fork()).ldelim();
+    if (message.pool !== "") {
+      writer.uint32(26).string(message.pool);
+    }
+    if (message.era !== 0) {
+      writer.uint32(32).uint32(message.era);
+    }
+    for (const v of message.unbondings) {
+      Unbonding.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -2578,7 +2591,7 @@ export const MsgMigrateUnbondings = {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgMigrateUnbondings } as MsgMigrateUnbondings;
-    message.poolUnbonds = [];
+    message.unbondings = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2589,7 +2602,13 @@ export const MsgMigrateUnbondings = {
           message.denom = reader.string();
           break;
         case 3:
-          message.poolUnbonds.push(PoolUnbond.decode(reader, reader.uint32()));
+          message.pool = reader.string();
+          break;
+        case 4:
+          message.era = reader.uint32();
+          break;
+        case 5:
+          message.unbondings.push(Unbonding.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -2609,8 +2628,14 @@ export const MsgMigrateUnbondings = {
       object.denom !== undefined && object.denom !== null
         ? String(object.denom)
         : "";
-    message.poolUnbonds = (object.poolUnbonds ?? []).map((e: any) =>
-      PoolUnbond.fromJSON(e)
+    message.pool =
+      object.pool !== undefined && object.pool !== null
+        ? String(object.pool)
+        : "";
+    message.era =
+      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
+    message.unbondings = (object.unbondings ?? []).map((e: any) =>
+      Unbonding.fromJSON(e)
     );
     return message;
   },
@@ -2619,12 +2644,14 @@ export const MsgMigrateUnbondings = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.denom !== undefined && (obj.denom = message.denom);
-    if (message.poolUnbonds) {
-      obj.poolUnbonds = message.poolUnbonds.map((e) =>
-        e ? PoolUnbond.toJSON(e) : undefined
+    message.pool !== undefined && (obj.pool = message.pool);
+    message.era !== undefined && (obj.era = message.era);
+    if (message.unbondings) {
+      obj.unbondings = message.unbondings.map((e) =>
+        e ? Unbonding.toJSON(e) : undefined
       );
     } else {
-      obj.poolUnbonds = [];
+      obj.unbondings = [];
     }
     return obj;
   },
@@ -2633,8 +2660,10 @@ export const MsgMigrateUnbondings = {
     const message = { ...baseMsgMigrateUnbondings } as MsgMigrateUnbondings;
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
-    message.poolUnbonds = (object.poolUnbonds ?? []).map((e) =>
-      PoolUnbond.fromPartial(e)
+    message.pool = object.pool ?? "";
+    message.era = object.era ?? 0;
+    message.unbondings = (object.unbondings ?? []).map((e) =>
+      Unbonding.fromPartial(e)
     );
     return message;
   },

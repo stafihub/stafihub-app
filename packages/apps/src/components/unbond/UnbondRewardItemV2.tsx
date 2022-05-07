@@ -6,16 +6,16 @@ import {
 } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
 import { FormatterText } from "@stafihub/react-components";
-import { UserUnlockChunk } from "@stafihub/types";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import pendingIcon from "../../assets/images/icon_pending.svg";
 import successIcon from "../../assets/images/icon_success_round.svg";
 import { useChainEra } from "../../hooks/useChainEra";
 import { useRParams } from "../../hooks/useRParams";
+import { UserUnbondRecord } from "../../types/interface";
 
 interface UnbondRewardItemProps {
-  item: UserUnlockChunk;
+  item: UserUnbondRecord;
   unbondingDays: string;
 }
 
@@ -28,26 +28,22 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
     if (!props.item) {
       return "--";
     }
-    return atomicToHuman(props.item.value, getChainDecimals(chainId));
+    return atomicToHuman(props.item.tokenAmount, getChainDecimals(chainId));
   }, [props.item, chainId]);
 
   const [completed, remainingDays]: [boolean, string] = useMemo(() => {
-    if (!props.item || !era || isNaN(Number(eraHours))) {
-      return [false, "--"];
-    }
-
-    if (props.item.unlockEra <= era) {
+    if (props.item.lockLeftTime <= 0) {
       return [true, "completed"];
     }
 
-    const days = ((props.item.unlockEra - era) * Number(eraHours)) / 24;
+    const days = props.item.lockLeftTime / (24 * 60 * 60);
 
     if (days < 1) {
       return [false, "<1d left"];
     }
 
     return [false, Math.floor(days) + "d left"];
-  }, [props.item, era, eraHours]);
+  }, [props.item]);
 
   return (
     <div className="w-full h-[50px] py-[10px] flex items-center text-text-gray2 text-[14px] border-[#494D51] border-solid border-b-[1px]">
@@ -82,7 +78,7 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
       </div>
 
       <div className="basis-4/12 text-[12px] text-white font-bold">
-        <div className="break-all">{props.item.recipient}</div>
+        <div className="break-all">{props.item.receiveAddress}</div>
       </div>
     </div>
   );

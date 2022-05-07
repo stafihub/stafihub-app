@@ -8,13 +8,12 @@ import {
   UnbondRelayFee,
   BondPipeline,
   BondSnapshot,
-  PoolUnbond,
-  AccountUnbond,
   BondRecord,
   OriginalTxType,
   Signature,
   RParams,
   TotalProtocolFee,
+  Unbonding,
   originalTxTypeFromJSON,
   originalTxTypeToJSON,
 } from "../ledger/ledger";
@@ -158,25 +157,6 @@ export interface QueryGetTotalExpectedActiveResponse {
   active: string;
 }
 
-export interface QueryGetPoolUnbondRequest {
-  denom: string;
-  pool: string;
-  era: number;
-}
-
-export interface QueryGetPoolUnbondResponse {
-  unbond?: PoolUnbond;
-}
-
-export interface QueryGetAccountUnbondRequest {
-  denom: string;
-  unbonder: string;
-}
-
-export interface QueryGetAccountUnbondResponse {
-  unbond?: AccountUnbond;
-}
-
 export interface QueryGetBondRecordRequest {
   denom: string;
   txhash: string;
@@ -226,6 +206,26 @@ export interface QueryUnbondSwitchRequest {
 
 export interface QueryUnbondSwitchResponse {
   isOpen: boolean;
+}
+
+export interface QueryPoolUnbondNextSequenceRequest {
+  denom: string;
+  pool: string;
+  unlockEra: number;
+}
+
+export interface QueryPoolUnbondNextSequenceResponse {
+  nextSequence: number;
+}
+
+export interface QueryPoolUnbondingsRequest {
+  denom: string;
+  pool: string;
+  unlockEra: number;
+}
+
+export interface QueryPoolUnbondingsResponse {
+  unbondings: Unbonding[];
 }
 
 const baseQueryGetExchangeRateRequest: object = { denom: "" };
@@ -2499,308 +2499,6 @@ export const QueryGetTotalExpectedActiveResponse = {
   },
 };
 
-const baseQueryGetPoolUnbondRequest: object = { denom: "", pool: "", era: 0 };
-
-export const QueryGetPoolUnbondRequest = {
-  encode(
-    message: QueryGetPoolUnbondRequest,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.denom !== "") {
-      writer.uint32(10).string(message.denom);
-    }
-    if (message.pool !== "") {
-      writer.uint32(18).string(message.pool);
-    }
-    if (message.era !== 0) {
-      writer.uint32(24).uint32(message.era);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): QueryGetPoolUnbondRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetPoolUnbondRequest,
-    } as QueryGetPoolUnbondRequest;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.denom = reader.string();
-          break;
-        case 2:
-          message.pool = reader.string();
-          break;
-        case 3:
-          message.era = reader.uint32();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): QueryGetPoolUnbondRequest {
-    const message = {
-      ...baseQueryGetPoolUnbondRequest,
-    } as QueryGetPoolUnbondRequest;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
-    return message;
-  },
-
-  toJSON(message: QueryGetPoolUnbondRequest): unknown {
-    const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.pool !== undefined && (obj.pool = message.pool);
-    message.era !== undefined && (obj.era = message.era);
-    return obj;
-  },
-
-  fromPartial(
-    object: DeepPartial<QueryGetPoolUnbondRequest>
-  ): QueryGetPoolUnbondRequest {
-    const message = {
-      ...baseQueryGetPoolUnbondRequest,
-    } as QueryGetPoolUnbondRequest;
-    message.denom = object.denom ?? "";
-    message.pool = object.pool ?? "";
-    message.era = object.era ?? 0;
-    return message;
-  },
-};
-
-const baseQueryGetPoolUnbondResponse: object = {};
-
-export const QueryGetPoolUnbondResponse = {
-  encode(
-    message: QueryGetPoolUnbondResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.unbond !== undefined) {
-      PoolUnbond.encode(message.unbond, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): QueryGetPoolUnbondResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetPoolUnbondResponse,
-    } as QueryGetPoolUnbondResponse;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.unbond = PoolUnbond.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): QueryGetPoolUnbondResponse {
-    const message = {
-      ...baseQueryGetPoolUnbondResponse,
-    } as QueryGetPoolUnbondResponse;
-    message.unbond =
-      object.unbond !== undefined && object.unbond !== null
-        ? PoolUnbond.fromJSON(object.unbond)
-        : undefined;
-    return message;
-  },
-
-  toJSON(message: QueryGetPoolUnbondResponse): unknown {
-    const obj: any = {};
-    message.unbond !== undefined &&
-      (obj.unbond = message.unbond
-        ? PoolUnbond.toJSON(message.unbond)
-        : undefined);
-    return obj;
-  },
-
-  fromPartial(
-    object: DeepPartial<QueryGetPoolUnbondResponse>
-  ): QueryGetPoolUnbondResponse {
-    const message = {
-      ...baseQueryGetPoolUnbondResponse,
-    } as QueryGetPoolUnbondResponse;
-    message.unbond =
-      object.unbond !== undefined && object.unbond !== null
-        ? PoolUnbond.fromPartial(object.unbond)
-        : undefined;
-    return message;
-  },
-};
-
-const baseQueryGetAccountUnbondRequest: object = { denom: "", unbonder: "" };
-
-export const QueryGetAccountUnbondRequest = {
-  encode(
-    message: QueryGetAccountUnbondRequest,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.denom !== "") {
-      writer.uint32(10).string(message.denom);
-    }
-    if (message.unbonder !== "") {
-      writer.uint32(18).string(message.unbonder);
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): QueryGetAccountUnbondRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetAccountUnbondRequest,
-    } as QueryGetAccountUnbondRequest;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.denom = reader.string();
-          break;
-        case 2:
-          message.unbonder = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): QueryGetAccountUnbondRequest {
-    const message = {
-      ...baseQueryGetAccountUnbondRequest,
-    } as QueryGetAccountUnbondRequest;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.unbonder =
-      object.unbonder !== undefined && object.unbonder !== null
-        ? String(object.unbonder)
-        : "";
-    return message;
-  },
-
-  toJSON(message: QueryGetAccountUnbondRequest): unknown {
-    const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.unbonder !== undefined && (obj.unbonder = message.unbonder);
-    return obj;
-  },
-
-  fromPartial(
-    object: DeepPartial<QueryGetAccountUnbondRequest>
-  ): QueryGetAccountUnbondRequest {
-    const message = {
-      ...baseQueryGetAccountUnbondRequest,
-    } as QueryGetAccountUnbondRequest;
-    message.denom = object.denom ?? "";
-    message.unbonder = object.unbonder ?? "";
-    return message;
-  },
-};
-
-const baseQueryGetAccountUnbondResponse: object = {};
-
-export const QueryGetAccountUnbondResponse = {
-  encode(
-    message: QueryGetAccountUnbondResponse,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.unbond !== undefined) {
-      AccountUnbond.encode(message.unbond, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): QueryGetAccountUnbondResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetAccountUnbondResponse,
-    } as QueryGetAccountUnbondResponse;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.unbond = AccountUnbond.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): QueryGetAccountUnbondResponse {
-    const message = {
-      ...baseQueryGetAccountUnbondResponse,
-    } as QueryGetAccountUnbondResponse;
-    message.unbond =
-      object.unbond !== undefined && object.unbond !== null
-        ? AccountUnbond.fromJSON(object.unbond)
-        : undefined;
-    return message;
-  },
-
-  toJSON(message: QueryGetAccountUnbondResponse): unknown {
-    const obj: any = {};
-    message.unbond !== undefined &&
-      (obj.unbond = message.unbond
-        ? AccountUnbond.toJSON(message.unbond)
-        : undefined);
-    return obj;
-  },
-
-  fromPartial(
-    object: DeepPartial<QueryGetAccountUnbondResponse>
-  ): QueryGetAccountUnbondResponse {
-    const message = {
-      ...baseQueryGetAccountUnbondResponse,
-    } as QueryGetAccountUnbondResponse;
-    message.unbond =
-      object.unbond !== undefined && object.unbond !== null
-        ? AccountUnbond.fromPartial(object.unbond)
-        : undefined;
-    return message;
-  },
-};
-
 const baseQueryGetBondRecordRequest: object = { denom: "", txhash: "" };
 
 export const QueryGetBondRecordRequest = {
@@ -3644,6 +3342,327 @@ export const QueryUnbondSwitchResponse = {
   },
 };
 
+const baseQueryPoolUnbondNextSequenceRequest: object = {
+  denom: "",
+  pool: "",
+  unlockEra: 0,
+};
+
+export const QueryPoolUnbondNextSequenceRequest = {
+  encode(
+    message: QueryPoolUnbondNextSequenceRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    if (message.pool !== "") {
+      writer.uint32(18).string(message.pool);
+    }
+    if (message.unlockEra !== 0) {
+      writer.uint32(24).uint32(message.unlockEra);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryPoolUnbondNextSequenceRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryPoolUnbondNextSequenceRequest,
+    } as QueryPoolUnbondNextSequenceRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = reader.string();
+          break;
+        case 2:
+          message.pool = reader.string();
+          break;
+        case 3:
+          message.unlockEra = reader.uint32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryPoolUnbondNextSequenceRequest {
+    const message = {
+      ...baseQueryPoolUnbondNextSequenceRequest,
+    } as QueryPoolUnbondNextSequenceRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.pool =
+      object.pool !== undefined && object.pool !== null
+        ? String(object.pool)
+        : "";
+    message.unlockEra =
+      object.unlockEra !== undefined && object.unlockEra !== null
+        ? Number(object.unlockEra)
+        : 0;
+    return message;
+  },
+
+  toJSON(message: QueryPoolUnbondNextSequenceRequest): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.pool !== undefined && (obj.pool = message.pool);
+    message.unlockEra !== undefined && (obj.unlockEra = message.unlockEra);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryPoolUnbondNextSequenceRequest>
+  ): QueryPoolUnbondNextSequenceRequest {
+    const message = {
+      ...baseQueryPoolUnbondNextSequenceRequest,
+    } as QueryPoolUnbondNextSequenceRequest;
+    message.denom = object.denom ?? "";
+    message.pool = object.pool ?? "";
+    message.unlockEra = object.unlockEra ?? 0;
+    return message;
+  },
+};
+
+const baseQueryPoolUnbondNextSequenceResponse: object = { nextSequence: 0 };
+
+export const QueryPoolUnbondNextSequenceResponse = {
+  encode(
+    message: QueryPoolUnbondNextSequenceResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.nextSequence !== 0) {
+      writer.uint32(8).uint32(message.nextSequence);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryPoolUnbondNextSequenceResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryPoolUnbondNextSequenceResponse,
+    } as QueryPoolUnbondNextSequenceResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nextSequence = reader.uint32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryPoolUnbondNextSequenceResponse {
+    const message = {
+      ...baseQueryPoolUnbondNextSequenceResponse,
+    } as QueryPoolUnbondNextSequenceResponse;
+    message.nextSequence =
+      object.nextSequence !== undefined && object.nextSequence !== null
+        ? Number(object.nextSequence)
+        : 0;
+    return message;
+  },
+
+  toJSON(message: QueryPoolUnbondNextSequenceResponse): unknown {
+    const obj: any = {};
+    message.nextSequence !== undefined &&
+      (obj.nextSequence = message.nextSequence);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryPoolUnbondNextSequenceResponse>
+  ): QueryPoolUnbondNextSequenceResponse {
+    const message = {
+      ...baseQueryPoolUnbondNextSequenceResponse,
+    } as QueryPoolUnbondNextSequenceResponse;
+    message.nextSequence = object.nextSequence ?? 0;
+    return message;
+  },
+};
+
+const baseQueryPoolUnbondingsRequest: object = {
+  denom: "",
+  pool: "",
+  unlockEra: 0,
+};
+
+export const QueryPoolUnbondingsRequest = {
+  encode(
+    message: QueryPoolUnbondingsRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    if (message.pool !== "") {
+      writer.uint32(18).string(message.pool);
+    }
+    if (message.unlockEra !== 0) {
+      writer.uint32(24).uint32(message.unlockEra);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryPoolUnbondingsRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryPoolUnbondingsRequest,
+    } as QueryPoolUnbondingsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = reader.string();
+          break;
+        case 2:
+          message.pool = reader.string();
+          break;
+        case 3:
+          message.unlockEra = reader.uint32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryPoolUnbondingsRequest {
+    const message = {
+      ...baseQueryPoolUnbondingsRequest,
+    } as QueryPoolUnbondingsRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    message.pool =
+      object.pool !== undefined && object.pool !== null
+        ? String(object.pool)
+        : "";
+    message.unlockEra =
+      object.unlockEra !== undefined && object.unlockEra !== null
+        ? Number(object.unlockEra)
+        : 0;
+    return message;
+  },
+
+  toJSON(message: QueryPoolUnbondingsRequest): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    message.pool !== undefined && (obj.pool = message.pool);
+    message.unlockEra !== undefined && (obj.unlockEra = message.unlockEra);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryPoolUnbondingsRequest>
+  ): QueryPoolUnbondingsRequest {
+    const message = {
+      ...baseQueryPoolUnbondingsRequest,
+    } as QueryPoolUnbondingsRequest;
+    message.denom = object.denom ?? "";
+    message.pool = object.pool ?? "";
+    message.unlockEra = object.unlockEra ?? 0;
+    return message;
+  },
+};
+
+const baseQueryPoolUnbondingsResponse: object = {};
+
+export const QueryPoolUnbondingsResponse = {
+  encode(
+    message: QueryPoolUnbondingsResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.unbondings) {
+      Unbonding.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryPoolUnbondingsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryPoolUnbondingsResponse,
+    } as QueryPoolUnbondingsResponse;
+    message.unbondings = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.unbondings.push(Unbonding.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryPoolUnbondingsResponse {
+    const message = {
+      ...baseQueryPoolUnbondingsResponse,
+    } as QueryPoolUnbondingsResponse;
+    message.unbondings = (object.unbondings ?? []).map((e: any) =>
+      Unbonding.fromJSON(e)
+    );
+    return message;
+  },
+
+  toJSON(message: QueryPoolUnbondingsResponse): unknown {
+    const obj: any = {};
+    if (message.unbondings) {
+      obj.unbondings = message.unbondings.map((e) =>
+        e ? Unbonding.toJSON(e) : undefined
+      );
+    } else {
+      obj.unbondings = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryPoolUnbondingsResponse>
+  ): QueryPoolUnbondingsResponse {
+    const message = {
+      ...baseQueryPoolUnbondingsResponse,
+    } as QueryPoolUnbondingsResponse;
+    message.unbondings = (object.unbondings ?? []).map((e) =>
+      Unbonding.fromPartial(e)
+    );
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Queries a list of getExchangeRate items. */
@@ -3714,14 +3733,6 @@ export interface Query {
   GetTotalExpectedActive(
     request: QueryGetTotalExpectedActiveRequest
   ): Promise<QueryGetTotalExpectedActiveResponse>;
-  /** Queries a list of getPoolUnbond items. */
-  GetPoolUnbond(
-    request: QueryGetPoolUnbondRequest
-  ): Promise<QueryGetPoolUnbondResponse>;
-  /** Queries a list of getAccountUnbond items. */
-  GetAccountUnbond(
-    request: QueryGetAccountUnbondRequest
-  ): Promise<QueryGetAccountUnbondResponse>;
   /** Queries a list of getBondRecord items. */
   GetBondRecord(
     request: QueryGetBondRecordRequest
@@ -3744,6 +3755,14 @@ export interface Query {
   UnbondSwitch(
     request: QueryUnbondSwitchRequest
   ): Promise<QueryUnbondSwitchResponse>;
+  /** Queries a list of PoolUnbondNextSequence items. */
+  PoolUnbondNextSequence(
+    request: QueryPoolUnbondNextSequenceRequest
+  ): Promise<QueryPoolUnbondNextSequenceResponse>;
+  /** Queries a list of PoolUnbondings items. */
+  PoolUnbondings(
+    request: QueryPoolUnbondingsRequest
+  ): Promise<QueryPoolUnbondingsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -3768,14 +3787,14 @@ export class QueryClientImpl implements Query {
     this.GetEraSnapshot = this.GetEraSnapshot.bind(this);
     this.GetSnapshot = this.GetSnapshot.bind(this);
     this.GetTotalExpectedActive = this.GetTotalExpectedActive.bind(this);
-    this.GetPoolUnbond = this.GetPoolUnbond.bind(this);
-    this.GetAccountUnbond = this.GetAccountUnbond.bind(this);
     this.GetBondRecord = this.GetBondRecord.bind(this);
     this.GetSignature = this.GetSignature.bind(this);
     this.GetRParams = this.GetRParams.bind(this);
     this.TotalProtocolFee = this.TotalProtocolFee.bind(this);
     this.RelayFeeReceiver = this.RelayFeeReceiver.bind(this);
     this.UnbondSwitch = this.UnbondSwitch.bind(this);
+    this.PoolUnbondNextSequence = this.PoolUnbondNextSequence.bind(this);
+    this.PoolUnbondings = this.PoolUnbondings.bind(this);
   }
   GetExchangeRate(
     request: QueryGetExchangeRateRequest
@@ -4016,34 +4035,6 @@ export class QueryClientImpl implements Query {
     );
   }
 
-  GetPoolUnbond(
-    request: QueryGetPoolUnbondRequest
-  ): Promise<QueryGetPoolUnbondResponse> {
-    const data = QueryGetPoolUnbondRequest.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Query",
-      "GetPoolUnbond",
-      data
-    );
-    return promise.then((data) =>
-      QueryGetPoolUnbondResponse.decode(new _m0.Reader(data))
-    );
-  }
-
-  GetAccountUnbond(
-    request: QueryGetAccountUnbondRequest
-  ): Promise<QueryGetAccountUnbondResponse> {
-    const data = QueryGetAccountUnbondRequest.encode(request).finish();
-    const promise = this.rpc.request(
-      "stafihub.stafihub.ledger.Query",
-      "GetAccountUnbond",
-      data
-    );
-    return promise.then((data) =>
-      QueryGetAccountUnbondResponse.decode(new _m0.Reader(data))
-    );
-  }
-
   GetBondRecord(
     request: QueryGetBondRecordRequest
   ): Promise<QueryGetBondRecordResponse> {
@@ -4125,6 +4116,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryUnbondSwitchResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  PoolUnbondNextSequence(
+    request: QueryPoolUnbondNextSequenceRequest
+  ): Promise<QueryPoolUnbondNextSequenceResponse> {
+    const data = QueryPoolUnbondNextSequenceRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "PoolUnbondNextSequence",
+      data
+    );
+    return promise.then((data) =>
+      QueryPoolUnbondNextSequenceResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  PoolUnbondings(
+    request: QueryPoolUnbondingsRequest
+  ): Promise<QueryPoolUnbondingsResponse> {
+    const data = QueryPoolUnbondingsRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "PoolUnbondings",
+      data
+    );
+    return promise.then((data) =>
+      QueryPoolUnbondingsResponse.decode(new _m0.Reader(data))
     );
   }
 }

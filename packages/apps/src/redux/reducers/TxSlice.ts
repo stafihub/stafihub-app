@@ -27,6 +27,7 @@ import {
 } from "@stafihub/apps-wallet";
 import { LiquidityBondState } from "@stafihub/types";
 import Long from "long";
+import moment from "moment";
 import { FeeStationPool } from "../../types/interface";
 import { getHumanAccountBalance, timeout } from "../../utils/common";
 import snackbarUtil from "../../utils/snackbarUtils";
@@ -461,6 +462,7 @@ export const unbond =
     willGetAmount: string,
     poolAddress: string,
     relayFee: string,
+    bondingHours: string,
     callback?: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
@@ -518,6 +520,9 @@ export const unbond =
               rTokenName: getRTokenDisplayName(chainId),
               unstakeAmount: inputAmount,
               willGetAmount,
+              completeTimestamp:
+                moment().valueOf() + Number(bondingHours) * 3600 * 1000,
+              rTokenDenom: getRTokenDenom(chainId),
             },
             getExplorerUrl(getStafiHubChainId()),
             "Confirmed"

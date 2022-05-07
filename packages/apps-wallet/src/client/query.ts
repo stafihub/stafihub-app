@@ -17,10 +17,7 @@ import type {
   QuerySupplyOfResponse,
   UserClaimInfo,
 } from "@stafihub/types";
-import {
-  QueryDenomTraceResponse,
-  QueryGetAccountUnbondResponse,
-} from "@stafihub/types";
+import { QueryDenomTraceResponse } from "@stafihub/types";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
   createCosmosBankQueryService,
@@ -203,22 +200,22 @@ export async function queryBondRecord(
   return null;
 }
 
-export async function queryAccountUnbond(
-  tokenDenom: string,
-  stafiHubAddress: string
-): Promise<QueryGetAccountUnbondResponse | null> {
-  try {
-    const queryService = await createQueryService(getStafiHubChainId());
-    const result = await queryService.GetAccountUnbond({
-      denom: tokenDenom,
-      unbonder: stafiHubAddress,
-    });
-    return result;
-  } catch (err: unknown) {
-    console.log("queryAccountUnbond err", err);
-  }
-  return null;
-}
+// export async function queryAccountUnbond(
+//   tokenDenom: string,
+//   stafiHubAddress: string
+// ): Promise<QueryGetAccountUnbondResponse | null> {
+//   try {
+//     const queryService = await createQueryService(getStafiHubChainId());
+//     const result = await queryService.GetAccountUnbond({
+//       denom: tokenDenom,
+//       unbonder: stafiHubAddress,
+//     });
+//     return result;
+//   } catch (err: unknown) {
+//     console.log("queryAccountUnbond err", err);
+//   }
+//   return null;
+// }
 
 export async function queryUnbondCommission(
   tokenDenom: string

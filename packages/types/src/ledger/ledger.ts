@@ -222,12 +222,6 @@ export interface Pool {
   addrs: string[];
 }
 
-export interface TotalExpectedActive {
-  denom: string;
-  era: string;
-  amount: string;
-}
-
 export interface BondPipeline {
   denom: string;
   pool: string;
@@ -237,13 +231,6 @@ export interface BondPipeline {
 export interface EraSnapshot {
   denom: string;
   shotIds: string[];
-}
-
-export interface PoolUnbond {
-  denom: string;
-  pool: string;
-  era: number;
-  unbondings: Unbonding[];
 }
 
 export interface EraUnbondLimit {
@@ -297,19 +284,6 @@ export interface Unbonding {
   unbonder: string;
   amount: string;
   recipient: string;
-}
-
-export interface UserUnlockChunk {
-  pool: string;
-  unlockEra: number;
-  value: string;
-  recipient: string;
-}
-
-export interface AccountUnbond {
-  unbonder: string;
-  denom: string;
-  chunks: UserUnlockChunk[];
 }
 
 export interface BondRecord {
@@ -467,81 +441,6 @@ export const Pool = {
   },
 };
 
-const baseTotalExpectedActive: object = { denom: "", era: "", amount: "" };
-
-export const TotalExpectedActive = {
-  encode(
-    message: TotalExpectedActive,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.denom !== "") {
-      writer.uint32(10).string(message.denom);
-    }
-    if (message.era !== "") {
-      writer.uint32(18).string(message.era);
-    }
-    if (message.amount !== "") {
-      writer.uint32(26).string(message.amount);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): TotalExpectedActive {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTotalExpectedActive } as TotalExpectedActive;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.denom = reader.string();
-          break;
-        case 2:
-          message.era = reader.string();
-          break;
-        case 3:
-          message.amount = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): TotalExpectedActive {
-    const message = { ...baseTotalExpectedActive } as TotalExpectedActive;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? String(object.era) : "";
-    message.amount =
-      object.amount !== undefined && object.amount !== null
-        ? String(object.amount)
-        : "";
-    return message;
-  },
-
-  toJSON(message: TotalExpectedActive): unknown {
-    const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.era !== undefined && (obj.era = message.era);
-    message.amount !== undefined && (obj.amount = message.amount);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<TotalExpectedActive>): TotalExpectedActive {
-    const message = { ...baseTotalExpectedActive } as TotalExpectedActive;
-    message.denom = object.denom ?? "";
-    message.era = object.era ?? "";
-    message.amount = object.amount ?? "";
-    return message;
-  },
-};
-
 const baseBondPipeline: object = { denom: "", pool: "" };
 
 export const BondPipeline = {
@@ -686,101 +585,6 @@ export const EraSnapshot = {
     const message = { ...baseEraSnapshot } as EraSnapshot;
     message.denom = object.denom ?? "";
     message.shotIds = (object.shotIds ?? []).map((e) => e);
-    return message;
-  },
-};
-
-const basePoolUnbond: object = { denom: "", pool: "", era: 0 };
-
-export const PoolUnbond = {
-  encode(
-    message: PoolUnbond,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.denom !== "") {
-      writer.uint32(10).string(message.denom);
-    }
-    if (message.pool !== "") {
-      writer.uint32(18).string(message.pool);
-    }
-    if (message.era !== 0) {
-      writer.uint32(24).uint32(message.era);
-    }
-    for (const v of message.unbondings) {
-      Unbonding.encode(v!, writer.uint32(34).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): PoolUnbond {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...basePoolUnbond } as PoolUnbond;
-    message.unbondings = [];
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.denom = reader.string();
-          break;
-        case 2:
-          message.pool = reader.string();
-          break;
-        case 3:
-          message.era = reader.uint32();
-          break;
-        case 4:
-          message.unbondings.push(Unbonding.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): PoolUnbond {
-    const message = { ...basePoolUnbond } as PoolUnbond;
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
-    message.era =
-      object.era !== undefined && object.era !== null ? Number(object.era) : 0;
-    message.unbondings = (object.unbondings ?? []).map((e: any) =>
-      Unbonding.fromJSON(e)
-    );
-    return message;
-  },
-
-  toJSON(message: PoolUnbond): unknown {
-    const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.pool !== undefined && (obj.pool = message.pool);
-    message.era !== undefined && (obj.era = message.era);
-    if (message.unbondings) {
-      obj.unbondings = message.unbondings.map((e) =>
-        e ? Unbonding.toJSON(e) : undefined
-      );
-    } else {
-      obj.unbondings = [];
-    }
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<PoolUnbond>): PoolUnbond {
-    const message = { ...basePoolUnbond } as PoolUnbond;
-    message.denom = object.denom ?? "";
-    message.pool = object.pool ?? "";
-    message.era = object.era ?? 0;
-    message.unbondings = (object.unbondings ?? []).map((e) =>
-      Unbonding.fromPartial(e)
-    );
     return message;
   },
 };
@@ -1474,185 +1278,6 @@ export const Unbonding = {
     message.unbonder = object.unbonder ?? "";
     message.amount = object.amount ?? "";
     message.recipient = object.recipient ?? "";
-    return message;
-  },
-};
-
-const baseUserUnlockChunk: object = {
-  pool: "",
-  unlockEra: 0,
-  value: "",
-  recipient: "",
-};
-
-export const UserUnlockChunk = {
-  encode(
-    message: UserUnlockChunk,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.pool !== "") {
-      writer.uint32(10).string(message.pool);
-    }
-    if (message.unlockEra !== 0) {
-      writer.uint32(16).uint32(message.unlockEra);
-    }
-    if (message.value !== "") {
-      writer.uint32(26).string(message.value);
-    }
-    if (message.recipient !== "") {
-      writer.uint32(34).string(message.recipient);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): UserUnlockChunk {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseUserUnlockChunk } as UserUnlockChunk;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.pool = reader.string();
-          break;
-        case 2:
-          message.unlockEra = reader.uint32();
-          break;
-        case 3:
-          message.value = reader.string();
-          break;
-        case 4:
-          message.recipient = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UserUnlockChunk {
-    const message = { ...baseUserUnlockChunk } as UserUnlockChunk;
-    message.pool =
-      object.pool !== undefined && object.pool !== null
-        ? String(object.pool)
-        : "";
-    message.unlockEra =
-      object.unlockEra !== undefined && object.unlockEra !== null
-        ? Number(object.unlockEra)
-        : 0;
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    message.recipient =
-      object.recipient !== undefined && object.recipient !== null
-        ? String(object.recipient)
-        : "";
-    return message;
-  },
-
-  toJSON(message: UserUnlockChunk): unknown {
-    const obj: any = {};
-    message.pool !== undefined && (obj.pool = message.pool);
-    message.unlockEra !== undefined && (obj.unlockEra = message.unlockEra);
-    message.value !== undefined && (obj.value = message.value);
-    message.recipient !== undefined && (obj.recipient = message.recipient);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<UserUnlockChunk>): UserUnlockChunk {
-    const message = { ...baseUserUnlockChunk } as UserUnlockChunk;
-    message.pool = object.pool ?? "";
-    message.unlockEra = object.unlockEra ?? 0;
-    message.value = object.value ?? "";
-    message.recipient = object.recipient ?? "";
-    return message;
-  },
-};
-
-const baseAccountUnbond: object = { unbonder: "", denom: "" };
-
-export const AccountUnbond = {
-  encode(
-    message: AccountUnbond,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.unbonder !== "") {
-      writer.uint32(10).string(message.unbonder);
-    }
-    if (message.denom !== "") {
-      writer.uint32(18).string(message.denom);
-    }
-    for (const v of message.chunks) {
-      UserUnlockChunk.encode(v!, writer.uint32(26).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): AccountUnbond {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccountUnbond } as AccountUnbond;
-    message.chunks = [];
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.unbonder = reader.string();
-          break;
-        case 2:
-          message.denom = reader.string();
-          break;
-        case 3:
-          message.chunks.push(UserUnlockChunk.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): AccountUnbond {
-    const message = { ...baseAccountUnbond } as AccountUnbond;
-    message.unbonder =
-      object.unbonder !== undefined && object.unbonder !== null
-        ? String(object.unbonder)
-        : "";
-    message.denom =
-      object.denom !== undefined && object.denom !== null
-        ? String(object.denom)
-        : "";
-    message.chunks = (object.chunks ?? []).map((e: any) =>
-      UserUnlockChunk.fromJSON(e)
-    );
-    return message;
-  },
-
-  toJSON(message: AccountUnbond): unknown {
-    const obj: any = {};
-    message.unbonder !== undefined && (obj.unbonder = message.unbonder);
-    message.denom !== undefined && (obj.denom = message.denom);
-    if (message.chunks) {
-      obj.chunks = message.chunks.map((e) =>
-        e ? UserUnlockChunk.toJSON(e) : undefined
-      );
-    } else {
-      obj.chunks = [];
-    }
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<AccountUnbond>): AccountUnbond {
-    const message = { ...baseAccountUnbond } as AccountUnbond;
-    message.unbonder = object.unbonder ?? "";
-    message.denom = object.denom ?? "";
-    message.chunks = (object.chunks ?? []).map((e) =>
-      UserUnlockChunk.fromPartial(e)
-    );
     return message;
   },
 };

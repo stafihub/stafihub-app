@@ -32,7 +32,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
   const isLoading = useIsLoading();
   const { updateStakeStatus } = useChainStakeStatus(chainId);
   const { relayFee } = useUnbondRelayFee(chainId);
-  const { bondingDays } = useRParams(getRTokenDenom(chainId));
+  const { bondingDays, bondingHours } = useRParams(getRTokenDenom(chainId));
 
   const { poolAddress } = useStakePoolInfo(getRTokenDenom(chainId));
 
@@ -96,6 +96,7 @@ export const UnbondModal = (props: UnbondModalProps) => {
                   props.willGetAmount,
                   poolAddress,
                   relayFee,
+                  bondingHours,
                   (success) => {
                     if (success) {
                       props.onSuccess();

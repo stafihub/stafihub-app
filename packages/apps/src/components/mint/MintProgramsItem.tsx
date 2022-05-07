@@ -6,6 +6,7 @@ import { usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useInterval } from "../../hooks/useInterval";
 import { FormatMintRewardAct } from "../../types/interface";
 import { formatDuration } from "../../utils/time";
+import { TokenName } from "./TokenName";
 
 interface MintProgramsItemProps {
   data: FormatMintRewardAct;
@@ -16,6 +17,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
   const navigate = useNavigate();
   const tokenPrice = usePriceFromDenom(getDenom(data.chainId));
   const [remainingDisplayTime, setRemainingDisplayTime] = useState("");
+  const [displayTokenName, setDisplayTokenName] = useState("");
 
   useInterval(() => {
     if (data) {
@@ -52,9 +54,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
           <div key={index} className="my-1 flex items-end justify-start">
             <div className="w-[70px]">1 : {rewardInfo.apy}</div>
 
-            <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
+            {/* <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
               {rewardInfo.denom.slice(1)}
-            </div>
+            </div> */}
+            <TokenName denom={rewardInfo.denom} />
           </div>
         ))}
       </div>
@@ -69,9 +72,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
               />
             </div>
 
-            <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
+            {/* <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
               {rewardInfo.denom.slice(1)}
-            </div>
+            </div> */}
+            <TokenName denom={rewardInfo.denom} />
           </div>
         ))}
       </div>
@@ -83,9 +87,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
               <FormatterText value={rewardInfo.leftRewardAmount} decimals={2} />
             </div>
 
-            <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
+            {/* <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
               {rewardInfo.denom.slice(1)}
-            </div>
+            </div> */}
+            <TokenName denom={rewardInfo.denom} />
           </div>
         ))}
       </div>

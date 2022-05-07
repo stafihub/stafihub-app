@@ -41,7 +41,6 @@ export function useAccountUnbond(denom: string) {
         if (resJson.status === "80000" && resJson.data) {
           const list: UserUnbondRecord[] = [];
           const noticeList = getNoticeList();
-          resJson.data.unbondList = resJson.data.unbondList.slice(1, 10);
 
           noticeList.forEach((notice) => {
             if (notice.type === "Unbond") {

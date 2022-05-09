@@ -9,7 +9,7 @@ import {
   getChainIdFromRTokenDisplayName,
   getStafiHubChainId,
 } from "@stafihub/apps-config";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import iconDown from "../assets/images/icon_down_white.png";
 import iconRewardToken from "../assets/images/icon_mint_reward_token.svg";
@@ -19,17 +19,25 @@ import iconMyReward from "../assets/images/icon_my_reward.svg";
 import iconVesting from "../assets/images/icon_mint_vesting.svg";
 import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
-import { useChainAccount } from "../hooks/useAppSlice";
+import { useChainAccount, useLatestBlock } from "../hooks/useAppSlice";
 import { TokenName } from "../components/mint/TokenName";
 
 export const MintDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
+  const latestBlock = useLatestBlock();
   const { rToken, cycle } = params;
   const [claimModalVisible, setClaimModalVisible] = useState(false);
   const { actDetail, mintedValue, userMintInfo, vesting, updateUserActDetail } =
     useMintProgram(getChainIdFromRTokenDisplayName(rToken), Number(cycle));
+
+  const isEnd = useMemo(() => {
+    if (!latestBlock || !actDetail) {
+      return true;
+    }
+    return actDetail.end <= latestBlock;
+  }, [latestBlock, actDetail]);
 
   if (!rToken) {
     return null;
@@ -162,17 +170,19 @@ export const MintDetail = () => {
               </div>
 
               <div className="mt-12 flex">
-                <div className="w-[184px]">
-                  <Button
-                    type="rectangle"
-                    height={35}
-                    onClick={() => navigate(`/rToken/${rToken}/stake`)}
-                  >
-                    Mint
-                  </Button>
-                </div>
+                {!isEnd && (
+                  <div className="w-[184px] mr-5">
+                    <Button
+                      type="rectangle"
+                      height={35}
+                      onClick={() => navigate(`/rToken/${rToken}/stake`)}
+                    >
+                      Mint
+                    </Button>
+                  </div>
+                )}
 
-                <div className="ml-5 w-[184px]">
+                <div className="w-[184px]">
                   <Button
                     disabled={!stafiHubAccount}
                     type="rectangle"

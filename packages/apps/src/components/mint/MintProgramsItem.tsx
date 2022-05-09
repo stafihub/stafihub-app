@@ -40,7 +40,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
 
   return (
     <div className="w-full pt-5 pb-3 flex text-white bg-black-700 items-center">
-      <div className="basis-[25%] font-bold text-[16px] flex items-center">
+      <div className="basis-[20%] font-bold text-[16px] flex items-center">
         <div className="ml-6 mr-[10px]">
           <RTokenIcon rtokenName={data.rTokenDisplayName} size={26} />
         </div>
@@ -48,14 +48,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
         <div>{data.rTokenDisplayName}</div>
       </div>
 
-      <div className="basis-[20%] text-[14px]">
+      <div className="basis-[15%] text-[14px]">
         {data.tokenRewardInfos.map((rewardInfo, index) => (
           <div key={index} className="my-1 flex items-end justify-start">
             <div className="w-[70px]">1 : {rewardInfo.apy}</div>
-
-            <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom-left">
-              <TokenName denom={rewardInfo.denom} />
-            </div>
           </div>
         ))}
       </div>
@@ -102,7 +98,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
         </div>
       </div>
 
-      <div className="basis-3/12 text-[14px]">
+      <div className="basis-2/12 text-[14px]">
         <div
           className="w-[66px] h-[22px] text-primary text-[12px] flex justify-center items-center border-primary border-solid border-[0.5px] rounded-full cursor-pointer"
           onClick={() =>

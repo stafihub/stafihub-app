@@ -65,16 +65,19 @@ export const MintDetail = () => {
               </div>
 
               <div className="mt-4">
-                {actDetail?.tokenRewardInfos.map((rewardInfo, index) => (
-                  <div
-                    key={index}
-                    className="mt-2 text-primary text-[20px] font-bold"
-                  >
-                    1 {rToken.slice(1)} : {rewardInfo.apy}{" "}
-                    {/* {rewardInfo.denom.slice(1).toUpperCase()} */}
-                    <TokenName denom={rewardInfo.denom} />
-                  </div>
-                ))}
+                {actDetail?.tokenRewardInfos.map(
+                  (rewardInfo, index) =>
+                    Number(rewardInfo.leftRewardAmount) > 0 && (
+                      <div
+                        key={index}
+                        className="mt-2 text-primary text-[20px] font-bold"
+                      >
+                        1 {rToken.slice(1)} : {rewardInfo.apy}{" "}
+                        {/* {rewardInfo.denom.slice(1).toUpperCase()} */}
+                        <TokenName denom={rewardInfo.denom} />
+                      </div>
+                    )
+                )}
               </div>
 
               <div className="my-4 h-[1px] bg-divider w-[280px]" />

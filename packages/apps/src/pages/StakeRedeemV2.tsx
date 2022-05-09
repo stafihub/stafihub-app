@@ -111,7 +111,7 @@ export const StakeRedeemV2 = () => {
 
       <div className="ml-10 mt-2 flex flex-col">
         <div className="border-solid border-[1px] rounded-[3.5px] border-input-border w-[494px] h-[46px] flex items-center justify-between">
-          <div className="ml-5">
+          <div className="ml-5 flex-1">
             <CustomNumberInput
               fontSize={16}
               placeholder="AMOUNT"

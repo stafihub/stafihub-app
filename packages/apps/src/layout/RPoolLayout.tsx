@@ -11,7 +11,7 @@ export const RPoolLayout = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[1120px] pl-[87px] pr-10">
+      <div className="w-[1120px] pl-10 pr-10">
         <div className="mt-14 flex items-start">
           <div
             className={classNames(

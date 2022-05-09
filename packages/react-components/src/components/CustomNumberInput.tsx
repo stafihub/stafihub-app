@@ -15,7 +15,7 @@ export const CustomNumberInput = (props: CustomInputProps) => {
     <input
       disabled={props.disabled}
       className={classNames(
-        "bg-transparent border-none outline-none font-bold",
+        "w-full bg-transparent border-none outline-none font-bold",
         props.light
           ? "text-text-black1 placeholder:text-[#cacaca]"
           : props.primary

@@ -141,7 +141,7 @@ export const StakeV2 = () => {
 
       <div className="mt-10 flex flex-col">
         <div className="bg-white rounded-[3.5px] h-[46px] flex items-center justify-between">
-          <div className="ml-5">
+          <div className="ml-5 flex-1">
             <CustomNumberInput
               light
               fontSize={16}

@@ -1,6 +1,7 @@
-import { FormatterText, CustomLoading } from "@stafihub/react-components";
+import { CustomLoading, FormatterText } from "@stafihub/react-components";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import nodata from "../assets/images/nodata.png";
 import { MintProgramsItem } from "../components/mint/MintProgramsItem";
 import { MintProgramsTableHeader } from "../components/mint/MintProgramsTableHeader";
@@ -8,6 +9,7 @@ import { useLatestBlock } from "../hooks/useAppSlice";
 import { useMintPrograms } from "../hooks/useMintPrograms";
 
 export const MintPrograms = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const latestBlock = useLatestBlock();
   const { actDetails, totalMintedValue, totalRewardFis, loading } =
     useMintPrograms();
@@ -15,6 +17,15 @@ export const MintPrograms = () => {
   const [programStatus, setProgramStatus] = useState<
     "In Progress" | "Completed"
   >("In Progress");
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && tab === "completed") {
+      setProgramStatus("Completed");
+    } else {
+      setProgramStatus("In Progress");
+    }
+  }, [searchParams]);
 
   const displayList = useMemo(() => {
     if (!latestBlock) {
@@ -32,7 +43,7 @@ export const MintPrograms = () => {
       <div className="mt-7 flex">
         <div className="w-[217px] h-20 rounded-[4px] bg-black-700 flex flex-col">
           <div className="mt-4 ml-5 text-white text-[12px]">
-            Total minted value
+            Total Minted Value
           </div>
           <div className="self-end mt-4 mr-3 text-white text-[20px] font-bold">
             $<FormatterText value={totalMintedValue} decimals={2} />
@@ -57,7 +68,8 @@ export const MintPrograms = () => {
             "rounded-full w-[100px] h-[34px] flex items-center justify-center text-[12px] font-bold cursor-pointer bg-[#262626]",
             programStatus === "In Progress" ? "text-primary" : "text-text-gray3"
           )}
-          onClick={() => setProgramStatus("In Progress")}
+          // onClick={() => setProgramStatus("In Progress")}
+          onClick={() => setSearchParams({ tab: "inProgress" })}
         >
           In Progress
         </div>
@@ -67,7 +79,7 @@ export const MintPrograms = () => {
             "ml-5 rounded-full w-[100px] h-[34px] flex items-center justify-center text-[12px] font-bold cursor-pointer bg-[#262626]",
             programStatus === "Completed" ? "text-primary" : "text-text-gray3"
           )}
-          onClick={() => setProgramStatus("Completed")}
+          onClick={() => setSearchParams({ tab: "completed" })}
         >
           Completed
         </div>

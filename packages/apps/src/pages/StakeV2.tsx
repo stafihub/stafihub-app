@@ -1,6 +1,7 @@
 import {
   getChainIdFromRTokenDisplayName,
   getDenom,
+  getDisplayHubName,
   getRTokenDenom,
   getRTokenDisplayName,
   getStafiHubChainId,
@@ -81,9 +82,6 @@ export const StakeV2 = () => {
   const clickStake = async () => {
     if (!poolAddress || !stafiHubAddress) {
       return;
-    }
-    if (!chainAccount) {
-      dispatch(connectKeplr(chainId));
     }
 
     dispatch(
@@ -284,6 +282,10 @@ export const StakeV2 = () => {
               dispatch(connectKeplr(getStafiHubChainId()));
               return;
             }
+            if (!chainAccount) {
+              dispatch(connectKeplr(chainId));
+              return;
+            }
             if (Number(inputAmount) < Number(leastBond)) {
               snackbarUtil.warning(
                 `The stake amount is less than the minimum stake size: ${leastBond} ${getTokenDisplayName(
@@ -296,6 +298,7 @@ export const StakeV2 = () => {
           }}
           disabled={
             stafiHubAccount &&
+            chainAccount &&
             (buttonDisabled ||
               Number(inputAmount) > Number(transferrableAmount))
           }
@@ -308,6 +311,8 @@ export const StakeV2 = () => {
             </div>
           ) : !stafiHubAccount ? (
             "Connect StaFi-Hub Wallet"
+          ) : !chainAccount ? (
+            `Connect ${getDisplayHubName(chainId)} Wallet`
           ) : Number(inputAmount) > 0 &&
             Number(inputAmount) > Number(transferrableAmount) ? (
             "Insufficient Balance"

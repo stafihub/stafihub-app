@@ -133,3 +133,11 @@ export function getDefaultApy(chainId: string | undefined) {
   const chain = chains[chainId];
   return chain.defaultApy;
 }
+
+export function getDisplayHubName(chainId: string | undefined) {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.displayHubName;
+}

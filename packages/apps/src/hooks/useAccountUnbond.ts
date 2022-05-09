@@ -43,12 +43,12 @@ export function useAccountUnbond(denom: string) {
           const noticeList = getNoticeList();
 
           noticeList.forEach((notice) => {
-            if (notice.type === "Unbond") {
+            const noticeData = notice.data as NoticeUnbondData;
+            if (notice.type === "Unbond" && noticeData.completeTimestamp) {
               const matched = resJson.data.unbondList.find(
                 (item: UserUnbondRecord) => item.txHash === notice.id
               );
               if (!matched) {
-                const noticeData = notice.data as NoticeUnbondData;
                 list.push({
                   txHash: notice.id,
                   hasReceived: false,

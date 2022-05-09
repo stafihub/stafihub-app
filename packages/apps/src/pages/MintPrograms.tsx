@@ -6,13 +6,19 @@ import nodata from "../assets/images/nodata.png";
 import { MintProgramsItem } from "../components/mint/MintProgramsItem";
 import { MintProgramsTableHeader } from "../components/mint/MintProgramsTableHeader";
 import { useLatestBlock } from "../hooks/useAppSlice";
+import { useInterval } from "../hooks/useInterval";
 import { useMintPrograms } from "../hooks/useMintPrograms";
 
 export const MintPrograms = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const latestBlock = useLatestBlock();
-  const { actDetails, totalMintedValue, totalRewardFis, loading } =
-    useMintPrograms();
+  const {
+    actDetails,
+    totalMintedValue,
+    totalRewardFis,
+    loading,
+    updateActDetails,
+  } = useMintPrograms();
 
   const [programStatus, setProgramStatus] = useState<
     "In Progress" | "Completed"
@@ -26,6 +32,10 @@ export const MintPrograms = () => {
       setProgramStatus("In Progress");
     }
   }, [searchParams]);
+
+  useInterval(() => {
+    updateActDetails();
+  }, 6000);
 
   const displayList = useMemo(() => {
     if (!latestBlock) {

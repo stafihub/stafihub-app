@@ -107,7 +107,13 @@ export function useMintPrograms() {
     updateActDetails();
   }, [updateActDetails]);
 
-  return { actDetails, totalMintedValue, totalRewardFis, loading };
+  return {
+    actDetails,
+    totalMintedValue,
+    totalRewardFis,
+    loading,
+    updateActDetails,
+  };
 }
 
 export function useMintProgram(chainId: string, cycle: number) {

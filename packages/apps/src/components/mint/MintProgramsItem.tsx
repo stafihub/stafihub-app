@@ -17,7 +17,6 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
   const navigate = useNavigate();
   const tokenPrice = usePriceFromDenom(getDenom(data.chainId));
   const [remainingDisplayTime, setRemainingDisplayTime] = useState("");
-  const [displayTokenName, setDisplayTokenName] = useState("");
 
   useInterval(() => {
     if (data) {
@@ -54,10 +53,9 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
           <div key={index} className="my-1 flex items-end justify-start">
             <div className="w-[70px]">1 : {rewardInfo.apy}</div>
 
-            {/* <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
-              {rewardInfo.denom.slice(1)}
-            </div> */}
-            <TokenName denom={rewardInfo.denom} />
+            <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom-left">
+              <TokenName denom={rewardInfo.denom} />
+            </div>
           </div>
         ))}
       </div>
@@ -72,10 +70,9 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
               />
             </div>
 
-            {/* <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
-              {rewardInfo.denom.slice(1)}
-            </div> */}
-            <TokenName denom={rewardInfo.denom} />
+            <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom-left">
+              <TokenName denom={rewardInfo.denom} />
+            </div>
           </div>
         ))}
       </div>
@@ -87,10 +84,9 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
               <FormatterText value={rewardInfo.leftRewardAmount} decimals={2} />
             </div>
 
-            {/* <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom uppercase">
-              {rewardInfo.denom.slice(1)}
-            </div> */}
-            <TokenName denom={rewardInfo.denom} />
+            <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom-left">
+              <TokenName denom={rewardInfo.denom} />
+            </div>
           </div>
         ))}
       </div>

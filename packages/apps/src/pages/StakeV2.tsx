@@ -177,7 +177,7 @@ export const StakeV2 = () => {
 
             <div className="mx-[5px]">
               {params.rToken && (
-                <TokenIcon tokenName={params.rToken.slice(1)} size={36} />
+                <TokenIcon denom={getDenom(chainId)} size={36} />
               )}
             </div>
           </div>

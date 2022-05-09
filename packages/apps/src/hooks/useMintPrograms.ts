@@ -12,6 +12,7 @@ import {
   queryUserClaimInfoDetail,
   queryUserMintCount,
   queryLatestBlock,
+  queryDenomTrace,
 } from "@stafihub/apps-wallet";
 import * as _ from "lodash";
 import Long from "long";
@@ -175,7 +176,7 @@ export function useMintProgram(chainId: string, cycle: number) {
       return;
     }
 
-    const claimInfoRequests = _.range(0, userMintCount.toInt() + 1).map(
+    const claimInfoRequests = _.range(0, userMintCount.toInt()).map(
       (mintIndex) =>
         (async () => {
           const claimInfoDetail = await queryUserClaimInfoDetail(
@@ -193,59 +194,110 @@ export function useMintProgram(chainId: string, cycle: number) {
     let userNativeTokenAmount = 0;
     let userRTokenAmount = 0;
     let userTotalRewardValue = 0;
-    let userTotalRewardAmount = 0;
-    let userTotalClaimableAmount = 0;
-    let userTotalClaimedAmount = 0;
-    let userTotalLockedAmount = 0;
+
+    const rewardMap: {
+      [key: string]: {
+        userTotalRewardAmount: number;
+        userTotalClaimableAmount: number;
+        userTotalClaimedAmount: number;
+        userTotalLockedAmount: number;
+      };
+    } = {};
 
     const claimMintIndexs: number[] = [];
 
-    claimInfoResponses.forEach((claimInfo, mintIndex) => {
-      if (claimInfo) {
-        userNativeTokenAmount += Number(claimInfo.nativeTokenAmount);
-        userRTokenAmount += Number(claimInfo.mintRTokenAmount);
-        claimInfo.TokenClaimInfos.forEach((tokenClaimInfo) => {
-          const priceItem = priceList.find(
-            (item) => item.denom === tokenClaimInfo.denom
-          );
-          if (isNaN(Number(tokenClaimInfo.totalRewardAmount)) || !priceItem) {
-            return;
-          }
-          userTotalRewardValue +=
-            Number(tokenClaimInfo.totalRewardAmount) *
-            Number(atomicToHuman(priceItem.price));
-          userTotalRewardAmount += Number(tokenClaimInfo.totalRewardAmount);
-          userTotalClaimedAmount += Number(tokenClaimInfo.totalClaimedAmount);
+    await Promise.all(
+      claimInfoResponses.map((claimInfo, mintIndex) =>
+        (async () => {
+          if (claimInfo) {
+            userNativeTokenAmount += Number(claimInfo.nativeTokenAmount);
+            userRTokenAmount += Number(claimInfo.mintRTokenAmount);
 
-          let finalBlock =
-            claimInfo.mintBlock.toInt() + Number(actDetail.lockedBlocks);
+            await Promise.all(
+              claimInfo.TokenClaimInfos.map((tokenClaimInfo) =>
+                (async () => {
+                  let finalDenom = tokenClaimInfo.denom;
 
-          let shouldClaimAmount = 0;
-          let leftClaimAmount =
-            Number(tokenClaimInfo.totalRewardAmount) -
-            Number(tokenClaimInfo.totalClaimedAmount);
-          if (leftClaimAmount > 0) {
-            if (latestBlock < finalBlock) {
-              let duBlocks = latestBlock - claimInfo.latestClaimedBlock.toInt();
-              let lockedDuBlocks =
-                finalBlock - claimInfo.latestClaimedBlock.toInt();
-              shouldClaimAmount = leftClaimAmount * (duBlocks / lockedDuBlocks);
-            } else {
-              shouldClaimAmount = leftClaimAmount;
-            }
-          }
-          if (Number(shouldClaimAmount) > Number(0)) {
-            claimMintIndexs.push(mintIndex);
-            userTotalClaimableAmount += shouldClaimAmount;
-          }
-        });
-      }
-    });
+                  if (finalDenom.startsWith("ibc/")) {
+                    const denomTraceRes = await queryDenomTrace(
+                      getStafiHubChainId(),
+                      finalDenom
+                    );
 
-    userTotalLockedAmount =
-      Number(userTotalRewardAmount) -
-      Number(userTotalClaimableAmount) -
-      Number(userTotalClaimedAmount);
+                    if (denomTraceRes && denomTraceRes.denomTrace) {
+                      finalDenom = denomTraceRes.denomTrace.baseDenom;
+                    }
+                  }
+
+                  const priceItem = priceList.find(
+                    (item) => item.denom === finalDenom
+                  );
+                  if (
+                    isNaN(Number(tokenClaimInfo.totalRewardAmount)) ||
+                    !priceItem
+                  ) {
+                    return;
+                  }
+                  userTotalRewardValue +=
+                    Number(tokenClaimInfo.totalRewardAmount) *
+                    Number(atomicToHuman(priceItem.price));
+                  if (!rewardMap[finalDenom]) {
+                    rewardMap[finalDenom] = {
+                      userTotalRewardAmount: 0,
+                      userTotalClaimableAmount: 0,
+                      userTotalClaimedAmount: 0,
+                      userTotalLockedAmount: 0,
+                    };
+                  }
+
+                  rewardMap[finalDenom].userTotalRewardAmount =
+                    Number(rewardMap[finalDenom].userTotalRewardAmount) +
+                    Number(tokenClaimInfo.totalRewardAmount);
+
+                  rewardMap[finalDenom].userTotalClaimedAmount =
+                    Number(rewardMap[finalDenom].userTotalClaimedAmount) +
+                    Number(tokenClaimInfo.totalClaimedAmount);
+
+                  let finalBlock =
+                    claimInfo.mintBlock.toInt() +
+                    Number(actDetail.lockedBlocks);
+
+                  let shouldClaimAmount = 0;
+                  let leftClaimAmount =
+                    Number(tokenClaimInfo.totalRewardAmount) -
+                    Number(tokenClaimInfo.totalClaimedAmount);
+                  if (leftClaimAmount > 0) {
+                    if (latestBlock < finalBlock) {
+                      let duBlocks =
+                        latestBlock - claimInfo.latestClaimedBlock.toInt();
+                      let lockedDuBlocks =
+                        finalBlock - claimInfo.latestClaimedBlock.toInt();
+                      shouldClaimAmount =
+                        leftClaimAmount * (duBlocks / lockedDuBlocks);
+                    } else {
+                      shouldClaimAmount = leftClaimAmount;
+                    }
+                  }
+                  if (Number(shouldClaimAmount) > Number(0)) {
+                    if (claimMintIndexs.indexOf(mintIndex) < 0) {
+                      claimMintIndexs.push(mintIndex);
+                    }
+                    rewardMap[finalDenom].userTotalClaimableAmount =
+                      Number(rewardMap[finalDenom].userTotalClaimableAmount) +
+                      shouldClaimAmount;
+                  }
+
+                  rewardMap[finalDenom].userTotalLockedAmount =
+                    Number(rewardMap[finalDenom].userTotalRewardAmount) -
+                    Number(rewardMap[finalDenom].userTotalClaimableAmount) -
+                    Number(rewardMap[finalDenom].userTotalClaimedAmount);
+                })()
+              )
+            );
+          }
+        })()
+      )
+    );
 
     // const userMintedValue = isNaN(Number(tokenPrice))
     //   ? "--"
@@ -266,9 +318,7 @@ export function useMintProgram(chainId: string, cycle: number) {
       mintRTokenAmount: atomicToHuman(userRTokenAmount),
       percentage: userPercentage,
       userTotalRewardValue: atomicToHuman(userTotalRewardValue),
-      userTotalRewardAmount: atomicToHuman(userTotalRewardAmount, 6, 4),
-      userTotalClaimableAmount: atomicToHuman(userTotalClaimableAmount, 6, 4),
-      userTotalLockedAmount: atomicToHuman(userTotalLockedAmount, 6, 4),
+      rewardMap: _.cloneDeep(rewardMap),
     });
   }, [
     chainId,

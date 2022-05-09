@@ -20,6 +20,7 @@ import iconVesting from "../assets/images/icon_mint_vesting.svg";
 import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
 import { useChainAccount } from "../hooks/useAppSlice";
+import { TokenName } from "../components/mint/TokenName";
 
 export const MintDetail = () => {
   const navigate = useNavigate();
@@ -70,7 +71,8 @@ export const MintDetail = () => {
                     className="mt-2 text-primary text-[20px] font-bold"
                   >
                     1 {rToken.slice(1)} : {rewardInfo.apy}{" "}
-                    {rewardInfo.denom.slice(1).toUpperCase()}
+                    {/* {rewardInfo.denom.slice(1).toUpperCase()} */}
+                    <TokenName denom={rewardInfo.denom} />
                   </div>
                 ))}
               </div>
@@ -87,10 +89,7 @@ export const MintDetail = () => {
                 <div className="ml-20 flex">
                   {actDetail?.tokenRewardInfos.map((rewardInfo, index) => (
                     <div key={index} className="mr-[10px]">
-                      <TokenIcon
-                        tokenName={rewardInfo.denom.slice(1).toUpperCase()}
-                        size={20}
-                      />
+                      <TokenIcon denom={rewardInfo.denom} size={20} />
                     </div>
                   ))}
                 </div>

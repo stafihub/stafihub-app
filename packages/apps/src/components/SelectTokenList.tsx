@@ -4,7 +4,7 @@ import {
   TokenIcon,
   FormatterText,
 } from "@stafihub/react-components";
-import { getTokenDisplayName } from "@stafihub/apps-config";
+import { getDenom, getTokenDisplayName } from "@stafihub/apps-config";
 import { FeeStationPool } from "../types/interface";
 import { BackIcon } from "./icons/BackIcon";
 
@@ -96,7 +96,7 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
                     /> */}
 
                     <TokenIcon
-                      tokenName={getTokenDisplayName(item.chainId)}
+                      denom={getDenom(item.chainId)}
                       size={36}
                       withBorder
                     />

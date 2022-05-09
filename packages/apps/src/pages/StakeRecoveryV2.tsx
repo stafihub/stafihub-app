@@ -1,5 +1,9 @@
 import { Collapse, Popover } from "@mui/material";
-import { getRTokenDenom, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  getDenom,
+  getRTokenDenom,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import { queryPoolByDenom } from "@stafihub/apps-wallet";
 import { Button, CustomInput, TokenIcon } from "@stafihub/react-components";
 import classNames from "classnames";
@@ -235,7 +239,7 @@ export const StakeRecoveryV2 = () => {
               >
                 <div className="flex items-center">
                   <TokenIcon
-                    tokenName={rTokenItem.tokenName}
+                    denom={getDenom(rTokenItem.chainId)}
                     size={26}
                     withBorder
                   />

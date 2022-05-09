@@ -273,7 +273,7 @@ export async function sendClaimMintRewardTx(
     }),
   }));
 
-  const simulateResponse = await client.simulate(sender, messages, "");
+  // const simulateResponse = await client.simulate(sender, messages, "");
 
   const fee = {
     amount: [
@@ -282,7 +282,8 @@ export async function sendClaimMintRewardTx(
         amount: "1",
       },
     ],
-    gas: Math.ceil(simulateResponse * 1.3).toString(),
+    // gas: Math.ceil(simulateResponse * 1.3).toString(),
+    gas: "500000",
   };
 
   const response = await client.signAndBroadcast(sender, messages, fee);

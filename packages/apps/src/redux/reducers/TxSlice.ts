@@ -938,7 +938,7 @@ export const claimMintRewards =
     denom: string,
     cycle: number,
     mintIndexes: number[],
-    claimableRewardTokenAmount: string,
+    claimableRewardText: string,
     rewardTokenDenom: string,
     callback: (success: boolean) => void
   ): AppThunk =>
@@ -977,7 +977,7 @@ export const claimMintRewards =
             {
               rewardTokenName: rewardTokenDenom.slice(1).toUpperCase(),
               rewardTokenDenom: rewardTokenDenom,
-              rewardAmount: claimableRewardTokenAmount,
+              claimableRewardText: claimableRewardText,
             },
             getExplorerUrl(getStafiHubChainId()),
             "Confirmed"
@@ -995,6 +995,7 @@ export const claimMintRewards =
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
       } else {
+        console.log(err);
         snackbarUtil.error((err as Error).message);
       }
     } finally {

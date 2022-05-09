@@ -231,7 +231,11 @@ export const updateAllTokenBalance =
           newAccount.allBalances = balances;
 
           // Prevent disconnect conflict.
-          if (!getState().app.accounts[chainId]) {
+          if (
+            !getState().app.accounts[chainId] ||
+            getState().app.accounts[chainId]?.bech32Address !==
+              account.bech32Address
+          ) {
             return;
           }
           return { network: chainId, account: newAccount };

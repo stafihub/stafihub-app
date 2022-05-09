@@ -166,6 +166,8 @@ importers:
       '@emotion/react': ^11.8.1
       '@emotion/styled': ^11.8.1
       '@mui/material': ^5.4.2
+      '@stafihub/apps-config': workspace:0.1.0
+      '@stafihub/apps-wallet': workspace:0.1.0
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^12.0.0
       '@testing-library/user-event': ^13.2.1
@@ -184,6 +186,8 @@ importers:
       '@emotion/react': 11.8.2_00d6772dea80510e818fd171caaa025a
       '@emotion/styled': 11.8.1_19c9b884401318110e0b35fad34f7b03
       '@mui/material': 5.5.1_04cccb159326fc32d263f5d228230564
+      '@stafihub/apps-config': link:../apps-config
+      '@stafihub/apps-wallet': link:../apps-wallet
       '@testing-library/jest-dom': 5.16.2
       '@testing-library/react': 12.1.4_react-dom@17.0.2+react@17.0.2
       '@testing-library/user-event': 13.5.0

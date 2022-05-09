@@ -94,16 +94,19 @@ export interface FormatTokenRewardInfo {
 }
 
 export interface FormatUserMintInfo {
-  // mintedValue: string;
   denom: string;
   claimMintIndexs: number[];
   nativeTokenAmount: string;
   mintRTokenAmount: string;
   percentage: string;
   userTotalRewardValue: string;
-  userTotalRewardAmount: string;
-  userTotalClaimableAmount: string;
-  userTotalLockedAmount: string;
+  rewardMap: { [key: string]: UserMintRewardItem };
+}
+
+export interface UserMintRewardItem {
+  userTotalRewardAmount: number;
+  userTotalClaimableAmount: number;
+  userTotalLockedAmount: number;
 }
 
 export interface UserUnbondRecord {

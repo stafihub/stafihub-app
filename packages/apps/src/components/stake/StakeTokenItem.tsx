@@ -35,7 +35,7 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">
       <div className="basis-5/12 font-bold text-[16px] flex items-center">
         <div className="ml-9 mr-[10px]">
-          <TokenIcon tokenName={props.originTokenName} size={26} />
+          <TokenIcon denom={getDenom(props.chainId)} size={26} />
         </div>
 
         <div>{props.originTokenName}</div>

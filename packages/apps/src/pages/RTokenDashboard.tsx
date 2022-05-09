@@ -218,7 +218,7 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="ml-5">
-                <TokenIcon tokenName={getTokenDisplayName(chainId)} size={26} />
+                <TokenIcon denom={getDenom(chainId)} size={26} />
               </div>
             </div>
 
@@ -234,7 +234,7 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="ml-5">
-                <TokenIcon tokenName={getTokenDisplayName(chainId)} size={26} />
+                <TokenIcon denom={getDenom(chainId)} size={26} />
               </div>
             </div>
           </div>

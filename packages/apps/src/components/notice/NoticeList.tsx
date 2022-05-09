@@ -57,7 +57,7 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
       }
       if (notice.type === "Claim Mint Reward") {
         data = notice.data as NoticeClaimMintRewardData;
-        return `Claim ${data.rewardAmount} ${data.rewardTokenName}.`;
+        return `Claim ${data.claimableRewardText}.`;
       }
     } catch (err: unknown) {}
 

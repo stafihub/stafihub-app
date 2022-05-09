@@ -65,5 +65,5 @@ export interface NoticeIBCBridgeData {
 export interface NoticeClaimMintRewardData {
   rewardTokenName: string;
   rewardTokenDenom: string;
-  rewardAmount: string;
+  claimableRewardText: string;
 }

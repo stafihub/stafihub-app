@@ -20,11 +20,6 @@ export const TokenName = (props: TokenNameProps) => {
 
         if (denomTraceRes && denomTraceRes.denomTrace) {
           setDisplayTokenName(denomTraceRes.denomTrace.baseDenom.slice(1));
-
-          // return {
-          //   ibcDenom: denom,
-          //   denomTrace: denomTraceRes.denomTrace,
-          // } as IBCChannel;
         }
       } else {
         setDisplayTokenName(denom.slice(1));
@@ -32,11 +27,5 @@ export const TokenName = (props: TokenNameProps) => {
     })();
   }, [denom]);
 
-  return (
-    <div>
-      <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom-left uppercase">
-        {displayTokenName}
-      </div>
-    </div>
-  );
+  return <span className="uppercase">{displayTokenName}</span>;
 };

@@ -91,7 +91,7 @@ export const MintPrograms = () => {
         </div>
       )}
 
-      {loading && (
+      {loading && !displayList.length && (
         <div className="mt-14 flex flex-col items-center">
           <CustomLoading color="#FF7FA7" size={40} />
         </div>

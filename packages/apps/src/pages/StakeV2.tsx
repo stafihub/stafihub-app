@@ -7,7 +7,7 @@ import {
   getStafiHubChainId,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
-import { formatNumberToFixed, atomicToHuman } from "@stafihub/apps-util";
+import { formatNumberToFixed } from "@stafihub/apps-util";
 import {
   Button,
   CustomInput,
@@ -296,7 +296,7 @@ export const StakeV2 = () => {
               <div className="">
                 <div className="flex items-end">
                   <div className="font-bold text-[14px] text-text-gray8">
-                    Mint APR
+                    Mint Reward
                   </div>
 
                   <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">

@@ -7,7 +7,7 @@ import {
   getStafiHubChainId,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
-import { formatNumberToFixed } from "@stafihub/apps-util";
+import { formatNumberToFixed, atomicToHuman } from "@stafihub/apps-util";
 import {
   Button,
   CustomInput,
@@ -21,14 +21,21 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import iconApy from "../assets/images/icon_apy.svg";
 import iconStakeMenu from "../assets/images/icon_stake_menu.svg";
-import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
+import { TokenName } from "../components/mint/TokenName";
+import {
+  useChainAccount,
+  useIsLoading,
+  useLatestBlock,
+} from "../hooks/useAppSlice";
 import { useApy } from "../hooks/useApy";
+import { useMintPrograms } from "../hooks/useMintPrograms";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { MemoNoticeModal } from "../modals/MemoNoticeModal";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { setStakeSidebarProps, stake } from "../redux/reducers/TxSlice";
+import { FormatTokenRewardInfo } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 
@@ -49,6 +56,37 @@ export const StakeV2 = () => {
   const [stafiHubAddress, setStafiHubAddress] = useState("");
   const [memoNoticeModalVisible, setMemoNoticeModalVisible] = useState(false);
   const { height } = useWindowDimensions();
+  const latestBlock = useLatestBlock();
+  const { actDetails } = useMintPrograms();
+
+  const mintRewardInfos: FormatTokenRewardInfo[] = useMemo(() => {
+    if (!actDetails || !latestBlock) {
+      return [];
+    }
+    return (
+      actDetails.find(
+        (item) =>
+          item.rTokenDisplayName === params.rToken && item.end >= latestBlock
+      )?.tokenRewardInfos || []
+    );
+  }, [actDetails, params.rToken, latestBlock]);
+
+  const mintRewardArr = useMemo(() => {
+    if (!inputAmount || isNaN(Number(inputAmount))) {
+      return [];
+    }
+    return mintRewardInfos
+      .map((rewardInfo) => {
+        return {
+          denom: rewardInfo.denom,
+          rewardAmount: Math.min(
+            Number(inputAmount) * Number(rewardInfo.apy),
+            Number(rewardInfo.leftRewardAmount)
+          ),
+        };
+      })
+      .filter((item) => Number(item.rewardAmount) > 0);
+  }, [mintRewardInfos, inputAmount]);
 
   const buttonDisabled = useMemo(() => {
     return Boolean(!poolAddress || !stafiHubAddress || !inputAmount);
@@ -122,7 +160,7 @@ export const StakeV2 = () => {
   };
 
   return (
-    <div className="w-[490px] pb-[45px] flex flex-col items-stretch">
+    <div className="w-[490px] pb-[85px] flex flex-col items-stretch">
       <div className="flex items-center self-center">
         <img src={iconStakeMenu} alt="menu" className="w-6 h-6" />
         <div className="ml-1 text-white font-bold text-[30px]">
@@ -226,7 +264,12 @@ export const StakeV2 = () => {
 
       <div className="mt-10 h-[0.5px] bg-divider" />
 
-      <div className="hidden">
+      <div
+        className={classNames(
+          mintRewardInfos.length ? "" : "hidden",
+          "self-center"
+        )}
+      >
         <div className="self-center mt-5 flex items-end">
           <div>
             <div className="flex items-end">
@@ -244,25 +287,29 @@ export const StakeV2 = () => {
             </div>
           </div>
 
-          <div className="hidden ml-[2px] mr-[20px] font-bold text-white text-[30px]">
-            +
-          </div>
-
-          <div className="hidden">
-            <div className="flex items-end">
-              <div className="font-bold text-[14px] text-text-gray8">
-                Mint APR
+          {mintRewardArr.map((rewardInfo) => (
+            <div key={rewardInfo.denom} className="flex items-end">
+              <div className=" ml-[2px] mr-[20px] font-bold text-white text-[30px]">
+                +
               </div>
 
-              <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
-                +FIS
+              <div className="">
+                <div className="flex items-end">
+                  <div className="font-bold text-[14px] text-text-gray8">
+                    Mint APR
+                  </div>
+
+                  <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
+                    +<TokenName denom={rewardInfo.denom} />
+                  </div>
+                </div>
+
+                <div className="mt-[2px] font-bold text-text-gray8 text-[24px]">
+                  {rewardInfo.rewardAmount}
+                </div>
               </div>
             </div>
-
-            <div className="mt-[2px] font-bold text-text-gray8 text-[24px]">
-              --%
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 

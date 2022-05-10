@@ -21,6 +21,7 @@ import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
 import { useChainAccount, useLatestBlock } from "../hooks/useAppSlice";
 import { TokenName } from "../components/mint/TokenName";
+import * as _ from "lodash";
 
 export const MintDetail = () => {
   const navigate = useNavigate();
@@ -38,6 +39,12 @@ export const MintDetail = () => {
     }
     return actDetail.end <= latestBlock;
   }, [latestBlock, actDetail]);
+
+  const claimDisabled = useMemo(() => {
+    return (
+      !stafiHubAccount || !userMintInfo || _.isEmpty(userMintInfo.rewardMap)
+    );
+  }, [stafiHubAccount, userMintInfo]);
 
   if (!rToken) {
     return null;
@@ -184,7 +191,7 @@ export const MintDetail = () => {
 
                 <div className="w-[184px]">
                   <Button
-                    disabled={!stafiHubAccount}
+                    disabled={claimDisabled}
                     type="rectangle"
                     height={35}
                     onClick={() => setClaimModalVisible(true)}

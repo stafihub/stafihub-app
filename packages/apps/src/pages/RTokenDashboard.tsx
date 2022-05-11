@@ -12,6 +12,7 @@ import {
   TokenIcon,
   EraRewardChart,
 } from "@stafihub/react-components";
+import { Tooltip } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -208,11 +209,13 @@ export const RTokenDashboard = () => {
               </div>
             </div>
 
-            <div className="mt-10 w-[195px] text-[#aaaaaa] text-[20px]">
-              Redeemable Reward in the last 24h
+            <div className="mt-10 text-[#aaaaaa] text-[20px] leading-tight">
+              Redeemable Reward
+              <br />
+              in {getTokenDisplayName(chainId)} (last 24h)
             </div>
 
-            <div className="mt-7 flex items-center">
+            <div className="mt-6 flex items-center">
               <div className="text-white font-bold text-[30px]">
                 + <FormatterText value={last24hReward} />
               </div>
@@ -224,11 +227,13 @@ export const RTokenDashboard = () => {
 
             <div className="mt-7 w-[290px] h-[0.5px] bg-divider" />
 
-            <div className="mt-5 w-[240px] text-[#aaaaaa] text-[20px]">
-              Total Redeemable Reward
+            <div className="mt-5 text-[#aaaaaa] text-[20px] leading-tight">
+              Total Redeemable
+              <br />
+              Reward in {getTokenDisplayName(chainId)}
             </div>
 
-            <div className="mt-7 flex items-center">
+            <div className="mt-6 flex items-center">
               <div className="text-white font-bold text-[30px]">
                 + <FormatterText value={totalReward} />
               </div>
@@ -237,6 +242,15 @@ export const RTokenDashboard = () => {
                 <TokenIcon denom={getDenom(chainId)} size={26} />
               </div>
             </div>
+
+            <Tooltip
+              title="Staking rewards are automatically restaked, you can redeem reward through the redeem function."
+              placement="right"
+            >
+              <div className="mt-10 w-8 self-start ml-1 text-[12px] underline text-white">
+                Claim?
+              </div>
+            </Tooltip>
           </div>
 
           <div className="w-[590px]">

@@ -11,9 +11,10 @@ import {
   Button,
   CustomInput,
   CustomNumberInput,
-  RTokenIcon,
   FormatterText,
+  RTokenIcon,
 } from "@stafihub/react-components";
+import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -122,7 +123,13 @@ export const StakeRedeemV2 = () => {
 
           <div className="flex items-center">
             <div
-              className="text-primary text-[16px] cursor-pointer"
+              className={classNames(
+                Number(formatNumberToFixed(stakeStatus?.rTokenBalance)) ===
+                  Number(inputAmount)
+                  ? "text-[#8f8f8f]"
+                  : "text-primary",
+                "text-[16px] cursor-pointer"
+              )}
               onClick={() => {
                 if (
                   !isNaN(Number(stakeStatus?.rTokenBalance)) &&
@@ -170,7 +177,12 @@ export const StakeRedeemV2 = () => {
         </div>
 
         <div
-          className="mx-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
+          className={classNames(
+            receivingAddress === chainAccount?.bech32Address
+              ? "text-[#8f8f8f]"
+              : "text-primary",
+            "mx-[10px] text-[12px] cursor-pointer w-[63px] text-center"
+          )}
           onClick={setConnectedReceivingAddress}
         >
           Connected Address

@@ -175,7 +175,12 @@ export const StakeRecoveryV2 = () => {
         </div>
 
         <div
-          className="mx-[10px] text-primary text-[12px] cursor-pointer w-[63px] text-center"
+          className={classNames(
+            stafiHubAddress === stafiHubAccount?.bech32Address
+              ? "text-[#8f8f8f]"
+              : "text-primary",
+            "mx-[10px] text-[12px] cursor-pointer w-[63px] text-center"
+          )}
           onClick={setConnectedStafiHubAddress}
         >
           Connected Address

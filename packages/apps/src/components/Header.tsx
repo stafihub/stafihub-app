@@ -45,7 +45,6 @@ export const Header = () => {
         <div
           className="mr-3 h-[36px] bg-primary rounded-[3px] flex flex-col justify-center items-center px-2 cursor-pointer"
           onClick={() => {
-            // dispatch(connectKeplr(STAFIHUB_CHAIN_ID));
             setAccountModalVisible(true);
           }}
         >

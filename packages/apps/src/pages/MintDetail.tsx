@@ -4,6 +4,7 @@ import {
   TokenIcon,
   Button,
   FormatterText,
+  TokenName,
 } from "@stafihub/react-components";
 import {
   getChainIdFromRTokenDisplayName,
@@ -20,7 +21,6 @@ import iconVesting from "../assets/images/icon_mint_vesting.svg";
 import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
 import { useChainAccount, useLatestBlock } from "../hooks/useAppSlice";
-import { TokenName } from "../components/mint/TokenName";
 import * as _ from "lodash";
 
 export const MintDetail = () => {

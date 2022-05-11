@@ -552,7 +552,7 @@ export const unbond =
       dispatch(updateTokenBalance(chainId));
       callback && callback(txResponse?.code === 0);
     } catch (err: unknown) {
-      console.log("sendLiquidityUnbondTx err", err);
+      // console.log("sendLiquidityUnbondTx err", err);
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
       } else {

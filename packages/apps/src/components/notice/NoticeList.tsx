@@ -74,9 +74,6 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
         }
         return `${notice.explorerUrl}/account/${notice.txDetail.address}`;
       } else {
-        console.log(
-          `${notice.explorerUrl}/tx/${notice.txDetail.transactionHash}`
-        );
         return `${notice.explorerUrl}/tx/${notice.txDetail.transactionHash}`;
       }
     } catch (err: unknown) {}

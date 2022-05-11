@@ -8,7 +8,6 @@ export function checkAddress(address: string, addrPrefix: string): boolean {
     decodeAddress(address, addrPrefix);
     return true;
   } catch (e) {
-    console.log("errrr", e);
     return false;
   }
 }

@@ -1,12 +1,15 @@
 import { getDenom, getRTokenDisplayName } from "@stafihub/apps-config";
-import { FormatterText, RTokenIcon } from "@stafihub/react-components";
+import {
+  FormatterText,
+  RTokenIcon,
+  TokenName,
+} from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useInterval } from "../../hooks/useInterval";
 import { FormatMintRewardAct } from "../../types/interface";
 import { formatDuration } from "../../utils/time";
-import { TokenName } from "./TokenName";
 
 interface MintProgramsItemProps {
   data: FormatMintRewardAct;

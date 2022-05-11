@@ -6,6 +6,7 @@ export * from "./FormatterText";
 export * from "./CustomLoading";
 export * from "./ChainIcon";
 export * from "./TokenIcon";
+export * from "./TokenName";
 export * from "./RTokenIcon";
 export * from "./TokenIconLarge";
 export * from "./Icon";

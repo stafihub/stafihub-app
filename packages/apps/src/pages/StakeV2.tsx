@@ -14,6 +14,7 @@ import {
   CustomNumberInput,
   FormatterText,
   TokenIcon,
+  TokenName,
 } from "@stafihub/react-components";
 import classNames from "classnames";
 import { useMemo, useState } from "react";
@@ -21,7 +22,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import iconApy from "../assets/images/icon_apy.svg";
 import iconStakeMenu from "../assets/images/icon_stake_menu.svg";
-import { TokenName } from "../components/mint/TokenName";
 import {
   useChainAccount,
   useIsLoading,
@@ -191,7 +191,11 @@ export const StakeV2 = () => {
           <div className="flex items-center">
             <div
               className={classNames(
-                "text-primary text-[16px]",
+                isNaN(Number(transferrableAmount)) ||
+                  Number(transferrableAmount) - 0.05 === Number(inputAmount)
+                  ? "text-[#8f8f8f]"
+                  : "text-primary",
+                "text-[16px]",
                 isLoading ? "cursor-default" : "cursor-pointer"
               )}
               onClick={() => {
@@ -238,7 +242,10 @@ export const StakeV2 = () => {
 
         <div
           className={classNames(
-            "mx-[10px] text-primary text-[12px] w-[63px] text-center",
+            stafiHubAddress === stafiHubAccount?.bech32Address
+              ? "text-[#8f8f8f]"
+              : "text-primary",
+            "mx-[10px] text-[12px] w-[63px] text-center",
             isLoading ? "cursor-default" : "cursor-pointer"
           )}
           onClick={setConnectedStafiHubAddress}

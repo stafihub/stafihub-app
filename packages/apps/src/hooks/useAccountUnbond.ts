@@ -1,4 +1,8 @@
-import { getApiHost, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  getApiHost,
+  getRTokenDenom,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import { humanToAtomic } from "@stafihub/apps-util";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -43,8 +47,13 @@ export function useAccountUnbond(denom: string) {
           const noticeList = getNoticeList();
 
           noticeList.forEach((notice) => {
+            const rTokenDenom = getRTokenDenom(notice.txDetail.chainId);
             const noticeData = notice.data as NoticeUnbondData;
-            if (notice.type === "Unbond" && noticeData.completeTimestamp) {
+            if (
+              notice.type === "Unbond" &&
+              noticeData.completeTimestamp &&
+              rTokenDenom === denom
+            ) {
               const matched = resJson.data.unbondList.find(
                 (item: UserUnbondRecord) => item.txHash === notice.id
               );

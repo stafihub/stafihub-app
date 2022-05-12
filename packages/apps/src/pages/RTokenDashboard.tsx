@@ -80,11 +80,7 @@ export const RTokenDashboard = () => {
   }, [stakeStatus, rTokenPrice]);
 
   const redeemableValue = useMemo(() => {
-    if (
-      !redeemableAmount ||
-      isNaN(Number(redeemableAmount)) ||
-      isNaN(Number(tokenPrice))
-    ) {
+    if (isNaN(Number(redeemableAmount)) || isNaN(Number(tokenPrice))) {
       return "--";
     }
     return Number(redeemableAmount) * Number(tokenPrice);

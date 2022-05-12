@@ -43,6 +43,11 @@ export function useApy(chainId: string | undefined) {
         const oldRate = oldRateRes?.eraExchangeRate?.value || defaultRate;
 
         let apy = 0;
+        let defaultApy = 7;
+        let configDefaultApy = getDefaultApy(chainId);
+        if (configDefaultApy && !isNaN(Number(configDefaultApy))) {
+          defaultApy = Number(configDefaultApy);
+        }
         if (oldRate === defaultRate) {
           const left1RateRes = await queryEraExchangeRate(
             Math.max(0, currentEra - 1),
@@ -50,14 +55,7 @@ export function useApy(chainId: string | undefined) {
           );
           const left1Rate = left1RateRes?.eraExchangeRate?.value || defaultRate;
 
-          if (left1Rate === defaultRate) {
-            let defaultApy = 7;
-            let configDefaultApy = getDefaultApy(chainId);
-            if (configDefaultApy && !isNaN(Number(configDefaultApy))) {
-              defaultApy = Number(configDefaultApy);
-            }
-            apy = defaultApy;
-          } else {
+          if (left1Rate != defaultRate) {
             apy =
             ((Number(currentRate) - Number(left1Rate)) * 365.25 * 100) * 24 /
             (Number(eraHours) * Number(left1Rate));
@@ -67,6 +65,8 @@ export function useApy(chainId: string | undefined) {
           ((Number(currentRate) - Number(oldRate)) * 365.25 * 100) /
           (annualizedDay * Number(oldRate));
         }
+
+        apy = apy == 0 ? defaultApy : apy;
 
         setApy(apy.toString());
       }

@@ -70,9 +70,6 @@ export const IBCBridge = () => {
       if (chainPair.src?.chainId === chain.chainId) {
         return;
       }
-      if (chain.chainId !== chainPair.dst?.chainId) {
-        setSelectedChannelToken(null);
-      }
       let dstChain = null;
       if (chain.chainId === getStafiHubChainId()) {
         dstChain = chainPair.src;
@@ -86,7 +83,7 @@ export const IBCBridge = () => {
       setInputAmount("");
       setDstAddress("");
     },
-    [chainPair.src, chainPair.dst?.chainId]
+    [chainPair.src]
   );
 
   useEffect(() => {
@@ -201,11 +198,11 @@ export const IBCBridge = () => {
   // Update tokenList when chain changes.
   useEffect(() => {
     setTokenChannelList(null);
+    setSelectedChannelToken(null);
 
     (async () => {
       if (!chainPair.src || !chainPair.dst) {
         setTokenChannelList([]);
-        setSelectedChannelToken(null);
         return;
       }
 
@@ -218,7 +215,6 @@ export const IBCBridge = () => {
 
       if (!ibcConfig) {
         setTokenChannelList([]);
-        setSelectedChannelToken(null);
         return;
       }
 
@@ -264,9 +260,6 @@ export const IBCBridge = () => {
   const handleDstChainChange = (chain: KeplrChainParams) => {
     if (chainPair.dst?.chainId === chain.chainId) {
       return;
-    }
-    if (chain.chainId !== chainPair.src?.chainId) {
-      setSelectedChannelToken(null);
     }
     let srcChain = null;
     if (chain.chainId === getStafiHubChainId()) {

@@ -55,11 +55,11 @@ importers:
       '@mui/material': ^5.4.2
       '@mui/styles': ^5.5.1
       '@reduxjs/toolkit': ^1.8.0
-      '@stafihub/apps-config': workspace:0.1.0
-      '@stafihub/apps-util': workspace:0.1.0
-      '@stafihub/apps-wallet': workspace:0.1.0
-      '@stafihub/react-components': workspace:0.1.0
-      '@stafihub/types': workspace:^0.1.0
+      '@stafihub/apps-config': workspace:latest
+      '@stafihub/apps-util': workspace:latest
+      '@stafihub/apps-wallet': workspace:latest
+      '@stafihub/react-components': workspace:latest
+      '@stafihub/types': workspace:latest
       '@types/lodash': ^4.14.180
       autoprefixer: ^10.4.2
       buffer: ^6.0.3
@@ -145,9 +145,9 @@ importers:
       '@cosmjs/proto-signing': 0.27.1
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
-      '@stafihub/apps-config': workspace:0.1.0
-      '@stafihub/apps-util': workspace:0.1.0
-      '@stafihub/types': workspace:0.1.0
+      '@stafihub/apps-config': workspace:latest
+      '@stafihub/apps-util': workspace:latest
+      '@stafihub/types': workspace:latest
       bech32: ^2.0.0
     dependencies:
       '@cosmjs/encoding': 0.27.1
@@ -166,7 +166,7 @@ importers:
       '@emotion/react': ^11.8.1
       '@emotion/styled': ^11.8.1
       '@mui/material': ^5.4.2
-      '@stafihub/apps-config': workspace:0.1.0
+      '@stafihub/apps-config': workspace:0.2.0
       '@stafihub/apps-wallet': workspace:0.1.0
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^12.0.0
@@ -209,7 +209,6 @@ importers:
       '@cosmjs/proto-signing': 0.27.1
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
-      '@stafihub/apps-config': workspace:0.1.0
       '@types/webpack-env': ^1.16.3
       long: 4.0.0
       protobufjs: 6.11.2
@@ -218,7 +217,6 @@ importers:
       '@cosmjs/proto-signing': 0.27.1
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
-      '@stafihub/apps-config': link:../apps-config
       long: 4.0.0
       protobufjs: 6.11.2
       ts-proto: 1.88.0
@@ -2432,8 +2430,8 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.17.7
-      '@emotion/react': 11.8.2_00d6772dea80510e818fd171caaa025a
-      '@emotion/styled': 11.8.1_19c9b884401318110e0b35fad34f7b03
+      '@emotion/react': 11.8.2_0e14d57dd4c09922d529c9e9e8056bb6
+      '@emotion/styled': 11.8.1_e83b8cb7e7b978fb3eaca354350d347d
       '@mui/base': 5.0.0-alpha.72_f456dfc349ace84b0ea11d9e6e4ef3ab
       '@mui/system': 5.5.1_fcd809b460cfc9d78b56b52c09fcfe39
       '@mui/types': 7.1.3_@types+react@17.0.40
@@ -2482,8 +2480,8 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.7
       '@emotion/cache': 11.7.1
-      '@emotion/react': 11.8.2_00d6772dea80510e818fd171caaa025a
-      '@emotion/styled': 11.8.1_19c9b884401318110e0b35fad34f7b03
+      '@emotion/react': 11.8.2_0e14d57dd4c09922d529c9e9e8056bb6
+      '@emotion/styled': 11.8.1_e83b8cb7e7b978fb3eaca354350d347d
       prop-types: 15.8.1
       react: 17.0.2
     dev: false
@@ -2536,8 +2534,8 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.17.7
-      '@emotion/react': 11.8.2_00d6772dea80510e818fd171caaa025a
-      '@emotion/styled': 11.8.1_19c9b884401318110e0b35fad34f7b03
+      '@emotion/react': 11.8.2_0e14d57dd4c09922d529c9e9e8056bb6
+      '@emotion/styled': 11.8.1_e83b8cb7e7b978fb3eaca354350d347d
       '@mui/private-theming': 5.4.4_00d6772dea80510e818fd171caaa025a
       '@mui/styled-engine': 5.4.4_dc240608ee0d50d8faddd7dd724375c2
       '@mui/types': 7.1.3_@types+react@17.0.40

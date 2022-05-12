@@ -231,7 +231,10 @@ export const IBCBridge = () => {
       // Check channel status.
       const requests = channels.map((channelName) => {
         return (async () => {
-          const channelRes = await queryChannel(otherChainId, channelName);
+          const channelRes = await queryChannel(
+            chainPair.src?.chainId || "",
+            channelName
+          );
           return channelRes?.channel?.state === State.STATE_OPEN;
         })();
       });

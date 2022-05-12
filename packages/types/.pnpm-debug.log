@@ -1,0 +1,426 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 7,
+    "total": 7,
+    "workspacePrefix": "/Users/amigo/develop/stafi/hub/stafihub-app"
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "stafihub-app",
+      "version": "0.1.0",
+      "private": true,
+      "scripts": {
+        "start": "cd packages/apps && pnpm start",
+        "build": "cd packages/apps && pnpm build",
+        "build:dev": "cd packages/apps && pnpm build:dev",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+      },
+      "dependencies": {
+        "@cosmjs/encoding": "0.27.1",
+        "@cosmjs/launchpad": "0.27.1",
+        "@cosmjs/math": "0.27.1",
+        "@cosmjs/proto-signing": "0.27.1",
+        "@cosmjs/stargate": "0.27.1",
+        "@cosmjs/tendermint-rpc": "0.27.1",
+        "notistack": "^2.0.3",
+        "path": "^0.12.7",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-router-dom": "6",
+        "stream": "^0.0.2"
+      },
+      "devDependencies": {
+        "@types/jest": "^27.0.1",
+        "@types/node": "^16.7.13",
+        "@types/react": "^17.0.20",
+        "@types/react-dom": "^17.0.9",
+        "typescript": "^4.4.2"
+      },
+      "eslintConfig": {
+        "extends": [
+          "react-app",
+          "react-app/jest"
+        ]
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app"
+  },
+  "2 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps-config",
+      "version": "0.2.0",
+      "type": "module",
+      "main": "./src/index.ts",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stafihub/stafihub-app.git"
+      },
+      "keywords": [
+        "stafihub",
+        "cosmos"
+      ],
+      "author": "joe",
+      "license": "MIT",
+      "dependencies": {
+        "lodash": "^4.17.21"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      },
+      "devDependencies": {
+        "@types/lodash": "^4.14.180"
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps-config"
+  },
+  "3 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps-util",
+      "version": "0.1.0",
+      "private": true,
+      "type": "module",
+      "main": "./src/index.ts",
+      "dependencies": {
+        "@cosmjs/math": "0.27.1",
+        "bignumber.js": "^9.0.2"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps-util"
+  },
+  "4 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/types",
+      "version": "0.2.0",
+      "private": true,
+      "type": "module",
+      "main": "./src/index.ts",
+      "dependencies": {
+        "@cosmjs/proto-signing": "0.27.1",
+        "@cosmjs/stargate": "0.27.1",
+        "@cosmjs/tendermint-rpc": "0.27.1",
+        "long": "4.0.0",
+        "protobufjs": "6.11.2",
+        "ts-proto": "1.88.0"
+      },
+      "scripts": {
+        "build-proto": "./ts-proto.sh"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      },
+      "devDependencies": {
+        "@types/webpack-env": "^1.16.3"
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/types"
+  },
+  "5 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps-wallet",
+      "version": "0.1.0",
+      "private": true,
+      "type": "module",
+      "main": "./src/index.ts",
+      "dependencies": {
+        "@cosmjs/encoding": "0.27.1",
+        "@cosmjs/launchpad": "0.27.1",
+        "@cosmjs/math": "0.27.1",
+        "@cosmjs/proto-signing": "0.27.1",
+        "@cosmjs/stargate": "0.27.1",
+        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@stafihub/apps-config": "workspace:0.2.0",
+        "@stafihub/apps-util": "workspace:0.1.0",
+        "@stafihub/types": "workspace:0.1.0",
+        "bech32": "^2.0.0"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps-wallet"
+  },
+  "6 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/react-components",
+      "version": "0.1.0",
+      "private": true,
+      "type": "module",
+      "main": "./src/index.tsx",
+      "dependencies": {
+        "@emotion/react": "^11.8.1",
+        "@emotion/styled": "^11.8.1",
+        "@mui/material": "^5.4.2",
+        "@stafihub/apps-wallet": "workspace:0.1.0",
+        "@stafihub/apps-config": "workspace:0.2.0",
+        "@testing-library/jest-dom": "^5.14.1",
+        "@testing-library/react": "^12.0.0",
+        "@testing-library/user-event": "^13.2.1",
+        "classnames": "^2.3.1",
+        "echarts": "^5.3.2",
+        "echarts-for-react": "^3.0.2",
+        "icomoon-react": "^2.0.19",
+        "react-loading": "^2.0.3",
+        "react-router-dom": "6",
+        "react-scripts": "5.0.0",
+        "web-vitals": "^2.1.0"
+      },
+      "eslintConfig": {
+        "extends": [
+          "react-app",
+          "react-app/jest"
+        ]
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      },
+      "devDependencies": {
+        "autoprefixer": "^10.4.2",
+        "postcss": "^8.4.6",
+        "tailwindcss": "^3.0.23"
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/react-components"
+  },
+  "7 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps",
+      "version": "0.1.0",
+      "private": true,
+      "dependencies": {
+        "@cosmjs/encoding": "^0.27.1",
+        "@cosmjs/launchpad": "^0.27.1",
+        "@emotion/react": "^11.8.1",
+        "@emotion/styled": "^11.8.1",
+        "@mui/material": "^5.4.2",
+        "@mui/styles": "^5.5.1",
+        "@reduxjs/toolkit": "^1.8.0",
+        "@stafihub/apps-config": "workspace:0.2.0",
+        "@stafihub/apps-util": "workspace:0.1.0",
+        "@stafihub/apps-wallet": "workspace:0.1.0",
+        "@stafihub/react-components": "workspace:0.1.0",
+        "@stafihub/types": "workspace:^0.1.0",
+        "buffer": "^6.0.3",
+        "classnames": "^2.3.1",
+        "crypto-browserify": "^3.12.0",
+        "lodash": "^4.17.21",
+        "long": "4.0.0",
+        "material-ui-popup-state": "^2.0.0",
+        "moment": "^2.29.1",
+        "notistack": "^2.0.3",
+        "postcss-flexbugs-fixes": "^5.0.2",
+        "react-loading": "^2.0.3",
+        "react-redux": "^7.2.6",
+        "react-router-dom": "6",
+        "react-scripts": "5.0.0",
+        "web-vitals": "^2.1.0"
+      },
+      "devDependencies": {
+        "@babel/core": "7.17.3",
+        "@babel/plugin-proposal-class-properties": "7.16.7",
+        "@babel/plugin-syntax-flow": "7.16.7",
+        "@babel/plugin-transform-react-jsx": "7.17.3",
+        "@craco/craco": "^6.4.3",
+        "@types/lodash": "^4.14.180",
+        "autoprefixer": "^10.4.2",
+        "craco-alias": "^3.0.1",
+        "postcss": "^8.4.6",
+        "tailwindcss": "^3.0.23",
+        "webpack": "^5.69.1"
+      },
+      "scripts": {
+        "start": "REACT_APP_ENV=dev PORT=3025 craco start",
+        "build:dev": "REACT_APP_ENV=dev craco build",
+        "build": "REACT_APP_ENV=production craco build",
+        "test": "craco test",
+        "eject": "react-scripts eject",
+        "storybook": "start-storybook -p 6006 -s public",
+        "build-storybook": "build-storybook -s public"
+      },
+      "eslintConfig": {
+        "extends": [
+          "react-app",
+          "react-app/jest"
+        ],
+        "overrides": [
+          {
+            "files": [
+              "**/*.stories.*"
+            ],
+            "rules": {
+              "import/no-anonymous-default-export": "off"
+            }
+          }
+        ]
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps"
+  },
+  "8 debug pnpm:context": {
+    "currentLockfileExists": true,
+    "storeDir": "/Users/amigo/.pnpm-store/v3",
+    "virtualStoreDir": "/Users/amigo/develop/stafi/hub/stafihub-app/node_modules/.pnpm"
+  },
+  "9 debug pnpm:stage": {
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app",
+    "stage": "resolution_started"
+  },
+  "10 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-config",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@stafihub/apps-config",
+      "rawSpec": "workspace:0.2.0"
+    }
+  },
+  "11 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-util",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@stafihub/apps-util",
+      "rawSpec": "workspace:0.1.0"
+    }
+  },
+  "12 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-wallet",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@stafihub/apps-wallet",
+      "rawSpec": "workspace:0.1.0"
+    }
+  },
+  "13 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-config",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@stafihub/apps-config",
+      "rawSpec": "workspace:0.2.0"
+    }
+  },
+  "14 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-config",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/apps-config",
+      "rawSpec": "workspace:0.2.0"
+    }
+  },
+  "15 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-util",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/apps-util",
+      "rawSpec": "workspace:0.1.0"
+    }
+  },
+  "16 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-wallet",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/apps-wallet",
+      "rawSpec": "workspace:0.1.0"
+    }
+  },
+  "17 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../react-components",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/react-components",
+      "rawSpec": "workspace:0.1.0"
+    }
+  },
+  "18 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "In ../apps-wallet: No matching version found for @stafihub/types@0.1.0 inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "pnpm: In ../apps-wallet: No matching version found for @stafihub/types@0.1.0 inside the workspace\n    at tryResolveFromWorkspace (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:85948:15)\n    at resolveNpm (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:85839:39)\n    at Object.resolve (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:86071:40)\n    at ctx.requestsQueue.add.priority (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74444:75)\n    at run (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74160:90)\n    at PQueue._tryToStartAnother (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74114:13)\n    at /usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74173:16\n    at new Promise (<anonymous>)\n    at PQueue.add (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74155:16)\n    at resolveAndFetch (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74444:55)"
+    }
+  }
+}

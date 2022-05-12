@@ -1,9 +1,18 @@
 {
   "name": "@stafihub/apps-config",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
   "type": "module",
   "main": "./src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stafihub/stafihub-app.git"
+  },
+  "keywords": [
+    "stafihub",
+    "cosmos"
+  ],
+  "author": "joe",
+  "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21"
   },

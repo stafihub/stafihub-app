@@ -41,7 +41,8 @@
     "craco-alias": "^3.0.1",
     "postcss": "^8.4.6",
     "tailwindcss": "^3.0.23",
-    "webpack": "^5.69.1"
+    "webpack": "^5.69.1",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "scripts": {
     "start": "REACT_APP_ENV=dev PORT=3025 craco start",

@@ -1,6 +1,7 @@
 const path = require("path");
 // const webpack = require("webpack");
 // const cracoAlias = require("craco-alias");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 /**
  * ALlows us to edit create-react-app configuration
@@ -15,14 +16,14 @@ const absolutePath = path.join(__dirname, "../../packages");
 
 module.exports = {
   // plugins: [
-  //   {
-  //     plugin: cracoAlias,
-  //     options: {
-  //       baseUrl: "./src",
-  //       source: "tsconfig",
-  //       tsConfigPath: "./tsconfig.path.json",
-  //     },
+  // {
+  //   plugin: cracoAlias,
+  //   options: {
+  //     baseUrl: "./src",
+  //     source: "tsconfig",
+  //     tsConfigPath: "./tsconfig.path.json",
   //   },
+  // },
   // ],
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
@@ -40,6 +41,10 @@ module.exports = {
       }
       return {
         ...webpackConfig,
+        plugins: [
+          ...webpackConfig.plugins,
+          // new BundleAnalyzerPlugin({ analyzerPort: 8919 }),
+        ],
         resolve: {
           ...webpackConfig.resolve,
           fallback: {
@@ -51,10 +56,33 @@ module.exports = {
         /**
          * Optionally, other webpack configuration details.
          */
-        // optimization: {
-        //   splitChunks: {
-        //   },
-        // },
+        optimization: {
+          splitChunks: {
+            chunks: "all",
+            minSize: 1000000,
+            maxSize: 5000000,
+            cacheGroups: {
+              vendor: {
+                test: /[\\/]node_modules[\\/]/,
+                priority: -10,
+                name(module) {
+                  // get the name. E.g. node_modules/packageName/not/this/part.js
+                  // or node_modules/packageName
+                  const packageName = module.context.match(
+                    /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                  )[1];
+                  // npm package names are URL-safe, but some servers don't like @ symbols
+                  return `npm.${packageName.replace("@", "")}`;
+                },
+              },
+              default: {
+                minChunks: 2,
+                priority: -20,
+                reuseExistingChunk: true,
+              },
+            },
+          },
+        },
       };
     },
   },

@@ -50,7 +50,7 @@ export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
         {estReward}
       </div>
 
-      <div className="bg-divider h-[0.5px] absolute left-0 right-0 bottom-0" />
+      <div className="bg-[#2f2f2f] h-[0.5px] absolute left-0 right-0 bottom-0" />
     </div>
   );
 };

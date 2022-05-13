@@ -46,38 +46,38 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
   }, [props.item]);
 
   return (
-    <div className="w-full h-[50px] py-[10px] flex items-center text-text-gray2 text-[14px] border-[#494D51] border-solid border-b-[1px]">
-      <div className="basis-[4%] flex items-center">
+    <div className="w-full h-[50px] py-[10px] flex items-center text-text-gray2 text-[14px] border-[#2f2f2f] border-solid border-b-[1px]">
+      <div className="basis-[16%] flex items-center">
         <img
           src={completed ? successIcon : pendingIcon}
           alt="icon"
           className="w-4"
         />
+
+        <div className="ml-5 text-[16px] text-white">
+          {!isNaN(Number(amount)) && Number(amount) < 0.0001 ? (
+            "<0.0001"
+          ) : (
+            <FormatterText value={amount} />
+          )}
+        </div>
       </div>
 
-      <div className="basis-[10%] text-[16px] text-white">
-        {!isNaN(Number(amount)) && Number(amount) < 0.0001 ? (
-          "<0.0001"
-        ) : (
-          <FormatterText value={amount} />
-        )}
-      </div>
-
-      <div className="basis-[16%] text-[12px] text-white">
+      <div className="basis-[16%] text-[14px] text-white">
         {getTokenDisplayName(chainId)}
       </div>
 
-      <div className="basis-2/12 text-[12px] text-white">
+      <div className="basis-[12%] text-[14px] text-white">
         {!isNaN(Number(props.unbondingDays)) && (
           <div>≈{props.unbondingDays} D</div>
         )}
       </div>
 
-      <div className="basis-2/12 text-[12px] text-white">
+      <div className="basis-[12%] text-[14px] text-white">
         <div className="mt-1">{remainingDays}</div>
       </div>
 
-      <div className="basis-4/12 text-[12px] text-white font-bold">
+      <div className="basis-5/12 text-[14px] text-white">
         <div className="break-all">{props.item.receiveAddress}</div>
       </div>
     </div>

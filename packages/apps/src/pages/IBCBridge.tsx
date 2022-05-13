@@ -178,7 +178,8 @@ export const IBCBridge = () => {
       Number(inputAmount) <= 0 ||
       isNaN(Number(inputAmount)) ||
       !dstAddress ||
-      !selectedChannelToken
+      !selectedChannelToken ||
+      isLoading
     ) {
       return ["Swap", true];
     }
@@ -193,6 +194,7 @@ export const IBCBridge = () => {
     balance,
     dstAddress,
     selectedChannelToken,
+    isLoading,
   ]);
 
   // Update tokenList when chain changes.

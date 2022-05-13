@@ -13,11 +13,9 @@ export const TradeModal = (props: TradeModalProps) => {
     <Modal open={props.visible} onClose={props.onClose}>
       <Box
         pt="20px"
-        pl="40px"
-        pr="30px"
         pb="40px"
         border={0}
-        height="470px"
+        height="270px"
         sx={{
           backgroundColor: "#ffffff",
           width: "400px",
@@ -36,45 +34,51 @@ export const TradeModal = (props: TradeModalProps) => {
           </div>
 
           <div
-            className="absolute right-0 top-[1px] cursor-pointer"
+            className="absolute right-5 top-[1px] cursor-pointer"
             onClick={props.onClose}
           >
             <Icon icon="close" size={18} color="#23292F" />
           </div>
         </div>
 
-        <div className="mt-6 text-center text-text-black1 font-bold text-[16px]">
+        <div className="mt-7 text-center text-text-black1 font-bold text-[16px]">
           Available Trading DEXes
         </div>
 
         <div className="flex items-center mt-12">
-          <div className="text-[#7e7e7e] text-[14px] mr-[70px] ml-[50px]">
-            DEX
+          <div className="basis-8/12 text-[#7e7e7e] text-[14px] pl-7">DEX</div>
+
+          <div className="basis-6/12 text-[#7e7e7e] text-[14px]">
+            Token
+            <br />
+            Standard
           </div>
 
-          <div className="text-[#7e7e7e] text-[14px]">Token Standard</div>
+          <div className="basis-4/12 text-[#7e7e7e] text-[14px]">Operation</div>
         </div>
 
         <div className="h-[0.5px] mt-4 bg-divider-light ml-[-40px] mr-[-30px]" />
 
         <div>
           <div className="h-[42px] flex items-center text-[16px] text-base">
-            <div className="flex items-center w-[145px] ml-[30px]">
+            <div className="basis-8/12 flex items-center w-[145px] pl-7">
               <img src={rdex} className="w-[18px] h-[18px] mr-2" alt="icon" />
 
               <div>rDEX</div>
             </div>
 
-            <div style={{ width: "130px" }}>Native</div>
+            <div className="basis-6/12">Native</div>
 
-            <div className="opacity-50 w-[52px] h-[22px] flex items-center justify-center bg-primary rounded-full">
-              <div className="text-text-black1 font-bold text-[12px] scale-[0.75] origin-center">
-                Soon
+            <div className="basis-4/12 ">
+              <div className="w-[52px] text-white font-bold  bg-primary rounded-full flex items-center justify-center  opacity-50 h-[22px]">
+                <div className="text-[12px] scale-[0.75] origin-center">
+                  Soon
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="h-[0.5px] bg-divider-light" />
+          <div className="h-[0.5px] bg-divider-light mx-4" />
         </div>
       </Box>
     </Modal>

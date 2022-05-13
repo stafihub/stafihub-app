@@ -46,6 +46,17 @@ export const MintDetail = () => {
     );
   }, [stafiHubAccount, userMintInfo]);
 
+  const isRewardEmpty = useMemo(() => {
+    if (!actDetail) {
+      return false;
+    }
+
+    const validList = actDetail.tokenRewardInfos.filter(
+      (item) => Number(item.leftRewardAmount) > 0
+    );
+    return validList.length === 0;
+  }, [actDetail]);
+
   if (!rToken) {
     return null;
   }
@@ -79,19 +90,25 @@ export const MintDetail = () => {
                 Mint {rToken}
               </div>
 
-              <div className="mt-4">
+              <div className="mt-6 mb-2">
                 {actDetail?.tokenRewardInfos.map(
                   (rewardInfo, index) =>
                     Number(rewardInfo.leftRewardAmount) > 0 && (
                       <div
                         key={index}
-                        className="mt-2 text-primary text-[20px] font-bold"
+                        className="mb-2 text-primary text-[20px] font-bold"
                       >
                         1 {rToken.slice(1)} : {rewardInfo.apy}{" "}
                         {/* {rewardInfo.denom.slice(1).toUpperCase()} */}
                         <TokenName denom={rewardInfo.denom} />
                       </div>
                     )
+                )}
+
+                {isRewardEmpty && (
+                  <div className="mb-2 text-primary text-[20px] font-bold">
+                    Reward Remaining 0
+                  </div>
                 )}
               </div>
 
@@ -176,9 +193,9 @@ export const MintDetail = () => {
                 </div>
               </div>
 
-              <div className="mt-12 flex">
+              <div className="mt-12 flex w-[388px]">
                 {!isEnd && (
-                  <div className="w-[184px] mr-5">
+                  <div className="flex-1 mr-5">
                     <Button
                       type="rectangle"
                       height={35}
@@ -189,7 +206,7 @@ export const MintDetail = () => {
                   </div>
                 )}
 
-                <div className="w-[184px]">
+                <div className="flex-1">
                   <Button
                     disabled={claimDisabled}
                     type="rectangle"

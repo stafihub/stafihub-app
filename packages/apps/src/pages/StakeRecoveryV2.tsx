@@ -2,6 +2,7 @@ import { Collapse, Popover } from "@mui/material";
 import {
   getDenom,
   getRTokenDenom,
+  getRTokenDisplayName,
   getStafiHubChainId,
 } from "@stafihub/apps-config";
 import { queryPoolByDenom } from "@stafihub/apps-wallet";
@@ -20,7 +21,7 @@ import iconSelectDropdown from "../assets/images/icon_select_dropdown.svg";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { RTokenItem, useRTokenList } from "../hooks/useRTokenList";
 import { connectKeplr } from "../redux/reducers/AppSlice";
-import { stakeRecovery } from "../redux/reducers/TxSlice";
+import { setStakeSidebarProps, stakeRecovery } from "../redux/reducers/TxSlice";
 import { openLink } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 
@@ -74,6 +75,8 @@ export const StakeRecoveryV2 = () => {
       return;
     }
 
+    const rToken = getRTokenDisplayName(selectedItem.chainId);
+
     dispatch(
       stakeRecovery(
         selectedItem.chainId,
@@ -84,6 +87,15 @@ export const StakeRecoveryV2 = () => {
           if (success) {
             setTxHash("");
             setStafiHubAddress("");
+            snackbarUtil.success("Recovery succeed");
+            setTimeout(() => {
+              dispatch(
+                setStakeSidebarProps({
+                  visible: false,
+                })
+              );
+              navigate(`/rToken/${rToken}/dashboard`);
+            }, 3000);
           }
         }
       )

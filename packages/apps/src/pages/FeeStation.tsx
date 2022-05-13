@@ -3,7 +3,7 @@ import { getStafiHubChainId } from "@stafihub/apps-config";
 import { formatNumberToFixed } from "@stafihub/apps-util";
 import { Button, FormatterText } from "@stafihub/react-components";
 import classNames from "classnames";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import arrowDownIcon from "../assets/images/icon_arrow_down.svg";
 import settingIcon from "../assets/images/icon_setting.svg";
@@ -58,6 +58,10 @@ export const FeeStation = (props: {}) => {
   const [inputAmount, outputAmount] = useMemo(() => {
     return amounts;
   }, [amounts]);
+
+  useEffect(() => {
+    setAmounts(["", ""]);
+  }, [selectedChainName]);
 
   const transferrableBalance = useMemo(() => {
     return selectedPool?.formatBalance || "--";

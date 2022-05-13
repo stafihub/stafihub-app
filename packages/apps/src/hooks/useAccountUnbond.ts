@@ -1,8 +1,4 @@
-import {
-  getApiHost,
-  getRTokenDenom,
-  getStafiHubChainId,
-} from "@stafihub/apps-config";
+import { getApiHost, getStafiHubChainId } from "@stafihub/apps-config";
 import { humanToAtomic } from "@stafihub/apps-util";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -46,52 +42,40 @@ export function useAccountUnbond(denom: string) {
           const list: UserUnbondRecord[] = [];
           const noticeList = getNoticeList();
 
-          noticeList.forEach((notice) => {
-            const rTokenDenom = getRTokenDenom(notice.txDetail.chainId);
-            const noticeData = notice.data as NoticeUnbondData;
-            if (
-              notice.type === "Unbond" &&
-              noticeData.completeTimestamp &&
-              rTokenDenom === denom
-            ) {
-              const matched = resJson.data.unbondList.find(
-                (item: UserUnbondRecord) => item.txHash === notice.id
-              );
-              if (!matched) {
-                list.push({
-                  txHash: notice.id,
-                  hasReceived: false,
-                  lockLeftTime:
-                    Math.max(
-                      0,
-                      Number(noticeData.completeTimestamp) - moment().valueOf()
-                    ) / 1000,
-                  rTokenDenom: noticeData.rTokenDenom,
-                  receiveAddress: notice.txDetail.address || "",
-                  tokenAmount: humanToAtomic(noticeData.willGetAmount),
-                });
+          try {
+            noticeList.forEach((notice) => {
+              const noticeData = notice.data as NoticeUnbondData;
+              if (
+                notice.type === "Unbond" &&
+                noticeData.completeTimestamp &&
+                noticeData.rTokenDenom === denom
+              ) {
+                const matched = resJson.data.unbondList.find(
+                  (item: UserUnbondRecord) => item.txHash === notice.id
+                );
+                if (!matched) {
+                  list.push({
+                    txHash: notice.id,
+                    hasReceived: false,
+                    lockLeftTime:
+                      Math.max(
+                        0,
+                        Number(noticeData.completeTimestamp) -
+                          moment().valueOf()
+                      ) / 1000,
+                    rTokenDenom: noticeData.rTokenDenom,
+                    receiveAddress: notice.txDetail.address || "",
+                    tokenAmount: humanToAtomic(noticeData.willGetAmount),
+                  });
+                }
               }
-            }
-          });
+            });
+          } catch {}
 
           list.push(...resJson.data.unbondList);
 
           setUnbondRecords(list.slice(0, 10));
         }
-
-        // let amount = 0;
-        // const result = await queryAccountUnbond(
-        //   denom,
-        //   stafiHubAccount.bech32Address
-        // );
-        // setLoading(false);
-        // setUnbondRecords(result?.unbond?.chunks?.reverse()?.slice(0, 10) || []);
-        // if (result?.unbond?.chunks) {
-        //   result.unbond.chunks.forEach((chunk) => {
-        //     amount += Number(atomicToHuman(chunk.value));
-        //   });
-        // }
-        // setUnbondingAmount(amount.toString());
       }
     })();
   }, [denom, stafiHubAccount?.bech32Address]);

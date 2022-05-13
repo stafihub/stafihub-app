@@ -172,6 +172,12 @@ export const IBCBridge = () => {
       return ["Connect Wallet", false];
     }
     if (
+      inputAmount &&
+      (Number(inputAmount) > Number(balance) || isNaN(Number(balance)))
+    ) {
+      return ["Insufficient Balance", true];
+    }
+    if (
       !chainPair.src ||
       !chainPair.dst ||
       !inputAmount ||
@@ -182,9 +188,6 @@ export const IBCBridge = () => {
       isLoading
     ) {
       return ["Swap", true];
-    }
-    if (Number(inputAmount) > Number(balance) || isNaN(Number(balance))) {
-      return ["Insufficient Balance", true];
     }
     return ["Swap", false];
   }, [

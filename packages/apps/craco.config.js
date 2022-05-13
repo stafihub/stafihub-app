@@ -39,24 +39,9 @@ module.exports = {
         // match.loader.include = include.concat(absolutePath, schonComponents);
         match.loader.include = include.concat(absolutePath);
       }
-      return {
-        ...webpackConfig,
-        plugins: [
-          ...webpackConfig.plugins,
-          // new BundleAnalyzerPlugin({ analyzerPort: 8919 }),
-        ],
-        resolve: {
-          ...webpackConfig.resolve,
-          fallback: {
-            ...webpackConfig.resolve.fallback,
-            buffer: require.resolve("buffer/"),
-            crypto: require.resolve("crypto-browserify"),
-          },
-        },
-        /**
-         * Optionally, other webpack configuration details.
-         */
-        optimization: {
+
+      if (env === "production") {
+        webpackConfig.optimization = {
           splitChunks: {
             chunks: "all",
             minSize: 1000000,
@@ -81,6 +66,21 @@ module.exports = {
                 reuseExistingChunk: true,
               },
             },
+          },
+        };
+      }
+      return {
+        ...webpackConfig,
+        plugins: [
+          ...webpackConfig.plugins,
+          // new BundleAnalyzerPlugin({ analyzerPort: 8919 }),
+        ],
+        resolve: {
+          ...webpackConfig.resolve,
+          fallback: {
+            ...webpackConfig.resolve.fallback,
+            buffer: require.resolve("buffer/"),
+            crypto: require.resolve("crypto-browserify"),
           },
         },
       };

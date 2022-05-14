@@ -93,7 +93,7 @@ export const MintDetail = () => {
               <div className="mt-6 mb-2">
                 {actDetail?.tokenRewardInfos.map(
                   (rewardInfo, index) =>
-                    Number(rewardInfo.leftRewardAmount) > 0 && (
+                    (Number(rewardInfo.leftRewardAmount) > 0 || isEnd) && (
                       <div
                         key={index}
                         className="mb-2 text-primary text-[20px] font-bold"
@@ -105,7 +105,7 @@ export const MintDetail = () => {
                     )
                 )}
 
-                {isRewardEmpty && (
+                {isRewardEmpty && !isEnd && (
                   <div className="mb-2 text-primary text-[20px] font-bold">
                     Reward Remaining 0
                   </div>

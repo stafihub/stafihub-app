@@ -213,7 +213,13 @@ export const RTokenDashboard = () => {
 
             <div className="mt-6 flex items-center">
               <div className="text-white font-bold text-[30px]">
-                + <FormatterText value={last24hReward} />
+                {Number(last24hReward) > 0 && Number(last24hReward) < 0.0001 ? (
+                  "< 0.0001"
+                ) : (
+                  <>
+                    + <FormatterText value={last24hReward} />
+                  </>
+                )}
               </div>
 
               <div className="ml-5">
@@ -231,7 +237,13 @@ export const RTokenDashboard = () => {
 
             <div className="mt-6 flex items-center">
               <div className="text-white font-bold text-[30px]">
-                + <FormatterText value={totalReward} />
+                {Number(totalReward) > 0 && Number(totalReward) < 0.0001 ? (
+                  "< 0.0001"
+                ) : (
+                  <>
+                    + <FormatterText value={totalReward} />
+                  </>
+                )}
               </div>
 
               <div className="ml-5">

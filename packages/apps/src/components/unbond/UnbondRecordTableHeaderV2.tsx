@@ -5,9 +5,9 @@ export const UnbondRecordTableHeaderV2 = () => {
 
       <div className="basis-[16%]">Receiving Token</div>
 
-      <div className="basis-[12%]">Unlock Date</div>
+      <div className="basis-[14%]">Unlock Date</div>
 
-      <div className="basis-[12%]">Remaining</div>
+      <div className="basis-[14%]">Remaining</div>
 
       <div className="basis-5/12">Received Address</div>
     </div>

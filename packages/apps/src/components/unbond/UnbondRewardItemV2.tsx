@@ -67,13 +67,13 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
         {getTokenDisplayName(chainId)}
       </div>
 
-      <div className="basis-[12%] text-[14px] text-white">
+      <div className="basis-[14%] text-[14px] text-white">
         {!isNaN(Number(props.unbondingDays)) && (
           <div>≈{props.unbondingDays} D</div>
         )}
       </div>
 
-      <div className="basis-[12%] text-[14px] text-white">
+      <div className="basis-[14%] text-[14px] text-white">
         <div className="mt-1">{remainingDays}</div>
       </div>
 

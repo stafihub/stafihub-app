@@ -17,7 +17,7 @@ import {
   TokenName,
 } from "@stafihub/react-components";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import iconApy from "../assets/images/icon_apy.svg";
@@ -58,6 +58,11 @@ export const StakeV2 = () => {
   const { height } = useWindowDimensions();
   const latestBlock = useLatestBlock();
   const { actDetails } = useMintPrograms();
+
+  useEffect(() => {
+    setInputAmount("");
+    setStafiHubAddress("");
+  }, [stafiHubAccount?.bech32Address]);
 
   const mintRewardInfos: FormatTokenRewardInfo[] = useMemo(() => {
     if (!actDetails || !latestBlock) {
@@ -312,7 +317,7 @@ export const StakeV2 = () => {
                 </div>
 
                 <div className="mt-[2px] font-bold text-text-gray8 text-[24px]">
-                  {rewardInfo.rewardAmount}
+                  <FormatterText value={rewardInfo.rewardAmount} />
                 </div>
               </div>
             </div>

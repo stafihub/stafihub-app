@@ -8,7 +8,7 @@ export const StakeRewardTableHeader = (props: {
 }) => {
   return (
     <div className="w-full py-[10px] flex items-center text-text-gray2 text-[14px] relative border-[#2F2F2F] border-solid border-b-[1px]">
-      <div className="basis-3/12 pl-5">To Era</div>
+      <div className="basis-3/12">To Era</div>
 
       <div className="basis-4/12">
         Staked {getTokenDisplayName(props.chainId)}

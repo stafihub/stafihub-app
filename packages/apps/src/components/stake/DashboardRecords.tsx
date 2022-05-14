@@ -41,7 +41,7 @@ export const DashboardRecords = () => {
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 h-[600px]">
         {tab === "unbond" && <StakeUnbondV2 />}
 
         {tab === "reward" && <StakeRewardListV2 />}

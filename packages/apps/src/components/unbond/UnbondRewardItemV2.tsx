@@ -54,7 +54,7 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
           className="w-4"
         />
 
-        <div className="ml-5 text-[16px] text-white">
+        <div className="ml-5 text-[14px] text-white">
           {!isNaN(Number(amount)) && Number(amount) < 0.0001 ? (
             "<0.0001"
           ) : (

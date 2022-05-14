@@ -26,7 +26,7 @@ export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
   }, [eraReward]);
 
   return (
-    <div className="w-full h-[50px] py-[10px] flex items-center text-[14px] font-bold relative">
+    <div className="w-full h-[50px] py-[10px] flex items-center text-[14px] relative">
       <div className="basis-3/12 text-white">{eraReward.era}</div>
 
       <div className="basis-4/12 text-white">

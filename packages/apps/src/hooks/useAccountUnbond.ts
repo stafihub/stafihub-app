@@ -48,7 +48,8 @@ export function useAccountUnbond(denom: string) {
               if (
                 notice.type === "Unbond" &&
                 noticeData.completeTimestamp &&
-                noticeData.rTokenDenom === denom
+                noticeData.rTokenDenom === denom &&
+                notice.txDetail.sender === stafiHubAccount.bech32Address
               ) {
                 const matched = resJson.data.unbondList.find(
                   (item: UserUnbondRecord) => item.txHash === notice.id

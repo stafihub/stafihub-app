@@ -115,8 +115,8 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="mt-3 text-text-gray7 text-[14px]">
-                <FormatterText value={stakeStatus?.stakedAmount} /> {tokenName}{" "}
-                staked
+                <FormatterText value={stakeStatus?.stakedAmount} useRound />{" "}
+                {tokenName} staked
               </div>
             </div>
           </div>

@@ -99,7 +99,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
 
         <div className="basis-5/12 text-[16px]">
           <div className="flex items-end">
-            <FormatterText value={myStakedAmount} />
+            <FormatterText value={myStakedAmount} useRound />
             <Tooltip
               title={`The increased amount of Staked ${getTokenDisplayName(
                 props.chainId

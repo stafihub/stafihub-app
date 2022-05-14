@@ -5,6 +5,7 @@ interface FormatterTextProps {
   decimals?: number;
   skipSplit?: boolean;
   refineForBigNumber?: boolean;
+  useRound?: boolean;
 }
 
 export const FormatterText = (props: FormatterTextProps) => {
@@ -20,8 +21,9 @@ export const FormatterText = (props: FormatterTextProps) => {
       return "0";
     }
     const decimals = props.decimals === undefined ? 4 : props.decimals;
+    const mathFunc = props.useRound ? Math.round : Math.floor;
     const newNum = (
-      Math.floor(Number(props.value) * Math.pow(10, decimals)) /
+      mathFunc(Number(props.value) * Math.pow(10, decimals)) /
       Math.pow(10, decimals)
     ).toFixed(decimals);
 

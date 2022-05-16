@@ -685,6 +685,10 @@ export const feeStationSwap =
             "Something went wrong, please increase the gas and try again!"
           );
         }
+      } else if (postSwapInfoResJson.status === "80012") {
+        snackbarUtil.error(
+          "The latest price has changed, please refresh the page and try again."
+        );
       } else {
         snackbarUtil.error(postSwapInfoResJson.message);
       }

@@ -17,7 +17,7 @@ import type {
   QuerySupplyOfResponse,
   UserClaimInfo,
 } from "@stafihub/types";
-import { QueryDenomTraceResponse } from "@stafihub/types";
+import { ClientState, QueryDenomTraceResponse } from "@stafihub/types";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import {
   createCosmosBankQueryService,
@@ -320,6 +320,31 @@ export async function queryChannel(
     return result;
   } catch (err: unknown) {
     console.log("queryChannel err", chainId, err);
+  }
+  return;
+}
+
+export async function queryChannelClientState(
+  chainId: string,
+  channelName: string
+): Promise<ClientState | undefined> {
+  try {
+    const queryService = await createIBCCoreConnectionQueryService(chainId);
+    const result = await queryService.ChannelClientState({
+      portId: "transfer",
+      channelId: channelName,
+    });
+
+    if (result.identifiedClientState?.clientState?.value) {
+      const clientState = ClientState.decode(
+        result.identifiedClientState?.clientState?.value
+      );
+
+      // console.log("clientState result", clientState);
+      return clientState;
+    }
+  } catch (err: unknown) {
+    console.log("queryChannelClientState err", chainId, err);
   }
   return;
 }

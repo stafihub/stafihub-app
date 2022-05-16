@@ -16,6 +16,7 @@ import {
   MsgLiquidityUnbond,
   MsgClaimMintReward,
 } from "@stafihub/types";
+import { queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
 
 declare const window: any;
@@ -199,7 +200,9 @@ export async function sendIBCTransferTx(
     { registry: myRegistry }
   );
 
-  const currentHeight = await client.getHeight();
+  // const currentHeight = await client.getHeight();
+
+  const clientState = await queryChannelClientState(srcChainId, sourceChannel);
 
   const message = {
     typeUrl: msgTypeUrl,
@@ -213,8 +216,8 @@ export async function sendIBCTransferTx(
       sender,
       receiver,
       timeoutHeight: {
-        revisionHeight: currentHeight,
-        revisionNumber: currentHeight + 100,
+        revisionNumber: clientState?.latestHeight?.revisionNumber,
+        revisionHeight: clientState?.latestHeight?.revisionHeight?.add(10000),
       },
     }),
   };

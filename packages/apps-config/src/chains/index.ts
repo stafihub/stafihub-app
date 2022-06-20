@@ -3,6 +3,7 @@ import { isDev, NetworkConfig } from "..";
 let configs = require.context("./mainnet", false, /\.json$/);
 if (isDev()) {
   configs = require.context("./testnet", false, /\.json$/);
+  // configs = require.context("./devnet", false, /\.json$/);
 }
 
 const update: NetworkConfig = {};

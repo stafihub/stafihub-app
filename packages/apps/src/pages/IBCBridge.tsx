@@ -1,5 +1,6 @@
 import {
   chains,
+  getDenom,
   getIBCConfig,
   getStafiHubChainId,
   ibcConfigs,
@@ -167,13 +168,27 @@ export const IBCBridge = () => {
     chainStakeStatusMap,
   ]);
 
+  const maxInput = useMemo(() => {
+    if (isNaN(Number(balance)) || !chainPair.src) {
+      return "--";
+    }
+    if (chainPair.src.denom === selectedChannelToken?.denom) {
+      return Math.max(0, Number(balance) - 0.05) + "";
+    } else {
+      return balance;
+    }
+  }, [balance, chainPair, selectedChannelToken]);
+
   const [buttonText, buttonDisabled] = useMemo(() => {
     if (chainPair.src && !accounts[chainPair.src.chainId]) {
       return ["Connect Wallet", false];
     }
+    if (isLoading) {
+      return ["Swap", true];
+    }
     if (
       inputAmount &&
-      (Number(inputAmount) > Number(balance) || isNaN(Number(balance)))
+      (Number(inputAmount) > Number(maxInput) || isNaN(Number(maxInput)))
     ) {
       return ["Insufficient Balance", true];
     }
@@ -184,8 +199,7 @@ export const IBCBridge = () => {
       Number(inputAmount) <= 0 ||
       isNaN(Number(inputAmount)) ||
       !dstAddress ||
-      !selectedChannelToken ||
-      isLoading
+      !selectedChannelToken
     ) {
       return ["Swap", true];
     }
@@ -194,7 +208,7 @@ export const IBCBridge = () => {
     accounts,
     chainPair,
     inputAmount,
-    balance,
+    maxInput,
     dstAddress,
     selectedChannelToken,
     isLoading,
@@ -389,6 +403,7 @@ export const IBCBridge = () => {
               value={inputAmount}
               onChange={setInputAmount}
               balance={balance}
+              maxInput={maxInput}
             />
           </div>
 

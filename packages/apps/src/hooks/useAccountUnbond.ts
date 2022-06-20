@@ -44,6 +44,8 @@ export function useAccountUnbond(denom: string) {
 
           try {
             noticeList.forEach((notice) => {
+              const currentTimestamp = moment().valueOf();
+              console.log("currentTimestamp", currentTimestamp);
               const noticeData = notice.data as NoticeUnbondData;
               if (
                 notice.type === "Unbond" &&
@@ -54,7 +56,10 @@ export function useAccountUnbond(denom: string) {
                 const matched = resJson.data.unbondList.find(
                   (item: UserUnbondRecord) => item.txHash === notice.id
                 );
-                if (!matched) {
+                if (
+                  !matched &&
+                  currentTimestamp - notice.timestamp < 300 * 1000
+                ) {
                   list.push({
                     txHash: notice.id,
                     hasReceived: false,

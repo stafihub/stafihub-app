@@ -8,8 +8,10 @@ import {
   IBCCoreChannelQueryClientImpl,
   CosmosBaseServiceClientImpl,
   RMintRewardQueryClientImpl,
+  RDexMiningQueryClientImpl,
 } from "@stafihub/types";
 import { chains } from "@stafihub/apps-config";
+import { RDexQueryClientImpl } from "@stafihub/types/src/rdex";
 
 export async function createQueryService(chainId: string) {
   // Inside an async function...
@@ -118,6 +120,30 @@ export async function createQueryService2<T extends Constructor>(
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
   const queryService = new clientType(rpcClient);
+
+  return queryService;
+}
+
+export async function createRDexQueryService(chainId: string) {
+  const tendermintClient = await Tendermint34Client.connect(
+    chains[chainId].rpc
+  );
+
+  const queryClient = new QueryClient(tendermintClient);
+  const rpcClient = createProtobufRpcClient(queryClient);
+  const queryService = new RDexQueryClientImpl(rpcClient);
+
+  return queryService;
+}
+
+export async function createRDexMiningQueryService(chainId: string) {
+  const tendermintClient = await Tendermint34Client.connect(
+    chains[chainId].rpc
+  );
+
+  const queryClient = new QueryClient(tendermintClient);
+  const rpcClient = createProtobufRpcClient(queryClient);
+  const queryService = new RDexMiningQueryClientImpl(rpcClient);
 
   return queryService;
 }

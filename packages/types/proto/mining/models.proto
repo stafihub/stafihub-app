@@ -1,0 +1,75 @@
+syntax = "proto3";
+package stafihub.stafihub.mining;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/stafihub/stafihub/x/mining/types";
+
+message StakePool {
+  uint32 index = 1;
+  // staked token denom
+  string stakeTokenDenom = 2;
+  repeated RewardPool rewardPools = 3;
+  // total (staked) balance of staked token
+  string totalStakedAmount = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string totalStakedPower = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  bool emergencySwitch = 6;
+  string creator = 7;
+}
+
+message RewardPool {
+  uint32 index = 1;
+  string rewardTokenDenom = 2;
+  string totalRewardAmount = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string leftRewardAmount = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string rewardPerSecond = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  uint64 startTimestamp = 6;
+  string rewardPerPower = 7 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  uint64 lastRewardTimestamp = 8;
+  string creator = 9;
+  string totalClaimedAmount = 10 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+}
+
+message UserStakeRecord {
+  string userAddress = 1;
+  uint32 stakePoolIndex = 2;
+  uint32 index = 3;
+
+  string stakedAmount = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string stakedPower = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  // the begin timestamp
+  uint64 startTimestamp = 6;
+  // promise not unstake before this timestamp
+  uint64 lockEndTimestamp = 7;
+  repeated UserRewardInfo userRewardInfos = 8; 
+
+  uint32 stakeItemIndex = 9;
+}
+
+message UserRewardInfo {
+  uint32 rewardPoolIndex = 1;
+  string rewardTokenDenom = 2;
+  string rewardDebt = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string claimedAmount = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+}
+
+message RewardToken {
+  string rewardTokenDenom = 1;
+  string minTotalRewardAmount = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string minRewardPerSecond = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+}
+
+message StakeItem {
+  uint32 index = 1;
+  uint32 stakePoolIndex = 2;
+
+  uint64 lockSecond = 3;
+  // user stakedPower = powerRewardRate * stakedAmount
+  string powerRewardRate = 4 [(gogoproto.customtype) = "github.com/stafihub/stafihub/utils.Dec", (gogoproto.nullable) = false];
+  bool enable = 5;
+}
+
+message StakeItemLimit {
+  string maxPowerRewardRate = 1 [(gogoproto.customtype) = "github.com/stafihub/stafihub/utils.Dec", (gogoproto.nullable) = false];
+  uint64 maxLockSecond = 2;
+}

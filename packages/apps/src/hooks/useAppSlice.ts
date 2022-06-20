@@ -1,6 +1,7 @@
 import { atomicToHuman } from "@stafihub/apps-util";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { PriceItem } from "../types/interface";
 
 export function useAccounts() {
   const accounts = useSelector((state: RootState) => {
@@ -63,7 +64,9 @@ export function usePriceList() {
 
 export function usePriceFromDenom(denom: string) {
   const price = useSelector((state: RootState) => {
-    const matched = state.app.priceList.find((price) => price.denom === denom);
+    const matched = state.app.priceList.find(
+      (price: PriceItem) => price.denom === denom
+    );
     if (matched) {
       return atomicToHuman(matched.price, 6, 6);
     } else {

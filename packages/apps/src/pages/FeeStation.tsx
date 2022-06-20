@@ -64,7 +64,10 @@ export const FeeStation = (props: {}) => {
   }, [selectedChainName]);
 
   const transferrableBalance = useMemo(() => {
-    return selectedPool?.formatBalance || "--";
+    if (!selectedPool) {
+      return "--";
+    }
+    return Math.max(0, Number(selectedPool.formatBalance) - 0.05).toString();
   }, [selectedPool]);
 
   const [buttonDisabled, buttonText]: [boolean, string] = useMemo(() => {
@@ -247,7 +250,7 @@ export const FeeStation = (props: {}) => {
         </Box>
 
         <div className="mt-1 text-text-gray4 text-[12px] scale-[0.8] origin-center self-end">
-          Balance: <FormatterText value={transferrableBalance} />
+          Transferable: <FormatterText value={transferrableBalance} />
         </div>
 
         <Box mt="-5px" alignSelf="center">

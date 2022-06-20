@@ -1,9 +1,18 @@
 {
   "name": "@stafihub/apps-wallet",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.8.3",
   "type": "module",
   "main": "./src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stafihub/stafihub-app.git"
+  },
+  "keywords": [
+    "stafihub",
+    "cosmos"
+  ],
+  "author": "joe",
+  "license": "MIT",
   "dependencies": {
     "@cosmjs/encoding": "0.27.1",
     "@cosmjs/launchpad": "0.27.1",
@@ -11,9 +20,9 @@
     "@cosmjs/proto-signing": "0.27.1",
     "@cosmjs/stargate": "0.27.1",
     "@cosmjs/tendermint-rpc": "0.27.1",
-    "@stafihub/apps-config": "workspace:latest",
-    "@stafihub/apps-util": "workspace:latest",
-    "@stafihub/types": "workspace:latest",
+    "@stafihub/apps-config": "workspace:0.5.7",
+    "@stafihub/apps-util": "workspace:0.4.0",
+    "@stafihub/types": "workspace:0.6.4",
     "bech32": "^2.0.0"
   },
   "eslintConfig": {

@@ -150,6 +150,7 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
 
     const account: KeplrAccount = {
       name: accountResult.name,
+      isNanoLedger: accountResult.isNanoLedger,
       bech32Address: accountResult.bech32Address,
     };
     // console.log("account", account);

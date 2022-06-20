@@ -127,6 +127,13 @@ export const StakeV2 = () => {
       return;
     }
 
+    if (stafiHubAccount?.isNanoLedger) {
+      snackbarUtil.error(
+        "Ledger is not supported, please use the extension wallet."
+      );
+      return;
+    }
+
     dispatch(
       stake(
         chainId,

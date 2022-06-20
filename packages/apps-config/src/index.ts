@@ -26,6 +26,7 @@ export function getApiHost(): string {
 export function getStafiHubChainId(): string {
   if (isDev()) {
     return "stafihub-public-testnet-2";
+    // return "stafihub-public-devnet-1";
   } else {
     return "stafihub-testnet-1";
   }
@@ -90,6 +91,17 @@ export function getChainIdFromRTokenDisplayName(
   });
   if (!matchedChain) {
     throw new Error(`Chain with this rTokenName not found: ${rTokenName}`);
+  }
+  return matchedChain.chainId;
+}
+
+export function getChainIdFromDenom(denom: string | undefined): string {
+  const chainArr = _.values(chains);
+  const matchedChain = chainArr.find((chain) => {
+    return chain.denom === denom;
+  });
+  if (!matchedChain) {
+    throw new Error(`Chain with this rTokenName not found: ${denom}`);
   }
   return matchedChain.chainId;
 }

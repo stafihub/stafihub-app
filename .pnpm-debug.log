@@ -1,0 +1,1187 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 7,
+    "total": 7,
+    "workspacePrefix": "/Users/amigo/develop/stafi/hub/stafihub-app"
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "stafihub-app",
+      "version": "0.1.0",
+      "private": true,
+      "scripts": {
+        "start": "cd packages/apps && pnpm start",
+        "build": "cd packages/apps && pnpm build",
+        "build:dev": "cd packages/apps && pnpm build:dev",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+      },
+      "dependencies": {
+        "@cosmjs/encoding": "0.27.1",
+        "@cosmjs/launchpad": "0.27.1",
+        "@cosmjs/math": "0.27.1",
+        "@cosmjs/proto-signing": "0.27.1",
+        "@cosmjs/stargate": "0.27.1",
+        "@cosmjs/tendermint-rpc": "0.27.1",
+        "notistack": "^2.0.3",
+        "path": "^0.12.7",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-router-dom": "6",
+        "stream": "^0.0.2"
+      },
+      "devDependencies": {
+        "@types/jest": "^27.0.1",
+        "@types/node": "^16.7.13",
+        "@types/react": "^17.0.20",
+        "@types/react-dom": "^17.0.9",
+        "typescript": "^4.4.2"
+      },
+      "eslintConfig": {
+        "extends": [
+          "react-app",
+          "react-app/jest"
+        ]
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app"
+  },
+  "2 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps",
+      "version": "0.1.0",
+      "private": true,
+      "dependencies": {
+        "@cosmjs/encoding": "^0.27.1",
+        "@cosmjs/launchpad": "^0.27.1",
+        "@emotion/react": "^11.8.1",
+        "@emotion/styled": "^11.8.1",
+        "@mui/material": "^5.4.2",
+        "@mui/styles": "^5.5.1",
+        "@reduxjs/toolkit": "^1.8.0",
+        "@stafihub/apps-config": "workspace:latest",
+        "@stafihub/apps-util": "workspace:latest",
+        "@stafihub/apps-wallet": "workspace:latest",
+        "@stafihub/react-components": "workspace:latest",
+        "@stafihub/types": "workspace:latest",
+        "buffer": "^6.0.3",
+        "classnames": "^2.3.1",
+        "crypto-browserify": "^3.12.0",
+        "lodash": "^4.17.21",
+        "long": "4.0.0",
+        "material-ui-popup-state": "^2.0.0",
+        "moment": "^2.29.1",
+        "notistack": "^2.0.3",
+        "postcss-flexbugs-fixes": "^5.0.2",
+        "react-loading": "^2.0.3",
+        "react-redux": "^7.2.6",
+        "react-router-dom": "6",
+        "react-scripts": "5.0.0",
+        "web-vitals": "^2.1.0"
+      },
+      "devDependencies": {
+        "@babel/core": "7.17.3",
+        "@babel/plugin-proposal-class-properties": "7.16.7",
+        "@babel/plugin-syntax-flow": "7.16.7",
+        "@babel/plugin-transform-react-jsx": "7.17.3",
+        "@craco/craco": "^6.4.3",
+        "@types/lodash": "^4.14.180",
+        "autoprefixer": "^10.4.2",
+        "craco-alias": "^3.0.1",
+        "postcss": "^8.4.6",
+        "tailwindcss": "^3.0.23",
+        "webpack": "^5.69.1",
+        "webpack-bundle-analyzer": "^4.5.0"
+      },
+      "scripts": {
+        "start": "REACT_APP_ENV=dev PORT=3025 craco start",
+        "build:dev": "REACT_APP_ENV=dev craco build",
+        "build": "REACT_APP_ENV=production craco build",
+        "test": "craco test",
+        "eject": "react-scripts eject",
+        "storybook": "start-storybook -p 6006 -s public",
+        "build-storybook": "build-storybook -s public"
+      },
+      "eslintConfig": {
+        "extends": [
+          "react-app",
+          "react-app/jest"
+        ],
+        "overrides": [
+          {
+            "files": [
+              "**/*.stories.*"
+            ],
+            "rules": {
+              "import/no-anonymous-default-export": "off"
+            }
+          }
+        ]
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps"
+  },
+  "3 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps-config",
+      "version": "0.5.7",
+      "type": "module",
+      "main": "./src/index.ts",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stafihub/stafihub-app.git"
+      },
+      "keywords": [
+        "stafihub",
+        "cosmos"
+      ],
+      "author": "joe",
+      "license": "MIT",
+      "dependencies": {
+        "lodash": "^4.17.21"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      },
+      "devDependencies": {
+        "@types/lodash": "^4.14.180",
+        "@types/webpack-env": "^1.16.3",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-preset-es2015": "^6.24.1"
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps-config"
+  },
+  "4 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps-util",
+      "version": "0.4.0",
+      "type": "module",
+      "main": "./src/index.ts",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stafihub/stafihub-app.git"
+      },
+      "keywords": [
+        "stafihub",
+        "cosmos"
+      ],
+      "author": "joe",
+      "license": "MIT",
+      "dependencies": {
+        "@cosmjs/math": "0.27.1",
+        "bignumber.js": "^9.0.2"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps-util"
+  },
+  "5 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/types",
+      "version": "0.6.4",
+      "type": "module",
+      "main": "./src/index.ts",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stafihub/stafihub-app.git"
+      },
+      "keywords": [
+        "stafihub",
+        "cosmos"
+      ],
+      "author": "joe",
+      "license": "MIT",
+      "dependencies": {
+        "@cosmjs/proto-signing": "0.27.1",
+        "@cosmjs/stargate": "0.27.1",
+        "@cosmjs/tendermint-rpc": "0.27.1",
+        "long": "4.0.0",
+        "protobufjs": "6.11.2",
+        "ts-proto": "1.88.0"
+      },
+      "scripts": {
+        "build-proto": "./ts-proto.sh"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      },
+      "devDependencies": {
+        "@types/webpack-env": "^1.16.3"
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/types"
+  },
+  "6 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/apps-wallet",
+      "version": "0.8.3",
+      "type": "module",
+      "main": "./src/index.ts",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stafihub/stafihub-app.git"
+      },
+      "keywords": [
+        "stafihub",
+        "cosmos"
+      ],
+      "author": "joe",
+      "license": "MIT",
+      "dependencies": {
+        "@cosmjs/encoding": "0.27.1",
+        "@cosmjs/launchpad": "0.27.1",
+        "@cosmjs/math": "0.27.1",
+        "@cosmjs/proto-signing": "0.27.1",
+        "@cosmjs/stargate": "0.27.1",
+        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@stafihub/apps-config": "workspace:0.5.7",
+        "@stafihub/apps-util": "workspace:0.4.0",
+        "@stafihub/types": "workspace:0.6.4",
+        "bech32": "^2.0.0"
+      },
+      "eslintConfig": {
+        "extends": []
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/apps-wallet"
+  },
+  "7 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@stafihub/react-components",
+      "version": "0.4.3",
+      "type": "module",
+      "main": "./src/index.tsx",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stafihub/stafihub-app.git"
+      },
+      "keywords": [
+        "stafihub",
+        "cosmos"
+      ],
+      "author": "joe",
+      "license": "MIT",
+      "dependencies": {
+        "@emotion/react": "^11.8.1",
+        "@emotion/styled": "^11.8.1",
+        "@mui/material": "^5.4.2",
+        "@stafihub/apps-wallet": "workspace:0.8.3",
+        "@stafihub/apps-config": "workspace:0.5.6",
+        "@testing-library/jest-dom": "^5.14.1",
+        "@testing-library/react": "^12.0.0",
+        "@testing-library/user-event": "^13.2.1",
+        "classnames": "^2.3.1",
+        "echarts": "^5.3.2",
+        "echarts-for-react": "^3.0.2",
+        "icomoon-react": "^2.0.19",
+        "react-loading": "^2.0.3",
+        "react-router-dom": "6",
+        "react-scripts": "5.0.0",
+        "web-vitals": "^2.1.0"
+      },
+      "eslintConfig": {
+        "extends": [
+          "react-app",
+          "react-app/jest"
+        ]
+      },
+      "browserslist": {
+        "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      },
+      "devDependencies": {
+        "autoprefixer": "^10.4.2",
+        "postcss": "^8.4.6",
+        "tailwindcss": "^3.0.23"
+      }
+    },
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app/packages/react-components"
+  },
+  "8 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "/Users/amigo/.pnpm-store/v3",
+    "virtualStoreDir": "/Users/amigo/develop/stafi/hub/stafihub-app/node_modules/.pnpm"
+  },
+  "9 debug pnpm:stage": {
+    "prefix": "/Users/amigo/develop/stafi/hub/stafihub-app",
+    "stage": "resolution_started"
+  },
+  "10 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/jest/27.4.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@types/jest",
+      "rawSpec": "^27.0.1"
+    }
+  },
+  "11 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/node/16.11.26",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@types/node",
+      "rawSpec": "^16.7.13"
+    }
+  },
+  "12 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react/17.0.40",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@types/react",
+      "rawSpec": "^17.0.20"
+    }
+  },
+  "13 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react-dom/17.0.13",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@types/react-dom",
+      "rawSpec": "^17.0.9"
+    }
+  },
+  "14 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/typescript/4.6.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "typescript",
+      "rawSpec": "^4.4.2"
+    }
+  },
+  "15 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@cosmjs/encoding",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "16 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@cosmjs/launchpad",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "17 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@cosmjs/math",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "18 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@cosmjs/proto-signing",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "19 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@cosmjs/stargate",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "20 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@cosmjs/tendermint-rpc",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "21 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/notistack/2.0.3",
+    "wanted": {
+      "dependentId": ".",
+      "name": "notistack",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "22 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/path/0.12.7",
+    "wanted": {
+      "dependentId": ".",
+      "name": "path",
+      "rawSpec": "^0.12.7"
+    }
+  },
+  "23 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react/17.0.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "react",
+      "rawSpec": "^17.0.2"
+    }
+  },
+  "24 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-dom/17.0.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "react-dom",
+      "rawSpec": "^17.0.2"
+    }
+  },
+  "25 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-router-dom/6.2.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "react-router-dom",
+      "rawSpec": "6"
+    }
+  },
+  "26 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/stream/0.0.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "stream",
+      "rawSpec": "^0.0.2"
+    }
+  },
+  "27 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/core/7.17.3",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@babel/core",
+      "rawSpec": "7.17.3"
+    }
+  },
+  "28 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/plugin-proposal-class-properties/7.16.7",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@babel/plugin-proposal-class-properties",
+      "rawSpec": "7.16.7"
+    }
+  },
+  "29 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/plugin-syntax-flow/7.16.7",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@babel/plugin-syntax-flow",
+      "rawSpec": "7.16.7"
+    }
+  },
+  "30 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/plugin-transform-react-jsx/7.17.3",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@babel/plugin-transform-react-jsx",
+      "rawSpec": "7.17.3"
+    }
+  },
+  "31 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@craco/craco/6.4.3",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@craco/craco",
+      "rawSpec": "^6.4.3"
+    }
+  },
+  "32 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/lodash/4.14.180",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@types/lodash",
+      "rawSpec": "^4.14.180"
+    }
+  },
+  "33 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/autoprefixer/10.4.2",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "autoprefixer",
+      "rawSpec": "^10.4.2"
+    }
+  },
+  "34 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/craco-alias/3.0.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "craco-alias",
+      "rawSpec": "^3.0.1"
+    }
+  },
+  "35 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/postcss/8.4.8",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "postcss",
+      "rawSpec": "^8.4.6"
+    }
+  },
+  "36 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/tailwindcss/3.0.23",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "tailwindcss",
+      "rawSpec": "^3.0.23"
+    }
+  },
+  "37 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/webpack/5.70.0",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "webpack",
+      "rawSpec": "^5.69.1"
+    }
+  },
+  "38 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/webpack-bundle-analyzer/4.5.0",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "webpack-bundle-analyzer",
+      "rawSpec": "^4.5.0"
+    }
+  },
+  "39 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@cosmjs/encoding",
+      "rawSpec": "^0.27.1"
+    }
+  },
+  "40 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@cosmjs/launchpad",
+      "rawSpec": "^0.27.1"
+    }
+  },
+  "41 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@emotion/react/11.8.2",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@emotion/react",
+      "rawSpec": "^11.8.1"
+    }
+  },
+  "42 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@emotion/styled/11.8.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@emotion/styled",
+      "rawSpec": "^11.8.1"
+    }
+  },
+  "43 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@mui/material/5.5.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@mui/material",
+      "rawSpec": "^5.4.2"
+    }
+  },
+  "44 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@mui/styles/5.5.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@mui/styles",
+      "rawSpec": "^5.5.1"
+    }
+  },
+  "45 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@reduxjs/toolkit/1.8.0",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@reduxjs/toolkit",
+      "rawSpec": "^1.8.0"
+    }
+  },
+  "46 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/buffer/6.0.3",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "buffer",
+      "rawSpec": "^6.0.3"
+    }
+  },
+  "47 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/classnames/2.3.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "classnames",
+      "rawSpec": "^2.3.1"
+    }
+  },
+  "48 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/crypto-browserify/3.12.0",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "crypto-browserify",
+      "rawSpec": "^3.12.0"
+    }
+  },
+  "49 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash/4.17.21",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "lodash",
+      "rawSpec": "^4.17.21"
+    }
+  },
+  "50 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/long/4.0.0",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "long",
+      "rawSpec": "4.0.0"
+    }
+  },
+  "51 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/material-ui-popup-state/2.0.0",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "material-ui-popup-state",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "52 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/moment/2.29.1",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "moment",
+      "rawSpec": "^2.29.1"
+    }
+  },
+  "53 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/notistack/2.0.3",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "notistack",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "54 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/postcss-flexbugs-fixes/5.0.2",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "postcss-flexbugs-fixes",
+      "rawSpec": "^5.0.2"
+    }
+  },
+  "55 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-loading/2.0.3",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "react-loading",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "56 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-redux/7.2.6",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "react-redux",
+      "rawSpec": "^7.2.6"
+    }
+  },
+  "57 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-router-dom/6.2.2",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "react-router-dom",
+      "rawSpec": "6"
+    }
+  },
+  "58 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-scripts/5.0.0",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "react-scripts",
+      "rawSpec": "5.0.0"
+    }
+  },
+  "59 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/web-vitals/2.1.4",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "web-vitals",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "60 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/lodash/4.14.180",
+    "wanted": {
+      "dependentId": "packages/apps-config",
+      "name": "@types/lodash",
+      "rawSpec": "^4.14.180"
+    }
+  },
+  "61 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/webpack-env/1.16.3",
+    "wanted": {
+      "dependentId": "packages/apps-config",
+      "name": "@types/webpack-env",
+      "rawSpec": "^1.16.3"
+    }
+  },
+  "62 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/babel-cli/6.26.0",
+    "wanted": {
+      "dependentId": "packages/apps-config",
+      "name": "babel-cli",
+      "rawSpec": "^6.26.0"
+    }
+  },
+  "63 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/babel-core/6.26.3",
+    "wanted": {
+      "dependentId": "packages/apps-config",
+      "name": "babel-core",
+      "rawSpec": "^6.26.3"
+    }
+  },
+  "64 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/babel-preset-es2015/6.24.1",
+    "wanted": {
+      "dependentId": "packages/apps-config",
+      "name": "babel-preset-es2015",
+      "rawSpec": "^6.24.1"
+    }
+  },
+  "65 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash/4.17.21",
+    "wanted": {
+      "dependentId": "packages/apps-config",
+      "name": "lodash",
+      "rawSpec": "^4.17.21"
+    }
+  },
+  "66 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps-util",
+      "name": "@cosmjs/math",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "67 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/bignumber.js/9.0.2",
+    "wanted": {
+      "dependentId": "packages/apps-util",
+      "name": "bignumber.js",
+      "rawSpec": "^9.0.2"
+    }
+  },
+  "68 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/webpack-env/1.16.3",
+    "wanted": {
+      "dependentId": "packages/types",
+      "name": "@types/webpack-env",
+      "rawSpec": "^1.16.3"
+    }
+  },
+  "69 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "wanted": {
+      "dependentId": "packages/types",
+      "name": "@cosmjs/proto-signing",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "70 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "wanted": {
+      "dependentId": "packages/types",
+      "name": "@cosmjs/stargate",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "71 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "wanted": {
+      "dependentId": "packages/types",
+      "name": "@cosmjs/tendermint-rpc",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "72 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/long/4.0.0",
+    "wanted": {
+      "dependentId": "packages/types",
+      "name": "long",
+      "rawSpec": "4.0.0"
+    }
+  },
+  "73 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/protobufjs/6.11.2",
+    "wanted": {
+      "dependentId": "packages/types",
+      "name": "protobufjs",
+      "rawSpec": "6.11.2"
+    }
+  },
+  "74 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ts-proto/1.88.0",
+    "wanted": {
+      "dependentId": "packages/types",
+      "name": "ts-proto",
+      "rawSpec": "1.88.0"
+    }
+  },
+  "75 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@cosmjs/encoding",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "76 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@cosmjs/launchpad",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "77 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@cosmjs/math",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "78 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@cosmjs/proto-signing",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "79 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@cosmjs/stargate",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "80 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@cosmjs/tendermint-rpc",
+      "rawSpec": "0.27.1"
+    }
+  },
+  "81 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/bech32/2.0.0",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "bech32",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "82 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/autoprefixer/10.4.2",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "autoprefixer",
+      "rawSpec": "^10.4.2"
+    }
+  },
+  "83 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/postcss/8.4.8",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "postcss",
+      "rawSpec": "^8.4.6"
+    }
+  },
+  "84 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/tailwindcss/3.0.23",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "tailwindcss",
+      "rawSpec": "^3.0.23"
+    }
+  },
+  "85 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@emotion/react/11.8.2",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@emotion/react",
+      "rawSpec": "^11.8.1"
+    }
+  },
+  "86 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@emotion/styled/11.8.1",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@emotion/styled",
+      "rawSpec": "^11.8.1"
+    }
+  },
+  "87 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@mui/material/5.5.1",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@mui/material",
+      "rawSpec": "^5.4.2"
+    }
+  },
+  "88 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@testing-library/jest-dom/5.16.2",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@testing-library/jest-dom",
+      "rawSpec": "^5.14.1"
+    }
+  },
+  "89 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@testing-library/react/12.1.4",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@testing-library/react",
+      "rawSpec": "^12.0.0"
+    }
+  },
+  "90 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@testing-library/user-event/13.5.0",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@testing-library/user-event",
+      "rawSpec": "^13.2.1"
+    }
+  },
+  "91 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/classnames/2.3.1",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "classnames",
+      "rawSpec": "^2.3.1"
+    }
+  },
+  "92 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/echarts/5.3.2",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "echarts",
+      "rawSpec": "^5.3.2"
+    }
+  },
+  "93 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/echarts-for-react/3.0.2",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "echarts-for-react",
+      "rawSpec": "^3.0.2"
+    }
+  },
+  "94 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/icomoon-react/2.0.19",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "icomoon-react",
+      "rawSpec": "^2.0.19"
+    }
+  },
+  "95 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-loading/2.0.3",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "react-loading",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "96 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-router-dom/6.2.2",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "react-router-dom",
+      "rawSpec": "6"
+    }
+  },
+  "97 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-scripts/5.0.0",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "react-scripts",
+      "rawSpec": "5.0.0"
+    }
+  },
+  "98 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/web-vitals/2.1.4",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "web-vitals",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "99 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-config",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/apps-config",
+      "rawSpec": "workspace:latest"
+    }
+  },
+  "100 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-util",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/apps-util",
+      "rawSpec": "workspace:latest"
+    }
+  },
+  "101 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-wallet",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/apps-wallet",
+      "rawSpec": "workspace:latest"
+    }
+  },
+  "102 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../react-components",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/react-components",
+      "rawSpec": "workspace:latest"
+    }
+  },
+  "103 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../types",
+    "wanted": {
+      "dependentId": "packages/apps",
+      "name": "@stafihub/types",
+      "rawSpec": "workspace:latest"
+    }
+  },
+  "104 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-config",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@stafihub/apps-config",
+      "rawSpec": "workspace:0.5.7"
+    }
+  },
+  "105 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-util",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@stafihub/apps-util",
+      "rawSpec": "workspace:0.4.0"
+    }
+  },
+  "106 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../types",
+    "wanted": {
+      "dependentId": "packages/apps-wallet",
+      "name": "@stafihub/types",
+      "rawSpec": "workspace:0.6.4"
+    }
+  },
+  "107 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../apps-wallet",
+    "wanted": {
+      "dependentId": "packages/react-components",
+      "name": "@stafihub/apps-wallet",
+      "rawSpec": "workspace:0.8.3"
+    }
+  },
+  "108 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "In packages/react-components: No matching version found for @stafihub/apps-config@0.5.6 inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "pnpm: In packages/react-components: No matching version found for @stafihub/apps-config@0.5.6 inside the workspace\n    at tryResolveFromWorkspace (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:85948:15)\n    at resolveNpm (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:85839:39)\n    at Object.resolve (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:86071:40)\n    at ctx.requestsQueue.add.priority (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74444:75)\n    at run (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74160:90)\n    at PQueue._tryToStartAnother (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74114:13)\n    at /usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74173:16\n    at new Promise (<anonymous>)\n    at PQueue.add (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74155:16)\n    at resolveAndFetch (/usr/local/Cellar/pnpm/6.31.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:74444:55)"
+    }
+  }
+}

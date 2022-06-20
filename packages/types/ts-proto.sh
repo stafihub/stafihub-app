@@ -8,6 +8,12 @@ protoc \
   "./proto/ledger/tx.proto" \
   "./proto/ledger/query.proto" \
   "./proto/ledger/ledger.proto" \
+  "./proto/mining/tx.proto" \
+  "./proto/mining/query.proto" \
+  "./proto/mining/models.proto" \
+  "./proto/rdex/tx.proto" \
+  "./proto/rdex/query.proto" \
+  "./proto/rdex/models.proto" \
   "./proto/rmintreward/query.proto" \
   "./proto/rmintreward/tx.proto" \
   "./proto/cosmos/base/tendermint/v1beta1/query.proto" \

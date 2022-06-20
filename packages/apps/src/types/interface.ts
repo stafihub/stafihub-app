@@ -7,6 +7,7 @@ export interface PoolInfo {
 export interface KeplrAccount {
   name: string;
   bech32Address: string;
+  isNanoLedger: boolean;
   allBalances?: Coin[];
 }
 

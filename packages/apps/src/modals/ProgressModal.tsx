@@ -22,7 +22,7 @@ export const ProgressModal = (props: ProgressModalProps) => {
         </div>
 
         <div className="mt-10 font-bold text-white text-[22px]">
-          You have successfully transferred your tokens.Please check your wallet
+          You have successfully transferred your tokens. Please check your wallet.
         </div>
 
         <img

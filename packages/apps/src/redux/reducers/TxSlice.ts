@@ -308,14 +308,14 @@ export const stakeRecovery =
       const txDetail = await queryTx(chainId, txHash);
 
       if (!txDetail) {
-        snackbarUtil.error("The txHash does not exist on chain.");
+        snackbarUtil.error("The txHash does not exist on " + getChainName(chainId) + " chain.");
         return;
       }
 
       const parsedRawLog = JSON.parse(txDetail.rawLog || "");
 
       if (!txDetail.rawLog || !parsedRawLog.length || !parsedRawLog[0].events) {
-        snackbarUtil.error("This transaction is not a transfer transaction.");
+        snackbarUtil.error("This transaction is not a MsgSend transaction.");
         return;
       }
 
@@ -324,7 +324,7 @@ export const stakeRecovery =
       });
 
       if (!messageLog) {
-        snackbarUtil.error("This transaction is not a transfer transaction.");
+        snackbarUtil.error("This transaction is not a MsgSend transaction.");
         return;
       }
 
@@ -340,7 +340,7 @@ export const stakeRecovery =
       const sender = senderAttribute.value;
 
       if (action !== "/cosmos.bank.v1beta1.MsgSend") {
-        snackbarUtil.error("This transaction is not a transfer transaction.");
+        snackbarUtil.error("This transaction is not a MsgSend transaction.");
         return;
       }
 
@@ -378,8 +378,6 @@ export const stakeRecovery =
         poolAddress,
         txHash
       );
-
-      // console.log("recovery txHash", txResponse?.transactionHash);
 
       let success = false;
 

@@ -45,7 +45,7 @@ export function useAccountUnbond(denom: string) {
           try {
             noticeList.forEach((notice) => {
               const currentTimestamp = moment().valueOf();
-              console.log("currentTimestamp", currentTimestamp);
+              // console.log("currentTimestamp", currentTimestamp);
               const noticeData = notice.data as NoticeUnbondData;
               if (
                 notice.type === "Unbond" &&

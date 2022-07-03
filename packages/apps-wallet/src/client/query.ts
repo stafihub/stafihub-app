@@ -165,7 +165,7 @@ export async function queryTokenSupply(
     });
     return result;
   } catch (err: unknown) {
-    console.log("queryrTokenSupply err", denom, err);
+    // console.log("queryrTokenSupply err", denom, err);
   }
   return null;
 }
@@ -195,7 +195,7 @@ export async function queryBondRecord(
     });
     return result;
   } catch (err: unknown) {
-    console.log("queryBondRecord err", denom, txhash, err);
+    // console.log("queryBondRecord err", denom, txhash, err);
   }
   return null;
 }
@@ -227,7 +227,7 @@ export async function queryUnbondCommission(
     });
     return result;
   } catch (err: unknown) {
-    console.log("queryUnbondCommission err", err);
+    // console.log("queryUnbondCommission err", err);
   }
   return null;
 }
@@ -242,7 +242,7 @@ export async function queryChainEra(
     });
     return result;
   } catch (err: unknown) {
-    console.log("queryChainEra err", denom, err);
+    // console.log("queryChainEra err", denom, err);
   }
   return null;
 }
@@ -272,7 +272,7 @@ export async function queryUnbondRelayFee(
     });
     return result;
   } catch (err: unknown) {
-    console.log("queryUnbondRelayFee err", denom, err);
+    // console.log("queryUnbondRelayFee err", denom, err);
   }
   return null;
 }
@@ -285,7 +285,7 @@ export async function queryChainParams(
     const result = await queryService.Params({});
     return result;
   } catch (err: unknown) {
-    console.log("queryChainParams err", chainId, err);
+    // console.log("queryChainParams err", chainId, err);
   }
   return;
 }
@@ -302,7 +302,7 @@ export async function queryDenomTrace(
     });
     return result;
   } catch (err: unknown) {
-    console.log("queryDenomTrace err", chainId, err);
+    // console.log("queryDenomTrace err", chainId, err);
   }
   return;
 }
@@ -319,7 +319,7 @@ export async function queryChannel(
     });
     return result;
   } catch (err: unknown) {
-    console.log("queryChannel err", chainId, err);
+    // console.log("queryChannel err", chainId, err);
   }
   return;
 }
@@ -344,7 +344,7 @@ export async function queryChannelClientState(
       return clientState;
     }
   } catch (err: unknown) {
-    console.log("queryChannelClientState err", chainId, err);
+    // console.log("queryChannelClientState err", chainId, err);
   }
   return;
 }

@@ -22,7 +22,7 @@ export async function queryRDexMiningStakeInfoList(): Promise<QueryStakePoolList
     // console.log("queryRDexMiningStakeInfoList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningStakeInfoList err", err);
+    // console.log("queryRDexMiningStakeInfoList err", err);
   }
   return null;
 }
@@ -38,7 +38,7 @@ export async function queryRDexMiningStakeInfo(
     // console.log("queryRDexMiningStakeInfo result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningStakeInfo err", err);
+    // console.log("queryRDexMiningStakeInfo err", err);
   }
   return null;
 }
@@ -54,7 +54,7 @@ export async function queryRDexMiningStakeItemList(
     // console.log("queryRDexMiningStakeItemList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningStakeItemList err", err);
+    // console.log("queryRDexMiningStakeItemList err", err);
   }
   return null;
 }
@@ -74,7 +74,7 @@ export async function queryRDexMiningStakeRecordList(
     // console.log("queryRDexMiningStakeRecordList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningStakeRecordList err", err);
+    // console.log("queryRDexMiningStakeRecordList err", err);
   }
   return null;
 }
@@ -96,7 +96,7 @@ export async function queryRDexMiningStakeRecord(
     // console.log("queryRDexMiningStakeRecord result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningStakeRecord err", err);
+    // console.log("queryRDexMiningStakeRecord err", err);
   }
   return null;
 }
@@ -118,7 +118,7 @@ export async function queryRDexMiningStakeRewardList(
     // console.log("queryRDexMiningStakeRewardList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningStakeRewardList err", err);
+    // console.log("queryRDexMiningStakeRewardList err", err);
   }
   return null;
 }
@@ -138,7 +138,7 @@ export async function queryRDexMiningUserStakeCount(
     // console.log("queryRDexMiningUserStakeCount result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningUserStakeCount err", err);
+    // console.log("queryRDexMiningUserStakeCount err", err);
   }
   return null;
 }
@@ -152,7 +152,7 @@ export async function queryRDexMiningRewardTokenList(): Promise<QueryRDexMiningR
     // console.log("queryRDexMiningRewardTokenList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningRewardTokenList err", err);
+    // console.log("queryRDexMiningRewardTokenList err", err);
   }
   return null;
 }
@@ -166,7 +166,7 @@ export async function queryRDexMiningProviderSwitch(): Promise<QueryMiningProvid
     // console.log("queryRDexMiningProviderSwitch result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningProviderSwitch err", err);
+    // console.log("queryRDexMiningProviderSwitch err", err);
   }
   return null;
 }
@@ -180,7 +180,7 @@ export async function queryRDexMiningProviderList(): Promise<QueryMiningProvider
     // console.log("queryRDexMiningProviderList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexMiningProviderList err", err);
+    // console.log("queryRDexMiningProviderList err", err);
   }
   return null;
 }

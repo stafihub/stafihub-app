@@ -25,8 +25,8 @@ export function getApiHost(): string {
 
 export function getStafiHubChainId(): string {
   if (isDev()) {
-    return "stafihub-public-testnet-2";
-    // return "stafihub-public-devnet-1";
+    // return "stafihub-public-testnet-2";
+    return "stafihub-public-testnet-3";
   } else {
     return "stafihub-testnet-1";
   }

@@ -13,7 +13,7 @@ export async function querySwapInfoList(): Promise<QuerySwapPoolListResponse | n
     // console.log("querySwapInfoList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("querySwapInfoList err", err);
+    // console.log("querySwapInfoList err", err);
   }
   return null;
 }
@@ -25,7 +25,7 @@ export async function queryRDexProviderSwitch(): Promise<QueryProviderSwitchResp
     // console.log("queryRDexProviderSwitch result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexProviderSwitch err", err);
+    // console.log("queryRDexProviderSwitch err", err);
   }
   return null;
 }
@@ -37,7 +37,7 @@ export async function queryRDexProviderList(): Promise<QueryProviderListResponse
     // console.log("queryRDexProviderList result", result);
     return result;
   } catch (err: unknown) {
-    console.log("queryRDexProviderList err", err);
+    // console.log("queryRDexProviderList err", err);
   }
   return null;
 }

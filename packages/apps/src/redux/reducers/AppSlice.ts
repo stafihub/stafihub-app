@@ -171,7 +171,7 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
       snackbarUtil.error("Cancelled");
       clearNetworkAllowedFlag(chainId);
     }
-    console.log(`connect ${chainId} error`, err);
+    // console.log(`connect ${chainId} error`, err);
     return null;
   }
 };
@@ -209,7 +209,7 @@ export const updateTokenBalance =
 
       dispatch(updateAccounts(chainId, newAccount));
     } catch (err: unknown) {
-      console.log(`updateTokenBalance ${chainId} error`, err);
+      // console.log(`updateTokenBalance ${chainId} error`, err);
     }
   };
 
@@ -241,7 +241,7 @@ export const updateAllTokenBalance =
           }
           return { network: chainId, account: newAccount };
         } catch (err: unknown) {
-          console.log(`updateTokenBalance ${chainId} error`, err);
+          // console.log(`updateTokenBalance ${chainId} error`, err);
           return null;
         }
       })();

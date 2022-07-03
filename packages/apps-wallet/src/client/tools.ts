@@ -25,3 +25,17 @@ function decodeAddress(accAddress: string, addrPrefix: string) {
 
   //   return buffer;
 }
+
+export function transformAddress(
+  address: string,
+  dstAddrPrefix: string
+): string {
+  try {
+    const { words } = bech32.decode(address);
+    const dstAddress = bech32.encode(dstAddrPrefix, words);
+
+    return dstAddress;
+  } catch (e) {
+    return "";
+  }
+}

@@ -308,7 +308,9 @@ export const stakeRecovery =
       const txDetail = await queryTx(chainId, txHash);
 
       if (!txDetail) {
-        snackbarUtil.error("The txHash does not exist on " + getChainName(chainId) + " chain.");
+        snackbarUtil.error(
+          "The txHash does not exist on " + getChainName(chainId) + " chain."
+        );
         return;
       }
 
@@ -691,7 +693,7 @@ export const feeStationSwap =
         snackbarUtil.error(postSwapInfoResJson.message);
       }
     } catch (err: unknown) {
-      console.log("feeStationSwap err", err);
+      // console.log("feeStationSwap err", err);
       dispatch(setIsLoading(false));
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
@@ -997,7 +999,7 @@ export const claimMintRewards =
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
       } else {
-        console.log(err);
+        // console.log(err);
         snackbarUtil.error((err as Error).message);
       }
     } finally {

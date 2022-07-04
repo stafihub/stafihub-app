@@ -13,7 +13,7 @@
     "srcChainId": "stafihub-public-testnet-2",
     "dstChainId": "irishub-stafi-1",
     "srcChannel": "channel-1",
-    "dstChannel": "channel-0",
+    "dstChannel": "channel-1",
     "assets": [
       { "denom": "uriris", "displayName": "rIRIS" },
       { "denom": "uiris", "displayName": "IRIS" }

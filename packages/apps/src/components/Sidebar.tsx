@@ -83,10 +83,7 @@ export const Sidebar = () => {
       />
 
       <div
-        className={classNames(
-          "mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer",
-          { "bg-[#FFEEF3]": matchBridge }
-        )}
+        className="mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer"
         onClick={() => openLink("https://test-app.rdex.finance/stafihub/swap")}
       >
         <img

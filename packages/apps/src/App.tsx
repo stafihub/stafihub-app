@@ -26,6 +26,7 @@ import { StakeReward } from "./pages/StakeReward";
 import { StakeStatus } from "./pages/StakeStatus";
 import { StakeUnbond } from "./pages/StakeUnbond";
 import { StakeV2 } from "./pages/StakeV2";
+import { ValidatorHome } from "./pages/ValidatorHome";
 import { SnackbarUtilsConfigurator } from "./utils/snackbarUtils";
 
 const useStyles = makeStyles({
@@ -60,6 +61,8 @@ function App() {
 
       <div className="flex justify-center">
         <Routes>
+          <Route path="/validator" element={<ValidatorHome />} />
+
           <Route path="/" element={<MainLayout />}>
             <Route path="/rAsset" element={<RAsset />} />
 

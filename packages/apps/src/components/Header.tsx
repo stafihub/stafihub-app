@@ -175,6 +175,18 @@ export const Header = () => {
           >
             rToken Recovery
           </div>
+
+          {/* <div className="h-[1px] bg-divider-light" />
+
+          <div
+            className="h-8 flex items-center justify-center text-[12px] text-text-black1 cursor-pointer"
+            onClick={() => {
+              navigate("/validator");
+              menuPopupState.close();
+            }}
+          >
+            rToken Validator
+          </div> */}
         </div>
       </Popover>
     </div>

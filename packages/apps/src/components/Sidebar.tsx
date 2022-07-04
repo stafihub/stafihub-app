@@ -6,10 +6,13 @@ import rPoolIconActive from "../assets/images/icon_rPool_active.svg";
 import rBridgeIcon from "../assets/images/icon_rBridge.svg";
 import rBridgeIconActive from "../assets/images/icon_rBridge_active.svg";
 import rTokenIcon from "../assets/images/icon_rToken.svg";
+import rDexIcon from "../assets/images/icon_rDex.svg";
+
 import rTokenIconActive from "../assets/images/icon_rToken_active.svg";
 import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { SidebarItem } from "@stafihub/react-components";
+import { openLink } from "../utils/common";
 
 export const Sidebar = () => {
   const location = useLocation();
@@ -78,6 +81,24 @@ export const Sidebar = () => {
           location.pathname.includes("/mint")
         }
       />
+
+      <div
+        className={classNames(
+          "mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer",
+          { "bg-[#FFEEF3]": matchBridge }
+        )}
+        onClick={() => openLink("https://test-app.rdex.finance/stafihub/swap")}
+      >
+        <img
+          src={rDexIcon}
+          alt="icon"
+          className="w-[36px] h-[36px] rounded-full ml-[9px]"
+        />
+
+        <div className="text-[16px] text-white ml-[10px]">
+          <div>rDex</div>
+        </div>
+      </div>
 
       <div className="absolute bottom-5 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
         <div>Need FIS for fees?</div>

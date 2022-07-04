@@ -1,23 +1,23 @@
 import { Tooltip } from "@mui/material";
-import { FormatterText, RTokenIcon } from "@stafihub/react-components";
 import {
   getRTokenDenom,
   getStafiHubChainId,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
+import { atomicToHuman } from "@stafihub/apps-util";
+import { FormatterText, RTokenIcon } from "@stafihub/react-components";
+import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
-// import iconDown from "../../assets/images/icon_down_white.png";
-import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
-import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
-import { useApy } from "../../hooks/useApy";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { TradeModal } from "../../modals/TradeModal";
 import { useAccountReward } from "../../hooks/useAccountReward";
 import { useChainAccount } from "../../hooks/useAppSlice";
-import { useDispatch } from "react-redux";
+import { useApy } from "../../hooks/useApy";
+import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
+// import iconDown from "../../assets/images/icon_down_white.png";
+import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
+import { TradeModal } from "../../modals/TradeModal";
 import { updateRTokenReward } from "../../redux/reducers/ChainSlice";
-import { atomicToHuman } from "@stafihub/apps-util";
-import classNames from "classnames";
 
 interface RAssetItemProps {
   chainId: string;
@@ -157,6 +157,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
       </div>
 
       <TradeModal
+        tradeDenom={getRTokenDenom(props.chainId)}
         tradeTokenName={props.derivativeTokenName}
         visible={tradeModalVisible}
         onClose={() => setTradeModalVisible(false)}

@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import {
   getChainIdFromRTokenDisplayName,
   getDenom,
@@ -7,12 +8,11 @@ import {
 } from "@stafihub/apps-config";
 import {
   Button,
+  EraRewardChart,
   FormatterText,
   RTokenIcon,
   TokenIcon,
-  EraRewardChart,
 } from "@stafihub/react-components";
-import { Tooltip } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -309,6 +309,7 @@ export const RTokenDashboard = () => {
       </div>
 
       <TradeModal
+        tradeDenom={getRTokenDenom(chainId)}
         tradeTokenName={params.rToken || ""}
         visible={tradeModalVisible}
         onClose={() => setTradeModalVisible(false)}

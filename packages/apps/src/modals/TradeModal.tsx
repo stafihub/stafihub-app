@@ -1,9 +1,11 @@
 import { Box, Modal } from "@mui/material";
 import { Icon } from "@stafihub/react-components";
 import rdex from "../assets/images/rdex.png";
+import { openLink } from "../utils/common";
 
 interface TradeModalProps {
   visible: boolean;
+  tradeDenom: string;
   tradeTokenName: string;
   onClose: () => void;
 }
@@ -70,9 +72,16 @@ export const TradeModal = (props: TradeModalProps) => {
             <div className="basis-6/12">Native</div>
 
             <div className="basis-4/12 ">
-              <div className="w-[52px] text-white font-bold  bg-primary rounded-full flex items-center justify-center  opacity-50 h-[22px]">
+              <div
+                className="w-[52px] text-white font-bold  bg-primary rounded-full flex items-center justify-center cursor-pointer h-[22px]"
+                onClick={() => {
+                  openLink(
+                    `https://test-app.rdex.finance/stafihub/swap?first=${props.tradeDenom}`
+                  );
+                }}
+              >
                 <div className="text-[12px] scale-[0.75] origin-center">
-                  Soon
+                  Swap
                 </div>
               </div>
             </div>

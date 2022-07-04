@@ -96,7 +96,7 @@ export const Sidebar = () => {
         />
 
         <div className="text-[16px] text-white ml-[10px]">
-          <div>rDex</div>
+          <div>rDEX</div>
         </div>
       </div>
 

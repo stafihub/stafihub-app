@@ -1,4 +1,5 @@
 import {
+  getApiHost,
   getChainIdFromRTokenDisplayName,
   getDenom,
   getDisplayHubName,
@@ -8,6 +9,7 @@ import {
   getTokenDisplayName,
 } from "@stafihub/apps-config";
 import { formatNumberToFixed } from "@stafihub/apps-util";
+import tooltipIcon from "../assets/images/icon_tooltip.svg";
 import {
   Button,
   CustomInput,
@@ -32,12 +34,14 @@ import { useMintPrograms } from "../hooks/useMintPrograms";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import { ApyComparisonModal } from "../modals/ApyComparisonModal";
 import { MemoNoticeModal } from "../modals/MemoNoticeModal";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { setStakeSidebarProps, stake } from "../redux/reducers/TxSlice";
 import { FormatTokenRewardInfo } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
+import { Tooltip } from "@mui/material";
 
 export const StakeV2 = () => {
   const dispatch = useDispatch();
@@ -55,9 +59,47 @@ export const StakeV2 = () => {
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
   const [memoNoticeModalVisible, setMemoNoticeModalVisible] = useState(false);
+  const [apyComparisonModalVisible, setApyComparisonModalVisible] =
+    useState(false);
+  const [otherApy, setOtherApy] = useState("--");
   const { height } = useWindowDimensions();
   const latestBlock = useLatestBlock();
   const { actDetails } = useMintPrograms();
+
+  useEffect(() => {
+    const rTokenDenom = getRTokenDenom(chainId);
+    const abortController = new AbortController();
+
+    fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: abortController.signal,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((resJson) => {
+        if (resJson.status === "80000") {
+          const annualRateList = resJson.data.annualRateList;
+          const matched = annualRateList.find(
+            (item: any) => item.rTokenDenom === rTokenDenom
+          );
+          if (matched) {
+            setOtherApy(matched.annualRate);
+          }
+        }
+      })
+      .catch((err: Error) => {
+        if (err.name === "AbortError") return;
+        throw err;
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  }, [chainId]);
 
   useEffect(() => {
     setInputAmount("");
@@ -274,7 +316,22 @@ export const StakeV2 = () => {
       <div className="self-center mt-14 flex items-center">
         <img src={iconApy} alt="apy icon" className="w-6 h-6" />
 
-        <div className="ml-1 text-white font-bold text-[20px]">Stake APY</div>
+        <div
+          className="ml-1 text-white font-bold text-[20px] underline cursor-pointer"
+          onClick={() => setApyComparisonModalVisible(true)}
+        >
+          Stake APY
+        </div>
+
+        <Tooltip title={"xxxxxxxx"} placement="right-end">
+          <img
+            src={tooltipIcon}
+            width="8px"
+            height="8px"
+            alt="tooltip"
+            style={{ alignSelf: "flex-start", marginLeft: "6px" }}
+          />
+        </Tooltip>
       </div>
 
       <div className="self-center mt-6 font-bold text-primary text-[90px]">
@@ -398,6 +455,14 @@ export const StakeV2 = () => {
           setMemoNoticeModalVisible(false);
           clickStake();
         }}
+      />
+
+      <ApyComparisonModal
+        visible={apyComparisonModalVisible}
+        onClose={() => setApyComparisonModalVisible(false)}
+        tokenName={getTokenDisplayName(chainId)}
+        stafiHubApy={apy}
+        otherApy={otherApy}
       />
     </div>
   );

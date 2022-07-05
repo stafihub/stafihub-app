@@ -121,3 +121,14 @@ export interface UserUnbondRecord {
   receiveAddress: string;
   tokenAmount: string;
 }
+
+export interface ValidatorWrapperInfo {
+  rTokenDenom: string;
+  validatorList: ValidatorInfo[];
+}
+
+export interface ValidatorInfo {
+  logoUrl: string;
+  moniker: string;
+  validatorAddress: string;
+}

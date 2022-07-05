@@ -2,23 +2,23 @@ import { Grid } from "@mui/material";
 import { getDenom, getRTokenDenom } from "@stafihub/apps-config";
 import { FormatterText, TokenIconLarge } from "@stafihub/react-components";
 import classNames from "classnames";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { usePriceFromDenom } from "../hooks/useAppSlice";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
-import iconValidator from "../assets/images/icon_validator.svg";
+import { ValidatorWrapperInfo } from "../types/interface";
+import { ValidatorIcon } from "./ValidatorIcon";
 
 interface ValidatorCardProps {
   chainId: string;
   originTokenName: string;
   derivativeTokenName: string;
+  validators: ValidatorWrapperInfo[];
 }
 
 export const ValidatorCard = (props: ValidatorCardProps) => {
   const supply = useTokenSupply(props.chainId);
   const tokenPrice = usePriceFromDenom(getDenom(props.chainId));
-  const { poolAddress } = useStakePoolInfo(getDenom(props.chainId));
-
   const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
 
   const liquidity = useMemo(() => {
@@ -32,13 +32,11 @@ export const ValidatorCard = (props: ValidatorCardProps) => {
     return Number(supply) * Number(exchangeRate) * Number(tokenPrice);
   }, [exchangeRate, supply, tokenPrice]);
 
-  useEffect(() => {
-    (async () => {
-      if (!poolAddress) {
-        return;
-      }
-    })();
-  }, [poolAddress]);
+  const validatorWrapperInfo: ValidatorWrapperInfo | undefined = useMemo(() => {
+    return props.validators.find(
+      (item) => item.rTokenDenom === getRTokenDenom(props.chainId)
+    );
+  }, [props.validators, props.chainId]);
 
   return (
     <div className="flex">
@@ -59,25 +57,26 @@ export const ValidatorCard = (props: ValidatorCardProps) => {
 
       <div className="h-[300px] overflow-auto pl-[60px] pr-[30px] flex-1 bg-[#111017] rounded-tr-[4px] rounded-br-[4px]">
         <div className="mt-7 text-primary text-[18px]">
-          Selected Validator 5
+          Selected Validator{" "}
+          {validatorWrapperInfo
+            ? validatorWrapperInfo.validatorList.length
+            : "--"}
         </div>
 
         <Grid container spacing={4} mt="20px" rowSpacing={1}>
-          {[1, 2, 3, 4, 5].map((n) => (
-            <Grid key={n} item xs={6}>
+          {validatorWrapperInfo?.validatorList?.map((item) => (
+            <Grid key={item.validatorAddress} item xs={6}>
               <div className="mb-[12px] h-[55px] flex-1 rounded-[2px] border-solid border-[1px] border-[#222222] flex items-center">
-                <img
-                  src={iconValidator}
-                  alt="icon"
-                  width="36px"
-                  height="36px"
-                  className="pl-3"
-                />
+                <div className="pl-3">
+                  <ValidatorIcon logoUrl={item.logoUrl} />
+                </div>
 
                 <div className="ml-[6px]">
-                  <div className="font-bold text-white text-[16px]">Wetez</div>
+                  <div className="font-bold text-white text-[16px]">
+                    {item.moniker}
+                  </div>
                   <div className="mt-[3px] text-[#A2A2A2] text-[14px]">
-                    cosmos1s05va5d09xlq3et8ma123sqh6r5lqy7mnr69xf
+                    {item.validatorAddress}
                   </div>
                 </div>
               </div>

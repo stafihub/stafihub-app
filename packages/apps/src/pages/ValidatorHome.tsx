@@ -1,11 +1,49 @@
+import { getApiHost } from "@stafihub/apps-config";
+import { isEmpty } from "lodash";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import stafihubLogo from "../assets/images/stafihub_logo.svg";
 import { ValidatorCard } from "../components/ValidatorCard";
 import { useRTokenList } from "../hooks/useRTokenList";
+import { ValidatorWrapperInfo } from "../types/interface";
 
 export const ValidatorHome = () => {
   const navigate = useNavigate();
   const rTokenList = useRTokenList();
+  const [validators, setValidators] = useState<ValidatorWrapperInfo[]>([]);
+
+  useEffect(() => {
+    if (isEmpty(rTokenList)) {
+      return;
+    }
+
+    const abortController = new AbortController();
+
+    fetch(`${getApiHost()}/stakingElection/api/v1/selectedValidators`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: abortController.signal,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((resJson) => {
+        if (resJson.status === "80000") {
+          const validators = resJson.data.selectedValidators;
+          setValidators(validators);
+        }
+      })
+      .catch((err: Error) => {
+        if (err.name === "AbortError") return;
+        throw err;
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  }, [rTokenList]);
 
   return (
     <div className="flex-1">
@@ -29,6 +67,7 @@ export const ValidatorHome = () => {
           {rTokenList.map((rToken) => (
             <div key={rToken.chainId} className="mb-14">
               <ValidatorCard
+                validators={validators}
                 chainId={rToken.chainId}
                 originTokenName={rToken.tokenName}
                 derivativeTokenName={rToken.rTokenName}

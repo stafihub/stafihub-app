@@ -1,6 +1,6 @@
 {
   "name": "@stafihub/react-components",
-  "version": "0.4.3",
+  "version": "0.4.7",
   "type": "module",
   "main": "./src/index.tsx",
   "repository": {
@@ -17,8 +17,8 @@
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.4.2",
-    "@stafihub/apps-wallet": "workspace:0.8.3",
-    "@stafihub/apps-config": "workspace:0.5.7",
+    "@stafihub/apps-wallet": "workspace:0.8.8",
+    "@stafihub/apps-config": "workspace:0.6.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",

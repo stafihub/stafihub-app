@@ -317,20 +317,20 @@ export const StakeV2 = () => {
         <img src={iconApy} alt="apy icon" className="w-6 h-6" />
 
         <div
-          className="flex items-center  cursor-pointer"
-          onClick={() => setApyComparisonModalVisible(true)}
+          className="flex items-center"
+          // onClick={() => setApyComparisonModalVisible(true)}
         >
-          <div className="ml-1 text-white font-bold text-[20px] underline">
+          <div className="ml-1 text-white font-bold text-[20px] ">
             Stake APY
           </div>
 
-          <img
+          {/* <img
             src={tooltipIcon}
             width="8px"
             height="8px"
             alt="tooltip"
             style={{ alignSelf: "flex-start", marginLeft: "6px" }}
-          />
+          /> */}
         </div>
       </div>
 

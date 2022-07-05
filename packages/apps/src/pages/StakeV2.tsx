@@ -87,7 +87,7 @@ export const StakeV2 = () => {
             (item: any) => item.rTokenDenom === rTokenDenom
           );
           if (matched) {
-            setOtherApy(matched.annualRate);
+            setOtherApy(Number(matched.annualRate) * 100 + "");
           }
         }
       })
@@ -317,13 +317,13 @@ export const StakeV2 = () => {
         <img src={iconApy} alt="apy icon" className="w-6 h-6" />
 
         <div
-          className="ml-1 text-white font-bold text-[20px] underline cursor-pointer"
+          className="flex items-center  cursor-pointer"
           onClick={() => setApyComparisonModalVisible(true)}
         >
-          Stake APY
-        </div>
+          <div className="ml-1 text-white font-bold text-[20px] underline">
+            Stake APY
+          </div>
 
-        <Tooltip title={"xxxxxxxx"} placement="right-end">
           <img
             src={tooltipIcon}
             width="8px"
@@ -331,7 +331,7 @@ export const StakeV2 = () => {
             alt="tooltip"
             style={{ alignSelf: "flex-start", marginLeft: "6px" }}
           />
-        </Tooltip>
+        </div>
       </div>
 
       <div className="self-center mt-6 font-bold text-primary text-[90px]">

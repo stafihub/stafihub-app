@@ -896,7 +896,7 @@ export const ibcBridgeSwap =
 
       if (txResponse?.code === 0) {
         await timeout(6000);
-        snackbarUtil.success("Swap succeed");
+        snackbarUtil.success("Swap succeeded");
         dispatch(
           addNotice(
             txResponse.transactionHash,

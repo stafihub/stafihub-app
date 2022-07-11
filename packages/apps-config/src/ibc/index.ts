@@ -1,4 +1,4 @@
-import { IbcConfig, isDev } from "..";
+import { getStafiHubChainId, IbcConfig, isDev } from "..";
 
 let jsonConfigs = require.context("./mainnet", false, /\.json$/);
 if (isDev()) {
@@ -9,6 +9,7 @@ const update: IbcConfig = {};
 jsonConfigs.keys().forEach((k) => {
   const list = jsonConfigs(k);
   list.forEach((config: any) => {
+    config.srcChainId = getStafiHubChainId();
     (update as any)[config.dstChainId] = config;
   });
 });

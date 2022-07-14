@@ -1,6 +1,5 @@
 import {
   chains,
-  getDenom,
   getIBCConfig,
   getStafiHubChainId,
   ibcConfigs,

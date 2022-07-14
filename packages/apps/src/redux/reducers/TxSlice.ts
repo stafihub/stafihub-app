@@ -262,6 +262,10 @@ export const stake =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
+      } else if ("Extension context invalidated.") {
+        snackbarUtil.error(
+          "Extension context invalidated, please refresh and retry."
+        );
       } else {
         snackbarUtil.error((err as Error).message);
       }
@@ -447,6 +451,10 @@ export const stakeRecovery =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
+      } else if ("Extension context invalidated.") {
+        snackbarUtil.error(
+          "Extension context invalidated, please refresh and retry."
+        );
       } else {
         snackbarUtil.error((err as Error).message);
       }
@@ -555,6 +563,10 @@ export const unbond =
       // console.log("sendLiquidityUnbondTx err", err);
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
+      } else if ("Extension context invalidated.") {
+        snackbarUtil.error(
+          "Extension context invalidated, please refresh and retry."
+        );
       } else {
         snackbarUtil.error((err as Error).message);
       }
@@ -697,6 +709,10 @@ export const feeStationSwap =
       dispatch(setIsLoading(false));
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
+      } else if ("Extension context invalidated.") {
+        snackbarUtil.error(
+          "Extension context invalidated, please refresh and retry."
+        );
       } else {
         snackbarUtil.error((err as Error).message);
       }
@@ -926,6 +942,10 @@ export const ibcBridgeSwap =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
+      } else if ("Extension context invalidated.") {
+        snackbarUtil.error(
+          "Extension context invalidated, please refresh and retry."
+        );
       } else {
         snackbarUtil.error((err as Error).message);
       }
@@ -998,6 +1018,10 @@ export const claimMintRewards =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
+      } else if ("Extension context invalidated.") {
+        snackbarUtil.error(
+          "Extension context invalidated, please refresh and retry."
+        );
       } else {
         // console.log(err);
         snackbarUtil.error((err as Error).message);

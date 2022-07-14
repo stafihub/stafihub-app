@@ -127,7 +127,7 @@ export async function sendRDexMiningWithdrawTx(
         amount: "1",
       },
     ],
-    gas: Math.ceil(simulateResponse * 1.3).toString(),
+    gas: Math.ceil(simulateResponse * 1.6).toString(),
   };
 
   const response = await client.signAndBroadcast(

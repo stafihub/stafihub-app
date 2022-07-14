@@ -173,7 +173,9 @@ export const IBCBridge = () => {
       return "--";
     }
     if (chainPair.src.denom === selectedChannelToken?.denom) {
-      return Math.max(0, Number(balance) - 0.05) + "";
+      let temp = Math.max(0, Number(balance) - 0.05);
+      temp = Math.floor(temp * 10000) / 10000;
+      return temp + "";
     } else {
       return balance;
     }

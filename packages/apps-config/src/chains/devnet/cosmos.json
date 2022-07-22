@@ -1,9 +1,9 @@
 {
-  "chainName": "Cosmos-Testnet",
-  "chainId": "cosmos-stafi-1",
+  "chainName": "Cosmos-Devnet",
+  "chainId": "cosmoshub-stafi-dev-1",
   "displayHubName": "CosmosHub",
-  "rpc": "https://test-cosmos-rpc1.stafihub.io",
-  "restEndpoint": "https://test-cosmos-rest1.stafihub.io",
+  "rpc": "https://dev-cosmos-rpc1.stafihub.io:443",
+  "restEndpoint": "https://dev-cosmos-rest1.stafihub.io:443",
   "denom": "uatom",
   "coinDenom": "ATOM",
   "decimals": 6,

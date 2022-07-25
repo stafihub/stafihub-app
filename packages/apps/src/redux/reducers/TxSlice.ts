@@ -517,23 +517,24 @@ export const unbond =
           amount: humanToAtomic(inputAmount),
         });
       } else {
-        if (Number(multisigPoolBalance) > 0) {
+        const multisigUnbondAmount = Math.floor(
+          (Number(inputAmount) * Number(multisigPoolBalance) * 0.95) /
+            Number(willGetAmount)
+        );
+
+        if (multisigUnbondAmount > 0) {
           pools.push({
             poolAddress: multisigPoolAddress,
-            amount: multisigPoolBalance,
+            amount: multisigUnbondAmount + "",
           });
         }
 
         pools.push({
           poolAddress: icaPoolAddress,
           amount:
-            Number(humanToAtomic(inputAmount)) -
-            Number(multisigPoolBalance) +
-            "",
+            Number(humanToAtomic(inputAmount)) - multisigUnbondAmount + "",
         });
       }
-
-      console.log("pools", pools);
 
       const txResponse = await sendLiquidityUnbondTx(
         chainId,

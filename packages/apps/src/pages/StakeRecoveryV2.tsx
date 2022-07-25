@@ -5,7 +5,7 @@ import {
   getRTokenDisplayName,
   getStafiHubChainId,
 } from "@stafihub/apps-config";
-import { queryPoolByDenom } from "@stafihub/apps-wallet";
+import { queryStakePoolInfo } from "@stafihub/apps-wallet";
 import { Button, CustomInput, TokenIcon } from "@stafihub/react-components";
 import classNames from "classnames";
 import {
@@ -20,6 +20,7 @@ import iconDown from "../assets/images/icon_down_white.png";
 import iconSelectDropdown from "../assets/images/icon_select_dropdown.svg";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { RTokenItem, useRTokenList } from "../hooks/useRTokenList";
+import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { setStakeSidebarProps, stakeRecovery } from "../redux/reducers/TxSlice";
 import { openLink } from "../utils/common";
@@ -44,11 +45,11 @@ export const StakeRecoveryV2 = () => {
       return;
     }
 
-    queryPoolByDenom(getRTokenDenom(selectedItem.chainId))
+    queryStakePoolInfo(getRTokenDenom(selectedItem.chainId))
       .then((result) => {
-        if (result.addrs && result.addrs.length >= 1) {
-          setPoolAddress(result.addrs[0]);
-        }
+        const address =
+          result.icaPoolAddress || result.multisigPoolAddress || "";
+        setPoolAddress(address);
       })
       .catch(() => {});
   }, [selectedItem]);

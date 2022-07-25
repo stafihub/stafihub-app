@@ -34,7 +34,9 @@ export const UnbondModal = (props: UnbondModalProps) => {
   const { relayFee } = useUnbondRelayFee(chainId);
   const { bondingDays, bondingHours } = useRParams(getRTokenDenom(chainId));
 
-  const { poolAddress } = useStakePoolInfo(getRTokenDenom(chainId));
+  const { multisigPoolAddress, icaPoolAddress } = useStakePoolInfo(
+    getRTokenDenom(chainId)
+  );
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>
@@ -94,7 +96,8 @@ export const UnbondModal = (props: UnbondModalProps) => {
                   chainId,
                   props.inputAmount,
                   props.willGetAmount,
-                  poolAddress,
+                  multisigPoolAddress,
+                  icaPoolAddress,
                   relayFee,
                   bondingHours,
                   (success) => {

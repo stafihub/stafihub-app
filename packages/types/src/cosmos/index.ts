@@ -14,3 +14,4 @@ export {
   ServiceClientImpl as CosmosBaseServiceClientImpl,
   GetLatestBlockResponse,
 } from "./base/tendermint/v1beta1/query";
+export { Coin } from "./base/v1beta1/coin";

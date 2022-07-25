@@ -6,7 +6,7 @@ if (isDev()) {
 }
 
 const update: IbcConfig = {};
-jsonConfigs.keys().forEach((k) => {
+jsonConfigs.keys().forEach((k: string) => {
   const list = jsonConfigs(k);
   list.forEach((config: any) => {
     config.srcChainId = getStafiHubChainId();

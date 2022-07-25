@@ -12,10 +12,14 @@ import {
   OriginalTxType,
   Signature,
   RParams,
+  InterchainTxStatus,
   TotalProtocolFee,
   Unbonding,
+  IcaPoolDetail,
   originalTxTypeFromJSON,
   originalTxTypeToJSON,
+  interchainTxStatusFromJSON,
+  interchainTxStatusToJSON,
 } from "../ledger/ledger";
 
 export const protobufPackage = "stafihub.stafihub.ledger";
@@ -226,6 +230,22 @@ export interface QueryPoolUnbondingsRequest {
 
 export interface QueryPoolUnbondingsResponse {
   unbondings: Unbonding[];
+}
+
+export interface QueryIcaPoolListRequest {
+  denom: string;
+}
+
+export interface QueryIcaPoolListResponse {
+  icaPoolList: IcaPoolDetail[];
+}
+
+export interface QueryInterchainTxStatusRequest {
+  propId: string;
+}
+
+export interface QueryInterchainTxStatusResponse {
+  interchainTxStatus: InterchainTxStatus;
 }
 
 const baseQueryGetExchangeRateRequest: object = { denom: "" };
@@ -3663,6 +3683,276 @@ export const QueryPoolUnbondingsResponse = {
   },
 };
 
+const baseQueryIcaPoolListRequest: object = { denom: "" };
+
+export const QueryIcaPoolListRequest = {
+  encode(
+    message: QueryIcaPoolListRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryIcaPoolListRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryIcaPoolListRequest,
+    } as QueryIcaPoolListRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryIcaPoolListRequest {
+    const message = {
+      ...baseQueryIcaPoolListRequest,
+    } as QueryIcaPoolListRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryIcaPoolListRequest): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryIcaPoolListRequest>
+  ): QueryIcaPoolListRequest {
+    const message = {
+      ...baseQueryIcaPoolListRequest,
+    } as QueryIcaPoolListRequest;
+    message.denom = object.denom ?? "";
+    return message;
+  },
+};
+
+const baseQueryIcaPoolListResponse: object = {};
+
+export const QueryIcaPoolListResponse = {
+  encode(
+    message: QueryIcaPoolListResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.icaPoolList) {
+      IcaPoolDetail.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryIcaPoolListResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryIcaPoolListResponse,
+    } as QueryIcaPoolListResponse;
+    message.icaPoolList = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.icaPoolList.push(
+            IcaPoolDetail.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryIcaPoolListResponse {
+    const message = {
+      ...baseQueryIcaPoolListResponse,
+    } as QueryIcaPoolListResponse;
+    message.icaPoolList = (object.icaPoolList ?? []).map((e: any) =>
+      IcaPoolDetail.fromJSON(e)
+    );
+    return message;
+  },
+
+  toJSON(message: QueryIcaPoolListResponse): unknown {
+    const obj: any = {};
+    if (message.icaPoolList) {
+      obj.icaPoolList = message.icaPoolList.map((e) =>
+        e ? IcaPoolDetail.toJSON(e) : undefined
+      );
+    } else {
+      obj.icaPoolList = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryIcaPoolListResponse>
+  ): QueryIcaPoolListResponse {
+    const message = {
+      ...baseQueryIcaPoolListResponse,
+    } as QueryIcaPoolListResponse;
+    message.icaPoolList = (object.icaPoolList ?? []).map((e) =>
+      IcaPoolDetail.fromPartial(e)
+    );
+    return message;
+  },
+};
+
+const baseQueryInterchainTxStatusRequest: object = { propId: "" };
+
+export const QueryInterchainTxStatusRequest = {
+  encode(
+    message: QueryInterchainTxStatusRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.propId !== "") {
+      writer.uint32(10).string(message.propId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryInterchainTxStatusRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryInterchainTxStatusRequest,
+    } as QueryInterchainTxStatusRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.propId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryInterchainTxStatusRequest {
+    const message = {
+      ...baseQueryInterchainTxStatusRequest,
+    } as QueryInterchainTxStatusRequest;
+    message.propId =
+      object.propId !== undefined && object.propId !== null
+        ? String(object.propId)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryInterchainTxStatusRequest): unknown {
+    const obj: any = {};
+    message.propId !== undefined && (obj.propId = message.propId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryInterchainTxStatusRequest>
+  ): QueryInterchainTxStatusRequest {
+    const message = {
+      ...baseQueryInterchainTxStatusRequest,
+    } as QueryInterchainTxStatusRequest;
+    message.propId = object.propId ?? "";
+    return message;
+  },
+};
+
+const baseQueryInterchainTxStatusResponse: object = { interchainTxStatus: 0 };
+
+export const QueryInterchainTxStatusResponse = {
+  encode(
+    message: QueryInterchainTxStatusResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.interchainTxStatus !== 0) {
+      writer.uint32(8).int32(message.interchainTxStatus);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryInterchainTxStatusResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryInterchainTxStatusResponse,
+    } as QueryInterchainTxStatusResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.interchainTxStatus = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryInterchainTxStatusResponse {
+    const message = {
+      ...baseQueryInterchainTxStatusResponse,
+    } as QueryInterchainTxStatusResponse;
+    message.interchainTxStatus =
+      object.interchainTxStatus !== undefined &&
+      object.interchainTxStatus !== null
+        ? interchainTxStatusFromJSON(object.interchainTxStatus)
+        : 0;
+    return message;
+  },
+
+  toJSON(message: QueryInterchainTxStatusResponse): unknown {
+    const obj: any = {};
+    message.interchainTxStatus !== undefined &&
+      (obj.interchainTxStatus = interchainTxStatusToJSON(
+        message.interchainTxStatus
+      ));
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryInterchainTxStatusResponse>
+  ): QueryInterchainTxStatusResponse {
+    const message = {
+      ...baseQueryInterchainTxStatusResponse,
+    } as QueryInterchainTxStatusResponse;
+    message.interchainTxStatus = object.interchainTxStatus ?? 0;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Queries a list of getExchangeRate items. */
@@ -3763,6 +4053,14 @@ export interface Query {
   PoolUnbondings(
     request: QueryPoolUnbondingsRequest
   ): Promise<QueryPoolUnbondingsResponse>;
+  /** Queries a list of IcaPoolList items. */
+  IcaPoolList(
+    request: QueryIcaPoolListRequest
+  ): Promise<QueryIcaPoolListResponse>;
+  /** Queries a list of InterchainTxStatus items. */
+  InterchainTxStatus(
+    request: QueryInterchainTxStatusRequest
+  ): Promise<QueryInterchainTxStatusResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -3795,6 +4093,8 @@ export class QueryClientImpl implements Query {
     this.UnbondSwitch = this.UnbondSwitch.bind(this);
     this.PoolUnbondNextSequence = this.PoolUnbondNextSequence.bind(this);
     this.PoolUnbondings = this.PoolUnbondings.bind(this);
+    this.IcaPoolList = this.IcaPoolList.bind(this);
+    this.InterchainTxStatus = this.InterchainTxStatus.bind(this);
   }
   GetExchangeRate(
     request: QueryGetExchangeRateRequest
@@ -4144,6 +4444,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryPoolUnbondingsResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  IcaPoolList(
+    request: QueryIcaPoolListRequest
+  ): Promise<QueryIcaPoolListResponse> {
+    const data = QueryIcaPoolListRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "IcaPoolList",
+      data
+    );
+    return promise.then((data) =>
+      QueryIcaPoolListResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  InterchainTxStatus(
+    request: QueryInterchainTxStatusRequest
+  ): Promise<QueryInterchainTxStatusResponse> {
+    const data = QueryInterchainTxStatusRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "stafihub.stafihub.ledger.Query",
+      "InterchainTxStatus",
+      data
+    );
+    return promise.then((data) =>
+      QueryInterchainTxStatusResponse.decode(new _m0.Reader(data))
     );
   }
 }

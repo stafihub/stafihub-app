@@ -21,7 +21,8 @@
       "@stafihub/apps-config": ["./packages/apps-config"],
       "@stafihub/types": ["./packages/types"],
       "@stafihub/apps-util": ["./packages/apps-util"]
-    }
+    },
+    "types": ["node", "webpack-env"]
   },
   "include": ["src"]
 }

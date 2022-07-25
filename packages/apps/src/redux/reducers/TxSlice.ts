@@ -24,6 +24,7 @@ import {
   sendStakeTx,
   queryAccountBalance,
   sendClaimMintRewardTx,
+  queryBondPipeline,
 } from "@stafihub/apps-wallet";
 import { LiquidityBondState } from "@stafihub/types";
 import Long from "long";
@@ -262,7 +263,7 @@ export const stake =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
-      } else if ("Extension context invalidated.") {
+      } else if ((err as Error).message === "Extension context invalidated.") {
         snackbarUtil.error(
           "Extension context invalidated, please refresh and retry."
         );
@@ -451,7 +452,7 @@ export const stakeRecovery =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
-      } else if ("Extension context invalidated.") {
+      } else if ((err as Error).message === "Extension context invalidated.") {
         snackbarUtil.error(
           "Extension context invalidated, please refresh and retry."
         );
@@ -468,7 +469,8 @@ export const unbond =
     chainId: string | undefined,
     inputAmount: string,
     willGetAmount: string,
-    poolAddress: string,
+    multisigPoolAddress: string,
+    icaPoolAddress: string,
     relayFee: string,
     bondingHours: string,
     callback?: (success: boolean) => void
@@ -503,12 +505,41 @@ export const unbond =
 
       dispatch(setIsLoading(true));
 
+      const multisigPoolBalance = await queryBondPipeline(
+        getRTokenDenom(chainId),
+        multisigPoolAddress
+      );
+
+      let pools = [];
+      if (Number(multisigPoolBalance) >= Number(humanToAtomic(willGetAmount))) {
+        pools.push({
+          poolAddress: multisigPoolAddress,
+          amount: humanToAtomic(inputAmount),
+        });
+      } else {
+        if (Number(multisigPoolBalance) > 0) {
+          pools.push({
+            poolAddress: multisigPoolAddress,
+            amount: multisigPoolBalance,
+          });
+        }
+
+        pools.push({
+          poolAddress: icaPoolAddress,
+          amount:
+            Number(humanToAtomic(inputAmount)) -
+            Number(multisigPoolBalance) +
+            "",
+        });
+      }
+
+      console.log("pools", pools);
+
       const txResponse = await sendLiquidityUnbondTx(
         chainId,
-        humanToAtomic(inputAmount, STAFIHUB_DECIMALS),
         chainAccount.bech32Address,
         stafiHubAccount.bech32Address,
-        poolAddress
+        pools
       );
 
       if (txResponse?.code === 0) {
@@ -563,7 +594,7 @@ export const unbond =
       // console.log("sendLiquidityUnbondTx err", err);
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
-      } else if ("Extension context invalidated.") {
+      } else if ((err as Error).message === "Extension context invalidated.") {
         snackbarUtil.error(
           "Extension context invalidated, please refresh and retry."
         );
@@ -709,7 +740,7 @@ export const feeStationSwap =
       dispatch(setIsLoading(false));
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
-      } else if ("Extension context invalidated.") {
+      } else if ((err as Error).message === "Extension context invalidated.") {
         snackbarUtil.error(
           "Extension context invalidated, please refresh and retry."
         );
@@ -942,7 +973,7 @@ export const ibcBridgeSwap =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
-      } else if ("Extension context invalidated.") {
+      } else if ((err as Error).message === "Extension context invalidated.") {
         snackbarUtil.error(
           "Extension context invalidated, please refresh and retry."
         );
@@ -1018,7 +1049,7 @@ export const claimMintRewards =
     } catch (err: unknown) {
       if ((err as Error).message === "Request rejected") {
         snackbarUtil.error(`Cancelled`);
-      } else if ("Extension context invalidated.") {
+      } else if ((err as Error).message === "Extension context invalidated.") {
         snackbarUtil.error(
           "Extension context invalidated, please refresh and retry."
         );

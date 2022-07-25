@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { atomicToHuman } from "@stafihub/apps-util";
 
 export function useStakePoolInfo(denom: string) {
-  const [poolAddress, setPoolAddress] = useState("--");
+  const [multisigPoolAddress, setMultisigPoolAddress] = useState("--");
+  const [icaPoolAddress, setIcaPoolAddress] = useState("--");
   const [exchangeRate, setExchangeRate] = useState("--");
   const [originExchangeRate, setOriginExchangeRate] = useState("--");
   const [leastBond, setLeastBond] = useState("--");
@@ -11,20 +12,30 @@ export function useStakePoolInfo(denom: string) {
 
   useEffect(() => {
     (async () => {
-      const result = await queryStakePoolInfo(denom);
-      if (result.exchangeRate) {
-        setExchangeRate(atomicToHuman(result.exchangeRate, 6, 6));
-        setOriginExchangeRate(atomicToHuman(result.exchangeRate));
-      }
-      if (result.leastBond) {
-        setLeastBond(atomicToHuman(result.leastBond));
-      }
-      if (result.eraHours) {
-        setEraHours(result.eraHours);
-      }
-      setPoolAddress(result.poolAddress);
+      try {
+        const result = await queryStakePoolInfo(denom);
+        if (result.exchangeRate) {
+          setExchangeRate(atomicToHuman(result.exchangeRate, 6, 6));
+          setOriginExchangeRate(atomicToHuman(result.exchangeRate));
+        }
+        if (result.leastBond) {
+          setLeastBond(atomicToHuman(result.leastBond));
+        }
+        if (result.eraHours) {
+          setEraHours(result.eraHours);
+        }
+        setMultisigPoolAddress(result.multisigPoolAddress);
+        setIcaPoolAddress(result.icaPoolAddress);
+      } catch {}
     })();
   }, [denom]);
 
-  return { poolAddress, exchangeRate, originExchangeRate, leastBond, eraHours };
+  return {
+    multisigPoolAddress,
+    icaPoolAddress,
+    exchangeRate,
+    originExchangeRate,
+    leastBond,
+    eraHours,
+  };
 }

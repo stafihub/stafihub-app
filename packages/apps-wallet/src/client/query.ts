@@ -17,8 +17,7 @@ import type {
   QuerySupplyOfResponse,
   UserClaimInfo,
 } from "@stafihub/types";
-import { ClientState, QueryDenomTraceResponse } from "@stafihub/types";
-import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { ClientState, QueryDenomTraceResponse, Coin } from "@stafihub/types";
 import {
   createCosmosBankQueryService,
   createCosmosBaseQueryService,
@@ -92,7 +91,24 @@ export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
     queryService.GetRParams({
       denom: tokenDenom,
     }),
+    queryService.IcaPoolList({ denom: tokenDenom }),
   ]);
+
+  const icaPoolList = results[3].icaPoolList;
+
+  const multisigPoolAddress = results[0].addrs.find((poolAddress) => {
+    const matchedIcaPool = icaPoolList.find(
+      (item) => item.DelegationAccount?.address === poolAddress
+    );
+    return !matchedIcaPool;
+  });
+
+  const icaPoolAddress = results[0].addrs.find((poolAddress) => {
+    const matchedIcaPool = icaPoolList.find(
+      (item) => item.DelegationAccount?.address === poolAddress
+    );
+    return matchedIcaPool;
+  });
 
   return {
     poolAddress: results[0].addrs[0],
@@ -103,7 +119,24 @@ export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
     eraHours: results[2].rParams?.eraSeconds
       ? Math.round(Number(results[2].rParams.eraSeconds) / 3600).toString()
       : "--",
+    multisigPoolAddress,
+    icaPoolAddress,
   };
+}
+
+export async function queryBondPipeline(
+  tokenDenom: string,
+  poolAddress: string
+): Promise<string> {
+  const queryService = await createQueryService(getStafiHubChainId());
+
+  const result = await queryService.GetBondPipeline({
+    denom: tokenDenom,
+    pool: poolAddress,
+  });
+
+  const balance = result.pipeline?.chunk?.active || "0";
+  return balance;
 }
 
 export async function queryRParams(

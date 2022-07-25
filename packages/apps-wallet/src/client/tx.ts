@@ -110,10 +110,9 @@ export async function sendChainTokens(
 
 export async function sendLiquidityUnbondTx(
   chainId: string,
-  inputAmount: string,
   chainAddress: string,
   stafiHubAddress: string,
-  poolAddress: string
+  pools: { poolAddress: string; amount: string }[]
 ): Promise<DeliverTxResponse | undefined> {
   if (!window.getOfflineSigner) {
     return;
@@ -135,24 +134,20 @@ export async function sendLiquidityUnbondTx(
     { registry: myRegistry }
   );
 
-  const message = {
+  const messages = pools.map((pool) => ({
     typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
     value: MsgLiquidityUnbond.fromPartial({
       creator: stafiHubAddress,
-      pool: poolAddress,
+      pool: pool.poolAddress,
       value: {
         denom: getRTokenDenom(chainId),
-        amount: inputAmount,
+        amount: pool.amount,
       },
       recipient: chainAddress,
     }),
-  };
+  }));
 
-  const simulateResponse = await client.simulate(
-    stafiHubAddress,
-    [message],
-    ""
-  );
+  const simulateResponse = await client.simulate(stafiHubAddress, messages, "");
 
   const fee = {
     amount: [
@@ -166,7 +161,7 @@ export async function sendLiquidityUnbondTx(
 
   const response = await client.signAndBroadcast(
     stafiHubAddress,
-    [message],
+    messages,
     fee
   );
 

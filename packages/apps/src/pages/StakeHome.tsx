@@ -38,9 +38,11 @@ export const StakeHome = () => {
   const chainAccount = useChainAccount(chainId);
   const apy = useApy(chainId);
   const supply = useTokenSupply(chainId);
-  const { poolAddress, exchangeRate, leastBond } = useStakePoolInfo(
-    getRTokenDenom(chainId)
-  );
+  const {
+    multisigPoolAddress: poolAddress,
+    exchangeRate,
+    leastBond,
+  } = useStakePoolInfo(getRTokenDenom(chainId));
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
 

@@ -19,7 +19,6 @@ export const StakeRecovery = () => {
   const chainId = getChainIdFromRTokenDisplayName(params.rToken);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const isLoading = useIsLoading();
-  const { poolAddress } = useStakePoolInfo(getRTokenDenom(chainId));
   const [txHash, setTxHash] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
 
@@ -32,10 +31,10 @@ export const StakeRecovery = () => {
   };
 
   const clickRecovery = () => {
-    if (!txHash || !stafiHubAddress || !poolAddress) {
+    if (!txHash || !stafiHubAddress) {
       return;
     }
-    dispatch(stakeRecovery(chainId, stafiHubAddress, poolAddress, txHash));
+    // dispatch(stakeRecovery(chainId, stafiHubAddress, poolAddress, txHash));
   };
 
   return (
@@ -106,7 +105,7 @@ export const StakeRecovery = () => {
           <Button
             type="rectangle"
             size="small"
-            disabled={!poolAddress}
+            disabled={true}
             loading={isLoading}
           >
             <div className="italic text-[#3B3D5C]" onClick={clickRecovery}>

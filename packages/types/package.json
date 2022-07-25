@@ -21,6 +21,10 @@
     "protobufjs": "6.11.2",
     "ts-proto": "1.88.0"
   },
+  "devDependencies": {
+    "@types/webpack-env": "^1.16.3",
+    "@types/long": "4.0.0"
+  },
   "scripts": {
     "build-proto": "./ts-proto.sh"
   },
@@ -38,8 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/webpack-env": "^1.16.3"
   }
 }

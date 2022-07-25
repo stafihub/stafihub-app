@@ -53,9 +53,8 @@ export const StakeV2 = () => {
   const chainAccount = useChainAccount(chainId);
   const apy = useApy(chainId);
   const supply = useTokenSupply(chainId);
-  const { poolAddress, exchangeRate, leastBond } = useStakePoolInfo(
-    getRTokenDenom(chainId)
-  );
+  const { multisigPoolAddress, icaPoolAddress, exchangeRate, leastBond } =
+    useStakePoolInfo(getRTokenDenom(chainId));
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
   const [memoNoticeModalVisible, setMemoNoticeModalVisible] = useState(false);
@@ -136,8 +135,12 @@ export const StakeV2 = () => {
   }, [mintRewardInfos, inputAmount]);
 
   const buttonDisabled = useMemo(() => {
-    return Boolean(!poolAddress || !stafiHubAddress || !inputAmount);
-  }, [poolAddress, stafiHubAddress, inputAmount]);
+    return Boolean(
+      (!multisigPoolAddress && !icaPoolAddress) ||
+        !stafiHubAddress ||
+        !inputAmount
+    );
+  }, [multisigPoolAddress, icaPoolAddress, stafiHubAddress, inputAmount]);
 
   const totalStakedAmount = useMemo(() => {
     if (isNaN(Number(exchangeRate)) || isNaN(Number(supply))) {
@@ -165,7 +168,7 @@ export const StakeV2 = () => {
   }, [inputAmount, exchangeRate]);
 
   const clickStake = async () => {
-    if (!poolAddress || !stafiHubAddress) {
+    if ((!multisigPoolAddress && !icaPoolAddress) || !stafiHubAddress) {
       return;
     }
 
@@ -175,6 +178,8 @@ export const StakeV2 = () => {
       );
       return;
     }
+
+    const poolAddress = icaPoolAddress || multisigPoolAddress;
 
     dispatch(
       stake(

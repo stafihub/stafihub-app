@@ -7,7 +7,7 @@ if (isDev()) {
 }
 
 const update: NetworkConfig = {};
-configs.keys().forEach((k) => {
+configs.keys().forEach((k: string) => {
   const c = configs(k);
   (update as any)[c.chainId] = c;
 });

@@ -22,7 +22,7 @@
     "ts-proto": "1.88.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.16.3",
+    "@types/webpack-env": "1.16.3",
     "@types/long": "4.0.0"
   },
   "scripts": {

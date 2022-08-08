@@ -20,7 +20,6 @@
     "@cosmjs/proto-signing": "0.27.1",
     "@cosmjs/stargate": "0.27.1",
     "@cosmjs/tendermint-rpc": "0.27.1",
-    "@stafihub/apps-config": "workspace:0.6.3",
     "@stafihub/apps-util": "workspace:0.4.0",
     "@stafihub/types": "workspace:0.6.7",
     "bech32": "^2.0.0",

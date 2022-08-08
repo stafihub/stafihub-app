@@ -1,4 +1,5 @@
-import { chains } from "./chains";
+import { chainsV2 } from "./chains";
+import { NetworkConfig } from ".";
 import { ibcConfigs } from "./ibc";
 import * as _ from "lodash";
 
@@ -13,6 +14,10 @@ export function isDev(): boolean {
 
 export function isFork(): boolean {
   return process.env.REACT_APP_CHAIN_ID !== getStafiHubChainId();
+}
+
+export function getChains(network: "testnet" | "devnet" | "mainnet") {
+  return chainsV2[network];
 }
 
 export function getApiHost(): string {
@@ -31,7 +36,10 @@ export function getStafiHubChainId(): string {
   }
 }
 
-export function getChainRestEndpoint(chainId: string | undefined): string {
+export function getChainRestEndpoint(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -39,7 +47,10 @@ export function getChainRestEndpoint(chainId: string | undefined): string {
   return chain.restEndpoint;
 }
 
-export function getChainAccountPrefix(chainId: string | undefined): string {
+export function getChainAccountPrefix(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -47,7 +58,10 @@ export function getChainAccountPrefix(chainId: string | undefined): string {
   return chain.bech32Config.bech32PrefixAccAddr;
 }
 
-export function getChainName(chainId: string | undefined): string {
+export function getChainName(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -55,7 +69,10 @@ export function getChainName(chainId: string | undefined): string {
   return chain.chainName;
 }
 
-export function getChainDecimals(chainId: string | undefined): number {
+export function getChainDecimals(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): number {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -63,7 +80,10 @@ export function getChainDecimals(chainId: string | undefined): number {
   return chain.decimals;
 }
 
-export function getTokenDisplayName(chainId: string | undefined): string {
+export function getTokenDisplayName(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -72,7 +92,10 @@ export function getTokenDisplayName(chainId: string | undefined): string {
   return chain.coinDenom;
 }
 
-export function getRTokenDisplayName(chainId: string | undefined): string {
+export function getRTokenDisplayName(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -82,11 +105,12 @@ export function getRTokenDisplayName(chainId: string | undefined): string {
 }
 
 export function getChainIdFromRTokenDisplayName(
-  rTokenName: string | undefined
+  rTokenName: string | undefined,
+  chains: NetworkConfig
 ): string {
   const chainArr = _.values(chains);
   const matchedChain = chainArr.find((chain) => {
-    return getRTokenDisplayName(chain.chainId) === rTokenName;
+    return getRTokenDisplayName(chain.chainId, chains) === rTokenName;
   });
   if (!matchedChain) {
     throw new Error(`Chain with this rTokenName not found: ${rTokenName}`);
@@ -94,7 +118,10 @@ export function getChainIdFromRTokenDisplayName(
   return matchedChain.chainId;
 }
 
-export function getChainIdFromDenom(denom: string | undefined): string {
+export function getChainIdFromDenom(
+  denom: string | undefined,
+  chains: NetworkConfig
+): string {
   const chainArr = _.values(chains);
   const matchedChain = chainArr.find((chain) => {
     return chain.denom === denom;
@@ -105,7 +132,10 @@ export function getChainIdFromDenom(denom: string | undefined): string {
   return matchedChain.chainId;
 }
 
-export function getDenom(chainId: string | undefined): string {
+export function getDenom(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -113,7 +143,10 @@ export function getDenom(chainId: string | undefined): string {
   return chain.denom;
 }
 
-export function getRTokenDenom(chainId: string | undefined): string {
+export function getRTokenDenom(
+  chainId: string | undefined,
+  chains: NetworkConfig
+): string {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -121,7 +154,10 @@ export function getRTokenDenom(chainId: string | undefined): string {
   return `ur${chain.denom.slice(1)}`;
 }
 
-export function getExplorerUrl(chainId: string | undefined) {
+export function getExplorerUrl(
+  chainId: string | undefined,
+  chains: NetworkConfig
+) {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -129,7 +165,10 @@ export function getExplorerUrl(chainId: string | undefined) {
   return chain.explorerUrl;
 }
 
-export function getIBCConfig(otherChainId: string | undefined) {
+export function getIBCConfig(
+  otherChainId: string | undefined,
+  chains: NetworkConfig
+) {
   if (!otherChainId || !ibcConfigs[otherChainId]) {
     throw new Error(`Invalid otherChainId: ${otherChainId}`);
   }
@@ -137,7 +176,10 @@ export function getIBCConfig(otherChainId: string | undefined) {
   return ibcConfig;
 }
 
-export function getDefaultApy(chainId: string | undefined) {
+export function getDefaultApy(
+  chainId: string | undefined,
+  chains: NetworkConfig
+) {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }
@@ -145,7 +187,10 @@ export function getDefaultApy(chainId: string | undefined) {
   return chain.defaultApy;
 }
 
-export function getDisplayHubName(chainId: string | undefined) {
+export function getDisplayHubName(
+  chainId: string | undefined,
+  chains: NetworkConfig
+) {
   if (!chainId || !chains[chainId]) {
     throw new Error(`Invalid chainId: ${chainId}`);
   }

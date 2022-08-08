@@ -5,11 +5,6 @@ import {
   DeliverTxResponse,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import {
-  chains,
-  getRTokenDenom,
-  getStafiHubChainId,
-} from "@stafihub/apps-config";
 import { humanToAtomic } from "@stafihub/apps-util";
 import {
   IBCMsgTransfer,
@@ -19,21 +14,25 @@ import {
 import { queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
 import Long from "long";
+import { KeplrChainParams } from "@stafihub/apps-config";
 
 declare const window: any;
 
 export async function sendStakeTx(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   inputAmount: string,
   accountAddress: string,
   stafiHubAddress: string,
   poolAddress: string
 ): Promise<DeliverTxResponse | undefined> {
-  const client = await createCosmosClient(chainId);
+  if (!chainConfig) {
+    throw new Error("stafiHubChainConfig can not be empty");
+  }
+  const client = await createCosmosClient(chainConfig.chainId);
   const fee = {
     amount: [
       {
-        denom: chains[chainId].denom,
+        denom: chainConfig.denom,
         amount: "5000",
       },
     ],
@@ -42,10 +41,7 @@ export async function sendStakeTx(
   const sendTokens = await client?.sendTokens(
     accountAddress,
     poolAddress,
-    coins(
-      humanToAtomic(inputAmount, chains[chainId].decimals),
-      chains[chainId].denom
-    ),
+    coins(humanToAtomic(inputAmount, chainConfig.decimals), chainConfig.denom),
     fee,
     `1:${stafiHubAddress}`
   );
@@ -53,17 +49,20 @@ export async function sendStakeTx(
 }
 
 export async function sendRecoveryTx(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   accountAddress: string,
   stafiHubAddress: string,
   poolAddress: string,
   txHash: string
 ): Promise<DeliverTxResponse | undefined> {
-  const client = await createCosmosClient(chainId);
+  if (!chainConfig) {
+    throw new Error("stafiHubChainConfig can not be empty");
+  }
+  const client = await createCosmosClient(chainConfig.chainId);
   const fee = {
     amount: [
       {
-        denom: chains[chainId].denom,
+        denom: chainConfig.denom,
         amount: "5000",
       },
     ],
@@ -72,7 +71,7 @@ export async function sendRecoveryTx(
   const sendTokens = await client?.sendTokens(
     accountAddress,
     poolAddress,
-    coins(1, chains[chainId].denom),
+    coins(1, chainConfig.denom),
     fee,
     `2:${stafiHubAddress}:${txHash}`
   );
@@ -80,20 +79,20 @@ export async function sendRecoveryTx(
 }
 
 export async function sendChainTokens(
+  chainConfig: KeplrChainParams | null | undefined,
   amount: string,
-  chainId: string,
   sender: string,
   targetAddress: string,
   memo: string
 ): Promise<DeliverTxResponse | undefined> {
-  if (!chains[chainId]) {
-    return;
+  if (!chainConfig) {
+    throw new Error("stafiHubChainConfig can not be empty");
   }
-  const client = await createCosmosClient(chainId);
+  const client = await createCosmosClient(chainConfig.chainId);
   const fee = {
     amount: [
       {
-        denom: chains[chainId].denom,
+        denom: chainConfig.denom,
         amount: "5000",
       },
     ],
@@ -102,7 +101,7 @@ export async function sendChainTokens(
   const response = await client?.sendTokens(
     sender,
     targetAddress,
-    coins(amount, chains[chainId].denom),
+    coins(amount, chainConfig.denom),
     fee,
     memo
   );
@@ -110,7 +109,8 @@ export async function sendChainTokens(
 }
 
 export async function sendLiquidityUnbondTx(
-  chainId: string,
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
+  rTokenDenom: string,
   chainAddress: string,
   stafiHubAddress: string,
   pools: { poolAddress: string; amount: string }[]
@@ -119,18 +119,20 @@ export async function sendLiquidityUnbondTx(
     return;
   }
 
+  if (!stafiHubChainConfig) {
+    throw new Error("stafiHubChainConfig can not be empty");
+  }
+
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register(
     "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
     MsgLiquidityUnbond
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -141,7 +143,7 @@ export async function sendLiquidityUnbondTx(
       creator: stafiHubAddress,
       pool: pool.poolAddress,
       value: {
-        denom: getRTokenDenom(chainId),
+        denom: rTokenDenom,
         amount: pool.amount,
       },
       recipient: chainAddress,
@@ -153,7 +155,7 @@ export async function sendLiquidityUnbondTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -170,7 +172,7 @@ export async function sendLiquidityUnbondTx(
 }
 
 export async function sendIBCTransferTx(
-  srcChainId: string,
+  srcChainConfig: KeplrChainParams | null | undefined,
   sender: string,
   receiver: string,
   amount: string,
@@ -184,21 +186,28 @@ export async function sendIBCTransferTx(
     return;
   }
 
+  if (!srcChainConfig) {
+    throw new Error("srcChainConfig can not be empty");
+  }
+
   const myRegistry = new Registry(defaultStargateTypes);
   const msgTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
   myRegistry.register(msgTypeUrl, IBCMsgTransfer);
 
-  const offlineSigner = window.getOfflineSigner(srcChainId);
+  const offlineSigner = window.getOfflineSigner(srcChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[srcChainId].rpc,
+    srcChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
 
   // const currentHeight = await client.getHeight();
 
-  const clientState = await queryChannelClientState(srcChainId, sourceChannel);
+  const clientState = await queryChannelClientState(
+    srcChainConfig.chainId,
+    sourceChannel
+  );
 
   const message = {
     typeUrl: msgTypeUrl,
@@ -223,7 +232,7 @@ export async function sendIBCTransferTx(
   const fee = {
     amount: [
       {
-        denom: chains[srcChainId].denom,
+        denom: srcChainConfig.denom,
         amount: "1",
       },
     ],
@@ -239,7 +248,7 @@ export async function sendIBCTransferTx(
 }
 
 export async function sendClaimMintRewardTx(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   sender: string,
   denom: string,
   cycle: Long,
@@ -250,14 +259,18 @@ export async function sendClaimMintRewardTx(
     return;
   }
 
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+
   const myRegistry = new Registry(defaultStargateTypes);
   const msgTypeUrl = "/stafihub.stafihub.rmintreward.MsgClaimMintReward";
   myRegistry.register(msgTypeUrl, MsgClaimMintReward);
 
-  const offlineSigner = window.getOfflineSigner(chainId);
+  const offlineSigner = window.getOfflineSigner(chainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[chainId].rpc,
+    chainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -277,7 +290,7 @@ export async function sendClaimMintRewardTx(
   const fee = {
     amount: [
       {
-        denom: chains[chainId].denom,
+        denom: chainConfig.denom,
         amount: "1",
       },
     ],

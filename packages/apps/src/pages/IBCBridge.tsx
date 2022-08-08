@@ -1,5 +1,4 @@
 import {
-  chains,
   getIBCConfig,
   getStafiHubChainId,
   ibcConfigs,
@@ -18,6 +17,7 @@ import { BridgeChainSelector } from "../components/bridge/BridgeChainSelector";
 import { BridgeTokenSelector } from "../components/bridge/BridgeTokenSelector";
 import { SwapAddressInput } from "../components/bridge/SwapAddressInput";
 import { SwapAmountInput } from "../components/bridge/SwapAmountInput";
+import { chains } from "../config";
 import { useAccounts, useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import {
@@ -231,7 +231,7 @@ export const IBCBridge = () => {
           ? chainPair.dst.chainId
           : chainPair.src.chainId;
 
-      const ibcConfig = getIBCConfig(otherChainId);
+      const ibcConfig = getIBCConfig(otherChainId, chains);
 
       if (!ibcConfig) {
         setTokenChannelList([]);

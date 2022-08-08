@@ -11,32 +11,31 @@ import {
   RDexMiningQueryClientImpl,
   AirdropClaimQueryClientImpl,
 } from "@stafihub/types";
-import { chains } from "@stafihub/apps-config";
 import { RDexQueryClientImpl } from "@stafihub/types/src/rdex";
+import { KeplrChainParams } from "../interface";
 
-export async function createQueryService(chainId: string) {
-  // Inside an async function...
-  // The Tendermint client knows how to talk to the Tendermint RPC endpoint
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
-  // The generic Stargate query client knows how to use the Tendermint client to submit unverified ABCI queries
   const queryClient = new QueryClient(tendermintClient);
-
-  // This helper function wraps the generic Stargate query client for use by the specific generated query client
   const rpcClient = createProtobufRpcClient(queryClient);
-
-  // Here we instantiate a specific query client which will have the custom methods defined in the .proto file
   const queryService = new QueryClientImpl(rpcClient);
 
   return queryService;
 }
 
-export async function createCosmosBankQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createCosmosBankQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -45,10 +44,13 @@ export async function createCosmosBankQueryService(chainId: string) {
   return queryService;
 }
 
-export async function createCosmosBaseQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createCosmosBaseQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -57,10 +59,13 @@ export async function createCosmosBaseQueryService(chainId: string) {
   return queryService;
 }
 
-export async function createCosmosStakingQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createCosmosStakingQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -69,10 +74,13 @@ export async function createCosmosStakingQueryService(chainId: string) {
   return queryService;
 }
 
-export async function createIBCApplicationsQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createIBCApplicationsQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -81,10 +89,13 @@ export async function createIBCApplicationsQueryService(chainId: string) {
   return queryService;
 }
 
-export async function createIBCCoreConnectionQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createIBCCoreConnectionQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -93,10 +104,13 @@ export async function createIBCCoreConnectionQueryService(chainId: string) {
   return queryService;
 }
 
-export async function createRMintRewardQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createRMintRewardQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -111,12 +125,13 @@ type QueryClientImplType = IBCCoreChannelQueryClientImpl;
 export type Constructor = new (rpc: any) => QueryClientImplType;
 
 export async function createQueryService2<T extends Constructor>(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   clientType: T
 ): Promise<QueryClientImplType> {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -125,10 +140,13 @@ export async function createQueryService2<T extends Constructor>(
   return queryService;
 }
 
-export async function createRDexQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createRDexQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -137,10 +155,13 @@ export async function createRDexQueryService(chainId: string) {
   return queryService;
 }
 
-export async function createRDexMiningQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createRDexMiningQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -149,10 +170,13 @@ export async function createRDexMiningQueryService(chainId: string) {
   return queryService;
 }
 
-export async function createAirdropClaimQueryService(chainId: string) {
-  const tendermintClient = await Tendermint34Client.connect(
-    chains[chainId].rpc
-  );
+export async function createAirdropClaimQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
 
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);

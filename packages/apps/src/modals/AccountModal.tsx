@@ -1,10 +1,11 @@
 import { Box, Modal } from "@mui/material";
-import { chains, getStafiHubChainId } from "@stafihub/apps-config";
+import { getStafiHubChainId } from "@stafihub/apps-config";
 import { Button } from "@stafihub/react-components";
 import * as _ from "lodash";
 import { useMemo } from "react";
 import { useAccounts } from "../hooks/useAppSlice";
 import { AccountItem } from "../components/AccountItem";
+import { chains } from "../config";
 
 interface UnbondModalProps {
   visible: boolean;

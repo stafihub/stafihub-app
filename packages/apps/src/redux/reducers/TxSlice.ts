@@ -10,7 +10,6 @@ import {
   getRTokenDisplayName,
   getStafiHubChainId,
   getTokenDisplayName,
-  STAFIHUB_DECIMALS,
 } from "@stafihub/apps-config";
 import { humanToAtomic, atomicToHuman } from "@stafihub/apps-util";
 import {
@@ -29,6 +28,7 @@ import {
 import { LiquidityBondState } from "@stafihub/types";
 import Long from "long";
 import moment from "moment";
+import { chains } from "../../config";
 import { FeeStationPool } from "../../types/interface";
 import { getHumanAccountBalance, timeout } from "../../utils/common";
 import snackbarUtil from "../../utils/snackbarUtils";
@@ -131,7 +131,7 @@ export const stake =
       if (
         !checkAddress(
           stafiHubAddress,
-          getChainAccountPrefix(getStafiHubChainId())
+          getChainAccountPrefix(getStafiHubChainId(), chains)
         )
       ) {
         snackbarUtil.error("Address format error");
@@ -145,7 +145,7 @@ export const stake =
 
       dispatch(setIsLoading(true));
       const txResponse = await sendStakeTx(
-        chainId,
+        chains[chainId],
         inputAmount,
         chainAccount.bech32Address,
         stafiHubAddress,
@@ -166,11 +166,11 @@ export const stake =
               chainId,
             },
             {
-              tokenName: getTokenDisplayName(chainId),
+              tokenName: getTokenDisplayName(chainId, chains),
               stakeAmount: inputAmount,
               eraNumber,
             },
-            getExplorerUrl(chainId)
+            getExplorerUrl(chainId, chains)
           )
         );
 
@@ -180,7 +180,7 @@ export const stake =
         dispatch(
           setStakeSidebarProps({
             visible: true,
-            explorerUrl: getExplorerUrl(chainId),
+            explorerUrl: getExplorerUrl(chainId, chains),
             chainId: chainId,
             txHash: "",
             eraNumber,
@@ -204,7 +204,7 @@ export const stake =
         let timeCount = 0;
         while (true) {
           const bondRecordRes = await queryBondRecord(
-            getRTokenDenom(chainId),
+            getRTokenDenom(chainId, chains),
             txResponse.transactionHash
           );
 
@@ -296,7 +296,7 @@ export const stakeRecovery =
       if (
         !checkAddress(
           stafiHubAddress,
-          getChainAccountPrefix(getStafiHubChainId())
+          getChainAccountPrefix(getStafiHubChainId(), chains)
         )
       ) {
         snackbarUtil.error("Address format error");
@@ -314,7 +314,9 @@ export const stakeRecovery =
 
       if (!txDetail) {
         snackbarUtil.error(
-          "The txHash does not exist on " + getChainName(chainId) + " chain."
+          "The txHash does not exist on " +
+            getChainName(chainId, chains) +
+            " chain."
         );
         return;
       }
@@ -354,7 +356,8 @@ export const stakeRecovery =
       if (sender !== chainAccount.bech32Address) {
         snackbarUtil.error(
           `Please select your ${getTokenDisplayName(
-            chainId
+            chainId,
+            chains
           )} account that sent the transaction.`
         );
         return;
@@ -363,7 +366,7 @@ export const stakeRecovery =
       // console.log("rawLog", parsedRawLog);
 
       const currentBondRecordRes = await queryBondRecord(
-        getRTokenDenom(chainId),
+        getRTokenDenom(chainId, chains),
         txHash
       );
 
@@ -379,7 +382,7 @@ export const stakeRecovery =
       }
 
       const txResponse = await sendRecoveryTx(
-        chainId,
+        chains[chainId],
         chainAccount.bech32Address,
         stafiHubAddress,
         poolAddress,
@@ -393,7 +396,7 @@ export const stakeRecovery =
         dispatch(
           setStakeSidebarProps({
             visible: true,
-            explorerUrl: getExplorerUrl(chainId),
+            explorerUrl: getExplorerUrl(chainId, chains),
             txHash,
             sendingStatus: 2,
             mintingStatus: 1,
@@ -404,7 +407,7 @@ export const stakeRecovery =
         let timeCount = 0;
         while (true) {
           const bondRecordRes = await queryBondRecord(
-            getRTokenDenom(chainId),
+            getRTokenDenom(chainId, chains),
             txHash
           );
 
@@ -494,8 +497,8 @@ export const unbond =
 
       const fisAmount = getHumanAccountBalance(
         stafiHubAccount.allBalances,
-        getDenom(getStafiHubChainId()),
-        getChainDecimals(getStafiHubChainId())
+        getDenom(getStafiHubChainId(), chains),
+        getChainDecimals(getStafiHubChainId(), chains)
       );
 
       if (Number(fisAmount) < Number(relayFee) + Number(0.0045)) {
@@ -506,7 +509,7 @@ export const unbond =
       dispatch(setIsLoading(true));
 
       const multisigPoolBalance = await queryBondPipeline(
-        getRTokenDenom(chainId),
+        getRTokenDenom(chainId, chains),
         multisigPoolAddress
       );
 
@@ -542,7 +545,8 @@ export const unbond =
       }
 
       const txResponse = await sendLiquidityUnbondTx(
-        chainId,
+        chains[getStafiHubChainId()],
+        getRTokenDenom(chainId, chains),
         chainAccount.bech32Address,
         stafiHubAccount.bech32Address,
         pools
@@ -561,15 +565,15 @@ export const unbond =
               chainId,
             },
             {
-              tokenName: getTokenDisplayName(chainId),
-              rTokenName: getRTokenDisplayName(chainId),
+              tokenName: getTokenDisplayName(chainId, chains),
+              rTokenName: getRTokenDisplayName(chainId, chains),
               unstakeAmount: inputAmount,
               willGetAmount,
               completeTimestamp:
                 moment().valueOf() + Number(bondingHours) * 3600 * 1000,
-              rTokenDenom: getRTokenDenom(chainId),
+              rTokenDenom: getRTokenDenom(chainId, chains),
             },
-            getExplorerUrl(getStafiHubChainId()),
+            getExplorerUrl(getStafiHubChainId(), chains),
             "Confirmed"
           )
         );
@@ -647,7 +651,7 @@ export const feeStationSwap =
 
       const payerAddressBalanceResult = await queryAccountBalance(
         getStafiHubChainId(),
-        getDenom(getStafiHubChainId()),
+        getDenom(getStafiHubChainId(), chains),
         payerAddress
       );
 
@@ -688,8 +692,8 @@ export const feeStationSwap =
         const memo = `${uuid}:${stafiHubAccount.bech32Address}`;
 
         const txResponse = await sendChainTokens(
+          chains[poolInfo.chainId],
           humanToAtomic(inAmount, poolInfo.decimals),
-          poolInfo.chainId,
           chainAccount.bech32Address,
           poolInfo.poolAddress,
           memo
@@ -707,13 +711,13 @@ export const feeStationSwap =
                 chainId: poolInfo.chainId,
               },
               {
-                inputTokenName: getTokenDisplayName(poolInfo.chainId),
+                inputTokenName: getTokenDisplayName(poolInfo.chainId, chains),
                 inputAmount: inAmount,
                 outputTokenName: "FIS",
                 outputAmount: outAmount,
                 uuid,
               },
-              getExplorerUrl(getStafiHubChainId())
+              getExplorerUrl(getStafiHubChainId(), chains)
             )
           );
 
@@ -878,7 +882,7 @@ export const ibcBridgeSwap =
   ): AppThunk =>
   async (dispatch, getState) => {
     // Check dst address.
-    if (!checkAddress(dstAddress, getChainAccountPrefix(dstChainId))) {
+    if (!checkAddress(dstAddress, getChainAccountPrefix(dstChainId, chains))) {
       snackbarUtil.error("Address format error");
       return;
     }
@@ -906,11 +910,11 @@ export const ibcBridgeSwap =
 
       if (srcChainId === getStafiHubChainId()) {
         if (isRToken) {
-          transferDenom = getRTokenDenom(otherChainId);
+          transferDenom = getRTokenDenom(otherChainId, chains);
         } else {
           const ibcChannel = getIBCChannel(
             getState().ibc.ibcChannelStore,
-            getDenom(otherChainId),
+            getDenom(otherChainId, chains),
             srcChannel
           );
 
@@ -920,13 +924,13 @@ export const ibcBridgeSwap =
         if (isRToken) {
           const ibcChannel = getIBCChannel(
             getState().ibc.ibcChannelStore,
-            getRTokenDenom(otherChainId),
+            getRTokenDenom(otherChainId, chains),
             srcChannel
           );
 
           transferDenom = ibcChannel?.ibcDenom;
         } else {
-          transferDenom = getDenom(otherChainId);
+          transferDenom = getDenom(otherChainId, chains);
         }
       }
 
@@ -938,10 +942,10 @@ export const ibcBridgeSwap =
       // console.log("transferDenom", transferDenom);
 
       const txResponse = await sendIBCTransferTx(
-        srcChainId,
+        chains[srcChainId],
         srcChainAccount.bech32Address,
         dstAddress,
-        humanToAtomic(inputAmount, getChainDecimals(srcChainId)),
+        humanToAtomic(inputAmount, getChainDecimals(srcChainId, chains)),
         "transfer",
         srcChannel,
         transferDenom
@@ -962,13 +966,13 @@ export const ibcBridgeSwap =
             },
             {
               tokenName: isRToken
-                ? getRTokenDisplayName(otherChainId)
-                : getTokenDisplayName(otherChainId),
+                ? getRTokenDisplayName(otherChainId, chains)
+                : getTokenDisplayName(otherChainId, chains),
               amount: inputAmount,
-              inputChainName: getChainName(srcChainId),
-              outputChainName: getChainName(dstChainId),
+              inputChainName: getChainName(srcChainId, chains),
+              outputChainName: getChainName(dstChainId, chains),
             },
-            getExplorerUrl(srcChainId),
+            getExplorerUrl(srcChainId, chains),
             "Confirmed"
           )
         );
@@ -1017,7 +1021,7 @@ export const claimMintRewards =
       // console.log("transferDenom", transferDenom);
 
       const txResponse = await sendClaimMintRewardTx(
-        getStafiHubChainId(),
+        chains[getStafiHubChainId()],
         stafiHubAccount.bech32Address,
         denom,
         Long.fromInt(cycle),
@@ -1040,7 +1044,7 @@ export const claimMintRewards =
               rewardTokenDenom: rewardTokenDenom,
               claimableRewardText: claimableRewardText,
             },
-            getExplorerUrl(getStafiHubChainId()),
+            getExplorerUrl(getStafiHubChainId(), chains),
             "Confirmed"
           )
         );

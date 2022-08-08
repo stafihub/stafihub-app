@@ -18,6 +18,7 @@ import {
 } from "@stafihub/types";
 import { queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
+import Long from "long";
 
 declare const window: any;
 

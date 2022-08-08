@@ -1,6 +1,6 @@
 {
   "name": "@stafihub/apps-wallet",
-  "version": "0.8.9",
+  "version": "0.9.9",
   "type": "module",
   "main": "./src/index.ts",
   "repository": {
@@ -20,10 +20,14 @@
     "@cosmjs/proto-signing": "0.27.1",
     "@cosmjs/stargate": "0.27.1",
     "@cosmjs/tendermint-rpc": "0.27.1",
-    "@stafihub/apps-config": "workspace:0.6.1",
+    "@stafihub/apps-config": "workspace:0.6.2",
     "@stafihub/apps-util": "workspace:0.4.0",
-    "@stafihub/types": "workspace:0.6.4",
-    "bech32": "^2.0.0"
+    "@stafihub/types": "workspace:0.6.7",
+    "bech32": "^2.0.0",
+    "long": "4.0.0"
+  },
+  "devDependencies": {
+    "@types/long": "4.0.0"
   },
   "eslintConfig": {
     "extends": []

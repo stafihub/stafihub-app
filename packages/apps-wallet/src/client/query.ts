@@ -17,7 +17,8 @@ import type {
   QuerySupplyOfResponse,
   UserClaimInfo,
 } from "@stafihub/types";
-import { ClientState, QueryDenomTraceResponse, Coin } from "@stafihub/types";
+import { ClientState, Coin, QueryDenomTraceResponse } from "@stafihub/types";
+import Long from "long";
 import {
   createCosmosBankQueryService,
   createCosmosBaseQueryService,

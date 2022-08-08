@@ -7,3 +7,5 @@ export * from "./rdex/query";
 export * from "./rdex/tx";
 export * from "./mining/query";
 export * from "./mining/tx";
+export * from "./claim/tx";
+export * from "./claim/query";

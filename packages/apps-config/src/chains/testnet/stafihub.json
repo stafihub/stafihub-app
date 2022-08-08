@@ -1,6 +1,6 @@
 {
   "chainName": "StaFi-Hub-Testnet",
-  "chainId": "stafihub-public-testnet-3",
+  "chainId": "stafihub-testnet-1",
   "displayHubName": "StaFiHub",
   "rpc": "https://test-rpc1.stafihub.io",
   "restEndpoint": "https://test-rest-rpc1.stafihub.io",

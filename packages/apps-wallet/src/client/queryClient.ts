@@ -9,6 +9,7 @@ import {
   CosmosBaseServiceClientImpl,
   RMintRewardQueryClientImpl,
   RDexMiningQueryClientImpl,
+  AirdropClaimQueryClientImpl,
 } from "@stafihub/types";
 import { chains } from "@stafihub/apps-config";
 import { RDexQueryClientImpl } from "@stafihub/types/src/rdex";
@@ -144,6 +145,18 @@ export async function createRDexMiningQueryService(chainId: string) {
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
   const queryService = new RDexMiningQueryClientImpl(rpcClient);
+
+  return queryService;
+}
+
+export async function createAirdropClaimQueryService(chainId: string) {
+  const tendermintClient = await Tendermint34Client.connect(
+    chains[chainId].rpc
+  );
+
+  const queryClient = new QueryClient(tendermintClient);
+  const rpcClient = createProtobufRpcClient(queryClient);
+  const queryService = new AirdropClaimQueryClientImpl(rpcClient);
 
   return queryService;
 }

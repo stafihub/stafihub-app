@@ -14,6 +14,9 @@ protoc \
   "./proto/rdex/tx.proto" \
   "./proto/rdex/query.proto" \
   "./proto/rdex/models.proto" \
+  "./proto/claim/tx.proto" \
+  "./proto/claim/query.proto" \
+  "./proto/claim/params.proto" \
   "./proto/rmintreward/query.proto" \
   "./proto/rmintreward/tx.proto" \
   "./proto/cosmos/base/tendermint/v1beta1/query.proto" \
@@ -22,4 +25,4 @@ protoc \
   "./proto/ibc/applications/transfer/v1/query.proto" \
   "./proto/ibc/applications/transfer/v1/tx.proto" \
   "./proto/ibc/core/channel/v1/query.proto" \
-  "./proto/ibc/lightclients/tendermint/v1/tendermint.proto" 
+  "./proto/ibc/lightclients/tendermint/v1/tendermint.proto"

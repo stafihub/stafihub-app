@@ -163,10 +163,12 @@ importers:
       '@cosmjs/proto-signing': 0.27.1
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
-      '@stafihub/apps-config': workspace:0.6.1
+      '@stafihub/apps-config': workspace:0.6.2
       '@stafihub/apps-util': workspace:0.4.0
-      '@stafihub/types': workspace:0.6.4
+      '@stafihub/types': workspace:0.6.7
+      '@types/long': 4.0.0
       bech32: ^2.0.0
+      long: 4.0.0
     dependencies:
       '@cosmjs/encoding': 0.27.1
       '@cosmjs/launchpad': 0.27.1
@@ -178,14 +180,17 @@ importers:
       '@stafihub/apps-util': link:../apps-util
       '@stafihub/types': link:../types
       bech32: 2.0.0
+      long: 4.0.0
+    devDependencies:
+      '@types/long': 4.0.0
 
   packages/react-components:
     specifiers:
       '@emotion/react': ^11.8.1
       '@emotion/styled': ^11.8.1
       '@mui/material': ^5.4.2
-      '@stafihub/apps-config': workspace:0.6.1
-      '@stafihub/apps-wallet': workspace:0.8.9
+      '@stafihub/apps-config': workspace:0.6.2
+      '@stafihub/apps-wallet': workspace:0.9.6
       '@testing-library/jest-dom': ^5.14.1
       '@testing-library/react': ^12.0.0
       '@testing-library/user-event': ^13.2.1

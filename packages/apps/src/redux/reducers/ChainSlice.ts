@@ -5,6 +5,7 @@ import {
   getStafiHubChainId,
 } from "@stafihub/apps-config";
 import { queryChainEra } from "@stafihub/apps-wallet";
+import { chains } from "../../config";
 import { ChainStakeStatus, RTokenRewardData } from "../../types/interface";
 import { AppThunk } from "../store";
 
@@ -73,7 +74,10 @@ export const updateChainEras =
   async (dispatch, getState) => {
     const requests = chainIds.map((chainId) => {
       return (async () => {
-        const era = await queryChainEra(getRTokenDenom(chainId));
+        const era = await queryChainEra(
+          chains[getStafiHubChainId()],
+          getRTokenDenom(chainId, chains)
+        );
 
         return { chainId, era: era?.era || 0 };
       })();

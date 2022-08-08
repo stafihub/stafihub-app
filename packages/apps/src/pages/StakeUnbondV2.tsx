@@ -7,15 +7,18 @@ import { useParams } from "react-router-dom";
 import nodata from "../assets/images/nodata.png";
 import { UnbondRecordTableHeaderV2 } from "../components/unbond/UnbondRecordTableHeaderV2";
 import { UnbondRewardItemV2 } from "../components/unbond/UnbondRewardItemV2";
+import { chains } from "../config";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useRParams } from "../hooks/useRParams";
 
 export const StakeUnbondV2 = () => {
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const { bondingDays } = useRParams(getRTokenDenom(chainId));
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
+  const { bondingDays } = useRParams(getRTokenDenom(chainId, chains));
 
-  const { unbondRecords, loading } = useAccountUnbond(getRTokenDenom(chainId));
+  const { unbondRecords, loading } = useAccountUnbond(
+    getRTokenDenom(chainId, chains)
+  );
 
   return (
     <div className="">

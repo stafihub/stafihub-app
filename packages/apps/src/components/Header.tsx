@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import iconMore from "../assets/images/icon_more.svg";
 import iconNotice from "../assets/images/icon_notice.svg";
+import { chains } from "../config";
 import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
 import { AccountModal } from "../modals/AccountModal";
 import { getHumanAccountBalance } from "../utils/common";
@@ -64,11 +65,11 @@ export const Header = () => {
           <FormatterText
             value={getHumanAccountBalance(
               accounts[STAFIHUB_CHAIN_ID]?.allBalances,
-              getDenom(STAFIHUB_CHAIN_ID)
+              getDenom(STAFIHUB_CHAIN_ID, chains)
             )}
           />
           <div className="ml-1 uppercase">
-            {getTokenDisplayName(STAFIHUB_CHAIN_ID)}
+            {getTokenDisplayName(STAFIHUB_CHAIN_ID, chains)}
           </div>
         </div>
 

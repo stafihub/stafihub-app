@@ -11,13 +11,14 @@ import nodata from "../assets/images/nodata.png";
 import { CustomPagination } from "../components/CustomPagination";
 import { StakeRewardTableHeader } from "../components/StakeRewardTableHeader";
 import { StakeRewardTableItem } from "../components/StakeRewardTableItem";
+import { chains } from "../config";
 import { useChainAccount } from "../hooks/useAppSlice";
 import { EraRewardItem } from "../types/interface";
 
 export const StakeRewardListV2 = () => {
   const params = useParams();
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
@@ -40,7 +41,7 @@ export const StakeRewardListV2 = () => {
           body: JSON.stringify({
             chainType: 80,
             userAddress: stafiHubAccount.bech32Address,
-            rTokenDenom: getRTokenDenom(chainId),
+            rTokenDenom: getRTokenDenom(chainId, chains),
             pageIndex: page,
             pageCount: 10,
           }),

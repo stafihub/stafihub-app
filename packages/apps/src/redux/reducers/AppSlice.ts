@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { chains, getApiHost, getStafiHubChainId } from "@stafihub/apps-config";
+import { getApiHost, getStafiHubChainId } from "@stafihub/apps-config";
 import {
   connectAtomjs,
   getKeplrAccount,
   queryAccountBalances,
 } from "@stafihub/apps-wallet";
 import * as _ from "lodash";
+import { chains } from "../../config";
 import { KeplrAccount, PriceItem } from "../../types/interface";
 import {
   NoticeDataType,
@@ -141,7 +142,7 @@ export const connectKeplrChains =
 
 const _connectkeplr = async (dispatch: any, chainId: string) => {
   try {
-    await connectAtomjs(chainId);
+    await connectAtomjs(chains[chainId]);
     const accountResult = await getKeplrAccount(chainId);
 
     if (!accountResult) {
@@ -155,7 +156,10 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
     };
     // console.log("account", account);
 
-    const balances = await queryAccountBalances(chainId, account.bech32Address);
+    const balances = await queryAccountBalances(
+      chains[chainId],
+      account.bech32Address
+    );
     account.allBalances = balances;
 
     dispatch(updateAccounts(chainId, account));
@@ -197,7 +201,7 @@ export const updateTokenBalance =
       }
       const newAccount = { ...account };
       const balances = await queryAccountBalances(
-        chainId,
+        chains[chainId],
         newAccount.bech32Address
       );
       newAccount.allBalances = balances;
@@ -226,7 +230,7 @@ export const updateAllTokenBalance =
           }
           const newAccount = { ...account };
           const balances = await queryAccountBalances(
-            chainId,
+            chains[chainId],
             newAccount.bech32Address
           );
           newAccount.allBalances = balances;

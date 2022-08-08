@@ -2,6 +2,7 @@ import {
   getRTokenDisplayName,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
+import { chains } from "../config";
 
 export const StakeRewardTableHeader = (props: {
   chainId: string | undefined;
@@ -11,15 +12,17 @@ export const StakeRewardTableHeader = (props: {
       <div className="basis-3/12">To Era</div>
 
       <div className="basis-4/12">
-        Staked {getTokenDisplayName(props.chainId)}
+        Staked {getTokenDisplayName(props.chainId, chains)}
       </div>
 
       <div className="basis-4/12">
-        {getRTokenDisplayName(props.chainId)} :{" "}
-        {getTokenDisplayName(props.chainId)}
+        {getRTokenDisplayName(props.chainId, chains)} :{" "}
+        {getTokenDisplayName(props.chainId, chains)}
       </div>
 
-      <div className="basis-3/12">{getRTokenDisplayName(props.chainId)}</div>
+      <div className="basis-3/12">
+        {getRTokenDisplayName(props.chainId, chains)}
+      </div>
 
       <div className="basis-4/12 flex items-center">Est. Reward</div>
     </div>

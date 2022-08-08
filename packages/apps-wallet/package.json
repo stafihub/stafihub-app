@@ -1,6 +1,6 @@
 {
   "name": "@stafihub/apps-wallet",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "type": "module",
   "main": "./src/index.ts",
   "repository": {

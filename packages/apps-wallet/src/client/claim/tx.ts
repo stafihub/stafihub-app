@@ -4,12 +4,13 @@ import {
   DeliverTxResponse,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import { Coin, MsgAirdropClaim } from "@stafihub/types";
+import { KeplrChainParams } from "../../interface";
 
 declare const window: any;
 
 export async function getAirdropClaimTxSimulate(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   round: number,
   index: number,
@@ -23,12 +24,10 @@ export async function getAirdropClaimTxSimulate(
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.claim.MsgClaim", MsgAirdropClaim);
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -55,6 +54,7 @@ export async function getAirdropClaimTxSimulate(
 }
 
 export async function sendAirdropClaimTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   round: number,
   index: number,
@@ -68,12 +68,10 @@ export async function sendAirdropClaimTx(
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.claim.MsgClaim", MsgAirdropClaim);
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -99,7 +97,7 @@ export async function sendAirdropClaimTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],

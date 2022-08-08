@@ -7,6 +7,7 @@ import { atomicToHuman } from "@stafihub/apps-util";
 import { queryrTokenBalance, queryStakePoolInfo } from "@stafihub/apps-wallet";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { chains } from "../config";
 import { updateChainStakeStatus } from "../redux/reducers/ChainSlice";
 import { RootState } from "../redux/store";
 import { ChainStakeStatus } from "../types/interface";
@@ -35,7 +36,10 @@ export function useChainStakeStatus(chainId: string | undefined) {
         return;
       }
 
-      const poolInfoResult = await queryStakePoolInfo(getRTokenDenom(chainId));
+      const poolInfoResult = await queryStakePoolInfo(
+        chains[getStafiHubChainId()],
+        getRTokenDenom(chainId, chains)
+      );
       const exchangeRate = atomicToHuman(poolInfoResult.exchangeRate, 6, 6);
 
       if (isNaN(Number(exchangeRate))) {
@@ -43,13 +47,14 @@ export function useChainStakeStatus(chainId: string | undefined) {
       }
 
       const result = await queryrTokenBalance(
+        chains[getStafiHubChainId()],
         stafiHubAccount.bech32Address,
-        getRTokenDenom(chainId)
+        getRTokenDenom(chainId, chains)
       );
       const rTokenBalance = atomicToHuman(result, 6, 6);
 
       const matched = priceList.find(
-        (price) => price.denom === getDenom(chainId)
+        (price) => price.denom === getDenom(chainId, chains)
       );
       let tokenPrice = "--";
       if (matched) {

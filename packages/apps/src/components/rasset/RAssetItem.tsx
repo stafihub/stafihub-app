@@ -10,6 +10,7 @@ import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { chains } from "../../config";
 import { useAccountReward } from "../../hooks/useAccountReward";
 import { useChainAccount } from "../../hooks/useAppSlice";
 import { useApy } from "../../hooks/useApy";
@@ -30,7 +31,9 @@ export const RAssetItem = (props: RAssetItemProps) => {
   const navigate = useNavigate();
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const { stakeStatus } = useChainStakeStatus(props.chainId);
-  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
+  const { exchangeRate } = useStakePoolInfo(
+    getRTokenDenom(props.chainId, chains)
+  );
   const apy = useApy(props.chainId);
   const { originLast24hReward } = useAccountReward(props.chainId);
 
@@ -38,7 +41,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
 
   useEffect(() => {
     if (stafiHubAccount) {
-      dispatch(updateRTokenReward(getRTokenDenom(props.chainId)));
+      dispatch(updateRTokenReward(getRTokenDenom(props.chainId, chains)));
     }
   }, [props.chainId, dispatch, stafiHubAccount]);
 
@@ -102,7 +105,8 @@ export const RAssetItem = (props: RAssetItemProps) => {
             <FormatterText value={myStakedAmount} useRound />
             <Tooltip
               title={`The increased amount of Staked ${getTokenDisplayName(
-                props.chainId
+                props.chainId,
+                chains
               )} within the last 24h.`}
               placement="right"
             >
@@ -157,7 +161,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
       </div>
 
       <TradeModal
-        tradeDenom={getRTokenDenom(props.chainId)}
+        tradeDenom={getRTokenDenom(props.chainId, chains)}
         tradeTokenName={props.derivativeTokenName}
         visible={tradeModalVisible}
         onClose={() => setTradeModalVisible(false)}

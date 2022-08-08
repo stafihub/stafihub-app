@@ -3,6 +3,7 @@ import { getTokenDisplayName } from "@stafihub/apps-config";
 import { CustomNumberInput } from "@stafihub/react-components";
 import { useMemo } from "react";
 import downIcon from "../assets/images/icon_down_white.png";
+import { chains } from "../config";
 import { FeeStationPool } from "../types/interface";
 
 interface SelectTokenInputProps {
@@ -25,7 +26,7 @@ export const SelectTokenInput = (props: SelectTokenInputProps) => {
     if (!props.selectedToken) {
       return "";
     }
-    return getTokenDisplayName(props.selectedToken.chainId);
+    return getTokenDisplayName(props.selectedToken.chainId, chains);
   }, [props.selectedToken]);
 
   return (

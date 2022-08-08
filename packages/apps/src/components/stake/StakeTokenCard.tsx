@@ -6,6 +6,7 @@ import {
 } from "@stafihub/react-components";
 import classNames from "classnames";
 import { useMemo } from "react";
+import { chains } from "../../config";
 import { usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useApy } from "../../hooks/useApy";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
@@ -22,9 +23,11 @@ interface StakeTokenCardProps {
 export const StakeTokenCard = (props: StakeTokenCardProps) => {
   const apy = useApy(props.chainId);
   const supply = useTokenSupply(props.chainId);
-  const tokenPrice = usePriceFromDenom(getDenom(props.chainId));
+  const tokenPrice = usePriceFromDenom(getDenom(props.chainId, chains));
 
-  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
+  const { exchangeRate } = useStakePoolInfo(
+    getRTokenDenom(props.chainId, chains)
+  );
 
   const liquidity = useMemo(() => {
     if (

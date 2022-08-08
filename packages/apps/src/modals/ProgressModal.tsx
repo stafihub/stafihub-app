@@ -4,6 +4,7 @@ import { CustomLoading, FormatterText } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import iconClose from "../assets/images/icon_close_bold.svg";
 import iconCheckedLarge from "../assets/images/icon_success_large.png";
+import { chains } from "../config";
 import { useSwapProgressModalProps } from "../hooks/useSwapProgressModalProps";
 import { setSwapProgressModalProps } from "../redux/reducers/TxSlice";
 import { openLink } from "../utils/common";
@@ -22,7 +23,8 @@ export const ProgressModal = (props: ProgressModalProps) => {
         </div>
 
         <div className="mt-10 font-bold text-white text-[22px]">
-          You have successfully transferred your tokens. Please check your wallet.
+          You have successfully transferred your tokens. Please check your
+          wallet.
         </div>
 
         <img
@@ -36,10 +38,10 @@ export const ProgressModal = (props: ProgressModalProps) => {
           onClick={() => {
             openLink(
               swapProgressModalProps?.txDetail?.feeStationPayTxHash
-                ? `${getExplorerUrl(getStafiHubChainId())}/tx/${
+                ? `${getExplorerUrl(getStafiHubChainId(), chains)}/tx/${
                     swapProgressModalProps?.txDetail?.feeStationPayTxHash
                   }`
-                : `${getExplorerUrl(getStafiHubChainId())}/account/${
+                : `${getExplorerUrl(getStafiHubChainId(), chains)}/account/${
                     swapProgressModalProps?.txDetail?.stafihubAddress
                   }`
             );
@@ -118,7 +120,7 @@ export const ProgressModal = (props: ProgressModalProps) => {
               className="mt-9 mb-14 font-bold text-[20px] text-secondary cursor-pointer underline"
               onClick={() => {
                 openLink(
-                  `${getExplorerUrl(getStafiHubChainId())}/account/${
+                  `${getExplorerUrl(getStafiHubChainId(), chains)}/account/${
                     swapProgressModalProps?.txDetail?.stafihubAddress
                   }`
                 );

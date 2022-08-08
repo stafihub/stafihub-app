@@ -1,4 +1,4 @@
-import { getChains } from "packages/apps-config/src";
+import { getChains } from "@stafihub/apps-config";
 
 export function isDev(): boolean {
   // console.log("REACT_APP_ENV", process.env.REACT_APP_ENV);

@@ -1,10 +1,11 @@
 import { Box, Stack } from "@mui/material";
+import { getDenom, getStafiHubChainId } from "@stafihub/apps-config";
 import {
   CustomLoading,
-  TokenIcon,
   FormatterText,
+  TokenIcon,
 } from "@stafihub/react-components";
-import { getDenom, getTokenDisplayName } from "@stafihub/apps-config";
+import { chains } from "../config";
 import { FeeStationPool } from "../types/interface";
 import { BackIcon } from "./icons/BackIcon";
 
@@ -96,7 +97,8 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
                     /> */}
 
                     <TokenIcon
-                      denom={getDenom(item.chainId)}
+                      stafiHubChainConfig={chains[getStafiHubChainId()]}
+                      denom={getDenom(item.chainId, chains)}
                       size={36}
                       withBorder
                     />

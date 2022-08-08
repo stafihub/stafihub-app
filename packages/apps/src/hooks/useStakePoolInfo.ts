@@ -1,6 +1,8 @@
 import { queryStakePoolInfo } from "@stafihub/apps-wallet";
 import { useEffect, useState } from "react";
 import { atomicToHuman } from "@stafihub/apps-util";
+import { getStafiHubChainId } from "@stafihub/apps-config";
+import { chains } from "../config";
 
 export function useStakePoolInfo(denom: string) {
   const [multisigPoolAddress, setMultisigPoolAddress] = useState("--");
@@ -13,7 +15,10 @@ export function useStakePoolInfo(denom: string) {
   useEffect(() => {
     (async () => {
       try {
-        const result = await queryStakePoolInfo(denom);
+        const result = await queryStakePoolInfo(
+          chains[getStafiHubChainId()],
+          denom
+        );
         if (result.exchangeRate) {
           setExchangeRate(atomicToHuman(result.exchangeRate, 6, 6));
           setOriginExchangeRate(atomicToHuman(result.exchangeRate));

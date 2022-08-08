@@ -1,6 +1,7 @@
 import { queryChainParams } from "@stafihub/apps-wallet";
 import { QueryParamsResponse } from "@stafihub/types";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { chains } from "../config";
 
 export function useChainParams(chainId: string | undefined) {
   const [chainParams, setChainParams] = useState<
@@ -10,7 +11,7 @@ export function useChainParams(chainId: string | undefined) {
   useEffect(() => {
     (async () => {
       if (chainId) {
-        const result = await queryChainParams(chainId);
+        const result = await queryChainParams(chains[chainId]);
         setChainParams(result);
       }
     })();

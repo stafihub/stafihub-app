@@ -6,6 +6,7 @@ import { EraRewardItem, RTokenRewardData } from "../types/interface";
 import * as _ from "lodash";
 import { getDenom, getRTokenDenom } from "@stafihub/apps-config";
 import { usePriceFromDenom } from "./useAppSlice";
+import { chains } from "../config";
 
 export function useAccountReward(chainId: string) {
   const [loading, setLoading] = useState(true);
@@ -16,11 +17,11 @@ export function useAccountReward(chainId: string) {
   const [eraRewards, setEraRewards] = useState<EraRewardItem[]>([]);
   const [chartXData, setChartXData] = useState<string[]>([]);
   const [chartYData, setChartYData] = useState<string[]>([]);
-  const tokenPrice = usePriceFromDenom(getDenom(chainId));
+  const tokenPrice = usePriceFromDenom(getDenom(chainId, chains));
 
   const rTokenReward: RTokenRewardData | undefined = useSelector(
     (state: RootState) => {
-      return state.chain.rTokenRewardStore[getRTokenDenom(chainId)];
+      return state.chain.rTokenRewardStore[getRTokenDenom(chainId, chains)];
     }
   );
 

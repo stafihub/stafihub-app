@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import iconClose from "../assets/images/icon_close_bold.svg";
+import { chains } from "../config";
 import { useIsLoading } from "../hooks/useAppSlice";
 import { claimMintRewards } from "../redux/reducers/TxSlice";
 import { FormatUserMintInfo, UserMintRewardItem } from "../types/interface";
@@ -106,7 +107,7 @@ export const ClaimMintRewardModal = (props: ClaimMintRewardModalProps) => {
 
     dispatch(
       claimMintRewards(
-        getRTokenDenom(getChainIdFromRTokenDisplayName(rToken)),
+        getRTokenDenom(getChainIdFromRTokenDisplayName(rToken, chains), chains),
         Number(cycle),
         userMintInfo.claimMintIndexs,
         claimableRewardText,

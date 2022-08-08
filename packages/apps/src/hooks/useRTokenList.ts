@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import * as _ from "lodash";
 import {
-  chains,
   getStafiHubChainId,
   getTokenDisplayName,
   getRTokenDisplayName,
 } from "@stafihub/apps-config/src";
+import { chains } from "../config";
 
 export interface RTokenItem {
   chainName: string;
@@ -24,8 +24,8 @@ export function useRTokenList() {
         return {
           chainName: chain.chainName,
           chainId: chain.chainId,
-          tokenName: getTokenDisplayName(chain.chainId),
-          rTokenName: getRTokenDisplayName(chain.chainId),
+          tokenName: getTokenDisplayName(chain.chainId, chains),
+          rTokenName: getRTokenDisplayName(chain.chainId, chains),
         };
       })
     );

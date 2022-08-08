@@ -204,6 +204,7 @@ export const stake =
         let timeCount = 0;
         while (true) {
           const bondRecordRes = await queryBondRecord(
+            chains[getStafiHubChainId()],
             getRTokenDenom(chainId, chains),
             txResponse.transactionHash
           );
@@ -310,7 +311,7 @@ export const stakeRecovery =
 
       dispatch(setIsLoading(true));
 
-      const txDetail = await queryTx(chainId, txHash);
+      const txDetail = await queryTx(chains[chainId], txHash);
 
       if (!txDetail) {
         snackbarUtil.error(
@@ -366,6 +367,7 @@ export const stakeRecovery =
       // console.log("rawLog", parsedRawLog);
 
       const currentBondRecordRes = await queryBondRecord(
+        chains[getStafiHubChainId()],
         getRTokenDenom(chainId, chains),
         txHash
       );
@@ -407,6 +409,7 @@ export const stakeRecovery =
         let timeCount = 0;
         while (true) {
           const bondRecordRes = await queryBondRecord(
+            chains[getStafiHubChainId()],
             getRTokenDenom(chainId, chains),
             txHash
           );
@@ -509,6 +512,7 @@ export const unbond =
       dispatch(setIsLoading(true));
 
       const multisigPoolBalance = await queryBondPipeline(
+        chains[getStafiHubChainId()],
         getRTokenDenom(chainId, chains),
         multisigPoolAddress
       );
@@ -650,7 +654,7 @@ export const feeStationSwap =
       dispatch(setIsLoading(true));
 
       const payerAddressBalanceResult = await queryAccountBalance(
-        getStafiHubChainId(),
+        chains[getStafiHubChainId()],
         getDenom(getStafiHubChainId(), chains),
         payerAddress
       );

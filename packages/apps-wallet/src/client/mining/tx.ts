@@ -4,7 +4,6 @@ import {
   DeliverTxResponse,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import {
   CreateRDexMiningRewardPoolInfo,
   CreateRDexMiningStakeItemInfo,
@@ -17,10 +16,12 @@ import {
   MsgRDexMiningAddRewardPool,
   MsgRDexMiningWithdrawRewardToken,
 } from "@stafihub/types";
+import { KeplrChainParams } from "../../interface";
 
 declare const window: any;
 
 export async function sendRDexMiningStakeTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   stakeAmount: string,
   stakePoolIndex: number,
@@ -33,12 +34,10 @@ export async function sendRDexMiningStakeTx(
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.mining.MsgStake", MsgRDexMiningStake);
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -62,7 +61,7 @@ export async function sendRDexMiningStakeTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -79,6 +78,7 @@ export async function sendRDexMiningStakeTx(
 }
 
 export async function sendRDexMiningWithdrawTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   withdrawAmount: string,
   stakePoolIndex: number,
@@ -94,12 +94,10 @@ export async function sendRDexMiningWithdrawTx(
     MsgRDexMiningWithdraw
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -123,7 +121,7 @@ export async function sendRDexMiningWithdrawTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -140,6 +138,7 @@ export async function sendRDexMiningWithdrawTx(
 }
 
 export async function sendRDexMiningClaimRewardTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   stakePoolIndex: number,
   stakeRecordIndex: number
@@ -154,12 +153,10 @@ export async function sendRDexMiningClaimRewardTx(
     MsgRDexMiningClaimReward
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -182,7 +179,7 @@ export async function sendRDexMiningClaimRewardTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -199,6 +196,7 @@ export async function sendRDexMiningClaimRewardTx(
 }
 
 export async function sendCreateRDexMiningStakePoolTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   stakeTokenDenom: string,
   rewardPoolInfoList: CreateRDexMiningRewardPoolInfo[],
@@ -214,12 +212,10 @@ export async function sendCreateRDexMiningStakePoolTx(
     MsgAddRDexMiningStakePool
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -243,7 +239,7 @@ export async function sendCreateRDexMiningStakePoolTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -260,6 +256,7 @@ export async function sendCreateRDexMiningStakePoolTx(
 }
 
 export async function sendUpdateRDexMiningRewardPoolTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   stakePoolIndex: number,
   rewardPoolIndex: number,
@@ -275,12 +272,10 @@ export async function sendUpdateRDexMiningRewardPoolTx(
     MsgRDexMiningUpdateRewardPool
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -304,7 +299,7 @@ export async function sendUpdateRDexMiningRewardPoolTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -321,6 +316,7 @@ export async function sendUpdateRDexMiningRewardPoolTx(
 }
 
 export async function sendUpdateRDexMiningAddRewardPoolTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   stakePoolIndex: number,
   rewardTokenDenom: string,
@@ -338,12 +334,10 @@ export async function sendUpdateRDexMiningAddRewardPoolTx(
     MsgRDexMiningAddRewardPool
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -369,7 +363,7 @@ export async function sendUpdateRDexMiningAddRewardPoolTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -386,6 +380,7 @@ export async function sendUpdateRDexMiningAddRewardPoolTx(
 }
 
 export async function sendUpdateRDexMiningDepositRewardTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   stakePoolIndex: number,
   rewardPoolIndex: number,
@@ -403,12 +398,10 @@ export async function sendUpdateRDexMiningDepositRewardTx(
     MsgRDexMiningAddReward
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -434,7 +427,7 @@ export async function sendUpdateRDexMiningDepositRewardTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -451,6 +444,7 @@ export async function sendUpdateRDexMiningDepositRewardTx(
 }
 
 export async function sendUpdateRDexMiningWithdrawRewardTx(
+  stafiHubChainConfig: KeplrChainParams,
   stafiHubAddress: string,
   stakePoolIndex: number,
   rewardPoolIndex: number,
@@ -466,12 +460,10 @@ export async function sendUpdateRDexMiningWithdrawRewardTx(
     MsgRDexMiningWithdrawRewardToken
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -495,7 +487,7 @@ export async function sendUpdateRDexMiningWithdrawRewardTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],

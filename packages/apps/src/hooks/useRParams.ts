@@ -1,5 +1,7 @@
 import { queryRParams } from "@stafihub/apps-wallet";
+import { getStafiHubChainId } from "@stafihub/apps-config";
 import { useEffect, useState } from "react";
+import { chains } from "../config";
 
 export function useRParams(denom: string) {
   const [eraSeconds, setEraSeconds] = useState("--");
@@ -9,7 +11,7 @@ export function useRParams(denom: string) {
 
   useEffect(() => {
     (async () => {
-      const result = await queryRParams(denom);
+      const result = await queryRParams(chains[getStafiHubChainId()], denom);
       if (result.rParams) {
         setEraSeconds(result.rParams.eraSeconds.toString());
         const hoursPerEra = Math.round(

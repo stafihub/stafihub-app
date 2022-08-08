@@ -1,8 +1,9 @@
-import { getStafiHubChainId } from "@stafihub/apps-config";
 import { queryDenomTrace } from "@stafihub/apps-wallet";
 import { useEffect, useState } from "react";
+import { KeplrChainParams } from "../interface";
 
 interface TokenNameProps {
+  stafiHubChainConfig: KeplrChainParams;
   denom: string;
 }
 
@@ -14,7 +15,7 @@ export const TokenName = (props: TokenNameProps) => {
     (async () => {
       if (denom.startsWith("ibc/")) {
         const denomTraceRes = await queryDenomTrace(
-          getStafiHubChainId(),
+          props.stafiHubChainConfig,
           denom
         );
 
@@ -25,7 +26,7 @@ export const TokenName = (props: TokenNameProps) => {
         setDisplayTokenName(denom.slice(1));
       }
     })();
-  }, [denom]);
+  }, [denom, props.stafiHubChainConfig]);
 
   return <span className="uppercase">{displayTokenName}</span>;
 };

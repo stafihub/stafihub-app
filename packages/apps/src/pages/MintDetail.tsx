@@ -22,6 +22,7 @@ import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
 import { useChainAccount, useLatestBlock } from "../hooks/useAppSlice";
 import * as _ from "lodash";
+import { chains } from "../config";
 
 export const MintDetail = () => {
   const navigate = useNavigate();
@@ -31,7 +32,10 @@ export const MintDetail = () => {
   const { rToken, cycle } = params;
   const [claimModalVisible, setClaimModalVisible] = useState(false);
   const { actDetail, mintedValue, userMintInfo, vesting, updateUserActDetail } =
-    useMintProgram(getChainIdFromRTokenDisplayName(rToken), Number(cycle));
+    useMintProgram(
+      getChainIdFromRTokenDisplayName(rToken, chains),
+      Number(cycle)
+    );
 
   const isEnd = useMemo(() => {
     if (!latestBlock || !actDetail) {
@@ -100,7 +104,10 @@ export const MintDetail = () => {
                       >
                         1 {rToken.slice(1)} : {rewardInfo.apy}{" "}
                         {/* {rewardInfo.denom.slice(1).toUpperCase()} */}
-                        <TokenName denom={rewardInfo.denom} />
+                        <TokenName
+                          stafiHubChainConfig={chains[getStafiHubChainId()]}
+                          denom={rewardInfo.denom}
+                        />
                       </div>
                     )
                 )}
@@ -124,7 +131,11 @@ export const MintDetail = () => {
                 <div className="ml-20 flex">
                   {actDetail?.tokenRewardInfos.map((rewardInfo, index) => (
                     <div key={index} className="mr-[10px]">
-                      <TokenIcon denom={rewardInfo.denom} size={20} />
+                      <TokenIcon
+                        stafiHubChainConfig={chains[getStafiHubChainId()]}
+                        denom={rewardInfo.denom}
+                        size={20}
+                      />
                     </div>
                   ))}
                 </div>

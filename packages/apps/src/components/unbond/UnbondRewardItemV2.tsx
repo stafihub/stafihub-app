@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import pendingIcon from "../../assets/images/icon_pending.svg";
 import successIcon from "../../assets/images/icon_success_round.svg";
+import { chains } from "../../config";
 import { useChainEra } from "../../hooks/useChainEra";
 import { useRParams } from "../../hooks/useRParams";
 import { UserUnbondRecord } from "../../types/interface";
@@ -21,14 +22,17 @@ interface UnbondRewardItemProps {
 
 export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
   const era = useChainEra(chainId);
-  const { eraHours } = useRParams(getRTokenDenom(chainId));
+  const { eraHours } = useRParams(getRTokenDenom(chainId, chains));
   const amount = useMemo(() => {
     if (!props.item) {
       return "--";
     }
-    return atomicToHuman(props.item.tokenAmount, getChainDecimals(chainId));
+    return atomicToHuman(
+      props.item.tokenAmount,
+      getChainDecimals(chainId, chains)
+    );
   }, [props.item, chainId]);
 
   const [completed, remainingDays]: [boolean, string] = useMemo(() => {
@@ -64,7 +68,7 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
       </div>
 
       <div className="basis-[16%] text-[14px] text-white">
-        {getTokenDisplayName(chainId)}
+        {getTokenDisplayName(chainId, chains)}
       </div>
 
       <div className="basis-[14%] text-[14px] text-white">

@@ -1,12 +1,8 @@
-import {
-  chains,
-  getApiHost,
-  getDenom,
-  STAFIHUB_DECIMALS,
-} from "@stafihub/apps-config";
+import { getApiHost, getDenom, STAFIHUB_DECIMALS } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
 import * as _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
+import { chains } from "../config";
 import { FeeStationPool } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import { useAccounts } from "./useAppSlice";
@@ -70,7 +66,7 @@ export function useFeeStationPools() {
           chainId: chain.chainId,
           formatBalance: getHumanAccountBalance(
             accounts[chain.chainId]?.allBalances,
-            getDenom(chain.chainId)
+            getDenom(chain.chainId, chains)
           ),
           formatSwapRate: atomicToHuman(pool.swapRate, pool.decimals),
         } as FeeStationPool;

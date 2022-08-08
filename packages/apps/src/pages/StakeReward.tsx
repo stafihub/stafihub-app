@@ -10,16 +10,19 @@ import { useParams } from "react-router-dom";
 import iconSwitch from "../assets/images/icon_switch.svg";
 import nodata from "../assets/images/nodata.png";
 import { StakeRewardTableHeader } from "../components/StakeRewardTableHeader";
+import { chains } from "../config";
 import { usePriceFromDenom } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 
 export const StakeReward = () => {
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const tokenPrice = usePriceFromDenom(getDenom(chainId));
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
+  const tokenPrice = usePriceFromDenom(getDenom(chainId, chains));
   const { stakeStatus } = useChainStakeStatus(chainId);
-  const { exchangeRate, eraHours } = useStakePoolInfo(getRTokenDenom(chainId));
+  const { exchangeRate, eraHours } = useStakePoolInfo(
+    getRTokenDenom(chainId, chains)
+  );
 
   const myStakedValue = useMemo(() => {
     if (
@@ -64,7 +67,7 @@ export const StakeReward = () => {
 
       <div className="mt-[5px] flex justify-end">
         <div className="text-secondary text-[14px]">
-          +0.00 {getTokenDisplayName(chainId)}
+          +0.00 {getTokenDisplayName(chainId, chains)}
         </div>
 
         <div className="ml-[4px] text-white text-[14px]">(last era)</div>

@@ -14,7 +14,7 @@ import {
 import { queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
 import Long from "long";
-import { KeplrChainParams } from "@stafihub/apps-config";
+import { KeplrChainParams } from "../interface";
 
 declare const window: any;
 
@@ -26,9 +26,9 @@ export async function sendStakeTx(
   poolAddress: string
 ): Promise<DeliverTxResponse | undefined> {
   if (!chainConfig) {
-    throw new Error("stafiHubChainConfig can not be empty");
+    throw new Error("chainConfig can not be empty");
   }
-  const client = await createCosmosClient(chainConfig.chainId);
+  const client = await createCosmosClient(chainConfig);
   const fee = {
     amount: [
       {
@@ -58,7 +58,7 @@ export async function sendRecoveryTx(
   if (!chainConfig) {
     throw new Error("stafiHubChainConfig can not be empty");
   }
-  const client = await createCosmosClient(chainConfig.chainId);
+  const client = await createCosmosClient(chainConfig);
   const fee = {
     amount: [
       {
@@ -88,7 +88,7 @@ export async function sendChainTokens(
   if (!chainConfig) {
     throw new Error("stafiHubChainConfig can not be empty");
   }
-  const client = await createCosmosClient(chainConfig.chainId);
+  const client = await createCosmosClient(chainConfig);
   const fee = {
     amount: [
       {
@@ -205,7 +205,7 @@ export async function sendIBCTransferTx(
   // const currentHeight = await client.getHeight();
 
   const clientState = await queryChannelClientState(
-    srcChainConfig.chainId,
+    srcChainConfig,
     sourceChannel
   );
 

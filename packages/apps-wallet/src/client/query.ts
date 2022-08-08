@@ -1,5 +1,4 @@
 import { IndexedTx } from "@cosmjs/stargate";
-import { getStafiHubChainId } from "@stafihub/apps-config";
 import type {
   GetLatestBlockResponse,
   QueryActDetailResponse,
@@ -29,12 +28,13 @@ import {
   createQueryService,
   createRMintRewardQueryService,
 } from ".";
+import { KeplrChainParams } from "../interface";
 
 export async function queryTx(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   txHash: string
 ): Promise<IndexedTx | null> {
-  const client = await createCosmosClient(chainId);
+  const client = await createCosmosClient(chainConfig);
   if (!client) {
     return null;
   }
@@ -48,11 +48,11 @@ export async function queryTx(
 }
 
 export async function queryAccountBalance(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   denom: string,
   address: string
 ): Promise<Coin | null> {
-  const client = await createCosmosClient(chainId);
+  const client = await createCosmosClient(chainConfig);
   if (!client) {
     return null;
   }
@@ -62,10 +62,10 @@ export async function queryAccountBalance(
 }
 
 export async function queryAccountBalances(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   address: string
 ): Promise<Coin[]> {
-  const client = await createCosmosClient(chainId);
+  const client = await createCosmosClient(chainConfig);
   if (!client) {
     return [];
   }
@@ -79,8 +79,11 @@ export async function queryAccountBalances(
   }
 }
 
-export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
-  const queryService = await createQueryService(getStafiHubChainId());
+export async function queryStakePoolInfo(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
+  tokenDenom: string
+): Promise<any> {
+  const queryService = await createQueryService(stafiHubChainConfig);
 
   const results = await Promise.all([
     queryService.BondedPoolsByDenom({
@@ -126,10 +129,12 @@ export async function queryStakePoolInfo(tokenDenom: string): Promise<any> {
 }
 
 export async function queryBondPipeline(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
+
   tokenDenom: string,
   poolAddress: string
 ): Promise<string> {
-  const queryService = await createQueryService(getStafiHubChainId());
+  const queryService = await createQueryService(stafiHubChainConfig);
 
   const result = await queryService.GetBondPipeline({
     denom: tokenDenom,
@@ -141,9 +146,10 @@ export async function queryBondPipeline(
 }
 
 export async function queryRParams(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   tokenDenom: string
 ): Promise<QueryGetRParamsResponse> {
-  const queryService = await createQueryService(getStafiHubChainId());
+  const queryService = await createQueryService(stafiHubChainConfig);
 
   const result = await queryService.GetRParams({
     denom: tokenDenom,
@@ -153,9 +159,9 @@ export async function queryRParams(
 }
 
 export async function queryLatestBlock(
-  chainId: string
+  chainConfig: KeplrChainParams | null | undefined
 ): Promise<GetLatestBlockResponse | null> {
-  const queryService = await createCosmosBaseQueryService(chainId);
+  const queryService = await createCosmosBaseQueryService(chainConfig);
 
   const result = await queryService.GetLatestBlock({});
 
@@ -165,9 +171,10 @@ export async function queryLatestBlock(
 }
 
 export async function queryPoolByDenom(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   tokenDenom: string
 ): Promise<QueryBondedPoolsByDenomResponse> {
-  const queryService = await createQueryService(getStafiHubChainId());
+  const queryService = await createQueryService(stafiHubChainConfig);
   const result = await queryService.BondedPoolsByDenom({
     denom: tokenDenom,
   });
@@ -175,11 +182,11 @@ export async function queryPoolByDenom(
 }
 
 export async function queryPoolDetail(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   tokenDenom: string,
   poolAddress: string
 ): Promise<QueryGetPoolDetailResponse> {
-  const queryService = await createQueryService(chainId);
+  const queryService = await createQueryService(chainConfig);
   const result = await queryService.GetPoolDetail({
     denom: tokenDenom,
     pool: poolAddress,
@@ -188,11 +195,12 @@ export async function queryPoolDetail(
 }
 
 export async function queryTokenSupply(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   denom: string
 ): Promise<QuerySupplyOfResponse | null> {
   try {
     const queryService = await createCosmosBankQueryService(
-      getStafiHubChainId()
+      stafiHubChainConfig
     );
     const result = await queryService.SupplyOf({
       denom,
@@ -205,10 +213,11 @@ export async function queryTokenSupply(
 }
 
 export async function queryrTokenBalance(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   stafiHubAddress: string,
   tokenDenom: string
 ): Promise<string> {
-  const client = await createCosmosClient(getStafiHubChainId());
+  const client = await createCosmosClient(stafiHubChainConfig);
   if (!client) {
     return "--";
   }
@@ -218,11 +227,12 @@ export async function queryrTokenBalance(
 }
 
 export async function queryBondRecord(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   denom: string,
   txhash: string
 ): Promise<QueryGetBondRecordResponse | null> {
   try {
-    const queryService = await createQueryService(getStafiHubChainId());
+    const queryService = await createQueryService(stafiHubChainConfig);
     const result = await queryService.GetBondRecord({
       denom,
       txhash,
@@ -252,10 +262,11 @@ export async function queryBondRecord(
 // }
 
 export async function queryUnbondCommission(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   tokenDenom: string
 ): Promise<QueryGetUnbondCommissionResponse | null> {
   try {
-    const queryService = await createQueryService(getStafiHubChainId());
+    const queryService = await createQueryService(stafiHubChainConfig);
     const result = await queryService.GetUnbondCommission({
       denom: tokenDenom,
     });
@@ -267,10 +278,11 @@ export async function queryUnbondCommission(
 }
 
 export async function queryChainEra(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   denom: string
 ): Promise<QueryGetChainEraResponse | null> {
   try {
-    const queryService = await createQueryService(getStafiHubChainId());
+    const queryService = await createQueryService(stafiHubChainConfig);
     const result = await queryService.GetChainEra({
       denom,
     });
@@ -282,11 +294,12 @@ export async function queryChainEra(
 }
 
 export async function queryEraExchangeRate(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   era: number,
   denom: string
 ): Promise<QueryGetEraExchangeRateResponse | null> {
   try {
-    const queryService = await createQueryService(getStafiHubChainId());
+    const queryService = await createQueryService(stafiHubChainConfig);
     const result = await queryService.GetEraExchangeRate({
       era,
       denom,
@@ -297,10 +310,11 @@ export async function queryEraExchangeRate(
 }
 
 export async function queryUnbondRelayFee(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   denom: string
 ): Promise<QueryGetUnbondRelayFeeResponse | null> {
   try {
-    const queryService = await createQueryService(getStafiHubChainId());
+    const queryService = await createQueryService(stafiHubChainConfig);
     const result = await queryService.GetUnbondRelayFee({
       denom,
     });
@@ -312,10 +326,10 @@ export async function queryUnbondRelayFee(
 }
 
 export async function queryChainParams(
-  chainId: string
+  chainConfig: KeplrChainParams | null | undefined
 ): Promise<QueryParamsResponse | undefined> {
   try {
-    const queryService = await createCosmosStakingQueryService(chainId);
+    const queryService = await createCosmosStakingQueryService(chainConfig);
     const result = await queryService.Params({});
     return result;
   } catch (err: unknown) {
@@ -325,12 +339,12 @@ export async function queryChainParams(
 }
 
 export async function queryDenomTrace(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   // ibc/{hash}
   ibcDenom: string
 ): Promise<QueryDenomTraceResponse | undefined> {
   try {
-    const queryService = await createIBCApplicationsQueryService(chainId);
+    const queryService = await createIBCApplicationsQueryService(chainConfig);
     const result = await queryService.DenomTrace({
       hash: ibcDenom.split("/")[1],
     });
@@ -342,11 +356,11 @@ export async function queryDenomTrace(
 }
 
 export async function queryChannel(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   channelName: string
 ): Promise<QueryChannelResponse | undefined> {
   try {
-    const queryService = await createIBCCoreConnectionQueryService(chainId);
+    const queryService = await createIBCCoreConnectionQueryService(chainConfig);
     const result = await queryService.Channel({
       portId: "transfer",
       channelId: channelName,
@@ -359,11 +373,11 @@ export async function queryChannel(
 }
 
 export async function queryChannelClientState(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   channelName: string
 ): Promise<ClientState | undefined> {
   try {
-    const queryService = await createIBCCoreConnectionQueryService(chainId);
+    const queryService = await createIBCCoreConnectionQueryService(chainConfig);
     const result = await queryService.ChannelClientState({
       portId: "transfer",
       channelId: channelName,
@@ -384,10 +398,10 @@ export async function queryChannelClientState(
 }
 
 export async function queryActLatestCycle(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   denom: string
 ): Promise<QueryActLatestCycleResponse> {
-  const queryService = await createRMintRewardQueryService(chainId);
+  const queryService = await createRMintRewardQueryService(chainConfig);
   const result = await queryService.ActLatestCycle({
     denom,
   });
@@ -398,11 +412,11 @@ export async function queryActLatestCycle(
 }
 
 export async function queryActDetail(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   denom: string,
   cycle: Long
 ): Promise<QueryActDetailResponse> {
-  const queryService = await createRMintRewardQueryService(chainId);
+  const queryService = await createRMintRewardQueryService(chainConfig);
   const result = await queryService.ActDetail({
     denom,
     cycle,
@@ -414,13 +428,13 @@ export async function queryActDetail(
 }
 
 export async function queryUserMintCount(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   userAddress: string,
   denom: string,
   cycle: Long
 ): Promise<Long | undefined> {
   try {
-    const queryService = await createRMintRewardQueryService(chainId);
+    const queryService = await createRMintRewardQueryService(chainConfig);
     const result = await queryService.UserMintCount({
       address: userAddress,
       denom,
@@ -439,14 +453,14 @@ export async function queryUserMintCount(
 }
 
 export async function queryUserClaimInfoDetail(
-  chainId: string,
+  chainConfig: KeplrChainParams | null | undefined,
   userAddress: string,
   denom: string,
   cycle: Long,
   mintIndex: Long
 ): Promise<UserClaimInfo | undefined> {
   try {
-    const queryService = await createRMintRewardQueryService(chainId);
+    const queryService = await createRMintRewardQueryService(chainConfig);
     const result = await queryService.ClaimInfoDetail({
       address: userAddress,
       denom,

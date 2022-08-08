@@ -11,6 +11,7 @@ import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import iconDown from "../assets/images/icon_down.png";
 import iconStakeArrow from "../assets/images/icon_stake_arrow.svg";
 import iconSwitch from "../assets/images/icon_switch.svg";
+import { chains } from "../config";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
@@ -19,8 +20,8 @@ import { useUnbondCommission } from "../hooks/useUnbondCommission";
 export const StakeStatus = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const rTokenDenom = getRTokenDenom(chainId);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
+  const rTokenDenom = getRTokenDenom(chainId, chains);
 
   const { stakeStatus } = useChainStakeStatus(chainId);
 
@@ -69,7 +70,7 @@ export const StakeStatus = () => {
           {params.rToken && <RTokenIcon rtokenName={params.rToken} size={36} />}
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            {getRTokenDisplayName(chainId)}
+            {getRTokenDisplayName(chainId, chains)}
           </div>
         </div>
 
@@ -79,7 +80,9 @@ export const StakeStatus = () => {
       </div>
 
       <div className="flex justify-end mt-[5px] text-text-gray4 text-[12px]">
-        <div className="mr-1">Redeemable {getTokenDisplayName(chainId)} :</div>
+        <div className="mr-1">
+          Redeemable {getTokenDisplayName(chainId, chains)} :
+        </div>
 
         <FormatterText value={redeemableAmount} />
       </div>
@@ -88,7 +91,7 @@ export const StakeStatus = () => {
         <div className="flex-grow-[1] flex justify-start pl-[15px]">
           <div className="flex flex-col items-center ">
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center">
-              Staked {getTokenDisplayName(chainId)}
+              Staked {getTokenDisplayName(chainId, chains)}
             </div>
 
             <div className="mt-[12px] text-[16px] font-bold text-white">
@@ -107,7 +110,7 @@ export const StakeStatus = () => {
             }}
           >
             <div className="text-[12px] font-bold text-text-gray4 scale-[0.67] origin-center flex items-center">
-              Unbonding {getTokenDisplayName(chainId)}
+              Unbonding {getTokenDisplayName(chainId, chains)}
               <img src={iconArrowRight} alt="arrow" className="ml-1 h-[10px]" />
             </div>
 
@@ -173,7 +176,8 @@ export const StakeStatus = () => {
           />
 
           <div className="ml-[10px] text-white text-[30px] font-bold">
-            {getRTokenDisplayName(chainId)} / {getTokenDisplayName(chainId)}
+            {getRTokenDisplayName(chainId, chains)} /{" "}
+            {getTokenDisplayName(chainId, chains)}
           </div>
         </div>
 

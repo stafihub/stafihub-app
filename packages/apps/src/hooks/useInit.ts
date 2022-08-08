@@ -1,4 +1,4 @@
-import { chains, getStafiHubChainId, isFork } from "@stafihub/apps-config";
+import { getStafiHubChainId, isFork } from "@stafihub/apps-config";
 import * as _ from "lodash";
 import { queryLatestBlock } from "@stafihub/apps-wallet";
 import { useCallback, useEffect } from "react";
@@ -15,6 +15,7 @@ import { updateChainIBCChannels } from "../redux/reducers/IBCSlice";
 import { isNetworkAllowed } from "../utils/storage";
 import { useAccounts } from "./useAppSlice";
 import { useInterval } from "./useInterval";
+import { chains } from "../config";
 
 export function useInit() {
   const dispatch = useDispatch();
@@ -56,7 +57,9 @@ export function useInit() {
   }, [dispatch]);
 
   const updateLatestBlock = useCallback(async () => {
-    const latestBlockResult = await queryLatestBlock(getStafiHubChainId());
+    const latestBlockResult = await queryLatestBlock(
+      chains[getStafiHubChainId()]
+    );
     const height = latestBlockResult?.block?.header?.height || 0;
     dispatch(setLatestBlock(height ? height.toInt() : 0));
   }, [dispatch]);

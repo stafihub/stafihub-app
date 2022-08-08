@@ -22,6 +22,7 @@ import {
 } from "../redux/reducers/AppSlice";
 import { setStakeSidebarProps } from "../redux/reducers/TxSlice";
 import { openLink } from "../utils/common";
+import { chains } from "../config";
 
 export const StakeSidebar = () => {
   const intervalID = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -43,7 +44,8 @@ export const StakeSidebar = () => {
       }
 
       const currentEraResult = await queryChainEra(
-        getRTokenDenom(stakeSidebarProps.chainId)
+        chains[getStafiHubChainId()],
+        getRTokenDenom(stakeSidebarProps.chainId, chains)
       );
       if (
         currentEraResult &&
@@ -52,13 +54,16 @@ export const StakeSidebar = () => {
         setStakingSuccess(true);
       } else {
         const rParamsResult = await queryRParams(
-          getRTokenDenom(stakeSidebarProps.chainId)
+          chains[getStafiHubChainId()],
+          getRTokenDenom(stakeSidebarProps.chainId, chains)
         );
         if (!rParamsResult.rParams) {
           return;
         }
         const eraSeconds = rParamsResult.rParams?.eraSeconds;
-        const latestBlockResult = await queryLatestBlock(getStafiHubChainId());
+        const latestBlockResult = await queryLatestBlock(
+          chains[getStafiHubChainId()]
+        );
         const currentBlockSeconds = (
           Number(latestBlockResult?.block?.header?.time?.getTime()) / 1000
         ).toFixed(0);
@@ -91,7 +96,8 @@ export const StakeSidebar = () => {
           return;
         }
         const bondRecordRes = await queryBondRecord(
-          getRTokenDenom(stakeSidebarProps.chainId),
+          chains[getStafiHubChainId()],
+          getRTokenDenom(stakeSidebarProps.chainId, chains),
           stakeSidebarProps.txHash
         );
 

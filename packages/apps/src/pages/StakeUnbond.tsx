@@ -6,15 +6,18 @@ import { CustomLoading } from "@stafihub/react-components";
 import { useParams } from "react-router-dom";
 import nodata from "../assets/images/nodata.png";
 import { UnbondRecordTableHeader } from "../components/unbond/UnbondRecordTableHeader";
+import { chains } from "../config";
 import { useAccountUnbond } from "../hooks/useAccountUnbond";
 import { useRParams } from "../hooks/useRParams";
 
 export const StakeUnbond = () => {
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const { bondingDays } = useRParams(getRTokenDenom(chainId));
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
+  const { bondingDays } = useRParams(getRTokenDenom(chainId, chains));
 
-  const { unbondRecords, loading } = useAccountUnbond(getRTokenDenom(chainId));
+  const { unbondRecords, loading } = useAccountUnbond(
+    getRTokenDenom(chainId, chains)
+  );
 
   return (
     <div className="pl-[30px] pt-[36px] pr-[30px]">

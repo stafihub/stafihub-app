@@ -7,6 +7,7 @@ import { FormatterText } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import iconArrowRight from "../assets/images/icon_arrow_right.svg";
 import iconDisconnect from "../assets/images/icon_disconnect.svg";
+import { chains } from "../config";
 import { connectKeplr, disconnectKeplr } from "../redux/reducers/AppSlice";
 import { KeplrAccount } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
@@ -80,12 +81,12 @@ export const AccountItem = (props: AccountItemProps) => {
               <FormatterText
                 value={getHumanAccountBalance(
                   props.chainAccount.allBalances,
-                  getDenom(props.chain.chainId)
+                  getDenom(props.chain.chainId, chains)
                 )}
               />
 
               <div className="ml-1 uppercase">
-                {getTokenDisplayName(props.chain.chainId)}
+                {getTokenDisplayName(props.chain.chainId, chains)}
               </div>
             </div>
           </div>

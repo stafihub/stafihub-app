@@ -17,6 +17,7 @@ import {
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { chains } from "../config";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { useApy } from "../hooks/useApy";
 import { useChainInfo } from "../hooks/useChainInfo";
@@ -31,7 +32,7 @@ export const StakeHome = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
   const isLoading = useIsLoading();
   const chain = useChainInfo(chainId);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
@@ -42,7 +43,7 @@ export const StakeHome = () => {
     multisigPoolAddress: poolAddress,
     exchangeRate,
     leastBond,
-  } = useStakePoolInfo(getRTokenDenom(chainId));
+  } = useStakePoolInfo(getRTokenDenom(chainId, chains));
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
 
@@ -61,7 +62,10 @@ export const StakeHome = () => {
     if (!chainAccount) {
       return "--";
     }
-    return getHumanAccountBalance(chainAccount.allBalances, getDenom(chainId));
+    return getHumanAccountBalance(
+      chainAccount.allBalances,
+      getDenom(chainId, chains)
+    );
   }, [chainAccount, chainId]);
 
   const willGetAmount = useMemo(() => {
@@ -86,7 +90,8 @@ export const StakeHome = () => {
     if (Number(inputAmount) < Number(leastBond)) {
       snackbarUtil.warning(
         `The stake amount is less than the minimum stake size: ${leastBond} ${getTokenDisplayName(
-          chainId
+          chainId,
+          chains
         )}`
       );
       return;
@@ -129,12 +134,12 @@ export const StakeHome = () => {
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
       <div className="text-white font-bold text-[30px]">
-        Stake {getTokenDisplayName(chainId)}
+        Stake {getTokenDisplayName(chainId, chains)}
       </div>
 
       <div className="mt-[12px] text-text-gray4 text-[14px]">
         <FormatterText value={totalStakedAmount} />{" "}
-        {getTokenDisplayName(chainId)} is currently staked
+        {getTokenDisplayName(chainId, chains)} is currently staked
       </div>
 
       <div className="mt-[10px] mr-[35px] h-[0.5px] bg-divider" />
@@ -168,7 +173,11 @@ export const StakeHome = () => {
 
             <div className="mx-[5px]">
               {params.rToken && (
-                <TokenIcon denom={getDenom(chainId)} size={36} />
+                <TokenIcon
+                  stafiHubChainConfig={chains[getStafiHubChainId()]}
+                  denom={getDenom(chainId, chains)}
+                  size={36}
+                />
               )}
             </div>
           </div>
@@ -188,7 +197,8 @@ export const StakeHome = () => {
       </div>
 
       <div className="mt-[2px] font-bold text-primary text-[30px]">
-        <FormatterText value={willGetAmount} /> {getRTokenDisplayName(chainId)}
+        <FormatterText value={willGetAmount} />{" "}
+        {getRTokenDisplayName(chainId, chains)}
       </div>
 
       <div className="mt-6 flex items-end">
@@ -199,7 +209,7 @@ export const StakeHome = () => {
             </div>
 
             <div className="ml-1 mb-[1.5px] text-text-gray5 text-[12px] scale-[0.67] origin-bottom-left">
-              +{getTokenDisplayName(chainId)}
+              +{getTokenDisplayName(chainId, chains)}
             </div>
           </div>
 

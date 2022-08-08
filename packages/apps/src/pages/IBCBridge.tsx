@@ -248,7 +248,7 @@ export const IBCBridge = () => {
       const requests = channels.map((channelName) => {
         return (async () => {
           const channelRes = await queryChannel(
-            chainPair.src?.chainId || "",
+            chains[chainPair.src?.chainId || ""],
             channelName
           );
           return channelRes?.channel?.state === State.STATE_OPEN;

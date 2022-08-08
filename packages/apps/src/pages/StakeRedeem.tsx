@@ -21,11 +21,12 @@ import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 import { UnbondModal } from "../modals/UnbondModal";
 import snackbarUtils from "../utils/snackbarUtils";
+import { chains } from "../config";
 
 export const StakeRedeem = () => {
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const rTokenDenom = getRTokenDenom(chainId);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
+  const rTokenDenom = getRTokenDenom(chainId, chains);
   const { exchangeRate } = useStakePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(chainId);
@@ -70,11 +71,11 @@ export const StakeRedeem = () => {
   return (
     <div className="pt-[36px] pl-[30px] pb-[45px]">
       <div className="text-white font-bold text-[30px]">
-        Redeem {getTokenDisplayName(chainId)}
+        Redeem {getTokenDisplayName(chainId, chains)}
       </div>
 
       <div className="mt-10 text-white text-[20px]">
-        1. Unbond {getTokenDisplayName(chainId)}
+        1. Unbond {getTokenDisplayName(chainId, chains)}
       </div>
 
       <div className="mt-2 flex flex-col">
@@ -113,7 +114,7 @@ export const StakeRedeem = () => {
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[12px] self-end mr-[60px]">
-          {getRTokenDisplayName(chainId)} balance:{" "}
+          {getRTokenDisplayName(chainId, chains)} balance:{" "}
           {stakeStatus ? stakeStatus.rTokenBalance : "--"}
         </div>
       </div>
@@ -166,7 +167,10 @@ export const StakeRedeem = () => {
           onClick={() => {
             if (
               !finalAddress ||
-              !checkAddress(finalAddress, getChainAccountPrefix(chainId))
+              !checkAddress(
+                finalAddress,
+                getChainAccountPrefix(chainId, chains)
+              )
             ) {
               snackbarUtils.warning("Please input valid address");
               return;

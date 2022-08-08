@@ -1,10 +1,15 @@
-import { getDenom, getRTokenDenom } from "@stafihub/apps-config";
+import {
+  getDenom,
+  getRTokenDenom,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import { FormatterText, TokenIcon } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useApy } from "../../hooks/useApy";
 import { useTokenSupply } from "../../hooks/useTokenSupply";
 import { usePriceFromDenom } from "../../hooks/useAppSlice";
+import { chains } from "../../config";
 
 interface StakeTokenItemProps {
   chainId: string;
@@ -16,9 +21,11 @@ interface StakeTokenItemProps {
 export const StakeTokenItem = (props: StakeTokenItemProps) => {
   const apy = useApy(props.chainId);
   const supply = useTokenSupply(props.chainId);
-  const tokenPrice = usePriceFromDenom(getDenom(props.chainId));
+  const tokenPrice = usePriceFromDenom(getDenom(props.chainId, chains));
 
-  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
+  const { exchangeRate } = useStakePoolInfo(
+    getRTokenDenom(props.chainId, chains)
+  );
 
   const liquidity = useMemo(() => {
     if (
@@ -35,7 +42,11 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">
       <div className="basis-5/12 font-bold text-[16px] flex items-center">
         <div className="ml-9 mr-[10px]">
-          <TokenIcon denom={getDenom(props.chainId)} size={26} />
+          <TokenIcon
+            stafiHubChainConfig={chains[getStafiHubChainId()]}
+            denom={getDenom(props.chainId, chains)}
+            size={26}
+          />
         </div>
 
         <div>{props.originTokenName}</div>

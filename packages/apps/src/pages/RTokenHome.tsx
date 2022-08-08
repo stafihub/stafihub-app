@@ -4,6 +4,7 @@ import { useRTokenList } from "../hooks/useRTokenList";
 import { StakeTokenItem } from "../components/stake/StakeTokenItem";
 import { StakeTokenTableHeader } from "../components/stake/StakeTokenTableHeader";
 import { getRTokenDisplayName } from "@stafihub/apps-config";
+import { chains } from "../config";
 
 export const RTokenHome = () => {
   const navigate = useNavigate();
@@ -31,7 +32,9 @@ export const RTokenHome = () => {
               originTokenName={rToken.tokenName}
               derivativeTokenName={rToken.rTokenName}
               onClickStake={() => {
-                navigate(`/${getRTokenDisplayName(rToken.chainId)}/stake`);
+                navigate(
+                  `/${getRTokenDisplayName(rToken.chainId, chains)}/stake`
+                );
               }}
             />
           </div>

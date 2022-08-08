@@ -3,6 +3,7 @@ import { getDenom, getRTokenDenom } from "@stafihub/apps-config";
 import { FormatterText, TokenIconLarge } from "@stafihub/react-components";
 import classNames from "classnames";
 import { useMemo } from "react";
+import { chains } from "../config";
 import { usePriceFromDenom } from "../hooks/useAppSlice";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../hooks/useTokenSupply";
@@ -18,8 +19,10 @@ interface ValidatorCardProps {
 
 export const ValidatorCard = (props: ValidatorCardProps) => {
   const supply = useTokenSupply(props.chainId);
-  const tokenPrice = usePriceFromDenom(getDenom(props.chainId));
-  const { exchangeRate } = useStakePoolInfo(getRTokenDenom(props.chainId));
+  const tokenPrice = usePriceFromDenom(getDenom(props.chainId, chains));
+  const { exchangeRate } = useStakePoolInfo(
+    getRTokenDenom(props.chainId, chains)
+  );
 
   const liquidity = useMemo(() => {
     if (
@@ -34,7 +37,7 @@ export const ValidatorCard = (props: ValidatorCardProps) => {
 
   const validatorWrapperInfo: ValidatorWrapperInfo | undefined = useMemo(() => {
     return props.validators.find(
-      (item) => item.rTokenDenom === getRTokenDenom(props.chainId)
+      (item) => item.rTokenDenom === getRTokenDenom(props.chainId, chains)
     );
   }, [props.validators, props.chainId]);
 

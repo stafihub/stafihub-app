@@ -1,4 +1,8 @@
-import { getDenom, getRTokenDisplayName } from "@stafihub/apps-config";
+import {
+  getDenom,
+  getRTokenDisplayName,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import {
   FormatterText,
   RTokenIcon,
@@ -6,6 +10,7 @@ import {
 } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { chains } from "../../config";
 import { usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useInterval } from "../../hooks/useInterval";
 import { FormatMintRewardAct } from "../../types/interface";
@@ -18,7 +23,7 @@ interface MintProgramsItemProps {
 export const MintProgramsItem = (props: MintProgramsItemProps) => {
   const { data } = props;
   const navigate = useNavigate();
-  const tokenPrice = usePriceFromDenom(getDenom(data.chainId));
+  const tokenPrice = usePriceFromDenom(getDenom(data.chainId, chains));
   const [remainingDisplayTime, setRemainingDisplayTime] = useState("");
 
   useInterval(() => {
@@ -70,7 +75,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
             </div>
 
             <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom-left">
-              <TokenName denom={rewardInfo.denom} />
+              <TokenName
+                stafiHubChainConfig={chains[getStafiHubChainId()]}
+                denom={rewardInfo.denom}
+              />
             </div>
           </div>
         ))}
@@ -84,7 +92,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
             </div>
 
             <div className="mb-[1px] pr-1 text-text-gray3 text-[12px] scale-[0.7] origin-bottom-left">
-              <TokenName denom={rewardInfo.denom} />
+              <TokenName
+                stafiHubChainConfig={chains[getStafiHubChainId()]}
+                denom={rewardInfo.denom}
+              />
             </div>
           </div>
         ))}
@@ -106,7 +117,9 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
           className="w-[66px] h-[22px] text-primary text-[12px] flex justify-center items-center border-primary border-solid border-[0.5px] rounded-full cursor-pointer"
           onClick={() =>
             navigate(
-              `/mint/${getRTokenDisplayName(data.chainId)}/${data.cycle}`
+              `/mint/${getRTokenDisplayName(data.chainId, chains)}/${
+                data.cycle
+              }`
             )
           }
         >

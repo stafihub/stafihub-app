@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { atomicToHuman } from "@stafihub/apps-util";
 import { queryDenomTrace } from "@stafihub/apps-wallet";
 import { DenomTrace } from "@stafihub/types";
+import { chains } from "../../config";
 import { Coin } from "../../types/interface";
 import { AppThunk } from "../store";
 
@@ -49,7 +50,10 @@ export const updateChainIBCChannels =
     const requests = balances.map((coin) =>
       (async () => {
         if (coin.denom.startsWith("ibc/")) {
-          const denomTraceRes = await queryDenomTrace(chainId, coin.denom);
+          const denomTraceRes = await queryDenomTrace(
+            chains[chainId],
+            coin.denom
+          );
           // console.log("xxx", coin.denom, chainId, denomTraceRes);
 
           if (denomTraceRes && denomTraceRes.denomTrace) {

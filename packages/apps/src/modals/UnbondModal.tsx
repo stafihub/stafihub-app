@@ -8,6 +8,7 @@ import {
 import { Button, FormatterText } from "@stafihub/react-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { chains } from "../config";
 import { useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useRParams } from "../hooks/useRParams";
@@ -27,15 +28,17 @@ interface UnbondModalProps {
 
 export const UnbondModal = (props: UnbondModalProps) => {
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
   const dispatch = useDispatch();
   const isLoading = useIsLoading();
   const { updateStakeStatus } = useChainStakeStatus(chainId);
   const { relayFee } = useUnbondRelayFee(chainId);
-  const { bondingDays, bondingHours } = useRParams(getRTokenDenom(chainId));
+  const { bondingDays, bondingHours } = useRParams(
+    getRTokenDenom(chainId, chains)
+  );
 
   const { multisigPoolAddress, icaPoolAddress } = useStakePoolInfo(
-    getRTokenDenom(chainId)
+    getRTokenDenom(chainId, chains)
   );
 
   return (
@@ -61,11 +64,12 @@ export const UnbondModal = (props: UnbondModalProps) => {
         }}
       >
         <div className="text-white font-bold text-[30px]">
-          Unbond {props.inputAmount} {getRTokenDisplayName(chainId)}
+          Unbond {props.inputAmount} {getRTokenDisplayName(chainId, chains)}
         </div>
 
         <div className="mt-[25px] text-text-gray4 text-[20px]">
-          —Commission: {props.commissionFee} {getRTokenDisplayName(chainId)}
+          —Commission: {props.commissionFee}{" "}
+          {getRTokenDisplayName(chainId, chains)}
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[20px]">
@@ -77,7 +81,8 @@ export const UnbondModal = (props: UnbondModalProps) => {
         </div>
 
         <div className="mt-[55px] text-white font-bold text-[20px]">
-          You will get {props.willGetAmount} {getTokenDisplayName(chainId)}
+          You will get {props.willGetAmount}{" "}
+          {getTokenDisplayName(chainId, chains)}
         </div>
 
         <div className="mt-[22px] self-end flex items-center">

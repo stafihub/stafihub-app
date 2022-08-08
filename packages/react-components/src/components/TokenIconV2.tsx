@@ -1,10 +1,11 @@
 import { queryDenomTrace } from "@stafihub/apps-wallet";
 import classNames from "classnames";
-import { getStafiHubChainId } from "@stafihub/apps-config";
 import { useEffect, useState } from "react";
 import iconEmpty from "../assets/images/icon_empty.svg";
+import { KeplrChainParams } from "../interface";
 
 interface TokenIconV2Props {
+  stafiHubChainConfig: KeplrChainParams;
   denom: string;
   size?: number;
   withBorder?: boolean;
@@ -20,7 +21,10 @@ export const TokenIconV2 = (props: TokenIconV2Props) => {
   const loadImage = async (denom: string) => {
     let finalDenom = denom;
     if (denom.startsWith("ibc/")) {
-      const denomTraceRes = await queryDenomTrace(getStafiHubChainId(), denom);
+      const denomTraceRes = await queryDenomTrace(
+        props.stafiHubChainConfig,
+        denom
+      );
       if (denomTraceRes && denomTraceRes.denomTrace) {
         finalDenom = denomTraceRes.denomTrace.baseDenom;
       }

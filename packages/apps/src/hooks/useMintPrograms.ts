@@ -1,5 +1,4 @@
 import {
-  chains,
   getDenom,
   getRTokenDenom,
   getRTokenDisplayName,
@@ -18,6 +17,7 @@ import * as _ from "lodash";
 import Long from "long";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { chains } from "../config";
 import {
   ActDetailStore,
   setActDetailStore,
@@ -52,7 +52,7 @@ export function useMintPrograms() {
     let total = 0;
     actDetails.forEach((actDetail) => {
       const priceItem = priceList.find(
-        (item) => item.denom === getDenom(actDetail.chainId)
+        (item) => item.denom === getDenom(actDetail.chainId, chains)
       );
       if (isNaN(Number(actDetail.totalNativeTokenAmount)) || !priceItem) {
         return;
@@ -69,7 +69,7 @@ export function useMintPrograms() {
     let total = 0;
     actDetails.forEach((actDetail) => {
       actDetail.tokenRewardInfos.forEach((info) => {
-        if (info.denom === getDenom(getStafiHubChainId())) {
+        if (info.denom === getDenom(getStafiHubChainId(), chains)) {
           total += Number(info.totalRewardAmount);
         }
       });
@@ -121,7 +121,7 @@ export function useMintProgram(chainId: string, cycle: number) {
   const latestBlock = useLatestBlock();
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const priceList = usePriceList();
-  const tokenPrice = usePriceFromDenom(getDenom(chainId));
+  const tokenPrice = usePriceFromDenom(getDenom(chainId, chains));
   const [userMintInfo, setUserMintInfo] = useState<FormatUserMintInfo | null>(
     null
   );
@@ -131,7 +131,7 @@ export function useMintProgram(chainId: string, cycle: number) {
   });
 
   const actDetail: FormatMintRewardAct | undefined = useMemo(() => {
-    const arr = actDetailStore[getRTokenDenom(chainId)];
+    const arr = actDetailStore[getRTokenDenom(chainId, chains)];
     if (!arr) {
       return undefined;
     }
@@ -163,7 +163,9 @@ export function useMintProgram(chainId: string, cycle: number) {
       (item) => item !== undefined
     ) || []) as FormatMintRewardAct[];
 
-    dispatch(updateSingleActDetailStore(getRTokenDenom(chainId), newValue));
+    dispatch(
+      updateSingleActDetailStore(getRTokenDenom(chainId, chains), newValue)
+    );
   }, [dispatch, chainId]);
 
   const updateUserActDetail = useCallback(async () => {
@@ -172,9 +174,9 @@ export function useMintProgram(chainId: string, cycle: number) {
       return;
     }
     const userMintCount = await queryUserMintCount(
-      getStafiHubChainId(),
+      chains[getStafiHubChainId()],
       stafiHubAccount.bech32Address,
-      getRTokenDenom(chainId),
+      getRTokenDenom(chainId, chains),
       Long.fromInt(cycle)
     );
 
@@ -186,9 +188,9 @@ export function useMintProgram(chainId: string, cycle: number) {
       (mintIndex) =>
         (async () => {
           const claimInfoDetail = await queryUserClaimInfoDetail(
-            getStafiHubChainId(),
+            chains[getStafiHubChainId()],
             stafiHubAccount.bech32Address,
-            getRTokenDenom(chainId),
+            getRTokenDenom(chainId, chains),
             Long.fromInt(cycle),
             Long.fromInt(mintIndex)
           );
@@ -226,7 +228,7 @@ export function useMintProgram(chainId: string, cycle: number) {
 
                   if (finalDenom.startsWith("ibc/")) {
                     const denomTraceRes = await queryDenomTrace(
-                      getStafiHubChainId(),
+                      chains[getStafiHubChainId()],
                       finalDenom
                     );
 
@@ -350,13 +352,15 @@ async function getActDetailList(
   chainId: string
 ): Promise<(FormatMintRewardAct | undefined)[] | undefined> {
   try {
-    const rTokenDenom = getRTokenDenom(chainId);
+    const rTokenDenom = getRTokenDenom(chainId, chains);
     const response = await queryActLatestCycle(
-      getStafiHubChainId(),
+      chains[getStafiHubChainId()],
       rTokenDenom
     );
 
-    const latestBlockResult = await queryLatestBlock(getStafiHubChainId());
+    const latestBlockResult = await queryLatestBlock(
+      chains[getStafiHubChainId()]
+    );
     const latestBlock = latestBlockResult?.block?.header?.height?.toNumber();
 
     const actDetailRequests = [];
@@ -365,7 +369,7 @@ async function getActDetailList(
         (async (): Promise<FormatMintRewardAct | undefined> => {
           try {
             const actDetailResponse = await queryActDetail(
-              getStafiHubChainId(),
+              chains[getStafiHubChainId()],
               rTokenDenom,
               Long.fromInt(cycle)
             );
@@ -403,7 +407,7 @@ async function getActDetailList(
               chainId,
               rTokenDenom: rTokenDenom,
               cycle,
-              rTokenDisplayName: getRTokenDisplayName(chainId),
+              rTokenDisplayName: getRTokenDisplayName(chainId, chains),
               durationDays: Math.round(durationDays).toString(),
               totalNativeTokenAmount: atomicToHuman(
                 actDetail.totalNativeTokenAmount

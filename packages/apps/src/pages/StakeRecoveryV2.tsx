@@ -18,9 +18,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import iconDown from "../assets/images/icon_down_white.png";
 import iconSelectDropdown from "../assets/images/icon_select_dropdown.svg";
+import { chains } from "../config";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { RTokenItem, useRTokenList } from "../hooks/useRTokenList";
-import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { setStakeSidebarProps, stakeRecovery } from "../redux/reducers/TxSlice";
 import { openLink } from "../utils/common";
@@ -45,7 +45,10 @@ export const StakeRecoveryV2 = () => {
       return;
     }
 
-    queryStakePoolInfo(getRTokenDenom(selectedItem.chainId))
+    queryStakePoolInfo(
+      chains[getStafiHubChainId()],
+      getRTokenDenom(selectedItem.chainId, chains)
+    )
       .then((result) => {
         const address =
           result.icaPoolAddress || result.multisigPoolAddress || "";
@@ -76,7 +79,7 @@ export const StakeRecoveryV2 = () => {
       return;
     }
 
-    const rToken = getRTokenDisplayName(selectedItem.chainId);
+    const rToken = getRTokenDisplayName(selectedItem.chainId, chains);
 
     dispatch(
       stakeRecovery(
@@ -257,7 +260,8 @@ export const StakeRecoveryV2 = () => {
               >
                 <div className="flex items-center">
                   <TokenIcon
-                    denom={getDenom(rTokenItem.chainId)}
+                    stafiHubChainConfig={chains[getStafiHubChainId()]}
+                    denom={getDenom(rTokenItem.chainId, chains)}
                     size={26}
                     withBorder
                   />

@@ -4,8 +4,8 @@ import {
   DeliverTxResponse,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { chains, getStafiHubChainId } from "@stafihub/apps-config";
 import { MsgSwap, MsgAddLiquidity, MsgRemoveLiquidity } from "@stafihub/types";
+import { KeplrChainParams } from "../../interface";
 
 declare const window: any;
 
@@ -15,6 +15,7 @@ interface Coin {
 }
 
 export async function sendRDexSwapTx(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   stafiHubAddress: string,
   swapPoolIndex: number,
   inputToken: Coin,
@@ -24,15 +25,17 @@ export async function sendRDexSwapTx(
     return;
   }
 
+  if (!stafiHubChainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.rdex.MsgSwap", MsgSwap);
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -56,7 +59,7 @@ export async function sendRDexSwapTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -73,6 +76,7 @@ export async function sendRDexSwapTx(
 }
 
 export async function sendRDexAddLiquidityTx(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   stafiHubAddress: string,
   swapPoolIndex: number,
   token0: Coin,
@@ -82,18 +86,20 @@ export async function sendRDexAddLiquidityTx(
     return;
   }
 
+  if (!stafiHubChainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register(
     "/stafihub.stafihub.rdex.MsgAddLiquidity",
     MsgAddLiquidity
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -117,7 +123,7 @@ export async function sendRDexAddLiquidityTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],
@@ -134,6 +140,7 @@ export async function sendRDexAddLiquidityTx(
 }
 
 export async function sendRDexRemoveLiquidityTx(
+  stafiHubChainConfig: KeplrChainParams | null | undefined,
   stafiHubAddress: string,
   swapPoolIndex: number,
   rmUnit: string,
@@ -146,18 +153,20 @@ export async function sendRDexRemoveLiquidityTx(
     return;
   }
 
+  if (!stafiHubChainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register(
     "/stafihub.stafihub.rdex.MsgRemoveLiquidity",
     MsgRemoveLiquidity
   );
 
-  const offlineSigner = window.getOfflineSigner(
-    chains[getStafiHubChainId()].chainId
-  );
+  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
-    chains[getStafiHubChainId()].rpc,
+    stafiHubChainConfig.rpc,
     offlineSigner,
     { registry: myRegistry }
   );
@@ -184,7 +193,7 @@ export async function sendRDexRemoveLiquidityTx(
   const fee = {
     amount: [
       {
-        denom: chains[getStafiHubChainId()].denom,
+        denom: stafiHubChainConfig.denom,
         amount: "1",
       },
     ],

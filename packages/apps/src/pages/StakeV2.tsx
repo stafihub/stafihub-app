@@ -9,14 +9,13 @@ import {
   getTokenDisplayName,
 } from "@stafihub/apps-config";
 import { formatNumberToFixed } from "@stafihub/apps-util";
-import tooltipIcon from "../assets/images/icon_tooltip.svg";
 import {
   Button,
   CustomInput,
   CustomNumberInput,
   FormatterText,
-  TokenIcon,
   TokenName,
+  TokenIcon,
 } from "@stafihub/react-components";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
@@ -41,20 +40,20 @@ import { setStakeSidebarProps, stake } from "../redux/reducers/TxSlice";
 import { FormatTokenRewardInfo } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
-import { Tooltip } from "@mui/material";
+import { chains } from "../config";
 
 export const StakeV2 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
   const isLoading = useIsLoading();
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const chainAccount = useChainAccount(chainId);
   const apy = useApy(chainId);
   const supply = useTokenSupply(chainId);
   const { multisigPoolAddress, icaPoolAddress, exchangeRate, leastBond } =
-    useStakePoolInfo(getRTokenDenom(chainId));
+    useStakePoolInfo(getRTokenDenom(chainId, chains));
   const [inputAmount, setInputAmount] = useState("");
   const [stafiHubAddress, setStafiHubAddress] = useState("");
   const [memoNoticeModalVisible, setMemoNoticeModalVisible] = useState(false);
@@ -66,7 +65,7 @@ export const StakeV2 = () => {
   const { actDetails } = useMintPrograms();
 
   useEffect(() => {
-    const rTokenDenom = getRTokenDenom(chainId);
+    const rTokenDenom = getRTokenDenom(chainId, chains);
     const abortController = new AbortController();
 
     fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
@@ -153,7 +152,15 @@ export const StakeV2 = () => {
     if (!chainAccount) {
       return "--";
     }
-    return getHumanAccountBalance(chainAccount.allBalances, getDenom(chainId));
+    return Math.max(
+      0,
+      Number(
+        getHumanAccountBalance(
+          chainAccount.allBalances,
+          getDenom(chainId, chains)
+        )
+      ) - 0.05
+    );
   }, [chainAccount, chainId]);
 
   const willGetAmount = useMemo(() => {
@@ -223,13 +230,13 @@ export const StakeV2 = () => {
       <div className="flex items-center self-center">
         <img src={iconStakeMenu} alt="menu" className="w-6 h-6" />
         <div className="ml-1 text-white font-bold text-[30px]">
-          Stake {getTokenDisplayName(chainId)}
+          Stake {getTokenDisplayName(chainId, chains)}
         </div>
       </div>
 
       <div className="self-center mt-[12px] text-text-gray4 text-[14px]">
         <FormatterText value={totalStakedAmount} />{" "}
-        {getTokenDisplayName(chainId)} is currently staked
+        {getTokenDisplayName(chainId, chains)} is currently staked
       </div>
 
       <div className="mt-[14px] h-[0.5px] bg-divider" />
@@ -251,7 +258,7 @@ export const StakeV2 = () => {
             <div
               className={classNames(
                 isNaN(Number(transferrableAmount)) ||
-                  Number(transferrableAmount) - 0.05 === Number(inputAmount)
+                  Number(transferrableAmount) === Number(inputAmount)
                   ? "text-[#8f8f8f]"
                   : "text-primary",
                 "text-[16px]",
@@ -263,10 +270,10 @@ export const StakeV2 = () => {
                 }
                 if (
                   !isNaN(Number(transferrableAmount)) &&
-                  Number(transferrableAmount) > 0.05
+                  Number(transferrableAmount) > 0
                 ) {
                   setInputAmount(
-                    formatNumberToFixed(Number(transferrableAmount) - 0.05)
+                    formatNumberToFixed(Number(transferrableAmount))
                   );
                 }
               }}
@@ -276,7 +283,11 @@ export const StakeV2 = () => {
 
             <div className="mx-[5px]">
               {params.rToken && (
-                <TokenIcon denom={getDenom(chainId)} size={36} />
+                <TokenIcon
+                  stafiHubChainConfig={chains[getStafiHubChainId()]}
+                  denom={getDenom(chainId, chains)}
+                  size={36}
+                />
               )}
             </div>
           </div>
@@ -359,7 +370,7 @@ export const StakeV2 = () => {
               </div>
 
               <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
-                +{getTokenDisplayName(chainId)}
+                +{getTokenDisplayName(chainId, chains)}
               </div>
             </div>
 
@@ -381,7 +392,11 @@ export const StakeV2 = () => {
                   </div>
 
                   <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
-                    +<TokenName denom={rewardInfo.denom} />
+                    +
+                    <TokenName
+                      stafiHubChainConfig={chains[getStafiHubChainId()]}
+                      denom={rewardInfo.denom}
+                    />
                   </div>
                 </div>
 
@@ -417,7 +432,8 @@ export const StakeV2 = () => {
             if (Number(inputAmount) < Number(leastBond)) {
               snackbarUtil.warning(
                 `The stake amount is less than the minimum stake size: ${leastBond} ${getTokenDisplayName(
-                  chainId
+                  chainId,
+                  chains
                 )}`
               );
               return;
@@ -435,19 +451,19 @@ export const StakeV2 = () => {
           {isLoading ? (
             <div>
               You will get <FormatterText value={willGetAmount} />{" "}
-              {getRTokenDisplayName(chainId)}
+              {getRTokenDisplayName(chainId, chains)}
             </div>
           ) : !stafiHubAccount ? (
             "Connect StaFi-Hub Wallet"
           ) : !chainAccount ? (
-            `Connect ${getDisplayHubName(chainId)} Wallet`
+            `Connect ${getDisplayHubName(chainId, chains)} Wallet`
           ) : Number(inputAmount) > 0 &&
             Number(inputAmount) > Number(transferrableAmount) ? (
             "Insufficient Balance"
           ) : (
             <div>
               You will get <FormatterText value={willGetAmount} />{" "}
-              {getRTokenDisplayName(chainId)}
+              {getRTokenDisplayName(chainId, chains)}
             </div>
           )}
         </Button>
@@ -465,7 +481,7 @@ export const StakeV2 = () => {
       <ApyComparisonModal
         visible={apyComparisonModalVisible}
         onClose={() => setApyComparisonModalVisible(false)}
-        tokenName={getTokenDisplayName(chainId)}
+        tokenName={getTokenDisplayName(chainId, chains)}
         stafiHubApy={apy}
         otherApy={otherApy}
       />

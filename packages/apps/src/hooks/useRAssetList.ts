@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import * as _ from "lodash";
 import {
-  chains,
   getStafiHubChainId,
   getTokenDisplayName,
   getRTokenDisplayName,
-} from "@stafihub/apps-config/src";
+} from "@stafihub/apps-config";
+import { chains } from "../config";
 
 interface RAssetItem {
   chainName: string;
@@ -26,8 +26,8 @@ export function useRAssetList() {
         return {
           chainName: chain.chainName,
           chainId: chain.chainId,
-          tokenName: getTokenDisplayName(chain.chainId),
-          rTokenName: getRTokenDisplayName(chain.chainId),
+          tokenName: getTokenDisplayName(chain.chainId, chains),
+          rTokenName: getRTokenDisplayName(chain.chainId, chains),
           myStakedAmount: "--",
           rTokenAmount: "--",
         };

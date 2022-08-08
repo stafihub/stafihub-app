@@ -23,6 +23,7 @@ import iconReward from "../assets/images/icon_rAsset_reward.svg";
 import iconWaveLine from "../assets/images/icon_wave_line.svg";
 import nodata from "../assets/images/nodata.png";
 import { DashboardRecords } from "../components/stake/DashboardRecords";
+import { chains } from "../config";
 import { useAccountReward } from "../hooks/useAccountReward";
 import { useChainAccount, usePriceFromDenom } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
@@ -35,11 +36,11 @@ export const RTokenDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const tokenName = getTokenDisplayName(chainId);
-  const rTokenDenom = getRTokenDenom(chainId);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
+  const tokenName = getTokenDisplayName(chainId, chains);
+  const rTokenDenom = getRTokenDenom(chainId, chains);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
-  const tokenPrice = usePriceFromDenom(getDenom(chainId));
+  const tokenPrice = usePriceFromDenom(getDenom(chainId, chains));
   const rTokenPrice = usePriceFromDenom(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(chainId);
   const { exchangeRate, eraHours } = useStakePoolInfo(rTokenDenom);
@@ -208,7 +209,7 @@ export const RTokenDashboard = () => {
             <div className="mt-10 text-[#aaaaaa] text-[20px] leading-tight">
               Redeemable Reward
               <br />
-              in {getTokenDisplayName(chainId)} (last 24h)
+              in {getTokenDisplayName(chainId, chains)} (last 24h)
             </div>
 
             <div className="mt-6 flex items-center">
@@ -223,7 +224,11 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="ml-5">
-                <TokenIcon denom={getDenom(chainId)} size={26} />
+                <TokenIcon
+                  stafiHubChainConfig={chains[getStafiHubChainId()]}
+                  denom={getDenom(chainId, chains)}
+                  size={26}
+                />
               </div>
             </div>
 
@@ -232,7 +237,7 @@ export const RTokenDashboard = () => {
             <div className="mt-5 text-[#aaaaaa] text-[20px] leading-tight">
               Total Redeemable
               <br />
-              Reward in {getTokenDisplayName(chainId)}
+              Reward in {getTokenDisplayName(chainId, chains)}
             </div>
 
             <div className="mt-6 flex items-center">
@@ -247,7 +252,11 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="ml-5">
-                <TokenIcon denom={getDenom(chainId)} size={26} />
+                <TokenIcon
+                  stafiHubChainConfig={chains[getStafiHubChainId()]}
+                  denom={getDenom(chainId, chains)}
+                  size={26}
+                />
               </div>
             </div>
 
@@ -275,7 +284,7 @@ export const RTokenDashboard = () => {
                 <div className="mt-2 flex">
                   <div className="text-secondary text-[14px]">
                     +<FormatterText value={lastEraReward} />{" "}
-                    {getTokenDisplayName(chainId)}
+                    {getTokenDisplayName(chainId, chains)}
                   </div>
 
                   <div className="ml-[4px] text-white text-[14px]">
@@ -309,7 +318,7 @@ export const RTokenDashboard = () => {
       </div>
 
       <TradeModal
-        tradeDenom={getRTokenDenom(chainId)}
+        tradeDenom={getRTokenDenom(chainId, chains)}
         tradeTokenName={params.rToken || ""}
         visible={tradeModalVisible}
         onClose={() => setTradeModalVisible(false)}

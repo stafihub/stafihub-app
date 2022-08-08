@@ -19,6 +19,7 @@ import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import iconDown from "../assets/images/icon_down_white.png";
+import { chains } from "../config";
 import { useChainAccount } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
@@ -31,8 +32,8 @@ export const StakeRedeemV2 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
-  const rTokenDenom = getRTokenDenom(chainId);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
+  const rTokenDenom = getRTokenDenom(chainId, chains);
   const { exchangeRate } = useStakePoolInfo(rTokenDenom);
   const { unbondCommission } = useUnbondCommission(rTokenDenom);
   const { stakeStatus } = useChainStakeStatus(chainId);
@@ -102,12 +103,12 @@ export const StakeRedeemV2 = () => {
         />
 
         <div className="ml-5 text-white text-[30px] font-bold">
-          Redeem {getTokenDisplayName(chainId)}
+          Redeem {getTokenDisplayName(chainId, chains)}
         </div>
       </div>
 
       <div className="ml-10 mt-10 text-white text-[20px]">
-        1. Unbond {getTokenDisplayName(chainId)}
+        1. Unbond {getTokenDisplayName(chainId, chains)}
       </div>
 
       <div className="ml-10 mt-2 flex flex-col">
@@ -153,7 +154,7 @@ export const StakeRedeemV2 = () => {
         </div>
 
         <div className="mt-[10px] text-text-gray4 text-[12px] self-end mr-[60px]">
-          {getRTokenDisplayName(chainId)} balance:{" "}
+          {getRTokenDisplayName(chainId, chains)} balance:{" "}
           {stakeStatus ? (
             <FormatterText value={stakeStatus.rTokenBalance} />
           ) : (
@@ -170,7 +171,7 @@ export const StakeRedeemV2 = () => {
         <div className="ml-5 flex-1">
           <CustomInput
             fontSize={16}
-            placeholder={`${getChainAccountPrefix(chainId)}...`}
+            placeholder={`${getChainAccountPrefix(chainId, chains)}...`}
             value={receivingAddress}
             handleValueChange={setReceivingAddress}
           />
@@ -195,7 +196,10 @@ export const StakeRedeemV2 = () => {
           onClick={() => {
             if (
               !receivingAddress ||
-              !checkAddress(receivingAddress, getChainAccountPrefix(chainId))
+              !checkAddress(
+                receivingAddress,
+                getChainAccountPrefix(chainId, chains)
+              )
             ) {
               snackbarUtils.warning("Please input valid address");
               return;

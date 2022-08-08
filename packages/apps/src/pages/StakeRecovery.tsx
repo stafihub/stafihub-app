@@ -1,6 +1,5 @@
 import {
   getChainIdFromRTokenDisplayName,
-  getRTokenDenom,
   getStafiHubChainId,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
@@ -8,15 +7,14 @@ import { Button, CustomInput } from "@stafihub/react-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
+import { chains } from "../config";
 import { useChainAccount, useIsLoading } from "../hooks/useAppSlice";
 import { connectKeplr } from "../redux/reducers/AppSlice";
-import { stakeRecovery } from "../redux/reducers/TxSlice";
 
 export const StakeRecovery = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const chainId = getChainIdFromRTokenDisplayName(params.rToken);
+  const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const isLoading = useIsLoading();
   const [txHash, setTxHash] = useState("");
@@ -57,7 +55,7 @@ export const StakeRecovery = () => {
 
       <div className="mt-[7px] h-[34px] border-solid border-[1px] rounded-[5px] border-input-border flex items-center">
         <div className="ml-[13px] text-[#8f8f8f] text-[12px]">
-          {getTokenDisplayName(chainId)}
+          {getTokenDisplayName(chainId, chains)}
         </div>
       </div>
 

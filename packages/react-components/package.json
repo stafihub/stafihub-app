@@ -14,22 +14,22 @@
   "author": "joe",
   "license": "MIT",
   "dependencies": {
-    "@emotion/react": "^11.8.1",
-    "@emotion/styled": "^11.8.1",
-    "@mui/material": "^5.4.2",
+    "@emotion/react": "11.8.1",
+    "@emotion/styled": "11.8.1",
+    "@mui/material": "5.4.2",
     "@stafihub/apps-wallet": "workspace:0.9.9",
     "@stafihub/apps-config": "workspace:0.6.3",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "classnames": "^2.3.1",
-    "echarts": "^5.3.2",
-    "echarts-for-react": "^3.0.2",
-    "icomoon-react": "^2.0.19",
-    "react-loading": "^2.0.3",
+    "@testing-library/jest-dom": "5.14.1",
+    "@testing-library/react": "12.0.0",
+    "@testing-library/user-event": "13.2.1",
+    "classnames": "2.3.1",
+    "echarts": "5.3.2",
+    "echarts-for-react": "3.0.2",
+    "icomoon-react": "2.0.19",
+    "react-loading": "2.0.3",
     "react-router-dom": "6",
     "react-scripts": "5.0.0",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "2.1.0"
   },
   "eslintConfig": {
     "extends": [
@@ -50,8 +50,8 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.6",
-    "tailwindcss": "^3.0.23"
+    "autoprefixer": "10.4.2",
+    "postcss": "8.4.6",
+    "tailwindcss": "3.0.23"
   }
 }

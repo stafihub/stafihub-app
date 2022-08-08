@@ -81,6 +81,8 @@ module.exports = {
             ...webpackConfig.resolve.fallback,
             buffer: require.resolve("buffer/"),
             crypto: require.resolve("crypto-browserify"),
+            string_decoder: require.resolve("string_decoder/"),
+            events: require.resolve("events/"),
           },
         },
       };

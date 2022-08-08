@@ -18,7 +18,7 @@
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.4.2",
     "@stafihub/apps-wallet": "workspace:0.9.9",
-    "@stafihub/apps-config": "workspace:0.6.2",
+    "@stafihub/apps-config": "workspace:0.6.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",

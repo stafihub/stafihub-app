@@ -1,5 +1,5 @@
 {
-  "chainName": "staFi-Hub",
+  "chainName": "StaFi-Hub-Testnet",
   "chainId": "stafihub-testnet-1",
   "displayHubName": "StaFiHub",
   "rpc": "https://test-rpc1.stafihub.io",
@@ -15,5 +15,5 @@
     "bech32PrefixConsAddr": "stafivalcons",
     "bech32PrefixConsPub": "stafivalconspub"
   },
-  "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-hub-devnet"
+  "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-hub-testnet"
 }

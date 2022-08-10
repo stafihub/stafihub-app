@@ -350,7 +350,7 @@ export const FeeStation = (props: {}) => {
       <div className="mt-2 font-bold text-white text-[30px]">Fee Station</div>
 
       <div className="mt-4 text-[14px] text-text-gray4 w-[430px] text-center">
-        If you have no native FIS to pay for the fee, you can swap native FIS
+        If you have no ICS20 FIS to pay for the fee, you can swap ICS20 FIS
         using native ATOM and other Cosmos Eco tokens.
       </div>
 

@@ -1,5 +1,5 @@
 import { SigningStargateClient } from "@cosmjs/stargate";
-import { KeplrChainParams } from "../interface";
+import { DetailKeplrChainParams, KeplrChainParams } from "../interface";
 
 declare const window: any;
 
@@ -8,7 +8,7 @@ function timeout(ms: number) {
 }
 
 export async function connectAtomjs(
-  chainConfig: KeplrChainParams | null | undefined
+  chainConfig: DetailKeplrChainParams | null | undefined
 ) {
   await timeout(500);
   if (!window.getOfflineSigner || !window.keplr) {
@@ -24,7 +24,7 @@ export async function connectAtomjs(
   return enableResult;
 }
 
-async function innerConnectKeplr(chainConfig: KeplrChainParams) {
+async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
   if (window.keplr.experimentalSuggestChain) {
     let parameter = {
       chainId: chainConfig.chainId,

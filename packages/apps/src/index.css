@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 body {
+  background-color: #10121d;
+  margin: 0;
+  font-family: "arial bold", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
   background-color: #000002;
   margin: 0;
   font-family: Helvetica, "Avenir", Arial, sans-serif;

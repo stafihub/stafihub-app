@@ -1,11 +1,14 @@
 import classNames from "classnames";
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
+import { ComingSoon } from "../components/ComingSoon";
 import { DashboardTokenSelector } from "../components/stake/DashboardTokenSelector";
 
 export const RTokenV2Layout = () => {
   const navigate = useNavigate();
   const matchStakeList = useMatch("/rToken");
   const matchStakeContent = useMatch("/rToken/:rToken/stake");
+
+  return <ComingSoon />;
 
   return (
     <div className="flex flex-col items-center">

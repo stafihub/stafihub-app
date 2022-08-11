@@ -50,6 +50,22 @@ module.exports = {
       animation: {
         siderbar_progress_show: "siderbar_progress_show 0.5s",
       },
+      fontFamily: {
+        arialBold: [
+          "arial bold",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Oxygen",
+          "Ubuntu",
+          "Cantarell",
+          "Fira Sans",
+          "Droid Sans",
+          "Helvetica Neue",
+          "sans-serif",
+        ],
+      },
     },
   },
   plugins: [],

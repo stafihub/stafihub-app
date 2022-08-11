@@ -168,7 +168,7 @@ importers:
       '@cosmjs/stargate': 0.27.1
       '@cosmjs/tendermint-rpc': 0.27.1
       '@stafihub/apps-util': workspace:0.4.0
-      '@stafihub/types': workspace:0.6.7
+      '@stafihub/types': workspace:0.6.9
       '@types/long': 4.0.0
       bech32: 2.0.0
       long: 4.0.0
@@ -191,7 +191,7 @@ importers:
       '@emotion/react': 11.8.1
       '@emotion/styled': 11.8.1
       '@mui/material': 5.4.2
-      '@stafihub/apps-wallet': workspace:0.9.9
+      '@stafihub/apps-wallet': workspace:1.0.6
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react': 12.0.0
       '@testing-library/user-event': 13.2.1

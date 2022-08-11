@@ -9,3 +9,5 @@ export * from "./mining/query";
 export * from "./mining/tx";
 export * from "./claim/tx";
 export * from "./claim/query";
+export * from "./bridge/tx";
+export * from "./bridge/query";

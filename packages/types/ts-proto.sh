@@ -17,6 +17,9 @@ protoc \
   "./proto/claim/tx.proto" \
   "./proto/claim/query.proto" \
   "./proto/claim/params.proto" \
+  "./proto/bridge/tx.proto" \
+  "./proto/bridge/query.proto" \
+  "./proto/bridge/params.proto" \
   "./proto/rmintreward/query.proto" \
   "./proto/rmintreward/tx.proto" \
   "./proto/cosmos/base/tendermint/v1beta1/query.proto" \

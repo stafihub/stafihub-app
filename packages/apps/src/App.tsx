@@ -15,6 +15,7 @@ import { LiquidityPrograms } from "./pages/LiquidityPrograms";
 import { MintDetail } from "./pages/MintDetail";
 import { MintPrograms } from "./pages/MintPrograms";
 import { RAsset } from "./pages/RAsset";
+import { RDex } from "./pages/RDex";
 import { RTokenDashboard } from "./pages/RTokenDashboard";
 import { RTokenV2StakeList } from "./pages/RTokenV2StakeList";
 import { StakeHome } from "./pages/StakeHome";
@@ -99,6 +100,8 @@ function App() {
             <Route path="/feeStation" element={<FeeStation />} />
 
             <Route path="/rBridge" element={<IBCBridge />} />
+
+            <Route path="/rDex" element={<RDex />} />
 
             <Route path="/rPool" element={<RPoolLayout />}>
               <Route index element={<MintPrograms />} />

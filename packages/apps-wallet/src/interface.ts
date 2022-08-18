@@ -18,6 +18,6 @@ export interface DetailKeplrChainParams {
   bech32Config: any;
   explorerUrl: string;
   defaultApy?: string;
-  nativeKeplrChain?: boolean;
+  isNativeKeplrChain?: boolean;
   rTokenEnabled?: boolean;
 }

@@ -16,6 +16,8 @@ export interface KeplrChainParams {
   bech32Config: any;
   explorerUrl: string;
   defaultApy?: string;
+  isNativeKeplrChain?: boolean;
+  stakeDisabled?: boolean;
 }
 
 export type IbcConfig = { [key: string]: IbcConfigParams };

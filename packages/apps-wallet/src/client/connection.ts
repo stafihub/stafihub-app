@@ -25,7 +25,10 @@ export async function connectAtomjs(
 }
 
 async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
-  if (window.keplr.experimentalSuggestChain) {
+  if (
+    window.keplr.experimentalSuggestChain &&
+    !chainConfig.isNativeKeplrChain
+  ) {
     let parameter = {
       chainId: chainConfig.chainId,
       chainName: chainConfig.chainName,

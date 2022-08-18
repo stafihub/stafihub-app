@@ -20,16 +20,14 @@ export function useRTokenList() {
   useEffect(() => {
     const restChainsArr = _.values(_.omit(chains, [getStafiHubChainId()]));
     setRTokenList(
-      restChainsArr
-        .filter((chain) => !chain.stakeDisabled)
-        .map((chain) => {
-          return {
-            chainName: chain.chainName,
-            chainId: chain.chainId,
-            tokenName: getTokenDisplayName(chain.chainId, chains),
-            rTokenName: getRTokenDisplayName(chain.chainId, chains),
-          };
-        })
+      restChainsArr.map((chain) => {
+        return {
+          chainName: chain.chainName,
+          chainId: chain.chainId,
+          tokenName: getTokenDisplayName(chain.chainId, chains),
+          rTokenName: getRTokenDisplayName(chain.chainId, chains),
+        };
+      })
     );
   }, []);
 

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { Outlet, useMatch, useNavigate, useParams } from "react-router-dom";
 import { ComingSoon } from "../components/ComingSoon";
+import { isDev } from "../config";
 
 export const RPoolLayout = () => {
   const navigate = useNavigate();
@@ -10,7 +11,9 @@ export const RPoolLayout = () => {
   const matchMint = useMatch(`/rPool/mint`);
   const matchLiquidity = useMatch(`/rPool/liquidity`);
 
-  return <ComingSoon />;
+  if (!isDev()) {
+    return <ComingSoon />;
+  }
 
   return (
     <div className="flex justify-center">

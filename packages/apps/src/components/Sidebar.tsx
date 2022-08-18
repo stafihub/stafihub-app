@@ -14,6 +14,7 @@ import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { SidebarItem } from "@stafihub/react-components";
 import { openLink } from "../utils/common";
+import { isDev } from "../config";
 
 export const Sidebar = () => {
   const location = useLocation();
@@ -84,28 +85,32 @@ export const Sidebar = () => {
         }
       />
 
-      <SidebarItem
-        defaultIcon={rDexIcon}
-        activeIcon={rDexIconActive}
-        title="rDEX"
-        targetUrl="/rDex"
-        match={!!matchDex}
-      />
+      {isDev() ? (
+        <div
+          className="mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer"
+          onClick={() =>
+            openLink("https://test-app.rdex.finance/stafihub/swap")
+          }
+        >
+          <img
+            src={rDexIcon}
+            alt="icon"
+            className="w-[36px] h-[36px] rounded-full ml-[9px]"
+          />
 
-      {/* <div
-        className="mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer"
-        onClick={() => openLink("https://test-app.rdex.finance/stafihub/swap")}
-      >
-        <img
-          src={rDexIcon}
-          alt="icon"
-          className="w-[36px] h-[36px] rounded-full ml-[9px]"
-        />
-
-        <div className="text-[16px] text-white ml-[10px]">
-          <div>rDEX</div>
+          <div className="text-[16px] text-white ml-[10px]">
+            <div>rDEX</div>
+          </div>
         </div>
-      </div> */}
+      ) : (
+        <SidebarItem
+          defaultIcon={rDexIcon}
+          activeIcon={rDexIconActive}
+          title="rDEX"
+          targetUrl="/rDex"
+          match={!!matchDex}
+        />
+      )}
 
       <div className="absolute bottom-5 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
         <div>Need FIS for fees?</div>

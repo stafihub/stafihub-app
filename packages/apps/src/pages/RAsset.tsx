@@ -8,6 +8,7 @@ import { RootState } from "../redux/store";
 import * as _ from "lodash";
 import { FormatterText } from "@stafihub/react-components";
 import { ComingSoon } from "../components/ComingSoon";
+import { isDev } from "../config";
 
 export const RAsset = () => {
   const rAssetList = useRAssetList();
@@ -32,8 +33,9 @@ export const RAsset = () => {
     return sum;
   }, [stakeStatusMap]);
 
-  return <ComingSoon />;
-
+  if (!isDev()) {
+    return <ComingSoon />;
+  }
   return (
     <div className="flex flex-col items-center">
       <div className="font-bold text-secondary text-[20px] px-4 py-[10px] border-b-[2px] border-solid border-secondary">

@@ -1,9 +1,9 @@
 {
-  "chainName": "StaFi-Hub-Testnet",
-  "chainId": "stafihub-testnet-1",
+  "chainName": "StaFi Hub",
+  "chainId": "stafihub-1",
   "displayHubName": "StaFiHub",
-  "rpc": "https://test-rpc1.stafihub.io",
-  "restEndpoint": "https://test-rest-rpc1.stafihub.io",
+  "rpc": "https://public-rpc1.stafihub.io",
+  "restEndpoint": "https://public-rest-rpc1.stafihub.io",
   "denom": "ufis",
   "coinDenom": "FIS",
   "decimals": 6,

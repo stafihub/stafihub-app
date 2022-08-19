@@ -18,5 +18,15 @@
       { "denom": "uriris", "displayName": "rIRIS" },
       { "denom": "uiris", "displayName": "IRIS" }
     ]
+  },
+  {
+    "srcChainId": "_STAFI_HUB_CHAIN_ID_",
+    "dstChainId": "chihuahua-stafi-1",
+    "srcChannel": "channel-4",
+    "dstChannel": "channel-0",
+    "assets": [
+      { "denom": "urhuahua", "displayName": "rHUAHUA" },
+      { "denom": "uhuahua", "displayName": "HUAHUA" }
+    ]
   }
 ]

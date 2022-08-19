@@ -15,5 +15,6 @@
     "bech32PrefixConsAddr": "stafivalcons",
     "bech32PrefixConsPub": "stafivalconspub"
   },
-  "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-hub-testnet"
+  "explorerUrl": "https://ping.pub/stafihub",
+  "isNativeKeplrChain": false
 }

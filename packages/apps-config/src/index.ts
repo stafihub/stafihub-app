@@ -24,7 +24,7 @@ export function getApiHost(): string {
   if (isDev()) {
     return "https://test-rtoken-api.stafihub.io";
   } else {
-    return "https://test-rtoken-api.stafihub.io";
+    return "https://rtoken-api.stafihub.io";
   }
 }
 

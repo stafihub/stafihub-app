@@ -135,7 +135,7 @@ export const RTokenDashboard = () => {
                 {params.rToken} Value
               </div>
 
-              <div className="mt-8 w-[110px]">
+              <div className="mt-8 w-[120px]">
                 <Button
                   bgPrimary
                   type="rectangle"
@@ -159,7 +159,7 @@ export const RTokenDashboard = () => {
                 Redeemable Value
               </div>
 
-              <div className="mt-8 w-[110px]">
+              <div className="mt-8 w-[120px]">
                 <Button
                   bgPrimary
                   type="rectangle"

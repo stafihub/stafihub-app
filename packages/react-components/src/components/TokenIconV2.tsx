@@ -49,7 +49,7 @@ export const TokenIconV2 = (props: TokenIconV2Props) => {
         src={image || iconEmpty}
         alt="icon"
         className={classNames({
-          "p-1": props.stafiHubChainConfig.denom === "uhuahua",
+          "p-1": props.denom.indexOf("huahua") >= 0,
         })}
         style={{
           width: props.size ? `${props.size}px` : "24px",

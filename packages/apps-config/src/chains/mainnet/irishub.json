@@ -3,7 +3,7 @@
   "chainId": "irishub-1",
   "displayHubName": "IRISnet",
   "rpc": "https://iris-public-rpc.stafihub.io",
-  "restEndpoint": "https://iris-public-rest.stafihub.io",
+  "restEndpoint": "https://iris-public-rpc.stafihub.io",
   "denom": "uiris",
   "coinDenom": "IRIS",
   "decimals": 6,

@@ -16,7 +16,7 @@ export const TokenIconLarge = (props: TokenIconLargeProps) => {
   }, [props.tokenName]);
 
   const loadImage = (tokenName: string) => {
-    import(`../assets/images/${tokenName}_large.svg`)
+    import(`../assets/images/${tokenName}_large.png`)
       .then((image) => {
         setImage(image.default);
       })
@@ -34,7 +34,7 @@ export const TokenIconLarge = (props: TokenIconLargeProps) => {
       <img
         src={image || iconEmpty}
         alt="icon"
-        className={classNames("rounded-full", {
+        className={classNames({
           "border-solid border-[1px] border-border-main": props.withBorder,
         })}
         style={{

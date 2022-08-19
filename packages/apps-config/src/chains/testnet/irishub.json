@@ -16,5 +16,6 @@
     "bech32PrefixConsPub": "icp"
   },
   "explorerUrl": "https://testnet-explorer.stafihub.io/irisnet-testnet",
-  "defaultApy": "10"
+  "defaultApy": "10",
+  "sortIndex": 2
 }

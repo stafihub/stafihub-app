@@ -22,13 +22,15 @@ export const ChainIcon = (props: ChainIconProps) => {
   };
 
   return (
-    <div>
+    <div
+      className={classNames("rounded-full", {
+        "border-solid border-[1px] border-border-main": props.withBorder,
+      })}
+    >
       <img
         src={image || iconEmpty}
         alt="icon"
-        className={classNames("rounded-full", {
-          "border-solid border-[1px] border-border-main": props.withBorder,
-        })}
+        className={classNames({ "p-1": props.displayHubName === "Chihuahua" })}
         style={{
           width: props.size ? `${props.size}px` : "24px",
           height: props.size ? `${props.size}px` : "24px",

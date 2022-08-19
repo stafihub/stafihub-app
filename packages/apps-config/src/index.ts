@@ -32,7 +32,7 @@ export function getStafiHubChainId(): string {
   if (isDev()) {
     return "stafihub-testnet-1";
   } else {
-    return "stafihub-testnet-1";
+    return "stafihub-1";
   }
 }
 

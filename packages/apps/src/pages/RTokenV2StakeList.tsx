@@ -19,15 +19,20 @@ export const RTokenV2StakeList = () => {
   };
 
   return (
-    <div className="mt-16 min-h-[500px] relative flex flex-col items-center">
+    <div className="mt-4 min-h-[500px] relative flex flex-col items-center">
       <div
         className={classNames(
-          "w-[580px] grid",
-          rTokenList && rTokenList.length > 1 ? "grid-cols-2" : "grid-cols-1"
+          rTokenList && rTokenList.length > 2 ? "w-[999px]" : "w-[580px]",
+          "grid",
+          rTokenList && rTokenList.length > 2
+            ? "grid-cols-3"
+            : rTokenList && rTokenList.length > 1
+            ? "grid-cols-2"
+            : "grid-cols-1"
         )}
       >
         {rTokenList.map((rToken) => (
-          <div key={rToken.chainId} className="mb-3 px-[30px]">
+          <div key={rToken.chainId} className="mb-3 px-[50px]">
             <StakeTokenCard
               type={rTokenList && rTokenList.length > 1 ? "middle" : "large"}
               chainId={rToken.chainId}

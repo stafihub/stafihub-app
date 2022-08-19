@@ -17,6 +17,7 @@ export interface KeplrChainParams {
   explorerUrl: string;
   defaultApy?: string;
   isNativeKeplrChain?: boolean;
+  sortIndex?: number;
 }
 
 export type IbcConfig = { [key: string]: IbcConfigParams };

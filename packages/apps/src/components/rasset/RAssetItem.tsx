@@ -56,12 +56,12 @@ export const RAssetItem = (props: RAssetItemProps) => {
     return Number(stakeStatus.rTokenBalance) * Number(exchangeRate);
   }, [stakeStatus, exchangeRate]);
 
-  const [rewardText, highlight, hasBorder] = useMemo(() => {
+  const [rewardText, highlight, hasBorder, displayRewardText] = useMemo(() => {
     if (isNaN(Number(originLast24hReward))) {
-      return ["--", false, false];
+      return ["--", false, false, false];
     }
     if (Number(originLast24hReward) === 0) {
-      return ["0", false, false];
+      return ["0", false, false, false];
     }
     if (Number(originLast24hReward) <= -Math.pow(10, 4)) {
       return ["-" + atomicToHuman(originLast24hReward, 6, 4), true, true];
@@ -81,7 +81,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
     ) {
       return ["<0.0001", true, true];
     }
-    return ["--", false, false];
+    return ["--", false, false, false];
   }, [originLast24hReward]);
 
   return (
@@ -116,7 +116,8 @@ export const RAssetItem = (props: RAssetItemProps) => {
                   { "border-b-[1px]": hasBorder },
                   highlight
                     ? "border-secondary text-secondary"
-                    : "text-text-gray2 border-text-gray2"
+                    : "text-text-gray2 border-text-gray2",
+                  { invisible: !displayRewardText }
                 )}
               >
                 {rewardText}

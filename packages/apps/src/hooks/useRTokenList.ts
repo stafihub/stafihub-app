@@ -20,14 +20,18 @@ export function useRTokenList() {
   useEffect(() => {
     const restChainsArr = _.values(_.omit(chains, [getStafiHubChainId()]));
     setRTokenList(
-      restChainsArr.map((chain) => {
-        return {
-          chainName: chain.chainName,
-          chainId: chain.chainId,
-          tokenName: getTokenDisplayName(chain.chainId, chains),
-          rTokenName: getRTokenDisplayName(chain.chainId, chains),
-        };
-      })
+      restChainsArr
+        .sort((a, b) => {
+          return Number(a.sortIndex) - Number(b.sortIndex);
+        })
+        .map((chain) => {
+          return {
+            chainName: chain.chainName,
+            chainId: chain.chainId,
+            tokenName: getTokenDisplayName(chain.chainId, chains),
+            rTokenName: getRTokenDisplayName(chain.chainId, chains),
+          };
+        })
     );
   }, []);
 

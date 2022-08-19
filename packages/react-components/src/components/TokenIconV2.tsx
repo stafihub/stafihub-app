@@ -40,12 +40,16 @@ export const TokenIconV2 = (props: TokenIconV2Props) => {
   };
 
   return (
-    <div>
+    <div
+      className={classNames("rounded-full", "bg-white", {
+        "border-solid border-[1px] border-border-main": props.withBorder,
+      })}
+    >
       <img
         src={image || iconEmpty}
         alt="icon"
-        className={classNames("rounded-full", {
-          "border-solid border-[1px] border-border-main": props.withBorder,
+        className={classNames({
+          "p-1": props.stafiHubChainConfig.denom === "uhuahua",
         })}
         style={{
           width: props.size ? `${props.size}px` : "24px",

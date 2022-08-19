@@ -50,11 +50,11 @@ export function useRAssetList() {
               : stakeStatus1.rTokenBalance;
 
           const bBalance =
-            !stakeStatus1 ||
-            Number(stakeStatus1.rTokenBalance) === 0 ||
-            isNaN(Number(stakeStatus1.rTokenBalance))
+            !stakeStatus2 ||
+            Number(stakeStatus2.rTokenBalance) === 0 ||
+            isNaN(Number(stakeStatus2.rTokenBalance))
               ? 0
-              : stakeStatus1.rTokenBalance;
+              : stakeStatus2.rTokenBalance;
 
           return Number(bBalance) - Number(aBalance);
         })

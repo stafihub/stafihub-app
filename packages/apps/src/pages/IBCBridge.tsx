@@ -100,6 +100,7 @@ export const IBCBridge = () => {
 
   const chainArr = useMemo(() => {
     return _.values(chains)
+      .sort((a, b) => Number(a.sortIndex) - Number(b.sortIndex))
       .filter((item) => {
         return (
           item.chainId === getStafiHubChainId() || ibcConfigs[item.chainId]

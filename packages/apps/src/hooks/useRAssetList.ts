@@ -29,6 +29,7 @@ export function useRAssetList() {
     const restChainsArr = _.values(_.omit(chains, [getStafiHubChainId()]));
     setRAssetList(
       restChainsArr
+        .filter((item) => !item.stakeDisabled)
         .sort((a, b) => {
           const stakeStatus1 = stakeStatusMap[a.chainId];
           const stakeStatus2 = stakeStatusMap[b.chainId];

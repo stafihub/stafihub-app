@@ -21,6 +21,7 @@ export function useRTokenList() {
     const restChainsArr = _.values(_.omit(chains, [getStafiHubChainId()]));
     setRTokenList(
       restChainsArr
+        .filter((item) => !item.stakeDisabled)
         .sort((a, b) => {
           return Number(a.sortIndex) - Number(b.sortIndex);
         })

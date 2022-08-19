@@ -18,6 +18,7 @@ export interface KeplrChainParams {
   defaultApy?: string;
   isNativeKeplrChain?: boolean;
   sortIndex?: number;
+  stakeDisabled?: boolean;
 }
 
 export type IbcConfig = { [key: string]: IbcConfigParams };

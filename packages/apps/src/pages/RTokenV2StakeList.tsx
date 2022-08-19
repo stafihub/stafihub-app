@@ -32,7 +32,13 @@ export const RTokenV2StakeList = () => {
         )}
       >
         {rTokenList.map((rToken) => (
-          <div key={rToken.chainId} className="mb-3 px-[50px]">
+          <div
+            key={rToken.chainId}
+            className={classNames(
+              "mb-3",
+              rTokenList.length > 2 ? "px-[50px]" : "px-[30px]"
+            )}
+          >
             <StakeTokenCard
               type={rTokenList && rTokenList.length > 1 ? "middle" : "large"}
               chainId={rToken.chainId}

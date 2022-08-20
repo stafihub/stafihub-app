@@ -45,6 +45,11 @@ export function useMintPrograms() {
         result.push(...item);
       }
     });
+    result.sort((a, b) => {
+      const aChain = chains[a.chainId];
+      const bChain = chains[b.chainId];
+      return Number(aChain.sortIndex) - Number(bChain.sortIndex);
+    });
     return result;
   });
 

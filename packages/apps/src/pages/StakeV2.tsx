@@ -15,7 +15,7 @@ import {
   CustomNumberInput,
   FormatterText,
   TokenName,
-  TokenIcon,
+  TokenIconV2,
 } from "@stafihub/react-components";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
@@ -283,7 +283,7 @@ export const StakeV2 = () => {
 
             <div className="mx-[5px]">
               {params.rToken && (
-                <TokenIcon
+                <TokenIconV2
                   stafiHubChainConfig={chains[getStafiHubChainId()]}
                   denom={getDenom(chainId, chains)}
                   size={36}

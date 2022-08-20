@@ -11,7 +11,7 @@ import {
   EraRewardChart,
   FormatterText,
   RTokenIcon,
-  TokenIcon,
+  TokenIconV2,
 } from "@stafihub/react-components";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -224,7 +224,7 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="ml-5">
-                <TokenIcon
+                <TokenIconV2
                   stafiHubChainConfig={chains[getStafiHubChainId()]}
                   denom={getDenom(chainId, chains)}
                   size={26}
@@ -252,7 +252,7 @@ export const RTokenDashboard = () => {
               </div>
 
               <div className="ml-5">
-                <TokenIcon
+                <TokenIconV2
                   stafiHubChainConfig={chains[getStafiHubChainId()]}
                   denom={getDenom(chainId, chains)}
                   size={26}

@@ -3,7 +3,7 @@ import {
   getRTokenDenom,
   getStafiHubChainId,
 } from "@stafihub/apps-config";
-import { FormatterText, TokenIcon } from "@stafihub/react-components";
+import { FormatterText, TokenIconV2 } from "@stafihub/react-components";
 import { useMemo } from "react";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useApy } from "../../hooks/useApy";
@@ -42,7 +42,7 @@ export const StakeTokenItem = (props: StakeTokenItemProps) => {
     <div className="w-[660px] h-[42px] flex text-white border-[#494D51] border-solid border-[1px] rounded-[3.5px] items-center">
       <div className="basis-5/12 font-bold text-[16px] flex items-center">
         <div className="ml-9 mr-[10px]">
-          <TokenIcon
+          <TokenIconV2
             stafiHubChainConfig={chains[getStafiHubChainId()]}
             denom={getDenom(props.chainId, chains)}
             size={26}

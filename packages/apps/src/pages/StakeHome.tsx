@@ -12,7 +12,7 @@ import {
   CustomInput,
   CustomNumberInput,
   FormatterText,
-  TokenIcon,
+  TokenIconV2,
 } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -173,7 +173,7 @@ export const StakeHome = () => {
 
             <div className="mx-[5px]">
               {params.rToken && (
-                <TokenIcon
+                <TokenIconV2
                   stafiHubChainConfig={chains[getStafiHubChainId()]}
                   denom={getDenom(chainId, chains)}
                   size={36}

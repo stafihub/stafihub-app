@@ -1,7 +1,7 @@
 import {
   CardContainer,
   RTokenIcon,
-  TokenIcon,
+  TokenIconV2,
   Button,
   FormatterText,
   TokenName,
@@ -131,7 +131,7 @@ export const MintDetail = () => {
                 <div className="ml-20 flex">
                   {actDetail?.tokenRewardInfos.map((rewardInfo, index) => (
                     <div key={index} className="mr-[10px]">
-                      <TokenIcon
+                      <TokenIconV2
                         stafiHubChainConfig={chains[getStafiHubChainId()]}
                         denom={rewardInfo.denom}
                         size={20}

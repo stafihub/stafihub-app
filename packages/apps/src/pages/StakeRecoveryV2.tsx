@@ -6,7 +6,7 @@ import {
   getStafiHubChainId,
 } from "@stafihub/apps-config";
 import { queryStakePoolInfo } from "@stafihub/apps-wallet";
-import { Button, CustomInput, TokenIcon } from "@stafihub/react-components";
+import { Button, CustomInput, TokenIconV2 } from "@stafihub/react-components";
 import classNames from "classnames";
 import {
   bindPopover,
@@ -259,7 +259,7 @@ export const StakeRecoveryV2 = () => {
                 )}
               >
                 <div className="flex items-center">
-                  <TokenIcon
+                  <TokenIconV2
                     stafiHubChainConfig={chains[getStafiHubChainId()]}
                     denom={getDenom(rTokenItem.chainId, chains)}
                     size={26}

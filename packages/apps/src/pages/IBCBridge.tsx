@@ -17,7 +17,8 @@ import { BridgeChainSelector } from "../components/bridge/BridgeChainSelector";
 import { BridgeTokenSelector } from "../components/bridge/BridgeTokenSelector";
 import { SwapAddressInput } from "../components/bridge/SwapAddressInput";
 import { SwapAmountInput } from "../components/bridge/SwapAmountInput";
-import { chains } from "../config";
+import { ComingSoon } from "../components/ComingSoon";
+import { chains, isDev } from "../config";
 import { useAccounts, useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import {
@@ -334,6 +335,10 @@ export const IBCBridge = () => {
       )
     );
   };
+
+  if (!isDev()) {
+    return <ComingSoon />;
+  }
 
   return (
     <div className="flex items-center pt-2 flex-col">

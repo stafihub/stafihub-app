@@ -3,7 +3,7 @@ import { getDenom, getStafiHubChainId } from "@stafihub/apps-config";
 import {
   CustomLoading,
   FormatterText,
-  TokenIcon,
+  TokenIconV2,
 } from "@stafihub/react-components";
 import { chains } from "../config";
 import { FeeStationPool } from "../types/interface";
@@ -96,7 +96,7 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
                       }}
                     /> */}
 
-                    <TokenIcon
+                    <TokenIconV2
                       stafiHubChainConfig={chains[getStafiHubChainId()]}
                       denom={getDenom(item.chainId, chains)}
                       size={36}

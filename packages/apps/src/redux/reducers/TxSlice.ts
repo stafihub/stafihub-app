@@ -11,19 +11,19 @@ import {
   getStafiHubChainId,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
-import { humanToAtomic, atomicToHuman } from "@stafihub/apps-util";
+import { atomicToHuman, humanToAtomic } from "@stafihub/apps-util";
 import {
   checkAddress,
+  queryAccountBalance,
+  queryBondPipeline,
   queryBondRecord,
   queryTx,
   sendChainTokens,
+  sendClaimMintRewardTx,
   sendIBCTransferTx,
   sendLiquidityUnbondTx,
   sendRecoveryTx,
   sendStakeTx,
-  queryAccountBalance,
-  sendClaimMintRewardTx,
-  queryBondPipeline,
 } from "@stafihub/apps-wallet";
 import { LiquidityBondState } from "@stafihub/types";
 import Long from "long";
@@ -759,6 +759,7 @@ export const feeStationSwap =
           "Extension context invalidated, please refresh and retry."
         );
       } else {
+        // console.log((err as Error).message);
         snackbarUtil.error((err as Error).message);
       }
     } finally {
@@ -806,11 +807,33 @@ export const showFeeStationSwapLoadingModal =
             getUuidResJson.data?.payTxHash
           ) {
             // Success.
+            const txDetail = await queryTx(
+              chains[getStafiHubChainId()],
+              getUuidResJson.data.payTxHash
+            );
+
+            const parsedRawLog = JSON.parse(txDetail?.rawLog || "");
+
+            let realAmount = outAmount;
+
+            if (parsedRawLog[0].events) {
+              const messageLog = parsedRawLog[0].events.find((event: any) => {
+                return event.type === "coin_received";
+              });
+
+              const messageLogAttributes = messageLog.attributes;
+              const amountAttribute = messageLogAttributes?.find(
+                (attribute: any) => attribute.key === "amount"
+              );
+              const amount = amountAttribute.value.replace("ufis", "");
+              realAmount = atomicToHuman(amount);
+            }
+
             dispatch(
               setSwapProgressModalProps({
                 progress: 100,
                 txDetail: {
-                  amount: outAmount,
+                  amount: realAmount,
                   symbol: "FIS",
                   stafihubAddress: stafihubAddress,
                   feeStationPayTxHash: getUuidResJson.data.payTxHash,
@@ -820,6 +843,7 @@ export const showFeeStationSwapLoadingModal =
             dispatch(
               updateNotice(txHash, "Confirmed", {
                 payTxHash: getUuidResJson.data.payTxHash,
+                outputAmount: realAmount,
               })
             );
             break;

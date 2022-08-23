@@ -33,9 +33,10 @@ export const RAsset = () => {
     return sum;
   }, [stakeStatusMap]);
 
-  if (!isDev()) {
-    return <ComingSoon />;
-  }
+  // if (!isDev()) {
+  //   return <ComingSoon />;
+  // }
+
   return (
     <div className="flex flex-col items-center">
       <div className="font-bold text-secondary text-[20px] px-4 py-[10px] border-b-[2px] border-solid border-secondary">

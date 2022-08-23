@@ -336,9 +336,9 @@ export const IBCBridge = () => {
     );
   };
 
-  if (!isDev()) {
-    return <ComingSoon />;
-  }
+  // if (!isDev()) {
+  //   return <ComingSoon />;
+  // }
 
   return (
     <div className="flex items-center pt-2 flex-col">

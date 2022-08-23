@@ -9,9 +9,9 @@ export const RTokenV2Layout = () => {
   const matchStakeList = useMatch("/rToken");
   const matchStakeContent = useMatch("/rToken/:rToken/stake");
 
-  if (!isDev()) {
-    return <ComingSoon />;
-  }
+  // if (!isDev()) {
+  //   return <ComingSoon />;
+  // }
 
   return (
     <div className="flex flex-col items-center">

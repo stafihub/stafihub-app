@@ -3,7 +3,7 @@
     "srcChainId": "_STAFI_HUB_CHAIN_ID_",
     "dstChainId": "cosmoshub-4",
     "srcChannel": "channel-0",
-    "dstChannel": "channel-0",
+    "dstChannel": "channel-369",
     "assets": [
       { "denom": "uatom", "displayName": "ATOM" }
     ]

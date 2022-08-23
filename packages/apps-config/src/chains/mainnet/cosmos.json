@@ -18,6 +18,5 @@
   "explorerUrl": "https://ping.pub/cosmos",
   "defaultApy": "19",
   "sortIndex": 1,
-  "isNativeKeplrChain": true,
-  "stakeDisabled": true
+  "isNativeKeplrChain": true
 }

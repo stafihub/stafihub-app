@@ -5,6 +5,7 @@
     "srcChannel": "channel-0",
     "dstChannel": "channel-369",
     "assets": [
+      { "denom": "uratom", "displayName": "rATOM" },
       { "denom": "uatom", "displayName": "ATOM" }
     ]
   }

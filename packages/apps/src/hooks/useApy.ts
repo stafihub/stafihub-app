@@ -31,20 +31,28 @@ export function useApy(chainId: string | undefined) {
           chainEra - 1 - (24 * annualizedDay) / Number(eraHours)
         );
 
-        const currentRateRes = await queryEraExchangeRate(
-          chains[getStafiHubChainId()],
-          currentEra,
-          getRTokenDenom(chainId, chains)
-        );
-        const currentRate =
-          currentRateRes?.eraExchangeRate?.value || defaultRate;
+        const exchangeRates = await Promise.all([
+          queryEraExchangeRate(
+            chains[getStafiHubChainId()],
+            currentEra,
+            getRTokenDenom(chainId, chains)
+          ),
+          queryEraExchangeRate(
+            chains[getStafiHubChainId()],
+            oldEra,
+            getRTokenDenom(chainId, chains)
+          ),
+          queryEraExchangeRate(
+            chains[getStafiHubChainId()],
+            Math.max(0, currentEra - 1),
+            getRTokenDenom(chainId, chains)
+          ),
+        ]);
 
-        const oldRateRes = await queryEraExchangeRate(
-          chains[getStafiHubChainId()],
-          oldEra,
-          getRTokenDenom(chainId, chains)
-        );
-        const oldRate = oldRateRes?.eraExchangeRate?.value || defaultRate;
+        const currentRate =
+          exchangeRates[0]?.eraExchangeRate?.value || defaultRate;
+
+        const oldRate = exchangeRates[1]?.eraExchangeRate?.value || defaultRate;
 
         let apy = 0;
         let defaultApy = 7;
@@ -53,12 +61,8 @@ export function useApy(chainId: string | undefined) {
           defaultApy = Number(configDefaultApy);
         }
         if (oldRate === defaultRate) {
-          const left1RateRes = await queryEraExchangeRate(
-            chains[getStafiHubChainId()],
-            Math.max(0, currentEra - 1),
-            getRTokenDenom(chainId, chains)
-          );
-          const left1Rate = left1RateRes?.eraExchangeRate?.value || defaultRate;
+          const left1Rate =
+            exchangeRates[2]?.eraExchangeRate?.value || defaultRate;
 
           if (left1Rate !== defaultRate) {
             apy =

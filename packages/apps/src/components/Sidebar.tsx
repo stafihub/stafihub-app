@@ -114,13 +114,22 @@ export const Sidebar = () => {
 
       <div className="absolute bottom-5 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
         <div>Need FIS for fees?</div>
-        <div className="mt-[1px] flex items-center">
+        <div className="mt-[2px] flex items-center">
           <div>Try our</div>
           <div
             className="ml-1 text-primary underline cursor-pointer"
             onClick={() => navigate("/feeStation")}
           >
             Fee Station
+          </div>
+        </div>
+        <div className="mt-[2px] flex items-center">
+          <div>or</div>
+          <div
+            className="ml-1 text-primary underline cursor-pointer"
+            onClick={() => openLink("https://app.stafi.io/rAsset/swap/FIS")}
+          >
+            Use rBridge
           </div>
         </div>
       </div>

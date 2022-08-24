@@ -124,12 +124,12 @@ export const Sidebar = () => {
           </div>
         </div>
         <div className="mt-[2px] flex items-center">
-          <div>or</div>
+          <div>or Use</div>
           <div
             className="ml-1 text-primary underline cursor-pointer"
             onClick={() => openLink("https://app.stafi.io/rAsset/swap/FIS")}
           >
-            Use rBridge
+            rBridge
           </div>
         </div>
       </div>

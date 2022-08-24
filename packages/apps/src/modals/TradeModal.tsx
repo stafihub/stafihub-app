@@ -1,6 +1,8 @@
 import { Box, Modal } from "@mui/material";
 import { Icon } from "@stafihub/react-components";
+import classNames from "classnames";
 import rdex from "../assets/images/rdex.png";
+import { isDev } from "../config";
 import { openLink } from "../utils/common";
 
 interface TradeModalProps {
@@ -73,15 +75,21 @@ export const TradeModal = (props: TradeModalProps) => {
 
             <div className="basis-4/12 ">
               <div
-                className="w-[52px] text-white font-bold  bg-primary rounded-full flex items-center justify-center cursor-pointer h-[22px]"
+                className={classNames(
+                  "w-[52px] text-white font-bold bg-primary rounded-full flex items-center justify-center h-[22px]",
+                  isDev() ? "cursor-pointer" : "cursor-default",
+                  { "opacity-50": !isDev() }
+                )}
                 onClick={() => {
-                  openLink(
-                    `https://test-app.rdex.finance/stafihub/swap?first=${props.tradeDenom}`
-                  );
+                  if (isDev()) {
+                    openLink(
+                      `https://test-app.rdex.finance/stafihub/swap?first=${props.tradeDenom}`
+                    );
+                  }
                 }}
               >
                 <div className="text-[12px] scale-[0.75] origin-center">
-                  Swap
+                  {isDev() ? "Swap" : "Soon"}
                 </div>
               </div>
             </div>

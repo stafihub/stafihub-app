@@ -5,4 +5,11 @@ export function isDev(): boolean {
   return process.env.REACT_APP_ENV !== "production";
 }
 
+export function getStafiAppHost(): string {
+  if (isDev()) {
+    return "https://test-rdot.stafi.io";
+  }
+  return "https://app.stafi.io";
+}
+
 export const chains = getChains(isDev() ? "testnet" : "mainnet");

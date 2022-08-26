@@ -14,7 +14,7 @@ import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { SidebarItem } from "@stafihub/react-components";
 import { openLink } from "../utils/common";
-import { isDev } from "../config";
+import { getStafiAppHost, isDev } from "../config";
 
 export const Sidebar = () => {
   const location = useLocation();
@@ -127,7 +127,7 @@ export const Sidebar = () => {
           <div>or Use</div>
           <div
             className="ml-1 text-primary underline cursor-pointer"
-            onClick={() => openLink("https://app.stafi.io/rAsset/swap/FIS")}
+            onClick={() => openLink(`${getStafiAppHost()}/rAsset/swap/FIS`)}
           >
             rBridge
           </div>

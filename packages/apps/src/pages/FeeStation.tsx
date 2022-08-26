@@ -67,7 +67,7 @@ export const FeeStation = (props: {}) => {
     if (!selectedPool) {
       return "--";
     }
-    return Math.max(0, Number(selectedPool.formatBalance) - 0.05).toString();
+    return Math.max(0, Number(selectedPool.formatBalance) - 0.01).toString();
   }, [selectedPool]);
 
   const [buttonDisabled, buttonText]: [boolean, string] = useMemo(() => {

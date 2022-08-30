@@ -64,10 +64,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
         ))}
       </div>
 
-      <div className="basis-[15%] text-[14px]">
+      <div className="basis-[20%] text-[14px]">
         {data.tokenRewardInfos.map((rewardInfo, index) => (
           <div key={index} className="my-1 flex items-end justify-start">
-            <div className="w-[64px]">
+            <div className="mr-1">
               <FormatterText
                 value={rewardInfo.totalRewardAmount}
                 decimals={2}
@@ -87,7 +87,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
       <div className="basis-[20%] text-[14px]">
         {data.tokenRewardInfos.map((rewardInfo, index) => (
           <div key={index} className="my-1 flex items-end justify-start">
-            <div className="w-[64px]">
+            <div className="mr-1">
               <FormatterText value={rewardInfo.leftRewardAmount} decimals={2} />
             </div>
 
@@ -101,7 +101,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
         ))}
       </div>
 
-      <div className="basis-[20%] text-[14px]">
+      <div className="basis-[15%] text-[14px]">
         $<FormatterText value={mintedValue} decimals={2} />
       </div>
 

@@ -11,7 +11,7 @@ export const MintProgramsTableHeader = () => {
         Ratio
       </div>
 
-      <div className="basis-[15%]">
+      <div className="basis-[20%]">
         Reward
         <br />
         Pool
@@ -23,7 +23,7 @@ export const MintProgramsTableHeader = () => {
         Reward
       </div>
 
-      <div className="basis-[20%]">
+      <div className="basis-[15%]">
         Minted
         <br />
         Value

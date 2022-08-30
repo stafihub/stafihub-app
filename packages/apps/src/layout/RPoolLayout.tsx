@@ -11,10 +11,6 @@ export const RPoolLayout = () => {
   const matchMint = useMatch(`/rPool/mint`);
   const matchLiquidity = useMatch(`/rPool/liquidity`);
 
-  if (!isDev()) {
-    return <ComingSoon />;
-  }
-
   return (
     <div className="flex justify-center">
       <div className="w-[1120px] pl-10 pr-10">

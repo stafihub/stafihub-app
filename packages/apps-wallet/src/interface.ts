@@ -20,4 +20,11 @@ export interface DetailKeplrChainParams {
   defaultApy?: string;
   isNativeKeplrChain?: boolean;
   rTokenEnabled?: boolean;
+  currencies: ChainCurrencyConfig[];
+}
+
+export interface ChainCurrencyConfig {
+  coinDenom: string;
+  coinMinimalDenom: string;
+  coinDecimals: number;
 }

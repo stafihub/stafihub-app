@@ -15,5 +15,12 @@
     "bech32PrefixConsAddr": "stafivalcons",
     "bech32PrefixConsPub": "stafivalconspub"
   },
+  "currencies": [
+    {
+      "coinDenom": "rATOM",
+      "coinMinimalDenom": "uratom",
+      "coinDecimals": 6
+    }
+  ],
   "explorerUrl": "https://devnet-explorer.stafihub.io/stafi-hub-devnet"
 }

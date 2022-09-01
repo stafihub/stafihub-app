@@ -15,6 +15,13 @@
     "bech32PrefixConsAddr": "stafivalcons",
     "bech32PrefixConsPub": "stafivalconspub"
   },
+  "currencies": [
+    {
+      "coinDenom": "rATOM",
+      "coinMinimalDenom": "uratom",
+      "coinDecimals": 6
+    }
+  ],
   "explorerUrl": "https://ping.pub/stafihub",
   "isNativeKeplrChain": false
 }

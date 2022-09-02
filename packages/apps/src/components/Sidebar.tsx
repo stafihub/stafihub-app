@@ -7,20 +7,18 @@ import rBridgeIcon from "../assets/images/icon_rBridge.svg";
 import rBridgeIconActive from "../assets/images/icon_rBridge_active.svg";
 import rTokenIcon from "../assets/images/icon_rToken.svg";
 import rDexIcon from "../assets/images/icon_rDex.svg";
-import rDexIconActive from "../assets/images/icon_rDex_active.svg";
 
 import rTokenIconActive from "../assets/images/icon_rToken_active.svg";
 import { useNavigate, useMatch, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { SidebarItem } from "@stafihub/react-components";
 import { openLink } from "../utils/common";
-import { getStafiAppHost, isDev } from "../config";
+import { getStafiAppHost, getRdexAppHost } from "../config";
 
 export const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const matchBridge = useMatch("/rBridge");
-  const matchDex = useMatch("/rDex");
 
   return (
     <div className="w-[160px] min-w-[160px] h-screen bg-gradient-to-b from-[#0f0f0f] via-[#131313] to-[#0a0a0a] flex flex-col items-center overflow-auto relative">
@@ -85,32 +83,22 @@ export const Sidebar = () => {
         }
       />
 
-      {isDev() ? (
-        <div
-          className="mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer"
-          onClick={() =>
-            openLink("https://test-app.rdex.finance/stafihub/swap")
-          }
-        >
-          <img
-            src={rDexIcon}
-            alt="icon"
-            className="w-[36px] h-[36px] rounded-full ml-[9px]"
-          />
-
-          <div className="text-[16px] text-white ml-[10px]">
-            <div>rDEX</div>
-          </div>
-        </div>
-      ) : (
-        <SidebarItem
-          defaultIcon={rDexIcon}
-          activeIcon={rDexIconActive}
-          title="rDEX"
-          targetUrl="/rDex"
-          match={!!matchDex}
+      <div
+        className="mt-[25px] w-[122px] h-[42px] rounded-full flex items-center cursor-pointer"
+        onClick={() =>
+          openLink(`${getRdexAppHost()}/stafihub/swap`)
+        }
+      >
+        <img
+          src={rDexIcon}
+          alt="icon"
+          className="w-[36px] h-[36px] rounded-full ml-[9px]"
         />
-      )}
+
+        <div className="text-[16px] text-white ml-[10px]">
+          <div>rDEX</div>
+        </div>
+      </div>
 
       <div className="absolute bottom-5 text-[12px] text-text-gray5 left-auto right-auto flex flex-col items-center">
         <div>Need FIS for fees?</div>

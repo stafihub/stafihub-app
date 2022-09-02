@@ -1,7 +1,6 @@
 import {
   getChainDecimals,
   getChainIdFromRTokenDisplayName,
-  getRTokenDenom,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
 import { atomicToHuman } from "@stafihub/apps-util";
@@ -11,8 +10,6 @@ import { useParams } from "react-router-dom";
 import pendingIcon from "../../assets/images/icon_pending.svg";
 import successIcon from "../../assets/images/icon_success_round.svg";
 import { chains } from "../../config";
-import { useChainEra } from "../../hooks/useChainEra";
-import { useRParams } from "../../hooks/useRParams";
 import { UserUnbondRecord } from "../../types/interface";
 
 interface UnbondRewardItemProps {
@@ -23,8 +20,6 @@ interface UnbondRewardItemProps {
 export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
-  const era = useChainEra(chainId);
-  const { eraHours } = useRParams(getRTokenDenom(chainId, chains));
   const amount = useMemo(() => {
     if (!props.item) {
       return "--";

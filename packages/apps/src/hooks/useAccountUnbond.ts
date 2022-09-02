@@ -11,7 +11,7 @@ export function useAccountUnbond(denom: string) {
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
 
   const [loading, setLoading] = useState(true);
-  const [unbondingAmount, setUnbondingAmount] = useState("--");
+  const [unbondingAmount] = useState("--");
   const [unbondRecords, setUnbondRecords] = useState<UserUnbondRecord[]>([]);
 
   useEffect(() => {

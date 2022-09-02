@@ -14,6 +14,7 @@ export interface KeplrChainParams {
   coinDenom: string;
   decimals: number;
   bech32Config: any;
+  currencies: [];
   explorerUrl: string;
   defaultApy?: string;
   isNativeKeplrChain?: boolean;

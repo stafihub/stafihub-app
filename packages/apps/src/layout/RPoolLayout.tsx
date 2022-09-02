@@ -1,11 +1,8 @@
 import classNames from "classnames";
-import { Outlet, useMatch, useNavigate, useParams } from "react-router-dom";
-import { ComingSoon } from "../components/ComingSoon";
-import { isDev } from "../config";
+import { Outlet, useMatch, useNavigate } from "react-router-dom";
 
 export const RPoolLayout = () => {
   const navigate = useNavigate();
-  const params = useParams();
 
   const matchDefault = useMatch(`/rPool`);
   const matchMint = useMatch(`/rPool/mint`);

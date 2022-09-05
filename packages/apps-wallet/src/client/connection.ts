@@ -49,7 +49,7 @@ async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
           coinMinimalDenom: chainConfig.denom,
           coinDecimals: 6,
         },
-        ...chainConfig.currencies,
+        ...(chainConfig.currencies || []),
       ],
       feeCurrencies: [
         {

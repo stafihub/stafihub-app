@@ -183,7 +183,7 @@ export async function sendRDexMiningClaimRewardTx(
         amount: "1",
       },
     ],
-    gas: Math.ceil(simulateResponse * 1.3).toString(),
+    gas: Math.ceil(simulateResponse * 1.4).toString(),
   };
 
   const response = await client.signAndBroadcast(

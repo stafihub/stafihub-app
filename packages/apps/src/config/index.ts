@@ -12,4 +12,11 @@ export function getStafiAppHost(): string {
   return "https://app.stafi.io";
 }
 
+export function getRdexAppHost(): string {
+  if (isDev()) {
+    return "https://test-app.rdex.finance";
+  }
+  return "https://app.rdex.finance";
+}
+
 export const chains = getChains(isDev() ? "testnet" : "mainnet");

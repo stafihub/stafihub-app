@@ -8,5 +8,15 @@
       { "denom": "uratom", "displayName": "rATOM" },
       { "denom": "uatom", "displayName": "ATOM" }
     ]
+  },
+  {
+    "srcChainId": "_STAFI_HUB_CHAIN_ID_",
+    "dstChainId": "irishub-1",
+    "srcChannel": "channel-3",
+    "dstChannel": "channel-33",
+    "assets": [
+      { "denom": "uriris", "displayName": "rIRIS" },
+      { "denom": "uiris", "displayName": "IRIS" }
+    ]
   }
 ]

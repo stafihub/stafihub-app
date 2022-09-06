@@ -20,6 +20,11 @@
       "coinDenom": "rATOM",
       "coinMinimalDenom": "uratom",
       "coinDecimals": 6
+    },
+    {
+      "coinDenom": "rIRIS",
+      "coinMinimalDenom": "uriris",
+      "coinDecimals": 6
     }
   ],
   "explorerUrl": "https://ping.pub/stafihub",

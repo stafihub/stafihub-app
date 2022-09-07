@@ -2,7 +2,7 @@ import { Box, Modal } from "@mui/material";
 import { Icon } from "@stafihub/react-components";
 import classNames from "classnames";
 import rdex from "../assets/images/rdex.png";
-import { isDev } from "../config";
+import { getRdexAppHost, isDev } from "../config";
 import { openLink } from "../utils/common";
 
 interface TradeModalProps {
@@ -13,6 +13,8 @@ interface TradeModalProps {
 }
 
 export const TradeModal = (props: TradeModalProps) => {
+  const tradable = isDev() || props.tradeDenom === "uratom";
+
   return (
     <Modal open={props.visible} onClose={props.onClose}>
       <Box
@@ -77,19 +79,21 @@ export const TradeModal = (props: TradeModalProps) => {
               <div
                 className={classNames(
                   "w-[52px] text-white font-bold bg-primary rounded-full flex items-center justify-center h-[22px]",
-                  isDev() ? "cursor-pointer" : "cursor-default",
-                  { "opacity-50": !isDev() }
+                  tradable ? "cursor-pointer" : "cursor-default",
+                  { "opacity-50": !tradable }
                 )}
                 onClick={() => {
-                  if (isDev()) {
+                  if (tradable) {
                     openLink(
-                      `https://test-app.rdex.finance/stafihub/swap?first=${props.tradeDenom}`
+                      `${getRdexAppHost()}/stafihub/swap?first=${
+                        props.tradeDenom
+                      }`
                     );
                   }
                 }}
               >
                 <div className="text-[12px] scale-[0.75] origin-center">
-                  {isDev() ? "Swap" : "Soon"}
+                  {tradable ? "Swap" : "Soon"}
                 </div>
               </div>
             </div>

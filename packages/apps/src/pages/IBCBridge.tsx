@@ -111,6 +111,17 @@ export const IBCBridge = () => {
       });
   }, []);
 
+  const dstChainArr = useMemo(() => {
+    return chainArr.filter((item) => {
+      if (!chainPair.src) {
+        return true;
+      }
+      if (chainPair.src.chainId === getStafiHubChainId()) {
+        return item.chainId !== getStafiHubChainId();
+      }
+      return item.chainId === getStafiHubChainId();
+    });
+  }, [chainArr, chainPair]);
   // useEffect(() => {
   //   if (location.state && (location.state as any).fromChainId) {
   //     const src = chainArr.find(
@@ -386,7 +397,7 @@ export const IBCBridge = () => {
             />
             <div className="flex-1 ml-[-3px]">
               <BridgeChainSelector
-                data={chainArr}
+                data={dstChainArr}
                 selectedChain={chainPair.dst}
                 canTriggerSelect={!isLoading}
                 onChange={handleDstChainChange}

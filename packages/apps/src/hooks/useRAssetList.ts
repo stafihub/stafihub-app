@@ -43,6 +43,13 @@ export function useRAssetList() {
             return Number(a.sortIndex) - Number(b.sortIndex);
           }
 
+          if (
+            Number(stakeStatus1?.rTokenBalance) > 0 &&
+            Number(stakeStatus2?.rTokenBalance) > 0
+          ) {
+            return Number(a.sortIndex) - Number(b.sortIndex);
+          }
+
           const aBalance =
             !stakeStatus1 ||
             Number(stakeStatus1.rTokenBalance) === 0 ||

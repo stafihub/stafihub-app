@@ -60,11 +60,11 @@ export function useApy(chainId: string | undefined) {
         if (configDefaultApy && !isNaN(Number(configDefaultApy))) {
           defaultApy = Number(configDefaultApy);
         }
-        if (oldRate === defaultRate) {
+        if (Number(oldRate) === Number(defaultRate)) {
           const left1Rate =
             exchangeRates[2]?.eraExchangeRate?.value || defaultRate;
 
-          if (left1Rate !== defaultRate) {
+          if (Number(left1Rate) !== Number(defaultRate)) {
             apy =
               ((Number(currentRate) - Number(left1Rate)) * 365.25 * 100 * 24) /
               (Number(eraHours) * Number(left1Rate));

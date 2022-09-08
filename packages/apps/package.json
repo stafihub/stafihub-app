@@ -50,7 +50,7 @@
     "webpack-bundle-analyzer": "4.5.0"
   },
   "scripts": {
-    "start": "REACT_APP_ENV=dev PORT=3025 craco start",
+    "start": "REACT_APP_ENV=production PORT=3025 craco start",
     "build:dev": "REACT_APP_ENV=dev craco build",
     "build": "REACT_APP_ENV=production craco build",
     "test": "craco test",

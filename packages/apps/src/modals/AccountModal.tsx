@@ -48,7 +48,7 @@ export const AccountModal = (props: UnbondModalProps) => {
           Wallet connected
         </div>
 
-        <div className="h-96 max-h-96 overflow-auto">
+        <div className="h-[420px] max-h-[420px] overflow-auto">
           <AccountItem
             chain={stafiHubChain}
             chainAccount={accounts[getStafiHubChainId()]}

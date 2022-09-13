@@ -1,0 +1,23 @@
+{
+  "chainName": "Chihuahua",
+  "chainId": "chihuahua-1",
+  "displayHubName": "Chihuahua",
+  "rpc": "https://rpc.chihuahua.wtf",
+  "restEndpoint": "https://api.chihuahua.wtf",
+  "denom": "uhuahua",
+  "coinDenom": "HUAHUA",
+  "decimals": 6,
+  "bech32Config": {
+    "bech32PrefixAccAddr": "chihuahua",
+    "bech32PrefixAccPub": "chihuahuapub",
+    "bech32PrefixValAddr": "chihuahuavaloper",
+    "bech32PrefixValPub": "chihuahuavaloperpub",
+    "bech32PrefixConsAddr": "chihuahuavalcons",
+    "bech32PrefixConsPub": "chihuahuavalconspub"
+  },
+  "explorerUrl": "https://ping.pub/chihuahua",
+  "defaultApy": "55.71",
+  "sortIndex": 3,
+  "isNativeKeplrChain": false,
+  "stakeReserveAmount": 1
+}

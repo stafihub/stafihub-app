@@ -2,7 +2,7 @@
   "chainName": "Chihuahua",
   "chainId": "chihuahua-1",
   "displayHubName": "Chihuahua",
-  "rpc": "https://api.chihuahua.wtf",
+  "rpc": "https://rpc.chihuahua.wtf",
   "restEndpoint": "https://api.chihuahua.wtf",
   "denom": "uhuahua",
   "coinDenom": "HUAHUA",

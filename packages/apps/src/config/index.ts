@@ -1,5 +1,7 @@
 import { getChains } from "@stafihub/apps-config";
 
+export const chains = getChains(isDev() ? "testnet" : "mainnet");
+
 export function isDev(): boolean {
   // console.log("REACT_APP_ENV", process.env.REACT_APP_ENV);
   return process.env.REACT_APP_ENV !== "production";
@@ -18,5 +20,3 @@ export function getRdexAppHost(): string {
   }
   return "https://app.rdex.finance";
 }
-
-export const chains = getChains(isDev() ? "testnet" : "mainnet");

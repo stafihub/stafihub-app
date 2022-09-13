@@ -149,9 +149,10 @@ export const StakeV2 = () => {
   }, [exchangeRate, supply]);
 
   const transferrableAmount = useMemo(() => {
-    if (!chainAccount) {
+    if (!chainAccount || !chains[chainId]) {
       return "--";
     }
+    const reserveAmount = chains[chainId].stakeReserveAmount || 0.05;
     return Math.max(
       0,
       Number(
@@ -159,7 +160,7 @@ export const StakeV2 = () => {
           chainAccount.allBalances,
           getDenom(chainId, chains)
         )
-      ) - 0.05
+      ) - reserveAmount
     );
   }, [chainAccount, chainId]);
 

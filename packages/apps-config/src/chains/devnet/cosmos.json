@@ -17,5 +17,6 @@
   },
   "explorerUrl": "https://testnet-explorer.stafihub.io/cosmos-testnet",
   "defaultApy": "19",
-  "sortIndex": 1
+  "sortIndex": 1,
+  "stakeReserveAmount": 0.05
 }

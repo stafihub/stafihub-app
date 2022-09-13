@@ -17,5 +17,6 @@
   },
   "explorerUrl": "https://testnet-explorer.stafihub.io/irisnet-testnet",
   "defaultApy": "10",
-  "sortIndex": 2
+  "sortIndex": 2,
+  "stakeReserveAmount": 0.5
 }

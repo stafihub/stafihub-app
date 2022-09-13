@@ -20,6 +20,7 @@ export interface KeplrChainParams {
   isNativeKeplrChain?: boolean;
   sortIndex?: number;
   stakeDisabled?: boolean;
+  stakeReserveAmount?: number;
 }
 
 export type IbcConfig = { [key: string]: IbcConfigParams };

@@ -13,7 +13,8 @@ interface TradeModalProps {
 }
 
 export const TradeModal = (props: TradeModalProps) => {
-  const tradable = isDev() || props.tradeDenom === "uratom";
+  const tradable =
+    isDev() || props.tradeDenom === "uratom" || props.tradeDenom === "uriris";
 
   return (
     <Modal open={props.visible} onClose={props.onClose}>

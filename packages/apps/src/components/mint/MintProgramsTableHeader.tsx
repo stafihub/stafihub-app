@@ -5,7 +5,7 @@ export const MintProgramsTableHeader = () => {
         <div className="ml-5">Mint</div>
       </div>
 
-      <div className="basis-[15%]">
+      <div className="basis-[18%]">
         Reward
         <br />
         Ratio
@@ -29,7 +29,7 @@ export const MintProgramsTableHeader = () => {
         Value
       </div>
 
-      <div className="basis-[25%]">Duration(Days)</div>
+      <div className="basis-[22%]">Duration(Days)</div>
 
       <div className="basis-2/12">Farm</div>
     </div>

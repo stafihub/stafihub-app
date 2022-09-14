@@ -56,10 +56,10 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
         <div>{data.rTokenDisplayName}</div>
       </div>
 
-      <div className="basis-[15%] text-[14px]">
+      <div className="basis-[18%] text-[14px]">
         {data.tokenRewardInfos.map((rewardInfo, index) => (
           <div key={index} className="my-1 flex items-end justify-start">
-            <div className="w-[70px]">1 : {rewardInfo.apy}</div>
+            <div className="">1 : {rewardInfo.apy}</div>
           </div>
         ))}
       </div>
@@ -105,7 +105,7 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
         $<FormatterText value={mintedValue} decimals={2} />
       </div>
 
-      <div className="basis-[25%] text-[14px] flex items-end">
+      <div className="basis-[22%] text-[14px] flex items-end">
         <div>{data.durationDays}D</div>
         <div className="ml-1 text-[14px] origin-bottom-left">
           ({remainingDisplayTime})

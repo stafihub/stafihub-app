@@ -58,7 +58,7 @@ async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
           coinDecimals: 6,
           gasPriceStep: chainConfig.gasPriceStep || {
             low: 0.01,
-            average: 0.02,
+            average: 0.025,
             high: 0.04,
           },
         },

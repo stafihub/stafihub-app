@@ -56,14 +56,13 @@ async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
           coinDenom: chainConfig.coinDenom,
           coinMinimalDenom: chainConfig.denom,
           coinDecimals: 6,
+          gasPriceStep: chainConfig.gasPriceStep || {
+            low: 0.01,
+            average: 0.02,
+            high: 0.04,
+          },
         },
       ],
-      coinType: 118,
-      gasPriceStep: {
-        low: 0.01,
-        average: 0.02,
-        high: 0.04,
-      },
     };
     await window.keplr.experimentalSuggestChain(parameter);
   } else {

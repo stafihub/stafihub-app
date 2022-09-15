@@ -21,6 +21,7 @@ export interface DetailKeplrChainParams {
   isNativeKeplrChain?: boolean;
   rTokenEnabled?: boolean;
   currencies?: ChainCurrencyConfig[];
+  gasPriceStep?: any;
 }
 
 export interface ChainCurrencyConfig {

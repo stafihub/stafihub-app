@@ -25,6 +25,11 @@
       "coinDenom": "rIRIS",
       "coinMinimalDenom": "uriris",
       "coinDecimals": 6
+    },
+    {
+      "coinDenom": "rHUAHUA",
+      "coinMinimalDenom": "urhuahua",
+      "coinDecimals": 6
     }
   ],
   "explorerUrl": "https://ping.pub/stafihub",

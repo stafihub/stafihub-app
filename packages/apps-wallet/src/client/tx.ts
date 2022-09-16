@@ -222,7 +222,7 @@ export async function sendIBCTransferTx(
       receiver,
       timeoutHeight: {
         revisionNumber: clientState?.latestHeight?.revisionNumber,
-        revisionHeight: clientState?.latestHeight?.revisionHeight?.add(10000),
+        revisionHeight: clientState?.latestHeight?.revisionHeight?.add(100000),
       },
     }),
   };

@@ -475,6 +475,7 @@ export const unbond =
     chainId: string | undefined,
     inputAmount: string,
     willGetAmount: string,
+    receivingAddress: string,
     multisigPoolAddress: string,
     icaPoolAddress: string,
     relayFee: string,
@@ -551,7 +552,7 @@ export const unbond =
       const txResponse = await sendLiquidityUnbondTx(
         chains[getStafiHubChainId()],
         getRTokenDenom(chainId, chains),
-        chainAccount.bech32Address,
+        receivingAddress,
         stafiHubAccount.bech32Address,
         pools
       );
@@ -565,7 +566,7 @@ export const unbond =
             {
               sender: stafiHubAccount.bech32Address,
               transactionHash: txResponse.transactionHash,
-              address: chainAccount.bech32Address,
+              address: receivingAddress,
               chainId,
             },
             {

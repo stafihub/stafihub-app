@@ -66,15 +66,23 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
 
   const getNoticeUrl = (notice: LocalNotice): string | undefined => {
     try {
+      let explorerHost = notice.explorerUrl;
+      if (explorerHost.startsWith("https://ping.pub/stafihub")) {
+        explorerHost = "https://www.mintscan.io/stafi";
+      }
       let data;
       if (notice.type === "Fee Station") {
         data = notice.data as NoticeFeeStationData;
         if (data.payTxHash) {
-          return `${notice.explorerUrl}/tx/${data.payTxHash}`;
+          return explorerHost.startsWith("https://www.mintscan.io/stafi")
+            ? `${explorerHost}/txs/${data.payTxHash}`
+            : `${explorerHost}/tx/${data.payTxHash}`;
         }
-        return `${notice.explorerUrl}/account/${notice.txDetail.address}`;
+        return `${explorerHost}/account/${notice.txDetail.address}`;
       } else {
-        return `${notice.explorerUrl}/tx/${notice.txDetail.transactionHash}`;
+        return explorerHost.startsWith("https://www.mintscan.io/stafi")
+          ? `${explorerHost}/txs/${notice.txDetail.transactionHash}`
+          : `${explorerHost}/tx/${notice.txDetail.transactionHash}`;
       }
     } catch (err: unknown) {}
 

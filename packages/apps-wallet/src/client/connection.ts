@@ -1,3 +1,4 @@
+import { OfflineSigner } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { DetailKeplrChainParams, KeplrChainParams } from "../interface";
 
@@ -7,11 +8,23 @@ function timeout(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+export async function getOfflineSigner(
+  chainId: string
+): Promise<OfflineSigner | null> {
+  await timeout(500);
+
+  if (!window.getOfflineSignerOnlyAmino) {
+    return null;
+  }
+
+  return window.getOfflineSignerOnlyAmino(chainId);
+}
+
 export async function connectAtomjs(
   chainConfig: DetailKeplrChainParams | null | undefined
 ) {
   await timeout(500);
-  if (!window.getOfflineSigner || !window.keplr) {
+  if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
     // message.error("Please install Keplr extension");
     return;
   }
@@ -77,16 +90,15 @@ async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
 export async function createCosmosClient(
   chainConfig: KeplrChainParams | null | undefined
 ) {
-  await timeout(500);
-  if (!window.getOfflineSigner) {
-    return null;
-  }
-
   if (!chainConfig) {
     throw new Error("chainConfig can not be empty");
   }
 
-  const offlineSigner = window.getOfflineSigner(chainConfig.chainId);
+  const offlineSigner = await getOfflineSigner(chainConfig.chainId);
+  if (!offlineSigner) {
+    return null;
+  }
+
   const cosmosClient = SigningStargateClient.connectWithSigner(
     chainConfig.rpc,
     offlineSigner

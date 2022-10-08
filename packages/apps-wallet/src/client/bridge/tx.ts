@@ -5,9 +5,8 @@ import {
   SigningStargateClient,
 } from "@cosmjs/stargate";
 import { MsgBridgeDeposit } from "@stafihub/types";
+import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
-
-declare const window: any;
 
 export async function sendBridgeDepositTx(
   stafiHubChainConfig: KeplrChainParams | null | undefined,
@@ -17,18 +16,17 @@ export async function sendBridgeDepositTx(
   amount: string,
   receiver: string
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   if (!stafiHubChainConfig) {
     throw new Error("chainConfig can not be empty");
   }
 
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
+
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.bridge.MsgDeposit", MsgBridgeDeposit);
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,

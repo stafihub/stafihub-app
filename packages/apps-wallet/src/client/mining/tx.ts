@@ -16,6 +16,7 @@ import {
   MsgRDexMiningAddRewardPool,
   MsgRDexMiningWithdrawRewardToken,
 } from "@stafihub/types";
+import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
 
 declare const window: any;
@@ -27,14 +28,13 @@ export async function sendRDexMiningStakeTx(
   stakePoolIndex: number,
   stakeItemIndex: number
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.mining.MsgStake", MsgRDexMiningStake);
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -84,7 +84,8 @@ export async function sendRDexMiningWithdrawTx(
   stakePoolIndex: number,
   stakeRecordIndex: number
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
@@ -93,8 +94,6 @@ export async function sendRDexMiningWithdrawTx(
     "/stafihub.stafihub.mining.MsgWithdraw",
     MsgRDexMiningWithdraw
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -143,7 +142,8 @@ export async function sendRDexMiningClaimRewardTx(
   stakePoolIndex: number,
   stakeRecordIndex: number
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
@@ -152,8 +152,6 @@ export async function sendRDexMiningClaimRewardTx(
     "/stafihub.stafihub.mining.MsgClaimReward",
     MsgRDexMiningClaimReward
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -202,7 +200,8 @@ export async function sendCreateRDexMiningStakePoolTx(
   rewardPoolInfoList: CreateRDexMiningRewardPoolInfo[],
   stakeItemInfoList: CreateRDexMiningStakeItemInfo[]
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
@@ -211,8 +210,6 @@ export async function sendCreateRDexMiningStakePoolTx(
     "/stafihub.stafihub.mining.MsgAddStakePool",
     MsgAddRDexMiningStakePool
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -262,7 +259,8 @@ export async function sendUpdateRDexMiningRewardPoolTx(
   rewardPoolIndex: number,
   rewardPerSecond: string
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
@@ -271,8 +269,6 @@ export async function sendUpdateRDexMiningRewardPoolTx(
     "/stafihub.stafihub.mining.MsgUpdateRewardPool",
     MsgRDexMiningUpdateRewardPool
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -324,7 +320,8 @@ export async function sendUpdateRDexMiningAddRewardPoolTx(
   rewardPerSecond: string,
   startTimestamp: number
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
@@ -333,8 +330,6 @@ export async function sendUpdateRDexMiningAddRewardPoolTx(
     "/stafihub.stafihub.mining.MsgAddRewardPool",
     MsgRDexMiningAddRewardPool
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -388,7 +383,10 @@ export async function sendUpdateRDexMiningDepositRewardTx(
   rewardPerSecond: string,
   startTimestamp: number
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await window.getOfflineSigner(
+    stafiHubChainConfig.chainId
+  );
+  if (!offlineSigner) {
     return;
   }
 
@@ -397,8 +395,6 @@ export async function sendUpdateRDexMiningDepositRewardTx(
     "/stafihub.stafihub.mining.MsgAddReward",
     MsgRDexMiningAddReward
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -450,7 +446,8 @@ export async function sendUpdateRDexMiningWithdrawRewardTx(
   rewardPoolIndex: number,
   withdrawAmount: string
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
@@ -459,8 +456,6 @@ export async function sendUpdateRDexMiningWithdrawRewardTx(
     "/stafihub.stafihub.mining.MsgWithdrawRewardToken",
     MsgRDexMiningWithdrawRewardToken
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,

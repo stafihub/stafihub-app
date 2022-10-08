@@ -11,12 +11,10 @@ import {
   MsgLiquidityUnbond,
   MsgClaimMintReward,
 } from "@stafihub/types";
-import { queryChannelClientState } from ".";
+import { getOfflineSigner, queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
 import Long from "long";
 import { KeplrChainParams } from "../interface";
-
-declare const window: any;
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -115,12 +113,12 @@ export async function sendLiquidityUnbondTx(
   stafiHubAddress: string,
   pools: { poolAddress: string; amount: string }[]
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   if (!stafiHubChainConfig) {
     throw new Error("stafiHubChainConfig can not be empty");
+  }
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
+    return;
   }
 
   const myRegistry = new Registry(defaultStargateTypes);
@@ -128,8 +126,6 @@ export async function sendLiquidityUnbondTx(
     "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
     MsgLiquidityUnbond
   );
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -180,21 +176,17 @@ export async function sendIBCTransferTx(
   sourceChannel: string,
   denom: string
 ): Promise<DeliverTxResponse | undefined> {
-  // console.log("sendIBCTransferTx arguments:", arguments);
-
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   if (!srcChainConfig) {
     throw new Error("srcChainConfig can not be empty");
+  }
+  const offlineSigner = await getOfflineSigner(srcChainConfig.chainId);
+  if (!offlineSigner) {
+    return;
   }
 
   const myRegistry = new Registry(defaultStargateTypes);
   const msgTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
   myRegistry.register(msgTypeUrl, IBCMsgTransfer);
-
-  const offlineSigner = window.getOfflineSigner(srcChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     srcChainConfig.rpc,
@@ -255,19 +247,17 @@ export async function sendClaimMintRewardTx(
   mintIndexes: Long[]
 ): Promise<DeliverTxResponse | undefined> {
   // console.log("sendClaimRewardTx arguments:", arguments);
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   if (!chainConfig) {
     throw new Error("chainConfig can not be empty");
+  }
+  const offlineSigner = await getOfflineSigner(chainConfig.chainId);
+  if (!offlineSigner) {
+    return;
   }
 
   const myRegistry = new Registry(defaultStargateTypes);
   const msgTypeUrl = "/stafihub.stafihub.rmintreward.MsgClaimMintReward";
   myRegistry.register(msgTypeUrl, MsgClaimMintReward);
-
-  const offlineSigner = window.getOfflineSigner(chainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     chainConfig.rpc,

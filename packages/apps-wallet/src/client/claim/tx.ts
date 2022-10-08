@@ -5,9 +5,8 @@ import {
   SigningStargateClient,
 } from "@cosmjs/stargate";
 import { Coin, MsgAirdropClaim } from "@stafihub/types";
+import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
-
-declare const window: any;
 
 export async function getAirdropClaimTxSimulate(
   stafiHubChainConfig: KeplrChainParams,
@@ -17,14 +16,13 @@ export async function getAirdropClaimTxSimulate(
   coin: Coin,
   proof: string[]
 ): Promise<number | undefined> {
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.claim.MsgClaim", MsgAirdropClaim);
 
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
@@ -61,14 +59,13 @@ export async function sendAirdropClaimTx(
   coin: Coin,
   proof: string[]
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
     return;
   }
 
   const myRegistry = new Registry(defaultStargateTypes);
   myRegistry.register("/stafihub.stafihub.claim.MsgClaim", MsgAirdropClaim);
-
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,

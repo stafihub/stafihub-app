@@ -69,18 +69,24 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
       let explorerHost = notice.explorerUrl;
       if (explorerHost.startsWith("https://ping.pub/stafihub")) {
         explorerHost = "https://www.mintscan.io/stafi";
+      } else if (explorerHost.startsWith("https://ping.pub/iris")) {
+        explorerHost = "https://www.mintscan.io/iris";
+      } else if (explorerHost.startsWith("https://ping.pub/cosmos")) {
+        explorerHost = "https://www.mintscan.io/cosmos";
+      } else if (explorerHost.startsWith("https://ping.pub/chihuahua")) {
+        explorerHost = "https://www.mintscan.io/chihuahua";
       }
       let data;
       if (notice.type === "Fee Station") {
         data = notice.data as NoticeFeeStationData;
         if (data.payTxHash) {
-          return explorerHost.startsWith("https://www.mintscan.io/stafi")
+          return explorerHost.startsWith("https://www.mintscan.io")
             ? `${explorerHost}/txs/${data.payTxHash}`
             : `${explorerHost}/tx/${data.payTxHash}`;
         }
         return `${explorerHost}/account/${notice.txDetail.address}`;
       } else {
-        return explorerHost.startsWith("https://www.mintscan.io/stafi")
+        return explorerHost.startsWith("https://www.mintscan.io")
           ? `${explorerHost}/txs/${notice.txDetail.transactionHash}`
           : `${explorerHost}/tx/${notice.txDetail.transactionHash}`;
       }

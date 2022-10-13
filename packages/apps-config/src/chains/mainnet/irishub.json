@@ -15,7 +15,7 @@
     "bech32PrefixConsAddr": "ica",
     "bech32PrefixConsPub": "icp"
   },
-  "explorerUrl": "https://ping.pub/iris",
+  "explorerUrl": "https://www.mintscan.io/iris",
   "defaultApy": "9.21",
   "sortIndex": 2,
   "isNativeKeplrChain": true,

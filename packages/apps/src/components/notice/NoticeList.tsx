@@ -16,6 +16,7 @@ import {
 } from "../../types/notice";
 import { openLink } from "../../utils/common";
 import { getNoticeList } from "../../utils/notice";
+import { getScanFullUrl } from "../../utils/scanUrl";
 import { removeStorage, STORAGE_KEY_UNREAD_NOTICE } from "../../utils/storage";
 import { formatDate } from "../../utils/time";
 
@@ -66,29 +67,23 @@ export const NoticeList = (props: { isOpen: boolean; onClose: () => void }) => {
 
   const getNoticeUrl = (notice: LocalNotice): string | undefined => {
     try {
-      let explorerHost = notice.explorerUrl;
-      if (explorerHost.startsWith("https://ping.pub/stafihub")) {
-        explorerHost = "https://www.mintscan.io/stafi";
-      } else if (explorerHost.startsWith("https://ping.pub/iris")) {
-        explorerHost = "https://www.mintscan.io/iris";
-      } else if (explorerHost.startsWith("https://ping.pub/cosmos")) {
-        explorerHost = "https://www.mintscan.io/cosmos";
-      } else if (explorerHost.startsWith("https://ping.pub/chihuahua")) {
-        explorerHost = "https://www.mintscan.io/chihuahua";
-      }
       let data;
       if (notice.type === "Fee Station") {
         data = notice.data as NoticeFeeStationData;
         if (data.payTxHash) {
-          return explorerHost.startsWith("https://www.mintscan.io")
-            ? `${explorerHost}/txs/${data.payTxHash}`
-            : `${explorerHost}/tx/${data.payTxHash}`;
+          return getScanFullUrl(notice.explorerUrl, "tx", data.payTxHash);
         }
-        return `${explorerHost}/account/${notice.txDetail.address}`;
+        return getScanFullUrl(
+          notice.explorerUrl,
+          "account",
+          notice.txDetail.address
+        );
       } else {
-        return explorerHost.startsWith("https://www.mintscan.io")
-          ? `${explorerHost}/txs/${notice.txDetail.transactionHash}`
-          : `${explorerHost}/tx/${notice.txDetail.transactionHash}`;
+        return getScanFullUrl(
+          notice.explorerUrl,
+          "tx",
+          notice.txDetail.transactionHash
+        );
       }
     } catch (err: unknown) {}
 

@@ -23,6 +23,7 @@ import {
 import { setStakeSidebarProps } from "../redux/reducers/TxSlice";
 import { openLink } from "../utils/common";
 import { chains } from "../config";
+import { getScanFullUrl } from "../utils/scanUrl";
 
 export const StakeSidebar = () => {
   const intervalID = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -209,7 +210,11 @@ export const StakeSidebar = () => {
                   className="ml-3 underline cursor-pointer"
                   onClick={() => {
                     openLink(
-                      `${stakeSidebarProps.explorerUrl}/tx/${stakeSidebarProps.txHash}`
+                      getScanFullUrl(
+                        stakeSidebarProps.explorerUrl || "",
+                        "tx",
+                        stakeSidebarProps.txHash
+                      )
                     );
                   }}
                 >

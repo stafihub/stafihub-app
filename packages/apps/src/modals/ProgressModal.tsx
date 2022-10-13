@@ -125,9 +125,11 @@ export const ProgressModal = (props: ProgressModalProps) => {
               className="mt-9 mb-14 font-bold text-[20px] text-secondary cursor-pointer underline"
               onClick={() => {
                 openLink(
-                  `${getExplorerUrl(getStafiHubChainId(), chains)}/account/${
+                  getScanFullUrl(
+                    getExplorerUrl(getStafiHubChainId(), chains),
+                    "account",
                     swapProgressModalProps?.txDetail?.stafihubAddress
-                  }`
+                  )
                 );
               }}
             >

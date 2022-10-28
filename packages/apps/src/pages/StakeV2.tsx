@@ -68,7 +68,7 @@ export const StakeV2 = () => {
     const rTokenDenom = getRTokenDenom(chainId, chains);
     const abortController = new AbortController();
 
-    fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
+    apyComparisonModalVisible && fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

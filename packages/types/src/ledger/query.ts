@@ -4283,11 +4283,13 @@ export class QueryClientImpl implements Query {
     request: QueryGetBondPipelineRequest
   ): Promise<QueryGetBondPipelineResponse> {
     const data = QueryGetBondPipelineRequest.encode(request).finish();
+    console.log("jjjj")
     const promise = this.rpc.request(
       "stafihub.stafihub.ledger.Query",
       "GetBondPipeline",
       data
     );
+    console.log("hhhh")
     return promise.then((data) =>
       QueryGetBondPipelineResponse.decode(new _m0.Reader(data))
     );

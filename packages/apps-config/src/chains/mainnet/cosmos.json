@@ -15,7 +15,7 @@
     "bech32PrefixConsAddr": "cosmosvalcons",
     "bech32PrefixConsPub": "cosmosvalconspub"
   },
-  "explorerUrl": "https://ping.pub/cosmos",
+  "explorerUrl": "https://www.mintscan.io/cosmos",
   "defaultApy": "19",
   "sortIndex": 1,
   "isNativeKeplrChain": true,

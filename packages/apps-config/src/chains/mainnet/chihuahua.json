@@ -15,7 +15,7 @@
     "bech32PrefixConsAddr": "chihuahuavalcons",
     "bech32PrefixConsPub": "chihuahuavalconspub"
   },
-  "explorerUrl": "https://ping.pub/chihuahua",
+  "explorerUrl": "https://www.mintscan.io/chihuahua",
   "defaultApy": "55.71",
   "sortIndex": 3,
   "isNativeKeplrChain": false,

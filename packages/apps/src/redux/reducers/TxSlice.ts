@@ -483,6 +483,7 @@ export const unbond =
     callback?: (success: boolean) => void
   ): AppThunk =>
   async (dispatch, getState) => {
+    console.log("start",multisigPoolAddress)
     try {
       if (!chainId) {
         return;
@@ -493,12 +494,14 @@ export const unbond =
         dispatch(connectKeplr(getStafiHubChainId()));
         return;
       }
+      console.log("333333")
 
       const chainAccount = getState().app.accounts[chainId];
       if (!chainAccount) {
         return;
       }
 
+      console.log("44444")
       const fisAmount = getHumanAccountBalance(
         stafiHubAccount.allBalances,
         getDenom(getStafiHubChainId(), chains),
@@ -509,15 +512,26 @@ export const unbond =
         snackbarUtil.warning("Insufficient Balance for fee payment");
         return;
       }
-
+      console.log("5555")
       dispatch(setIsLoading(true));
+      console.log("666")
+      // const multisigPoolBalance = await queryBondPipeline(
+      //   chains[getStafiHubChainId()],
+      //   getRTokenDenom(chainId, chains),
+      //   multisigPoolAddress
+      // );
 
-      const multisigPoolBalance = await queryBondPipeline(
-        chains[getStafiHubChainId()],
-        getRTokenDenom(chainId, chains),
-        multisigPoolAddress
-      );
 
+      let multisigPoolBalance = "0";
+      if (multisigPoolAddress) {
+        multisigPoolBalance = await queryBondPipeline(
+          chains[getStafiHubChainId()],
+          getRTokenDenom(chainId, chains),
+          multisigPoolAddress
+        );
+      }
+
+      console.log("000000")
       let pools = [];
       if (Number(multisigPoolBalance) >= Number(humanToAtomic(willGetAmount))) {
         pools.push({
@@ -549,6 +563,8 @@ export const unbond =
         }
       }
 
+      console.log("11111")
+
       const txResponse = await sendLiquidityUnbondTx(
         chains[getStafiHubChainId()],
         getRTokenDenom(chainId, chains),
@@ -556,6 +572,8 @@ export const unbond =
         stafiHubAccount.bech32Address,
         pools
       );
+
+
 
       if (txResponse?.code === 0) {
         snackbarUtil.success("Unbond succeed");

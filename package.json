@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cd packages/apps && pnpm start",
+    "start:win": "cd packages/apps && pnpm start:win",
     "build": "cd packages/apps && pnpm build",
     "build:dev": "cd packages/apps && pnpm build:dev",
     "test": "react-scripts test",

@@ -8,6 +8,7 @@ import { chains } from "../config";
 import { useSwapProgressModalProps } from "../hooks/useSwapProgressModalProps";
 import { setSwapProgressModalProps } from "../redux/reducers/TxSlice";
 import { openLink } from "../utils/common";
+import { getScanFullUrl } from "../utils/scanUrl";
 
 interface ProgressModalProps {}
 
@@ -38,12 +39,16 @@ export const ProgressModal = (props: ProgressModalProps) => {
           onClick={() => {
             openLink(
               swapProgressModalProps?.txDetail?.feeStationPayTxHash
-                ? `${getExplorerUrl(getStafiHubChainId(), chains)}/tx/${
+                ? getScanFullUrl(
+                    getExplorerUrl(getStafiHubChainId(), chains),
+                    "tx",
                     swapProgressModalProps?.txDetail?.feeStationPayTxHash
-                  }`
-                : `${getExplorerUrl(getStafiHubChainId(), chains)}/account/${
+                  )
+                : getScanFullUrl(
+                    getExplorerUrl(getStafiHubChainId(), chains),
+                    "account",
                     swapProgressModalProps?.txDetail?.stafihubAddress
-                  }`
+                  )
             );
           }}
         >
@@ -120,9 +125,11 @@ export const ProgressModal = (props: ProgressModalProps) => {
               className="mt-9 mb-14 font-bold text-[20px] text-secondary cursor-pointer underline"
               onClick={() => {
                 openLink(
-                  `${getExplorerUrl(getStafiHubChainId(), chains)}/account/${
+                  getScanFullUrl(
+                    getExplorerUrl(getStafiHubChainId(), chains),
+                    "account",
                     swapProgressModalProps?.txDetail?.stafihubAddress
-                  }`
+                  )
                 );
               }}
             >

@@ -68,7 +68,7 @@ export const StakeV2 = () => {
     const rTokenDenom = getRTokenDenom(chainId, chains);
     const abortController = new AbortController();
 
-    fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
+    apyComparisonModalVisible && fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -180,12 +180,12 @@ export const StakeV2 = () => {
       return;
     }
 
-    if (stafiHubAccount?.isNanoLedger) {
-      snackbarUtil.error(
-        "Ledger is not supported, please use the extension wallet."
-      );
-      return;
-    }
+    // if (stafiHubAccount?.isNanoLedger) {
+    //   snackbarUtil.error(
+    //     "Ledger is not supported, please use the extension wallet."
+    //   );
+    //   return;
+    // }
 
     const poolAddress = icaPoolAddress || multisigPoolAddress;
 

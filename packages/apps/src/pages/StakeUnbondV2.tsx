@@ -19,8 +19,6 @@ export const StakeUnbondV2 = () => {
   const { unbondRecords, loading } = useAccountUnbond(
     getRTokenDenom(chainId, chains)
   );
-
-  console.log(999, unbondRecords)
   
   return (
     <div className="">

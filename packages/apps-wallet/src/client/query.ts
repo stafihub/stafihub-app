@@ -135,12 +135,10 @@ export async function queryBondPipeline(
   poolAddress: string
 ): Promise<string> {
   const queryService = await createQueryService(stafiHubChainConfig);
-  console.log("7777",tokenDenom,poolAddress)
   const result = await queryService.GetBondPipeline({
     denom: tokenDenom,
     pool: poolAddress,
   });
-  console.log("88888")
   const balance = result.pipeline?.chunk?.active || "0";
   return balance;
 }

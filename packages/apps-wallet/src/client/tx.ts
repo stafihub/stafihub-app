@@ -21,6 +21,7 @@ import Long from "long";
 import { KeplrChainParams } from "../interface";
 import { getOfflineSignerAmino } from "cosmjs-utils";
 import { osmosis } from "osmojs";
+import { MessageComposer } from "@stafihub/types/src/codegen/ledger/tx.registry";
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -172,7 +173,20 @@ export async function sendLiquidityUnbondTx(
     { registry, aminoTypes }
   );
 
-  const messages = pools.map((pool) => ({
+  const oldMessages = pools.map((pool) => ({
+    typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+    value: MsgLiquidityUnbond.fromPartial({
+      creator: stafiHubAddress,
+      pool: pool.poolAddress,
+      value: {
+        denom: rTokenDenom,
+        amount: pool.amount,
+      },
+      recipient: chainAddress,
+    }),
+  }));
+
+  const aminoMessages = pools.map((pool) => ({
     typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
     // value: MsgLiquidityUnbond.fromPartial({
     //   creator: stafiHubAddress,
@@ -196,6 +210,18 @@ export async function sendLiquidityUnbondTx(
     }),
   }));
 
+  const messages = pools.map((pool) => {
+    return MessageComposer.withTypeUrl.liquidityUnbond({
+      creator: stafiHubAddress,
+      pool: pool.poolAddress,
+      value: {
+        denom: rTokenDenom,
+        amount: pool.amount,
+      },
+      recipient: chainAddress,
+    });
+  });
+
   const simulateResponse = await client.simulate(stafiHubAddress, messages, "");
 
   const fee = {
@@ -207,6 +233,9 @@ export async function sendLiquidityUnbondTx(
     ],
     gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
+
+  // const ss = await client.sign(stafiHubAddress, messages, fee, "");
+  // console.log("ss", ss);
 
   const response = await client.signAndBroadcast(
     stafiHubAddress,

@@ -161,6 +161,7 @@ importers:
 
   packages/apps-wallet:
     specifiers:
+      '@cosmjs/amino': ^0.29.3
       '@cosmjs/encoding': 0.29.4
       '@cosmjs/launchpad': 0.27.1
       '@cosmjs/math': 0.29.4
@@ -175,6 +176,7 @@ importers:
       long: 4.0.0
       osmojs: ^0.36.0
     dependencies:
+      '@cosmjs/amino': 0.29.4
       '@cosmjs/encoding': 0.29.4
       '@cosmjs/launchpad': 0.27.1
       '@cosmjs/math': 0.29.4
@@ -1862,7 +1864,7 @@ packages:
   /@cosmjs/proto-signing/0.29.0:
     resolution: {integrity: sha512-zAdgDz5vRGAfJ5yyKYuTL7qg5UNUT7v4iV1/ZP8ZQn2fLh9QVxViAIovF4r/Y3EEI4JS5uYj/f8UeHMHQSu8hw==}
     dependencies:
-      '@cosmjs/amino': 0.29.0
+      '@cosmjs/amino': 0.29.4
       '@cosmjs/crypto': 0.29.0
       '@cosmjs/encoding': 0.29.4
       '@cosmjs/math': 0.29.4
@@ -1874,7 +1876,7 @@ packages:
   /@cosmjs/proto-signing/0.29.3:
     resolution: {integrity: sha512-Ai3l9THjMOrLJ4Ebn1Dgptwg6W5ZIRJqtnJjijHhGwTVC1WT0WdYU3aMZ7+PwubcA/cA1rH4ZTK7jrfYbra63g==}
     dependencies:
-      '@cosmjs/amino': 0.29.3
+      '@cosmjs/amino': 0.29.4
       '@cosmjs/crypto': 0.29.4
       '@cosmjs/encoding': 0.29.4
       '@cosmjs/math': 0.29.4
@@ -1912,7 +1914,7 @@ packages:
     resolution: {integrity: sha512-BsV3iA3vMclMm/B1LYO0djBYCALr/UIvL6u9HGvM7QvpdtpQiAvskuS4PieVO/gtF9iCCBJLPqa0scwFIgvDyg==}
     dependencies:
       '@confio/ics23': 0.6.8
-      '@cosmjs/amino': 0.29.0
+      '@cosmjs/amino': 0.29.4
       '@cosmjs/encoding': 0.29.4
       '@cosmjs/math': 0.29.4
       '@cosmjs/proto-signing': 0.29.4
@@ -1933,7 +1935,7 @@ packages:
     resolution: {integrity: sha512-455TgXStCi6E8KDjnhDAM8wt6aLSjobH4Dixvd7Up1DfCH6UB9NkC/G0fMJANNcNXMaM4wSX14niTXwD1d31BA==}
     dependencies:
       '@confio/ics23': 0.6.8
-      '@cosmjs/amino': 0.29.3
+      '@cosmjs/amino': 0.29.4
       '@cosmjs/encoding': 0.29.4
       '@cosmjs/math': 0.29.4
       '@cosmjs/proto-signing': 0.29.4

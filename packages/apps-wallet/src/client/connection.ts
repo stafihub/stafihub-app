@@ -13,11 +13,11 @@ export async function getOfflineSigner(
 ): Promise<OfflineSigner | null> {
   await timeout(500);
 
-  if (!window.getOfflineSignerAuto) {
+  if (!window.getOfflineSignerOnlyAmino) {
     return null;
   }
 
-  return window.getOfflineSignerAuto(chainId);
+  return window.getOfflineSignerOnlyAmino(chainId);
 }
 
 export async function connectAtomjs(

@@ -14,16 +14,17 @@
   "author": "joe",
   "license": "MIT",
   "dependencies": {
-    "@cosmjs/proto-signing": "0.27.1",
-    "@cosmjs/stargate": "0.27.1",
-    "@cosmjs/tendermint-rpc": "0.27.1",
+    "@cosmjs/amino": "^0.29.3",
+    "@cosmjs/proto-signing": "0.29.4",
+    "@cosmjs/stargate": "0.29.4",
+    "@cosmjs/tendermint-rpc": "0.29.4",
     "long": "4.0.0",
     "protobufjs": "6.11.2",
     "ts-proto": "1.88.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "1.16.3",
-    "@types/long": "4.0.0"
+    "@types/long": "4.0.0",
+    "@types/webpack-env": "1.16.3"
   },
   "scripts": {
     "build-proto": "./ts-proto.sh"

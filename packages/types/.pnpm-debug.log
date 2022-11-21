@@ -17,12 +17,12 @@
         "eject": "react-scripts eject"
       },
       "dependencies": {
-        "@cosmjs/encoding": "0.27.1",
-        "@cosmjs/launchpad": "0.27.1",
-        "@cosmjs/math": "0.27.1",
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/encoding": "0.29.4",
+        "@cosmjs/launchpad": "0.29.4",
+        "@cosmjs/math": "0.29.4",
+        "@cosmjs/proto-signing": "0.29.4",
+        "@cosmjs/stargate": "0.29.4",
+        "@cosmjs/tendermint-rpc": "0.29.4",
         "notistack": "^2.0.3",
         "path": "^0.12.7",
         "react": "^17.0.2",
@@ -106,7 +106,7 @@
       "type": "module",
       "main": "./src/index.ts",
       "dependencies": {
-        "@cosmjs/math": "0.27.1",
+        "@cosmjs/math": "0.29.4",
         "bignumber.js": "^9.0.2"
       },
       "eslintConfig": {
@@ -135,9 +135,9 @@
       "type": "module",
       "main": "./src/index.ts",
       "dependencies": {
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/proto-signing": "0.29.4",
+        "@cosmjs/stargate": "0.29.4",
+        "@cosmjs/tendermint-rpc": "0.29.4",
         "long": "4.0.0",
         "protobufjs": "6.11.2",
         "ts-proto": "1.88.0"
@@ -174,12 +174,12 @@
       "type": "module",
       "main": "./src/index.ts",
       "dependencies": {
-        "@cosmjs/encoding": "0.27.1",
-        "@cosmjs/launchpad": "0.27.1",
-        "@cosmjs/math": "0.27.1",
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/encoding": "0.29.4",
+        "@cosmjs/launchpad": "0.29.4",
+        "@cosmjs/math": "0.29.4",
+        "@cosmjs/proto-signing": "0.29.4",
+        "@cosmjs/stargate": "0.29.4",
+        "@cosmjs/tendermint-rpc": "0.29.4",
         "@stafihub/apps-config": "workspace:0.2.0",
         "@stafihub/apps-util": "workspace:0.1.0",
         "@stafihub/types": "workspace:0.1.0",
@@ -260,8 +260,8 @@
       "version": "0.1.0",
       "private": true,
       "dependencies": {
-        "@cosmjs/encoding": "^0.27.1",
-        "@cosmjs/launchpad": "^0.27.1",
+        "@cosmjs/encoding": "^0.29.4",
+        "@cosmjs/launchpad": "^0.29.4",
         "@emotion/react": "^11.8.1",
         "@emotion/styled": "^11.8.1",
         "@mui/material": "^5.4.2",

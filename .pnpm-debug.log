@@ -17,12 +17,12 @@
         "eject": "react-scripts eject"
       },
       "dependencies": {
-        "@cosmjs/encoding": "0.27.1",
-        "@cosmjs/launchpad": "0.27.1",
-        "@cosmjs/math": "0.27.1",
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/encoding": "0.29.4",
+        "@cosmjs/launchpad": "0.29.4",
+        "@cosmjs/math": "0.29.4",
+        "@cosmjs/proto-signing": "0.29.4",
+        "@cosmjs/stargate": "0.29.4",
+        "@cosmjs/tendermint-rpc": "0.29.4",
         "notistack": "^2.0.3",
         "path": "^0.12.7",
         "react": "^17.0.2",
@@ -64,8 +64,8 @@
       "version": "0.1.0",
       "private": true,
       "dependencies": {
-        "@cosmjs/encoding": "^0.27.1",
-        "@cosmjs/launchpad": "^0.27.1",
+        "@cosmjs/encoding": "^0.29.4",
+        "@cosmjs/launchpad": "^0.29.4",
         "@emotion/react": "^11.8.1",
         "@emotion/styled": "^11.8.1",
         "@mui/material": "^5.4.2",
@@ -206,7 +206,7 @@
       "author": "joe",
       "license": "MIT",
       "dependencies": {
-        "@cosmjs/math": "0.27.1",
+        "@cosmjs/math": "0.29.4",
         "bignumber.js": "^9.0.2"
       },
       "eslintConfig": {
@@ -244,9 +244,9 @@
       "author": "joe",
       "license": "MIT",
       "dependencies": {
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/proto-signing": "0.29.4",
+        "@cosmjs/stargate": "0.29.4",
+        "@cosmjs/tendermint-rpc": "0.29.4",
         "long": "4.0.0",
         "protobufjs": "6.11.2",
         "ts-proto": "1.88.0"
@@ -292,12 +292,12 @@
       "author": "joe",
       "license": "MIT",
       "dependencies": {
-        "@cosmjs/encoding": "0.27.1",
-        "@cosmjs/launchpad": "0.27.1",
-        "@cosmjs/math": "0.27.1",
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/encoding": "0.29.4",
+        "@cosmjs/launchpad": "0.29.4",
+        "@cosmjs/math": "0.29.4",
+        "@cosmjs/proto-signing": "0.29.4",
+        "@cosmjs/stargate": "0.29.4",
+        "@cosmjs/tendermint-rpc": "0.29.4",
         "@stafihub/apps-config": "workspace:0.5.7",
         "@stafihub/apps-util": "workspace:0.4.0",
         "@stafihub/types": "workspace:0.6.4",
@@ -431,51 +431,51 @@
     }
   },
   "15 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.4",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/encoding",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "16 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.29.4",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/launchpad",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "17 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.4",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "18 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.29.4",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/proto-signing",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "19 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.29.4",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/stargate",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "20 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.4",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/tendermint-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "21 debug pnpm:_dependency_resolved": {
@@ -623,19 +623,19 @@
     }
   },
   "39 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.4",
     "wanted": {
       "dependentId": "packages/apps",
       "name": "@cosmjs/encoding",
-      "rawSpec": "^0.27.1"
+      "rawSpec": "^0.29.4"
     }
   },
   "40 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.29.4",
     "wanted": {
       "dependentId": "packages/apps",
       "name": "@cosmjs/launchpad",
-      "rawSpec": "^0.27.1"
+      "rawSpec": "^0.29.4"
     }
   },
   "41 debug pnpm:_dependency_resolved": {
@@ -839,11 +839,11 @@
     }
   },
   "66 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.4",
     "wanted": {
       "dependentId": "packages/apps-util",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "67 debug pnpm:_dependency_resolved": {
@@ -863,27 +863,27 @@
     }
   },
   "69 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.29.4",
     "wanted": {
       "dependentId": "packages/types",
       "name": "@cosmjs/proto-signing",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "70 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.29.4",
     "wanted": {
       "dependentId": "packages/types",
       "name": "@cosmjs/stargate",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "71 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.4",
     "wanted": {
       "dependentId": "packages/types",
       "name": "@cosmjs/tendermint-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "72 debug pnpm:_dependency_resolved": {
@@ -911,51 +911,51 @@
     }
   },
   "75 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.4",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/encoding",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "76 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.29.4",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/launchpad",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "77 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.4",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "78 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.29.4",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/proto-signing",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "79 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.29.4",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/stargate",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "80 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.4",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/tendermint-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.4"
     }
   },
   "81 debug pnpm:_dependency_resolved": {

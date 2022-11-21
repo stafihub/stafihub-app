@@ -14,16 +14,18 @@
   "author": "joe",
   "license": "MIT",
   "dependencies": {
-    "@cosmjs/encoding": "0.27.1",
+    "@cosmjs/encoding": "0.29.4",
     "@cosmjs/launchpad": "0.27.1",
-    "@cosmjs/math": "0.27.1",
-    "@cosmjs/proto-signing": "0.27.1",
-    "@cosmjs/stargate": "0.27.1",
-    "@cosmjs/tendermint-rpc": "0.27.1",
+    "@cosmjs/math": "0.29.4",
+    "@cosmjs/proto-signing": "0.29.4",
+    "@cosmjs/stargate": "0.29.4",
+    "@cosmjs/tendermint-rpc": "0.29.4",
     "@stafihub/apps-util": "workspace:0.4.0",
     "@stafihub/types": "workspace:0.6.9",
     "bech32": "2.0.0",
-    "long": "4.0.0"
+    "cosmjs-utils": "^0.1.0",
+    "long": "4.0.0",
+    "osmojs": "^0.36.0"
   },
   "devDependencies": {
     "@types/long": "4.0.0"

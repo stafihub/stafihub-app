@@ -1,0 +1,191 @@
+syntax = "proto3";
+package stafihub.stafihub.ledger;
+
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/stafihub/stafihub/x/ledger/types";
+
+message ChainEra {
+  string denom = 1;
+  uint32 era = 2;
+}
+
+message Pool {
+  string denom = 1;
+  repeated string addrs = 2;
+}
+
+message BondPipeline {
+    string denom = 1;
+    string pool = 2;
+    LinkChunk chunk = 3 [(gogoproto.nullable) = false];
+}
+
+message EraSnapshot {
+    string denom = 1;
+    repeated string shotIds = 3;
+}
+
+message EraUnbondLimit {
+    string denom = 1;
+    uint32 limit = 2;
+}
+
+message PoolDetail {
+    string denom = 1;
+    string pool = 2;
+    repeated string subAccounts = 3;
+    uint32 threshold = 4;
+}
+
+message LinkChunk {
+    string bond = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+    string unbond = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+    string active = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+}
+
+message BondSnapshot {
+    string denom = 1;
+    string pool = 2;
+    uint32 era = 3;
+    LinkChunk chunk = 4 [(gogoproto.nullable) = false];
+    PoolBondState bond_state = 6;
+}
+
+enum PoolBondState {
+    option (gogoproto.goproto_enum_prefix) = false;
+
+    ERA_UPDATED = 0 [(gogoproto.enumvalue_customname) = "EraUpdated"];
+    BOND_REPORTED = 1 [(gogoproto.enumvalue_customname) = "BondReported"];
+    ACTIVE_REPORTED = 2 [(gogoproto.enumvalue_customname) = "ActiveReported"];
+    TRANSFER_SKIPPED = 3 [(gogoproto.enumvalue_customname) = "TransferSkipped"];
+    TRANSFER_REPORTED = 4 [(gogoproto.enumvalue_customname) = "TransferReported"];
+}
+
+enum BondAction {
+    option (gogoproto.goproto_enum_prefix) = false;
+
+    BOND_ONLY = 0 [(gogoproto.enumvalue_customname) = "BondOnly"];
+    UNBOND_ONLY = 1 [(gogoproto.enumvalue_customname) = "UnbondOnly"];
+    BOTH_BOND_UNBOND = 2 [(gogoproto.enumvalue_customname) = "BothBondUnbond"];
+    EITHER_BOND_UNBOND = 3 [(gogoproto.enumvalue_customname) = "EitherBondUnbond"];
+    INTER_DEDUCT = 4 [(gogoproto.enumvalue_customname) = "InterDeduct"];
+}
+
+message ExchangeRate {
+    string denom = 1;
+    string value = 2 [(gogoproto.customtype) = "github.com/stafihub/stafihub/utils.Dec", (gogoproto.nullable) = false];
+}
+
+message TotalProtocolFee {
+    string denom = 1;
+    string value = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+}
+
+
+message EraExchangeRate {
+  string denom = 1;
+  uint32 era = 2;
+  string value = 3 [(gogoproto.customtype) = "github.com/stafihub/stafihub/utils.Dec", (gogoproto.nullable) = false];
+}
+
+message UnbondRelayFee {
+    string denom = 1;
+    cosmos.base.v1beta1.Coin value = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+}
+
+message Unbonding {
+    string unbonder = 1;
+    string amount = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+    string recipient = 3;
+}
+
+message BondRecord {
+    string denom = 1;
+    string bonder = 2;
+    string pool = 3;
+    string txhash = 4;
+    string amount = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+    LiquidityBondState state = 6;
+}
+
+enum LiquidityBondState {
+    option (gogoproto.goproto_enum_prefix) = false;
+
+    LIQUIDITY_BOND_STATE_VERIFY_OK = 0 [(gogoproto.enumvalue_customname) = "LiquidityBondStateVerifyOk"];
+    LIQUIDITY_BOND_STATE_DENOM_UNMATCH = 1 [(gogoproto.enumvalue_customname) = "LiquidityBondStateDenomUnmatch"];
+    LIQUIDITY_BOND_STATE_BONDER_UNMATCH = 2 [(gogoproto.enumvalue_customname) = "LiquidityBondStateBonderUnmatch"];
+    LIQUIDITY_BOND_STATE_POOL_UNMATCH = 3 [(gogoproto.enumvalue_customname) = "LiquidityBondStatePoolUnmatch"];
+    LIQUIDITY_BOND_STATE_AMOUNT_UNMATCH = 4 [(gogoproto.enumvalue_customname) = "LiquidityBondStateAmountUnmatch"];
+    LIQUIDITY_BOND_STATE_MEMO_UNMATCH = 5 [(gogoproto.enumvalue_customname) = "LiquidityBondStateMemoUnmatch"];
+}
+
+message Signature {
+    string denom = 1;
+    uint32 era = 2;
+    string pool = 3;
+    OriginalTxType txType = 4;
+    string propId = 5;
+    repeated string sigs = 6;
+}
+
+// OriginalTxType enumerates the tx type of a signature.
+enum OriginalTxType {
+  option (gogoproto.goproto_enum_prefix) = false;
+
+  ORIGINAL_TX_TYPE_DEAL_ERAUPDATED = 0 [(gogoproto.enumvalue_customname) = "TxTypeDealEraUpdated"];
+  ORIGINAL_TX_TYPE_DEAL_BONDREPORTED = 1 [(gogoproto.enumvalue_customname) = "TxTypeDealBondReported"];
+  ORIGINAL_TX_TYPE_DEAL_ACTIVEREPORTED = 2 [(gogoproto.enumvalue_customname) = "TxTypeDealActiveReported"];
+  ORIGINAL_TX_TYPE_DEAL_VALIDATORUPDATED = 3 [(gogoproto.enumvalue_customname) = "TxTypeDealValidatorUpdated"];
+  ORIGINAL_TX_TYPE_RESERVED = 4 [(gogoproto.enumvalue_customname) = "TxTypeReserved"];
+}
+
+message RParams {
+    string denom = 1;
+    string gasPrice = 2;
+    uint32 eraSeconds = 3;
+    int32 offset = 4;
+    uint32 bondingDuration = 5;
+    string leastBond = 6;
+}
+
+
+message IcaAccount {
+    string owner = 1;
+    string address = 2;
+    string ctrlConnectionId = 3;
+    string ctrlPortId = 4;
+    string ctrlChannelId = 5;
+    string hostConnectionId = 6;
+    string hostPortId = 7;
+    string hostChannelId = 8;
+}
+
+
+message IcaPoolDetail {
+    string denom = 1;
+    uint32 index = 2;
+    IcaPoolStatus status = 3;
+    IcaAccount DelegationAccount = 4;
+    IcaAccount WithdrawalAccount = 5;
+}
+
+enum IcaPoolStatus {
+    option (gogoproto.goproto_enum_prefix) = false;
+  
+    ICA_POOL_STATUS_UNSPECIFIED = 0 [(gogoproto.enumvalue_customname) = "IcaPoolStatusUnspecified"];
+    ICA_POOL_STATUS_INIT = 1 [(gogoproto.enumvalue_customname) = "IcaPoolStatusInit"];
+    ICA_POOL_STATUS_CREATE_ONE = 2 [(gogoproto.enumvalue_customname) = "IcaPoolStatusCreateOne"];
+    ICA_POOL_STATUS_CREATE_TWO = 3 [(gogoproto.enumvalue_customname) = "IcaPoolStatusCreateTwo"];
+    ICA_POOL_STATUS_SET_WITHDRAWAL = 4 [(gogoproto.enumvalue_customname) = "IcaPoolStatusSetWithdrawal"];
+}
+
+enum InterchainTxStatus {
+    option (gogoproto.goproto_enum_prefix) = false;
+  
+    INTERCHAIN_TX_STATUS_UNSPECIFIED = 0 [(gogoproto.enumvalue_customname) = "InterchainTxStatusUnspecified"];
+    INTERCHAIN_TX_STATUS_INIT = 1 [(gogoproto.enumvalue_customname) = "InterchainTxStatusInit"];
+    INTERCHAIN_TX_STATUS_SUCCESS = 2 [(gogoproto.enumvalue_customname) = "InterchainTxStatusSuccess"];
+    INTERCHAIN_TX_STATUS_FAILED = 3 [(gogoproto.enumvalue_customname) = "InterchainTxStatusFailed"];
+}

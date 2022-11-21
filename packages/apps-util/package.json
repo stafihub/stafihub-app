@@ -14,7 +14,7 @@
   "author": "joe",
   "license": "MIT",
   "dependencies": {
-    "@cosmjs/math": "0.27.1",
+    "@cosmjs/math": "0.29.4",
     "bignumber.js": "9.0.2"
   },
   "eslintConfig": {

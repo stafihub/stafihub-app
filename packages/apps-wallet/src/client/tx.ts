@@ -1,5 +1,6 @@
-import { Registry } from "@cosmjs/proto-signing";
+import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import {
+  AminoTypes,
   coins,
   defaultRegistryTypes as defaultStargateTypes,
   DeliverTxResponse,
@@ -10,11 +11,16 @@ import {
   IBCMsgTransfer,
   MsgLiquidityUnbond,
   MsgClaimMintReward,
+  LedgerAnimoConverter,
+  LedgerProtoRegistry,
 } from "@stafihub/types";
 import { getOfflineSigner, queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
 import Long from "long";
 import { KeplrChainParams } from "../interface";
+import { getSigningOsmosisClient } from "osmojs";
+import { getOfflineSignerAmino } from "cosmjs-utils";
+import { osmosis } from "osmojs";
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -116,26 +122,63 @@ export async function sendLiquidityUnbondTx(
   if (!stafiHubChainConfig) {
     throw new Error("stafiHubChainConfig can not be empty");
   }
+
+  // const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  // if (!offlineSigner) {
+  //   return;
+  // }
+
+  // const client = await getSigningOsmosisClient({
+  //   rpcEndpoint: stafiHubChainConfig.rpc,
+  //   signer: offlineSigner, // OfflineSigner
+  // });
+
+  // return;
+
   const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
   if (!offlineSigner) {
     return;
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register(
-    "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-    MsgLiquidityUnbond
-  );
+  // aminotypes/
+  // const aminoTypes = new AminoTypes({
+  //   ...osmosis.gamm.v1beta1.AminoConverter,
+  //   ...osmosis.lockup.AminoConverter,
+  //   ...osmosis.superfluid.AminoConverter,
+  // });
+
+  const protoRegistry: ReadonlyArray<[string, GeneratedType]> = [
+    ...LedgerProtoRegistry.registry,
+  ];
+  const registry = new Registry(protoRegistry);
+  // myRegistry.register(
+  //   "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+  //   MsgLiquidityUnbond
+  // );
+
+  const aminoConverters = { ...LedgerAnimoConverter };
+  const aminoTypes = new AminoTypes(aminoConverters);
 
   const client = await SigningStargateClient.connectWithSigner(
     stafiHubChainConfig.rpc,
     offlineSigner,
-    { registry: myRegistry }
+    { registry, aminoTypes }
   );
 
   const messages = pools.map((pool) => ({
     typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-    value: MsgLiquidityUnbond.fromPartial({
+    // value: MsgLiquidityUnbond.fromPartial({
+    //   creator: stafiHubAddress,
+    //   pool: pool.poolAddress,
+    //   value: {
+    //     denom: rTokenDenom,
+    //     amount: pool.amount,
+    //   },
+    //   recipient: chainAddress,
+    // }),
+    value: LedgerAnimoConverter[
+      "/stafihub.stafihub.ledger.MsgLiquidityUnbond"
+    ].toAmino({
       creator: stafiHubAddress,
       pool: pool.poolAddress,
       value: {

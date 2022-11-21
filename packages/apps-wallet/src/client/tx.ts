@@ -7,6 +7,7 @@ import {
   SigningStargateClient,
 } from "@cosmjs/stargate";
 import { humanToAtomic } from "@stafihub/apps-util";
+import { makeSignDoc } from "@cosmjs/amino";
 import {
   IBCMsgTransfer,
   MsgLiquidityUnbond,
@@ -18,7 +19,6 @@ import { getOfflineSigner, queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
 import Long from "long";
 import { KeplrChainParams } from "../interface";
-import { getSigningOsmosisClient } from "osmojs";
 import { getOfflineSignerAmino } from "cosmjs-utils";
 import { osmosis } from "osmojs";
 
@@ -139,6 +139,13 @@ export async function sendLiquidityUnbondTx(
   if (!offlineSigner) {
     return;
   }
+
+  // const msg = {
+  //   type: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+  // };
+  // makeSignDoc([msg]);
+
+  // offlineSigner.signAmino();
 
   // aminotypes/
   // const aminoTypes = new AminoTypes({

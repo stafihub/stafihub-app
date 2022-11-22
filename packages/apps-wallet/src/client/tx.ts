@@ -14,6 +14,7 @@ import {
   MsgClaimMintReward,
   LedgerAnimoConverter,
   LedgerProtoRegistry,
+  getSigningStafihubClient,
 } from "@stafihub/types";
 import { getOfflineSigner, queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
@@ -21,7 +22,6 @@ import Long from "long";
 import { KeplrChainParams } from "../interface";
 import { getOfflineSignerAmino } from "cosmjs-utils";
 import { osmosis } from "osmojs";
-import { MessageComposer } from "@stafihub/types/src/codegen/ledger/tx.registry";
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -156,6 +156,7 @@ export async function sendLiquidityUnbondTx(
   // });
 
   const protoRegistry: ReadonlyArray<[string, GeneratedType]> = [
+    ...defaultStargateTypes,
     ...LedgerProtoRegistry.registry,
   ];
   const registry = new Registry(protoRegistry);
@@ -164,14 +165,21 @@ export async function sendLiquidityUnbondTx(
   //   MsgLiquidityUnbond
   // );
 
-  const aminoConverters = { ...LedgerAnimoConverter };
-  const aminoTypes = new AminoTypes(aminoConverters);
+  LedgerProtoRegistry.load(registry);
 
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry, aminoTypes }
-  );
+  const aminoConverters = { ...LedgerAnimoConverter };
+  const aminoTypes = new AminoTypes({ ...aminoConverters });
+
+  // const client = await SigningStargateClient.connectWithSigner(
+  //   stafiHubChainConfig.rpc,
+  //   offlineSigner,
+  //   { registry, aminoTypes }
+  // );
+
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   const oldMessages = pools.map((pool) => ({
     typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
@@ -188,15 +196,6 @@ export async function sendLiquidityUnbondTx(
 
   const aminoMessages = pools.map((pool) => ({
     typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-    // value: MsgLiquidityUnbond.fromPartial({
-    //   creator: stafiHubAddress,
-    //   pool: pool.poolAddress,
-    //   value: {
-    //     denom: rTokenDenom,
-    //     amount: pool.amount,
-    //   },
-    //   recipient: chainAddress,
-    // }),
     value: LedgerAnimoConverter[
       "/stafihub.stafihub.ledger.MsgLiquidityUnbond"
     ].toAmino({
@@ -211,7 +210,7 @@ export async function sendLiquidityUnbondTx(
   }));
 
   const messages = pools.map((pool) => {
-    return MessageComposer.withTypeUrl.liquidityUnbond({
+    return LedgerProtoRegistry.MessageComposer.withTypeUrl.liquidityUnbond({
       creator: stafiHubAddress,
       pool: pool.poolAddress,
       value: {

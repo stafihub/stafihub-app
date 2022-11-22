@@ -20,8 +20,8 @@ import { getOfflineSigner, queryChannelClientState } from ".";
 import { createCosmosClient } from "./connection";
 import Long from "long";
 import { KeplrChainParams } from "../interface";
-import { getOfflineSignerAmino } from "cosmjs-utils";
-import { osmosis } from "osmojs";
+import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import { Buffer } from "buffer";
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -233,8 +233,19 @@ export async function sendLiquidityUnbondTx(
     gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
-  // const ss = await client.sign(stafiHubAddress, messages, fee, "");
-  // console.log("ss", ss);
+  const ss = await client.sign(stafiHubAddress, messages, fee, "");
+  console.log("ss", ss);
+
+  const encoded = TxRaw.encode(ss);
+  console.log("encoded", encoded);
+  const u8arr = encoded.finish();
+  console.log("u8arr", u8arr);
+  console.log("u8arr", u8arr.toString());
+
+  let hex = Buffer.from(u8arr).toString("hex");
+  console.log("hex", hex);
+
+  return;
 
   const response = await client.signAndBroadcast(
     stafiHubAddress,

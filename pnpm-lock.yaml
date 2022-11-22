@@ -168,6 +168,7 @@ importers:
       '@cosmjs/proto-signing': 0.29.0
       '@cosmjs/stargate': 0.29.0
       '@cosmjs/tendermint-rpc': 0.29.0
+      '@keplr-wallet/proto-types': ^0.11.17
       '@stafihub/apps-util': workspace:0.4.0
       '@stafihub/types': workspace:0.6.9
       '@types/long': 4.0.0
@@ -183,6 +184,7 @@ importers:
       '@cosmjs/proto-signing': 0.29.0
       '@cosmjs/stargate': 0.29.0
       '@cosmjs/tendermint-rpc': 0.29.0
+      '@keplr-wallet/proto-types': 0.11.17
       '@stafihub/apps-util': link:../apps-util
       '@stafihub/types': link:../types
       bech32: 2.0.0
@@ -2712,6 +2714,13 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
+
+  /@keplr-wallet/proto-types/0.11.17:
+    resolution: {integrity: sha512-0ZNynnTDrmo+i5HnkvYmt1IU7Ho3yCX5hPgvjUv93WCr8BbfMMrDsJveRMTTJflgKn4e468H7uaI0g5xw5l2Ug==}
+    dependencies:
+      long: 4.0.0
+      protobufjs: 6.11.3
+    dev: false
 
   /@leichtgewicht/ip-codec/2.0.4:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}

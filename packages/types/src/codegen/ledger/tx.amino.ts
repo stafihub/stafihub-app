@@ -386,7 +386,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.ledger.MsgLiquidityUnbond": {
-    aminoType: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+    aminoType: "ledger/LiquidityUnbond",
     toAmino: ({
       creator,
       pool,

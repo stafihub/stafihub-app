@@ -181,33 +181,33 @@ export async function sendLiquidityUnbondTx(
     signer: offlineSigner,
   });
 
-  const oldMessages = pools.map((pool) => ({
-    typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-    value: MsgLiquidityUnbond.fromPartial({
-      creator: stafiHubAddress,
-      pool: pool.poolAddress,
-      value: {
-        denom: rTokenDenom,
-        amount: pool.amount,
-      },
-      recipient: chainAddress,
-    }),
-  }));
+  // const oldMessages = pools.map((pool) => ({
+  //   typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+  //   value: MsgLiquidityUnbond.fromPartial({
+  //     creator: stafiHubAddress,
+  //     pool: pool.poolAddress,
+  //     value: {
+  //       denom: rTokenDenom,
+  //       amount: pool.amount,
+  //     },
+  //     recipient: chainAddress,
+  //   }),
+  // }));
 
-  const aminoMessages = pools.map((pool) => ({
-    typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-    value: LedgerAnimoConverter[
-      "/stafihub.stafihub.ledger.MsgLiquidityUnbond"
-    ].toAmino({
-      creator: stafiHubAddress,
-      pool: pool.poolAddress,
-      value: {
-        denom: rTokenDenom,
-        amount: pool.amount,
-      },
-      recipient: chainAddress,
-    }),
-  }));
+  // const aminoMessages = pools.map((pool) => ({
+  //   typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+  //   value: LedgerAnimoConverter[
+  //     "/stafihub.stafihub.ledger.MsgLiquidityUnbond"
+  //   ].toAmino({
+  //     creator: stafiHubAddress,
+  //     pool: pool.poolAddress,
+  //     value: {
+  //       denom: rTokenDenom,
+  //       amount: pool.amount,
+  //     },
+  //     recipient: chainAddress,
+  //   }),
+  // }));
 
   const messages = pools.map((pool) => {
     return LedgerProtoRegistry.MessageComposer.withTypeUrl.liquidityUnbond({
@@ -233,19 +233,18 @@ export async function sendLiquidityUnbondTx(
     gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
-  const ss = await client.sign(stafiHubAddress, messages, fee, "");
-  console.log("ss", ss);
+  // const ss = await client.sign(stafiHubAddress, messages, fee, "");
+  // console.log("ss", ss);
 
-  const encoded = TxRaw.encode(ss);
-  console.log("encoded", encoded);
-  const u8arr = encoded.finish();
-  console.log("u8arr", u8arr);
-  console.log("u8arr", u8arr.toString());
+  // const encoded = TxRaw.encode(ss);
+  // console.log("encoded", encoded);
+  // const u8arr = encoded.finish();
+  // console.log("u8arr", u8arr);
+  // console.log("u8arr", u8arr.toString());
 
-  let hex = Buffer.from(u8arr).toString("hex");
-  console.log("hex", hex);
+  // let hex = Buffer.from(u8arr).toString("hex");
+  // console.log("hex", hex);
 
-  return;
 
   const response = await client.signAndBroadcast(
     stafiHubAddress,

@@ -2,7 +2,7 @@ import { coins, DeliverTxResponse } from "@cosmjs/stargate";
 import { humanToAtomic } from "@stafihub/apps-util";
 import { getSigningStafihubClient, IBCMsgTransfer } from "@stafihub/types";
 import Long from "long";
-import { getOfflineSigner, queryChannelClientState } from ".";
+import { getOfflineSigner, queryChannelClientState, queryLatestBlock } from ".";
 import { KeplrChainParams } from "../interface";
 import { createCosmosClient } from "./connection";
 
@@ -281,6 +281,11 @@ export async function sendIBCTransferTx(
     sourceChannel
   );
 
+  const latestBlockResult = await queryLatestBlock(srcChainConfig);
+  const latestBlockNanoSeconds = (
+    Number(latestBlockResult?.block?.header?.time?.getTime()) * 1000000
+  ).toFixed(0);
+
   const message = {
     typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
     value: {
@@ -296,6 +301,7 @@ export async function sendIBCTransferTx(
         revisionNumber: clientState?.latestHeight?.revisionNumber,
         revisionHeight: clientState?.latestHeight?.revisionHeight?.add(100000),
       },
+      timeoutTimestamp: Number(latestBlockNanoSeconds) + 600000000000000 + "",
     },
   };
 

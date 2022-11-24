@@ -283,7 +283,7 @@ export async function sendIBCTransferTx(
 
   const message = {
     typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
-    value: IBCMsgTransfer.fromPartial({
+    value: {
       sourcePort,
       sourceChannel,
       token: {
@@ -296,7 +296,7 @@ export async function sendIBCTransferTx(
         revisionNumber: clientState?.latestHeight?.revisionNumber,
         revisionHeight: clientState?.latestHeight?.revisionHeight?.add(100000),
       },
-    }),
+    },
   };
 
   const simulateResponse = await client.simulate(sender, [message], "");

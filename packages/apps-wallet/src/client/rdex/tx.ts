@@ -8,8 +8,6 @@ import { MsgSwap, MsgAddLiquidity, MsgRemoveLiquidity } from "@stafihub/types";
 import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
 
-declare const window: any;
-
 interface Coin {
   denom: string;
   amount: string;

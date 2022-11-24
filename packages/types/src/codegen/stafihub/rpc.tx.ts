@@ -4,6 +4,16 @@ export const createRPCMsgClient = async ({
 }: {
   rpc: Rpc;
 }) => ({
+  stafihub: {
+    stafihub: {
+      bridge: new (await import("../bridge/tx.rpc.msg")).MsgClientImpl(rpc),
+      claim: new (await import("../claim/tx.rpc.msg")).MsgClientImpl(rpc),
+      ledger: new (await import("../ledger/tx.rpc.msg")).MsgClientImpl(rpc),
+      mining: new (await import("../mining/tx.rpc.msg")).MsgClientImpl(rpc),
+      rdex: new (await import("../rdex/tx.rpc.msg")).MsgClientImpl(rpc),
+      rmintreward: new (await import("../rmintreward/tx.rpc.msg")).MsgClientImpl(rpc)
+    }
+  },
   cosmos: {
     authz: {
       v1beta1: new (await import("../cosmos/authz/v1beta1/tx.rpc.msg")).MsgClientImpl(rpc)
@@ -44,11 +54,6 @@ export const createRPCMsgClient = async ({
     },
     vesting: {
       v1beta1: new (await import("../cosmos/vesting/v1beta1/tx.rpc.msg")).MsgClientImpl(rpc)
-    }
-  },
-  stafihub: {
-    stafihub: {
-      ledger: new (await import("../ledger/tx.rpc.msg")).MsgClientImpl(rpc)
     }
   }
 });

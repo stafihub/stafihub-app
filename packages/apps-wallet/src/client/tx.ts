@@ -1,27 +1,10 @@
-import { GeneratedType, Registry } from "@cosmjs/proto-signing";
-import {
-  AminoTypes,
-  coins,
-  defaultRegistryTypes as defaultStargateTypes,
-  DeliverTxResponse,
-  SigningStargateClient,
-} from "@cosmjs/stargate";
+import { coins, DeliverTxResponse } from "@cosmjs/stargate";
 import { humanToAtomic } from "@stafihub/apps-util";
-import { makeSignDoc } from "@cosmjs/amino";
-import {
-  IBCMsgTransfer,
-  MsgLiquidityUnbond,
-  MsgClaimMintReward,
-  LedgerAnimoConverter,
-  LedgerProtoRegistry,
-  getSigningStafihubClient,
-} from "@stafihub/types";
-import { getOfflineSigner, queryChannelClientState } from ".";
-import { createCosmosClient } from "./connection";
+import { getSigningStafihubClient, IBCMsgTransfer } from "@stafihub/types";
 import Long from "long";
+import { getOfflineSigner, queryChannelClientState } from ".";
 import { KeplrChainParams } from "../interface";
-import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
-import { Buffer } from "buffer";
+import { createCosmosClient } from "./connection";
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -124,51 +107,24 @@ export async function sendLiquidityUnbondTx(
     throw new Error("stafiHubChainConfig can not be empty");
   }
 
-  // const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
-  // if (!offlineSigner) {
-  //   return;
-  // }
-
-  // const client = await getSigningOsmosisClient({
-  //   rpcEndpoint: stafiHubChainConfig.rpc,
-  //   signer: offlineSigner, // OfflineSigner
-  // });
-
-  // return;
-
   const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
   if (!offlineSigner) {
     return;
   }
 
-  // const msg = {
-  //   type: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-  // };
-  // makeSignDoc([msg]);
-
-  // offlineSigner.signAmino();
-
-  // aminotypes/
-  // const aminoTypes = new AminoTypes({
-  //   ...osmosis.gamm.v1beta1.AminoConverter,
-  //   ...osmosis.lockup.AminoConverter,
-  //   ...osmosis.superfluid.AminoConverter,
-  // });
-
-  const protoRegistry: ReadonlyArray<[string, GeneratedType]> = [
-    ...defaultStargateTypes,
-    ...LedgerProtoRegistry.registry,
-  ];
-  const registry = new Registry(protoRegistry);
+  // const protoRegistry: ReadonlyArray<[string, GeneratedType]> = [
+  //   ...defaultStargateTypes,
+  //   ...LedgerProtoRegistry.registry,
+  // ];
+  // const registry = new Registry(protoRegistry);
   // myRegistry.register(
   //   "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
   //   MsgLiquidityUnbond
   // );
+  // LedgerProtoRegistry.load(registry);
 
-  LedgerProtoRegistry.load(registry);
-
-  const aminoConverters = { ...LedgerAnimoConverter };
-  const aminoTypes = new AminoTypes({ ...aminoConverters });
+  // const aminoConverters = { ...LedgerAnimoConverter };
+  // const aminoTypes = new AminoTypes({ ...aminoConverters });
 
   // const client = await SigningStargateClient.connectWithSigner(
   //   stafiHubChainConfig.rpc,
@@ -210,15 +166,18 @@ export async function sendLiquidityUnbondTx(
   // }));
 
   const messages = pools.map((pool) => {
-    return LedgerProtoRegistry.MessageComposer.withTypeUrl.liquidityUnbond({
-      creator: stafiHubAddress,
-      pool: pool.poolAddress,
+    return {
+      typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
       value: {
-        denom: rTokenDenom,
-        amount: pool.amount,
+        creator: stafiHubAddress,
+        pool: pool.poolAddress,
+        value: {
+          denom: rTokenDenom,
+          amount: pool.amount,
+        },
+        recipient: chainAddress,
       },
-      recipient: chainAddress,
-    });
+    };
   });
 
   const simulateResponse = await client.simulate(stafiHubAddress, messages, "");
@@ -233,24 +192,62 @@ export async function sendLiquidityUnbondTx(
     gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
-  // const ss = await client.sign(stafiHubAddress, messages, fee, "");
-  // console.log("ss", ss);
-
-  // const encoded = TxRaw.encode(ss);
-  // console.log("encoded", encoded);
-  // const u8arr = encoded.finish();
-  // console.log("u8arr", u8arr);
-  // console.log("u8arr", u8arr.toString());
-
-  // let hex = Buffer.from(u8arr).toString("hex");
-  // console.log("hex", hex);
-
-
   const response = await client.signAndBroadcast(
     stafiHubAddress,
     messages,
     fee
   );
+
+  return response;
+}
+
+export async function sendClaimMintRewardTx(
+  chainConfig: KeplrChainParams | null | undefined,
+  sender: string,
+  denom: string,
+  cycle: Long,
+  mintIndexes: Long[]
+): Promise<DeliverTxResponse | undefined> {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const offlineSigner = await getOfflineSigner(chainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
+
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: chainConfig.rpc,
+    signer: offlineSigner,
+  });
+
+  const messages = mintIndexes.map((mintIndex) => ({
+    typeUrl: "/stafihub.stafihub.rmintreward.MsgClaimMintReward",
+    value: {
+      creator: sender,
+      denom,
+      cycle,
+      mintIndex,
+    },
+  }));
+
+  // const simulateResponse = await client.simulate(sender, messages, "");
+
+  const fee = {
+    amount: [
+      {
+        denom: chainConfig.denom,
+        amount: "1",
+      },
+    ],
+    // gas: Math.ceil(simulateResponse * 1.3).toString(),
+    gas: "500000",
+  };
+
+  const response = await client.signAndBroadcast(sender, messages, fee);
+
+  // console.log("sendClaimRewardTx message", messages);
+  // console.log("sendClaimRewardTx response", response);
 
   return response;
 }
@@ -272,15 +269,10 @@ export async function sendIBCTransferTx(
     return;
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  const msgTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
-  myRegistry.register(msgTypeUrl, IBCMsgTransfer);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    srcChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: srcChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   // const currentHeight = await client.getHeight();
 
@@ -290,7 +282,7 @@ export async function sendIBCTransferTx(
   );
 
   const message = {
-    typeUrl: msgTypeUrl,
+    typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
     value: IBCMsgTransfer.fromPartial({
       sourcePort,
       sourceChannel,
@@ -323,63 +315,6 @@ export async function sendIBCTransferTx(
 
   // console.log("message", message);
   // console.log("response", response);
-
-  return response;
-}
-
-export async function sendClaimMintRewardTx(
-  chainConfig: KeplrChainParams | null | undefined,
-  sender: string,
-  denom: string,
-  cycle: Long,
-  mintIndexes: Long[]
-): Promise<DeliverTxResponse | undefined> {
-  // console.log("sendClaimRewardTx arguments:", arguments);
-  if (!chainConfig) {
-    throw new Error("chainConfig can not be empty");
-  }
-  const offlineSigner = await getOfflineSigner(chainConfig.chainId);
-  if (!offlineSigner) {
-    return;
-  }
-
-  const myRegistry = new Registry(defaultStargateTypes);
-  const msgTypeUrl = "/stafihub.stafihub.rmintreward.MsgClaimMintReward";
-  myRegistry.register(msgTypeUrl, MsgClaimMintReward);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    chainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
-
-  const messages = mintIndexes.map((mintIndex) => ({
-    typeUrl: msgTypeUrl,
-    value: MsgClaimMintReward.fromPartial({
-      creator: sender,
-      denom,
-      cycle,
-      mintIndex,
-    }),
-  }));
-
-  // const simulateResponse = await client.simulate(sender, messages, "");
-
-  const fee = {
-    amount: [
-      {
-        denom: chainConfig.denom,
-        amount: "1",
-      },
-    ],
-    // gas: Math.ceil(simulateResponse * 1.3).toString(),
-    gas: "500000",
-  };
-
-  const response = await client.signAndBroadcast(sender, messages, fee);
-
-  // console.log("sendClaimRewardTx message", messages);
-  // console.log("sendClaimRewardTx response", response);
 
   return response;
 }

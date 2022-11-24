@@ -8,6 +8,28 @@ export const createLCDClient = async ({
     restEndpoint
   });
   return {
+    stafihub: {
+      stafihub: {
+        bridge: new (await import("../bridge/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        claim: new (await import("../claim/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        ledger: new (await import("../ledger/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        mining: new (await import("../mining/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        rdex: new (await import("../rdex/query.lcd")).LCDQueryClient({
+          requestClient
+        }),
+        rmintreward: new (await import("../rmintreward/query.lcd")).LCDQueryClient({
+          requestClient
+        })
+      }
+    },
     cosmos: {
       auth: {
         v1beta1: new (await import("../cosmos/auth/v1beta1/query.lcd")).LCDQueryClient({
@@ -91,13 +113,6 @@ export const createLCDClient = async ({
       },
       upgrade: {
         v1beta1: new (await import("../cosmos/upgrade/v1beta1/query.lcd")).LCDQueryClient({
-          requestClient
-        })
-      }
-    },
-    stafihub: {
-      stafihub: {
-        ledger: new (await import("../ledger/query.lcd")).LCDQueryClient({
           requestClient
         })
       }

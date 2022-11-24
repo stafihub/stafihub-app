@@ -13,18 +13,18 @@ export async function getOfflineSigner(
 ): Promise<OfflineSigner | null> {
   await timeout(500);
 
-  if (!window.getOfflineSignerOnlyAmino) {
+  if (!window.getOfflineSignerAuto) {
     return null;
   }
 
-  return window.getOfflineSignerOnlyAmino(chainId);
+  return window.getOfflineSignerAuto(chainId);
 }
 
 export async function connectAtomjs(
   chainConfig: DetailKeplrChainParams | null | undefined
 ) {
   await timeout(500);
-  if (!window.getOfflineSignerOnlyAmino || !window.keplr) {
+  if (!window.getOfflineSignerAuto || !window.keplr) {
     // message.error("Please install Keplr extension");
     return;
   }

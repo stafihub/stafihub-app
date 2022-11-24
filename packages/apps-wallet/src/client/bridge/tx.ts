@@ -1,10 +1,5 @@
-import { Registry } from "@cosmjs/proto-signing";
-import {
-  defaultRegistryTypes as defaultStargateTypes,
-  DeliverTxResponse,
-  SigningStargateClient,
-} from "@cosmjs/stargate";
-import { MsgBridgeDeposit } from "@stafihub/types";
+import { DeliverTxResponse } from "@cosmjs/stargate";
+import { getSigningStafihubClient } from "@stafihub/types";
 import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
 
@@ -25,24 +20,20 @@ export async function sendBridgeDepositTx(
     return;
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register("/stafihub.stafihub.bridge.MsgDeposit", MsgBridgeDeposit);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   const message = {
     typeUrl: "/stafihub.stafihub.bridge.MsgDeposit",
-    value: MsgBridgeDeposit.fromPartial({
+    value: {
       creator: stafiHubAddress,
       destChainId,
       denom,
       amount,
       receiver,
-    }),
+    },
   };
 
   const simulateResponse = await client.simulate(

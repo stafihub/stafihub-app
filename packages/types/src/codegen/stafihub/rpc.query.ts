@@ -8,6 +8,16 @@ export const createRPCQueryClient = async ({
   const tmClient = await Tendermint34Client.connect(rpcEndpoint);
   const client = new QueryClient(tmClient);
   return {
+    stafihub: {
+      stafihub: {
+        bridge: (await import("../bridge/query.rpc.Query")).createRpcQueryExtension(client),
+        claim: (await import("../claim/query.rpc.Query")).createRpcQueryExtension(client),
+        ledger: (await import("../ledger/query.rpc.Query")).createRpcQueryExtension(client),
+        mining: (await import("../mining/query.rpc.Query")).createRpcQueryExtension(client),
+        rdex: (await import("../rdex/query.rpc.Query")).createRpcQueryExtension(client),
+        rmintreward: (await import("../rmintreward/query.rpc.Query")).createRpcQueryExtension(client)
+      }
+    },
     cosmos: {
       app: {
         v1alpha1: (await import("../cosmos/app/v1alpha1/query.rpc.Query")).createRpcQueryExtension(client)
@@ -62,11 +72,6 @@ export const createRPCQueryClient = async ({
       },
       upgrade: {
         v1beta1: (await import("../cosmos/upgrade/v1beta1/query.rpc.Query")).createRpcQueryExtension(client)
-      }
-    },
-    stafihub: {
-      stafihub: {
-        ledger: (await import("../ledger/query.rpc.Query")).createRpcQueryExtension(client)
       }
     }
   };

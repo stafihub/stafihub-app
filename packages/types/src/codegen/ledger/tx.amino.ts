@@ -1,7 +1,30 @@
 import { originalTxTypeFromJSON } from "./ledger";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
-import { MsgSetEraUnbondLimit, MsgSetPoolDetail, MsgSetLeastBond, MsgClearCurrentEraSnapShots, MsgSetStakingRewardCommission, MsgSetProtocolFeeReceiver, MsgSetUnbondRelayFee, MsgLiquidityUnbond, MsgSetUnbondCommission, MsgSubmitSignature, MsgSetRParams, MsgSetRelayFeeReceiver, MsgSetRelayGasPrice, MsgSetEraSeconds, MsgRmBondedPool, MsgMigrateInit, MsgMigrateUnbondings, MsgToggleUnbondSwitch, MsgUnsealMigrateInit, MsgRegisterIcaPool, MsgSetWithdrawalAddr, MsgInitPool } from "./tx";
+import {
+  MsgSetEraUnbondLimit,
+  MsgSetPoolDetail,
+  MsgSetLeastBond,
+  MsgClearCurrentEraSnapShots,
+  MsgSetStakingRewardCommission,
+  MsgSetProtocolFeeReceiver,
+  MsgSetUnbondRelayFee,
+  MsgLiquidityUnbond,
+  MsgSetUnbondCommission,
+  MsgSubmitSignature,
+  MsgSetRParams,
+  MsgSetRelayFeeReceiver,
+  MsgSetRelayGasPrice,
+  MsgSetEraSeconds,
+  MsgRmBondedPool,
+  MsgMigrateInit,
+  MsgMigrateUnbondings,
+  MsgToggleUnbondSwitch,
+  MsgUnsealMigrateInit,
+  MsgRegisterIcaPool,
+  MsgSetWithdrawalAddr,
+  MsgInitPool,
+} from "./tx";
 export interface AminoMsgSetEraUnbondLimit extends AminoMsg {
   type: "/stafihub.stafihub.ledger.MsgSetEraUnbondLimit";
   value: {
@@ -209,25 +232,25 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       denom,
-      limit
+      limit,
     }: MsgSetEraUnbondLimit): AminoMsgSetEraUnbondLimit["value"] => {
       return {
         creator,
         denom,
-        limit
+        limit,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      limit
+      limit,
     }: AminoMsgSetEraUnbondLimit["value"]): MsgSetEraUnbondLimit => {
       return {
         creator,
         denom,
-        limit
+        limit,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetPoolDetail": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetPoolDetail",
@@ -236,14 +259,14 @@ export const AminoConverter = {
       denom,
       pool,
       subAccounts,
-      threshold
+      threshold,
     }: MsgSetPoolDetail): AminoMsgSetPoolDetail["value"] => {
       return {
         creator,
         denom,
         pool,
         subAccounts,
-        threshold
+        threshold,
       };
     },
     fromAmino: ({
@@ -251,199 +274,199 @@ export const AminoConverter = {
       denom,
       pool,
       subAccounts,
-      threshold
+      threshold,
     }: AminoMsgSetPoolDetail["value"]): MsgSetPoolDetail => {
       return {
         creator,
         denom,
         pool,
         subAccounts,
-        threshold
+        threshold,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetLeastBond": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetLeastBond",
     toAmino: ({
       creator,
       denom,
-      leastBond
+      leastBond,
     }: MsgSetLeastBond): AminoMsgSetLeastBond["value"] => {
       return {
         creator,
         denom,
-        leastBond
+        leastBond,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      leastBond
+      leastBond,
     }: AminoMsgSetLeastBond["value"]): MsgSetLeastBond => {
       return {
         creator,
         denom,
-        leastBond
+        leastBond,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgClearCurrentEraSnapShots": {
     aminoType: "/stafihub.stafihub.ledger.MsgClearCurrentEraSnapShots",
     toAmino: ({
       creator,
-      denom
+      denom,
     }: MsgClearCurrentEraSnapShots): AminoMsgClearCurrentEraSnapShots["value"] => {
       return {
         creator,
-        denom
+        denom,
       };
     },
     fromAmino: ({
       creator,
-      denom
+      denom,
     }: AminoMsgClearCurrentEraSnapShots["value"]): MsgClearCurrentEraSnapShots => {
       return {
         creator,
-        denom
+        denom,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetStakingRewardCommission": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetStakingRewardCommission",
     toAmino: ({
       creator,
       denom,
-      commission
+      commission,
     }: MsgSetStakingRewardCommission): AminoMsgSetStakingRewardCommission["value"] => {
       return {
         creator,
         denom,
-        commission
+        commission,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      commission
+      commission,
     }: AminoMsgSetStakingRewardCommission["value"]): MsgSetStakingRewardCommission => {
       return {
         creator,
         denom,
-        commission
+        commission,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetProtocolFeeReceiver": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetProtocolFeeReceiver",
     toAmino: ({
       creator,
-      receiver
+      receiver,
     }: MsgSetProtocolFeeReceiver): AminoMsgSetProtocolFeeReceiver["value"] => {
       return {
         creator,
-        receiver
+        receiver,
       };
     },
     fromAmino: ({
       creator,
-      receiver
+      receiver,
     }: AminoMsgSetProtocolFeeReceiver["value"]): MsgSetProtocolFeeReceiver => {
       return {
         creator,
-        receiver
+        receiver,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetUnbondRelayFee": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetUnbondRelayFee",
     toAmino: ({
       creator,
       denom,
-      value
+      value,
     }: MsgSetUnbondRelayFee): AminoMsgSetUnbondRelayFee["value"] => {
       return {
         creator,
         denom,
         value: {
           denom: value.denom,
-          amount: Long.fromValue(value.amount).toString()
-        }
+          amount: Long.fromValue(value.amount).toString(),
+        },
       };
     },
     fromAmino: ({
       creator,
       denom,
-      value
+      value,
     }: AminoMsgSetUnbondRelayFee["value"]): MsgSetUnbondRelayFee => {
       return {
         creator,
         denom,
         value: {
           denom: value.denom,
-          amount: value.amount
-        }
+          amount: value.amount,
+        },
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgLiquidityUnbond": {
-    aminoType: "ledger/LiquidityUnbond",
+    aminoType: "ledger.LiquidityUnbond",
     toAmino: ({
       creator,
       pool,
       value,
-      recipient
+      recipient,
     }: MsgLiquidityUnbond): AminoMsgLiquidityUnbond["value"] => {
       return {
         creator,
         pool,
         value: {
           denom: value.denom,
-          amount: Long.fromValue(value.amount).toString()
+          amount: Long.fromValue(value.amount).toString(),
         },
-        recipient
+        recipient,
       };
     },
     fromAmino: ({
       creator,
       pool,
       value,
-      recipient
+      recipient,
     }: AminoMsgLiquidityUnbond["value"]): MsgLiquidityUnbond => {
       return {
         creator,
         pool,
         value: {
           denom: value.denom,
-          amount: value.amount
+          amount: value.amount,
         },
-        recipient
+        recipient,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetUnbondCommission": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetUnbondCommission",
     toAmino: ({
       creator,
       denom,
-      commission
+      commission,
     }: MsgSetUnbondCommission): AminoMsgSetUnbondCommission["value"] => {
       return {
         creator,
         denom,
-        commission
+        commission,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      commission
+      commission,
     }: AminoMsgSetUnbondCommission["value"]): MsgSetUnbondCommission => {
       return {
         creator,
         denom,
-        commission
+        commission,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSubmitSignature": {
     aminoType: "/stafihub.stafihub.ledger.MsgSubmitSignature",
@@ -454,7 +477,7 @@ export const AminoConverter = {
       pool,
       txType,
       propId,
-      signature
+      signature,
     }: MsgSubmitSignature): AminoMsgSubmitSignature["value"] => {
       return {
         creator,
@@ -463,7 +486,7 @@ export const AminoConverter = {
         pool,
         txType,
         propId,
-        signature
+        signature,
       };
     },
     fromAmino: ({
@@ -473,7 +496,7 @@ export const AminoConverter = {
       pool,
       txType,
       propId,
-      signature
+      signature,
     }: AminoMsgSubmitSignature["value"]): MsgSubmitSignature => {
       return {
         creator,
@@ -482,9 +505,9 @@ export const AminoConverter = {
         pool,
         txType: originalTxTypeFromJSON(txType),
         propId,
-        signature
+        signature,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetRParams": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetRParams",
@@ -495,7 +518,7 @@ export const AminoConverter = {
       eraSeconds,
       offset,
       bondingDuration,
-      leastBond
+      leastBond,
     }: MsgSetRParams): AminoMsgSetRParams["value"] => {
       return {
         creator,
@@ -504,7 +527,7 @@ export const AminoConverter = {
         eraSeconds,
         offset,
         bondingDuration,
-        leastBond
+        leastBond,
       };
     },
     fromAmino: ({
@@ -514,7 +537,7 @@ export const AminoConverter = {
       eraSeconds,
       offset,
       bondingDuration,
-      leastBond
+      leastBond,
     }: AminoMsgSetRParams["value"]): MsgSetRParams => {
       return {
         creator,
@@ -523,59 +546,59 @@ export const AminoConverter = {
         eraSeconds,
         offset,
         bondingDuration,
-        leastBond
+        leastBond,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetRelayFeeReceiver": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetRelayFeeReceiver",
     toAmino: ({
       creator,
       denom,
-      receiver
+      receiver,
     }: MsgSetRelayFeeReceiver): AminoMsgSetRelayFeeReceiver["value"] => {
       return {
         creator,
         denom,
-        receiver
+        receiver,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      receiver
+      receiver,
     }: AminoMsgSetRelayFeeReceiver["value"]): MsgSetRelayFeeReceiver => {
       return {
         creator,
         denom,
-        receiver
+        receiver,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetRelayGasPrice": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetRelayGasPrice",
     toAmino: ({
       creator,
       denom,
-      gasPrice
+      gasPrice,
     }: MsgSetRelayGasPrice): AminoMsgSetRelayGasPrice["value"] => {
       return {
         creator,
         denom,
-        gasPrice
+        gasPrice,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      gasPrice
+      gasPrice,
     }: AminoMsgSetRelayGasPrice["value"]): MsgSetRelayGasPrice => {
       return {
         creator,
         denom,
-        gasPrice
+        gasPrice,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetEraSeconds": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetEraSeconds",
@@ -584,14 +607,14 @@ export const AminoConverter = {
       denom,
       eraSeconds,
       bondingDuration,
-      offset
+      offset,
     }: MsgSetEraSeconds): AminoMsgSetEraSeconds["value"] => {
       return {
         creator,
         denom,
         eraSeconds,
         bondingDuration,
-        offset
+        offset,
       };
     },
     fromAmino: ({
@@ -599,41 +622,41 @@ export const AminoConverter = {
       denom,
       eraSeconds,
       bondingDuration,
-      offset
+      offset,
     }: AminoMsgSetEraSeconds["value"]): MsgSetEraSeconds => {
       return {
         creator,
         denom,
         eraSeconds,
         bondingDuration,
-        offset
+        offset,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgRmBondedPool": {
     aminoType: "/stafihub.stafihub.ledger.MsgRmBondedPool",
     toAmino: ({
       creator,
       denom,
-      address
+      address,
     }: MsgRmBondedPool): AminoMsgRmBondedPool["value"] => {
       return {
         creator,
         denom,
-        address
+        address,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      address
+      address,
     }: AminoMsgRmBondedPool["value"]): MsgRmBondedPool => {
       return {
         creator,
         denom,
-        address
+        address,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgMigrateInit": {
     aminoType: "/stafihub.stafihub.ledger.MsgMigrateInit",
@@ -646,7 +669,7 @@ export const AminoConverter = {
       bond,
       unbond,
       exchangeRate,
-      totalProtocolFee
+      totalProtocolFee,
     }: MsgMigrateInit): AminoMsgMigrateInit["value"] => {
       return {
         creator,
@@ -657,7 +680,7 @@ export const AminoConverter = {
         bond,
         unbond,
         exchangeRate,
-        totalProtocolFee
+        totalProtocolFee,
       };
     },
     fromAmino: ({
@@ -669,7 +692,7 @@ export const AminoConverter = {
       bond,
       unbond,
       exchangeRate,
-      totalProtocolFee
+      totalProtocolFee,
     }: AminoMsgMigrateInit["value"]): MsgMigrateInit => {
       return {
         creator,
@@ -680,9 +703,9 @@ export const AminoConverter = {
         bond,
         unbond,
         exchangeRate,
-        totalProtocolFee
+        totalProtocolFee,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgMigrateUnbondings": {
     aminoType: "/stafihub.stafihub.ledger.MsgMigrateUnbondings",
@@ -691,18 +714,18 @@ export const AminoConverter = {
       denom,
       pool,
       era,
-      unbondings
+      unbondings,
     }: MsgMigrateUnbondings): AminoMsgMigrateUnbondings["value"] => {
       return {
         creator,
         denom,
         pool,
         era,
-        unbondings: unbondings.map(el0 => ({
+        unbondings: unbondings.map((el0) => ({
           unbonder: el0.unbonder,
           amount: el0.amount,
-          recipient: el0.recipient
-        }))
+          recipient: el0.recipient,
+        })),
       };
     },
     fromAmino: ({
@@ -710,128 +733,128 @@ export const AminoConverter = {
       denom,
       pool,
       era,
-      unbondings
+      unbondings,
     }: AminoMsgMigrateUnbondings["value"]): MsgMigrateUnbondings => {
       return {
         creator,
         denom,
         pool,
         era,
-        unbondings: unbondings.map(el0 => ({
+        unbondings: unbondings.map((el0) => ({
           unbonder: el0.unbonder,
           amount: el0.amount,
-          recipient: el0.recipient
-        }))
+          recipient: el0.recipient,
+        })),
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgToggleUnbondSwitch": {
     aminoType: "/stafihub.stafihub.ledger.MsgToggleUnbondSwitch",
     toAmino: ({
       creator,
-      denom
+      denom,
     }: MsgToggleUnbondSwitch): AminoMsgToggleUnbondSwitch["value"] => {
       return {
         creator,
-        denom
+        denom,
       };
     },
     fromAmino: ({
       creator,
-      denom
+      denom,
     }: AminoMsgToggleUnbondSwitch["value"]): MsgToggleUnbondSwitch => {
       return {
         creator,
-        denom
+        denom,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgUnsealMigrateInit": {
     aminoType: "/stafihub.stafihub.ledger.MsgUnsealMigrateInit",
     toAmino: ({
-      creator
+      creator,
     }: MsgUnsealMigrateInit): AminoMsgUnsealMigrateInit["value"] => {
       return {
-        creator
+        creator,
       };
     },
     fromAmino: ({
-      creator
+      creator,
     }: AminoMsgUnsealMigrateInit["value"]): MsgUnsealMigrateInit => {
       return {
-        creator
+        creator,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgRegisterIcaPool": {
     aminoType: "/stafihub.stafihub.ledger.MsgRegisterIcaPool",
     toAmino: ({
       creator,
       denom,
-      connectionId
+      connectionId,
     }: MsgRegisterIcaPool): AminoMsgRegisterIcaPool["value"] => {
       return {
         creator,
         denom,
-        connectionId
+        connectionId,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      connectionId
+      connectionId,
     }: AminoMsgRegisterIcaPool["value"]): MsgRegisterIcaPool => {
       return {
         creator,
         denom,
-        connectionId
+        connectionId,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgSetWithdrawalAddr": {
     aminoType: "/stafihub.stafihub.ledger.MsgSetWithdrawalAddr",
     toAmino: ({
       creator,
-      delegationAddr
+      delegationAddr,
     }: MsgSetWithdrawalAddr): AminoMsgSetWithdrawalAddr["value"] => {
       return {
         creator,
-        delegationAddr
+        delegationAddr,
       };
     },
     fromAmino: ({
       creator,
-      delegationAddr
+      delegationAddr,
     }: AminoMsgSetWithdrawalAddr["value"]): MsgSetWithdrawalAddr => {
       return {
         creator,
-        delegationAddr
+        delegationAddr,
       };
-    }
+    },
   },
   "/stafihub.stafihub.ledger.MsgInitPool": {
     aminoType: "/stafihub.stafihub.ledger.MsgInitPool",
     toAmino: ({
       creator,
       denom,
-      pool
+      pool,
     }: MsgInitPool): AminoMsgInitPool["value"] => {
       return {
         creator,
         denom,
-        pool
+        pool,
       };
     },
     fromAmino: ({
       creator,
       denom,
-      pool
+      pool,
     }: AminoMsgInitPool["value"]): MsgInitPool => {
       return {
         creator,
         denom,
-        pool
+        pool,
       };
-    }
-  }
+    },
+  },
 };

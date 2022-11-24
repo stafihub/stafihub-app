@@ -308,7 +308,8 @@ export async function sendIBCTransferTx(
         amount: "1",
       },
     ],
-    gas: Math.ceil(simulateResponse * 1.3).toString(),
+    // gas: Math.ceil(simulateResponse * 1.3).toString(),
+    gas: "500000",
   };
 
   const response = await client.signAndBroadcast(sender, [message], fee);

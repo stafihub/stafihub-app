@@ -44,7 +44,7 @@ export interface AminoMsgUpdateMintRewardAct extends AminoMsg {
   };
 }
 export interface AminoMsgClaimMintReward extends AminoMsg {
-  type: "rmintreward.ClaimMintReward";
+  type: "rmintreward/ClaimMintReward";
   value: {
     creator: string;
     denom: string;

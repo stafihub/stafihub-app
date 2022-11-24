@@ -121,7 +121,7 @@ export const AminoConverter = {
     },
   },
   "/stafihub.stafihub.bridge.MsgDeposit": {
-    aminoType: "bridge.Deposit",
+    aminoType: "bridge/Deposit",
     toAmino: ({
       creator,
       destChainId,

@@ -13,10 +13,14 @@ export async function getOfflineSigner(
 ): Promise<OfflineSigner | null> {
   await timeout(500);
 
+  // if (!window.getOfflineSignerOnlyAmino) {
+  //   return null;
+  // }
+  // return window.getOfflineSignerOnlyAmino(chainId);
+
   if (!window.getOfflineSignerAuto) {
     return null;
   }
-
   return window.getOfflineSignerAuto(chainId);
 }
 

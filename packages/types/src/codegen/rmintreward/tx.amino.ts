@@ -44,7 +44,7 @@ export interface AminoMsgUpdateMintRewardAct extends AminoMsg {
   };
 }
 export interface AminoMsgClaimMintReward extends AminoMsg {
-  type: "rmintreward/ClaimMintReward";
+  type: "/stafihub.stafihub.rmintreward.MsgClaimMintReward";
   value: {
     creator: string;
     denom: string;
@@ -155,7 +155,7 @@ export const AminoConverter = {
     },
   },
   "/stafihub.stafihub.rmintreward.MsgClaimMintReward": {
-    aminoType: "/stafihub.stafihub.rmintreward.MsgClaimMintReward",
+    aminoType: "rmintreward/ClaimMintReward",
     toAmino: ({
       creator,
       denom,

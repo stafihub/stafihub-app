@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { BIP44Params, BIP44ParamsSDKType } from "../../hd/v1/hd";
 import * as _m0 from "protobufjs/minimal";

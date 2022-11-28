@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType } from "./params";
 import { Proposal, ProposalSDKType } from "./proposal";
 import { ResourceIdToDenom, ResourceIdToDenomSDKType, BannedDenom, BannedDenomSDKType } from "./genesis";

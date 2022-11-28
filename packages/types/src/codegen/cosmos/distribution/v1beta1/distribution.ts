@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { DecCoin, DecCoinSDKType, Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "../../../helpers";

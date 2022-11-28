@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { Event, EventSDKType } from "../../../../tendermint/abci/types";
 import * as _m0 from "protobufjs/minimal";

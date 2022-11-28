@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { CapabilityOwners, CapabilityOwnersSDKType } from "./capability";
 import * as _m0 from "protobufjs/minimal";
 import { Long, DeepPartial } from "../../../helpers";

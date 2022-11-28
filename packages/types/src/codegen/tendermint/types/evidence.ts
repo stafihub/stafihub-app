@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Vote, VoteSDKType, LightBlock, LightBlockSDKType } from "./types";
 import { Timestamp } from "../../google/protobuf/timestamp";
 import { Validator, ValidatorSDKType } from "./validator";

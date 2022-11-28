@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../../../helpers";
 /** MsgVerifyInvariant represents a message to verify a particular invariance. */

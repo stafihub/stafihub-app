@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { IdentifiedClientState, IdentifiedClientStateSDKType, ClientConsensusStates, ClientConsensusStatesSDKType, Params, ParamsSDKType } from "./client";
 import * as _m0 from "protobufjs/minimal";
 import { Long, DeepPartial } from "../../../../helpers";

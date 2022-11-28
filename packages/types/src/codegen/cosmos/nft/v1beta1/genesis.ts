@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Class, ClassSDKType, NFT, NFTSDKType } from "./nft";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../../../helpers";

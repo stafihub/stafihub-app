@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../../../helpers";
 /** MsgSend represents a message to send a nft from one account to another account. */

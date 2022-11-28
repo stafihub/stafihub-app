@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../../../helpers";
 /** PubKey defines a secp256r1 ECDSA public key. */

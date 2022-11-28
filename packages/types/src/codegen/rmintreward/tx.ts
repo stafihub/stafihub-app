@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MintRewardActPost, MintRewardActPostSDKType } from "./models";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "../helpers";

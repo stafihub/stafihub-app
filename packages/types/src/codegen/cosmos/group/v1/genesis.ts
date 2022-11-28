@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GroupInfo, GroupInfoSDKType, GroupMember, GroupMemberSDKType, GroupPolicyInfo, GroupPolicyInfoSDKType, Proposal, ProposalSDKType, Vote, VoteSDKType } from "./types";
 import * as _m0 from "protobufjs/minimal";
 import { Long, DeepPartial } from "../../../helpers";

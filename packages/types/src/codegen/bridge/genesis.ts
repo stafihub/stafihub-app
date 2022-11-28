@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType } from "./params";
 import { Proposal, ProposalSDKType } from "./proposal";
 import { Coin, CoinSDKType } from "../cosmos/base/v1beta1/coin";

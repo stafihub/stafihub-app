@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgSetResourceidToDenom, MsgDeposit, MsgAddChainId, MsgVoteProposal, MsgRmChainId, MsgSetRelayFeeReceiver, MsgSetRelayFee, MsgAddBannedDenom, MsgRmBannedDenom } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/stafihub.stafihub.bridge.MsgSetResourceidToDenom", MsgSetResourceidToDenom], ["/stafihub.stafihub.bridge.MsgDeposit", MsgDeposit], ["/stafihub.stafihub.bridge.MsgAddChainId", MsgAddChainId], ["/stafihub.stafihub.bridge.MsgVoteProposal", MsgVoteProposal], ["/stafihub.stafihub.bridge.MsgRmChainId", MsgRmChainId], ["/stafihub.stafihub.bridge.MsgSetRelayFeeReceiver", MsgSetRelayFeeReceiver], ["/stafihub.stafihub.bridge.MsgSetRelayFee", MsgSetRelayFee], ["/stafihub.stafihub.bridge.MsgAddBannedDenom", MsgAddBannedDenom], ["/stafihub.stafihub.bridge.MsgRmBannedDenom", MsgRmBannedDenom]];

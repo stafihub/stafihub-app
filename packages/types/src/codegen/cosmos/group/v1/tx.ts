@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Member, MemberSDKType, VoteOption, VoteOptionSDKType } from "./types";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";

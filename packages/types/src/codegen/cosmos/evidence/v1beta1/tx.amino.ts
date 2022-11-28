@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgSubmitEvidence } from "./tx";
 export interface AminoMsgSubmitEvidence extends AminoMsg {

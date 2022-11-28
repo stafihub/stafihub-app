@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType } from "./params";
 import { StakePool, StakePoolSDKType, StakeItem, StakeItemSDKType, UserStakeRecord, UserStakeRecordSDKType, RewardToken, RewardTokenSDKType } from "./models";
 import { Coin, CoinSDKType } from "../cosmos/base/v1beta1/coin";

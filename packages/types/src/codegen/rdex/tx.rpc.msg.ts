@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Rpc } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 import { MsgCreatePool, MsgCreatePoolResponse, MsgAddLiquidity, MsgAddLiquidityResponse, MsgSwap, MsgSwapResponse, MsgRemoveLiquidity, MsgRemoveLiquidityResponse, MsgToggleProviderSwitch, MsgToggleProviderSwitchResponse, MsgAddProvider, MsgAddProviderResponse, MsgRmProvider, MsgRmProviderResponse, MsgAddPoolCreator, MsgAddPoolCreatorResponse, MsgRmPoolCreator, MsgRmPoolCreatorResponse } from "./tx";

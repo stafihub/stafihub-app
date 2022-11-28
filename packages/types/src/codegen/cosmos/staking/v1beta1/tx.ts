@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Description, DescriptionSDKType, CommissionRates, CommissionRatesSDKType } from "./staking";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Coin, CoinSDKType } from "../../base/v1beta1/coin";

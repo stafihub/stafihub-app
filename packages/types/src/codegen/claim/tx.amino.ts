@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
 import { MsgSetMerkleRoot, MsgClaim, MsgToggleClaimSwitch, MsgProvideToken, MsgWithdrawToken } from "./tx";

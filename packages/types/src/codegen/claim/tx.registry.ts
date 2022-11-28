@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgSetMerkleRoot, MsgClaim, MsgToggleClaimSwitch, MsgProvideToken, MsgWithdrawToken } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/stafihub.stafihub.claim.MsgSetMerkleRoot", MsgSetMerkleRoot], ["/stafihub.stafihub.claim.MsgClaim", MsgClaim], ["/stafihub.stafihub.claim.MsgToggleClaimSwitch", MsgToggleClaimSwitch], ["/stafihub.stafihub.claim.MsgProvideToken", MsgProvideToken], ["/stafihub.stafihub.claim.MsgWithdrawToken", MsgWithdrawToken]];

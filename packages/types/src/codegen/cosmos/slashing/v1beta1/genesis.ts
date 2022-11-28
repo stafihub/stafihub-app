@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType, ValidatorSigningInfo, ValidatorSigningInfoSDKType } from "./slashing";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "../../../helpers";

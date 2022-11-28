@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { BaseAccount, BaseAccountSDKType } from "../../auth/v1beta1/auth";
 import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";

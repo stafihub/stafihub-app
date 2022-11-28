@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import { Period, PeriodSDKType } from "./vesting";
 import * as _m0 from "protobufjs/minimal";

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Proof, ProofSDKType } from "../crypto/proof";
 import { Consensus, ConsensusSDKType } from "../version/types";
 import { Timestamp } from "../../google/protobuf/timestamp";

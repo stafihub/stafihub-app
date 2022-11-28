@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType, Metadata, MetadataSDKType } from "./bank";
 import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";

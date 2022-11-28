@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { SignMode, SignModeSDKType } from "../signing/v1beta1/signing";
 import { CompactBitArray, CompactBitArraySDKType } from "../../crypto/multisig/v1beta1/multisig";

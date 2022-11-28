@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Rpc } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 import { MsgSetResourceidToDenom, MsgSetResourceidToDenomResponse, MsgDeposit, MsgDepositResponse, MsgAddChainId, MsgAddChainIdResponse, MsgVoteProposal, MsgVoteProposalResponse, MsgRmChainId, MsgRmChainIdResponse, MsgSetRelayFeeReceiver, MsgSetRelayFeeReceiverResponse, MsgSetRelayFee, MsgSetRelayFeeResponse, MsgAddBannedDenom, MsgAddBannedDenomResponse, MsgRmBannedDenom, MsgRmBannedDenomResponse } from "./tx";

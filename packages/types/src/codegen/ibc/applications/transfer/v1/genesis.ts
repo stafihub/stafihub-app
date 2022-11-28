@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { DenomTrace, DenomTraceSDKType, Params, ParamsSDKType } from "./transfer";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../../../../helpers";

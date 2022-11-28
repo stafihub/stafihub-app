@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { LCDClient } from "@osmonauts/lcd";
 import { QueryParamsRequest, QueryParamsResponseSDKType, QueryStakePoolInfoRequest, QueryStakePoolInfoResponseSDKType, QueryStakeItemListRequest, QueryStakeItemListResponseSDKType, QueryStakeRewardRequest, QueryStakeRewardResponseSDKType, QueryStakeRecordCountRequest, QueryStakeRecordCountResponseSDKType, QueryStakeRecordRequest, QueryStakeRecordResponseSDKType, QueryStakeRecordListRequest, QueryStakeRecordListResponseSDKType, QueryStakePoolListRequest, QueryStakePoolListResponseSDKType, QueryMiningProviderListRequest, QueryMiningProviderListResponseSDKType, QueryRewardTokenListRequest, QueryRewardTokenListResponseSDKType, QueryMaxRewardPoolNumberRequest, QueryMaxRewardPoolNumberResponseSDKType, QueryMaxStakeItemNumberRequest, QueryMaxStakeItemNumberResponseSDKType, QueryProviderSwitchRequest, QueryProviderSwitchResponseSDKType } from "./query";
 export class LCDQueryClient {

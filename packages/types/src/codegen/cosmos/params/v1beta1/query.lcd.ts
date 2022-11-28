@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { LCDClient } from "@osmonauts/lcd";
 import { QueryParamsRequest, QueryParamsResponseSDKType, QuerySubspacesRequest, QuerySubspacesResponseSDKType } from "./query";
 export class LCDQueryClient {

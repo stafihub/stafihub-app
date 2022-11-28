@@ -1,11 +1,7 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
-import {
-  MsgAddMintRewardAct,
-  MsgUpdateMintRewardAct,
-  MsgClaimMintReward,
-  MsgProvideRewardToken,
-} from "./tx";
+import { MsgAddMintRewardAct, MsgUpdateMintRewardAct, MsgClaimMintReward, MsgProvideRewardToken } from "./tx";
 export interface AminoMsgAddMintRewardAct extends AminoMsg {
   type: "/stafihub.stafihub.rmintreward.MsgAddMintRewardAct";
   value: {
@@ -44,7 +40,7 @@ export interface AminoMsgUpdateMintRewardAct extends AminoMsg {
   };
 }
 export interface AminoMsgClaimMintReward extends AminoMsg {
-  type: "/stafihub.stafihub.rmintreward.MsgClaimMintReward";
+  type: "rmintreward/ClaimMintReward";
   value: {
     creator: string;
     denom: string;
@@ -65,7 +61,7 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       denom,
-      act,
+      act
     }: MsgAddMintRewardAct): AminoMsgAddMintRewardAct["value"] => {
       return {
         creator,
@@ -74,19 +70,19 @@ export const AminoConverter = {
           begin: act.begin.toString(),
           end: act.end.toString(),
           lockedBlocks: act.lockedBlocks.toString(),
-          tokenRewardInfos: act.tokenRewardInfos.map((el0) => ({
+          tokenRewardInfos: act.tokenRewardInfos.map(el0 => ({
             denom: el0.denom,
             rewardRate: el0.rewardRate,
             totalRewardAmount: el0.totalRewardAmount,
-            userLimit: el0.userLimit,
-          })),
-        },
+            userLimit: el0.userLimit
+          }))
+        }
       };
     },
     fromAmino: ({
       creator,
       denom,
-      act,
+      act
     }: AminoMsgAddMintRewardAct["value"]): MsgAddMintRewardAct => {
       return {
         creator,
@@ -95,15 +91,15 @@ export const AminoConverter = {
           begin: Long.fromString(act.begin),
           end: Long.fromString(act.end),
           lockedBlocks: Long.fromString(act.lockedBlocks),
-          tokenRewardInfos: act.tokenRewardInfos.map((el1) => ({
+          tokenRewardInfos: act.tokenRewardInfos.map(el1 => ({
             denom: el1.denom,
             rewardRate: el1.rewardRate,
             totalRewardAmount: el1.totalRewardAmount,
-            userLimit: el1.userLimit,
-          })),
-        },
+            userLimit: el1.userLimit
+          }))
+        }
       };
-    },
+    }
   },
   "/stafihub.stafihub.rmintreward.MsgUpdateMintRewardAct": {
     aminoType: "/stafihub.stafihub.rmintreward.MsgUpdateMintRewardAct",
@@ -111,7 +107,7 @@ export const AminoConverter = {
       creator,
       denom,
       cycle,
-      act,
+      act
     }: MsgUpdateMintRewardAct): AminoMsgUpdateMintRewardAct["value"] => {
       return {
         creator,
@@ -121,20 +117,20 @@ export const AminoConverter = {
           begin: act.begin.toString(),
           end: act.end.toString(),
           lockedBlocks: act.lockedBlocks.toString(),
-          tokenRewardInfos: act.tokenRewardInfos.map((el0) => ({
+          tokenRewardInfos: act.tokenRewardInfos.map(el0 => ({
             denom: el0.denom,
             rewardRate: el0.rewardRate,
             totalRewardAmount: el0.totalRewardAmount,
-            userLimit: el0.userLimit,
-          })),
-        },
+            userLimit: el0.userLimit
+          }))
+        }
       };
     },
     fromAmino: ({
       creator,
       denom,
       cycle,
-      act,
+      act
     }: AminoMsgUpdateMintRewardAct["value"]): MsgUpdateMintRewardAct => {
       return {
         creator,
@@ -144,15 +140,15 @@ export const AminoConverter = {
           begin: Long.fromString(act.begin),
           end: Long.fromString(act.end),
           lockedBlocks: Long.fromString(act.lockedBlocks),
-          tokenRewardInfos: act.tokenRewardInfos.map((el1) => ({
+          tokenRewardInfos: act.tokenRewardInfos.map(el1 => ({
             denom: el1.denom,
             rewardRate: el1.rewardRate,
             totalRewardAmount: el1.totalRewardAmount,
-            userLimit: el1.userLimit,
-          })),
-        },
+            userLimit: el1.userLimit
+          }))
+        }
       };
-    },
+    }
   },
   "/stafihub.stafihub.rmintreward.MsgClaimMintReward": {
     aminoType: "rmintreward/ClaimMintReward",
@@ -160,48 +156,48 @@ export const AminoConverter = {
       creator,
       denom,
       cycle,
-      mintIndex,
+      mintIndex
     }: MsgClaimMintReward): AminoMsgClaimMintReward["value"] => {
       return {
         creator,
         denom,
         cycle: cycle.toString(),
-        mintIndex: mintIndex.toString(),
+        mintIndex: mintIndex.toString()
       };
     },
     fromAmino: ({
       creator,
       denom,
       cycle,
-      mintIndex,
+      mintIndex
     }: AminoMsgClaimMintReward["value"]): MsgClaimMintReward => {
       return {
         creator,
         denom,
         cycle: Long.fromString(cycle),
-        mintIndex: Long.fromString(mintIndex),
+        mintIndex: Long.fromString(mintIndex)
       };
-    },
+    }
   },
   "/stafihub.stafihub.rmintreward.MsgProvideRewardToken": {
     aminoType: "/stafihub.stafihub.rmintreward.MsgProvideRewardToken",
     toAmino: ({
       creator,
-      amount,
+      amount
     }: MsgProvideRewardToken): AminoMsgProvideRewardToken["value"] => {
       return {
         creator,
-        amount,
+        amount
       };
     },
     fromAmino: ({
       creator,
-      amount,
+      amount
     }: AminoMsgProvideRewardToken["value"]): MsgProvideRewardToken => {
       return {
         creator,
-        amount,
+        amount
       };
-    },
-  },
+    }
+  }
 };

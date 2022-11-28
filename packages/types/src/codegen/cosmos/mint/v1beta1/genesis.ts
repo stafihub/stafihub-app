@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Minter, MinterSDKType, Params, ParamsSDKType } from "./mint";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../../../helpers";

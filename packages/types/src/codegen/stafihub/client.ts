@@ -1,23 +1,23 @@
-import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
+//@ts-nocheck
+import { OfflineSigner, GeneratedType, Registry } from "@cosmjs/proto-signing";
 import {
   defaultRegistryTypes,
   AminoTypes,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
 import * as bridgeTxRegistry from "../bridge/tx.registry";
 import * as claimTxRegistry from "../claim/tx.registry";
 import * as ledgerTxRegistry from "../ledger/tx.registry";
 import * as miningTxRegistry from "../mining/tx.registry";
 import * as rdexTxRegistry from "../rdex/tx.registry";
 import * as rmintrewardTxRegistry from "../rmintreward/tx.registry";
-import * as ibcTransferTxRegistry from "../ibc/applications/transfer/v1/tx.registry";
 import * as bridgeTxAmino from "../bridge/tx.amino";
 import * as claimTxAmino from "../claim/tx.amino";
 import * as ledgerTxAmino from "../ledger/tx.amino";
 import * as miningTxAmino from "../mining/tx.amino";
 import * as rdexTxAmino from "../rdex/tx.amino";
 import * as rmintrewardTxAmino from "../rmintreward/tx.amino";
+import * as ibcTransferTxRegistry from "../ibc/applications/transfer/v1/tx.registry";
 import * as ibcTransferTxAmino from "../ibc/applications/transfer/v1/tx.amino";
 export const stafihubAminoConverters = {
   ...bridgeTxAmino.AminoConverter,
@@ -57,7 +57,7 @@ export const getSigningStafihubClient = async ({
   signer,
   defaultTypes = defaultRegistryTypes,
 }: {
-  rpcEndpoint: string | HttpEndpoint;
+  rpcEndpoint: string;
   signer: OfflineSigner;
   defaultTypes?: ReadonlyArray<[string, GeneratedType]>;
 }) => {

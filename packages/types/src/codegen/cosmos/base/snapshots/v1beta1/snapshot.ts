@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _m0 from "protobufjs/minimal";
 import { Long, DeepPartial } from "../../../../helpers";
 /** Snapshot contains Tendermint state sync snapshot info. */

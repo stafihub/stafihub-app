@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Rpc } from "../helpers";
 import * as _m0 from "protobufjs/minimal";
 import { MsgAddMintRewardAct, MsgAddMintRewardActResponse, MsgUpdateMintRewardAct, MsgUpdateMintRewardActResponse, MsgClaimMintReward, MsgClaimMintRewardResponse, MsgProvideRewardToken, MsgProvideRewardTokenResponse } from "./tx";

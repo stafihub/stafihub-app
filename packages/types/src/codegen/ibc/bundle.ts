@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _131 from "./applications/transfer/v1/genesis";
 import * as _132 from "./applications/transfer/v1/query";
 import * as _133 from "./applications/transfer/v1/transfer";

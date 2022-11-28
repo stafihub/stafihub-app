@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Rpc } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 import { MsgUnjail, MsgUnjailResponse } from "./tx";

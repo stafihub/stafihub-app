@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../query/v1beta1/pagination";
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { BlockID, BlockIDSDKType } from "../../../../tendermint/types/types";

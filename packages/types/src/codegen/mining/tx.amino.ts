@@ -1,8 +1,9 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
 import { MsgAddStakePool, MsgAddStakeItem, MsgAddRewardPool, MsgStake, MsgClaimReward, MsgWithdraw, MsgUpdateStakeItem, MsgAddMiningProvider, MsgRmMiningProvider, MsgAddRewardToken, MsgSetMaxRewardPoolNumber, MsgUpdateRewardPool, MsgToggleProviderSwitch, MsgSetMaxStakeItemNumber, MsgAddReward, MsgToggleEmergencySwitch, MsgEmergencyWithdraw, MsgAddStakeToken, MsgRmRewardToken, MsgRmStakeToken, MsgSetStakeItemLimit, MsgWithdrawRewardToken } from "./tx";
 export interface AminoMsgAddStakePool extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgAddStakePool";
+  type: "mining/AddStakePool";
   value: {
     creator: string;
     stakeTokenDenom: string;
@@ -29,7 +30,7 @@ export interface AminoMsgAddStakeItem extends AminoMsg {
   };
 }
 export interface AminoMsgAddRewardPool extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgAddRewardPool";
+  type: "mining/AddRewardPool";
   value: {
     creator: string;
     stakePoolIndex: number;
@@ -40,7 +41,7 @@ export interface AminoMsgAddRewardPool extends AminoMsg {
   };
 }
 export interface AminoMsgStake extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgStake";
+  type: "mining/Stake";
   value: {
     creator: string;
     stakePoolIndex: number;
@@ -49,7 +50,7 @@ export interface AminoMsgStake extends AminoMsg {
   };
 }
 export interface AminoMsgClaimReward extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgClaimReward";
+  type: "mining/ClaimReward";
   value: {
     creator: string;
     stakePoolIndex: number;
@@ -57,7 +58,7 @@ export interface AminoMsgClaimReward extends AminoMsg {
   };
 }
 export interface AminoMsgWithdraw extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgWithdraw";
+  type: "mining/Withdraw";
   value: {
     creator: string;
     stakePoolIndex: number;
@@ -107,7 +108,7 @@ export interface AminoMsgSetMaxRewardPoolNumber extends AminoMsg {
   };
 }
 export interface AminoMsgUpdateRewardPool extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgUpdateRewardPool";
+  type: "mining/UpdateRewardPool";
   value: {
     creator: string;
     stakePoolIndex: number;
@@ -129,7 +130,7 @@ export interface AminoMsgSetMaxStakeItemNumber extends AminoMsg {
   };
 }
 export interface AminoMsgAddReward extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgAddReward";
+  type: "mining/AddReward";
   value: {
     creator: string;
     stakePoolIndex: number;
@@ -184,7 +185,7 @@ export interface AminoMsgSetStakeItemLimit extends AminoMsg {
   };
 }
 export interface AminoMsgWithdrawRewardToken extends AminoMsg {
-  type: "/stafihub.stafihub.mining.MsgWithdrawRewardToken";
+  type: "mining/WithdrawRewardToken";
   value: {
     creator: string;
     stakePoolIndex: number;
@@ -194,7 +195,7 @@ export interface AminoMsgWithdrawRewardToken extends AminoMsg {
 }
 export const AminoConverter = {
   "/stafihub.stafihub.mining.MsgAddStakePool": {
-    aminoType: "/stafihub.stafihub.mining.MsgAddStakePool",
+    aminoType: "mining/AddStakePool",
     toAmino: ({
       creator,
       stakeTokenDenom,
@@ -272,7 +273,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.mining.MsgAddRewardPool": {
-    aminoType: "/stafihub.stafihub.mining.MsgAddRewardPool",
+    aminoType: "mining/AddRewardPool",
     toAmino: ({
       creator,
       stakePoolIndex,
@@ -309,7 +310,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.mining.MsgStake": {
-    aminoType: "/stafihub.stafihub.mining.MsgStake",
+    aminoType: "mining/Stake",
     toAmino: ({
       creator,
       stakePoolIndex,
@@ -338,7 +339,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.mining.MsgClaimReward": {
-    aminoType: "/stafihub.stafihub.mining.MsgClaimReward",
+    aminoType: "mining/ClaimReward",
     toAmino: ({
       creator,
       stakePoolIndex,
@@ -363,7 +364,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.mining.MsgWithdraw": {
-    aminoType: "/stafihub.stafihub.mining.MsgWithdraw",
+    aminoType: "mining/Withdraw",
     toAmino: ({
       creator,
       stakePoolIndex,
@@ -521,7 +522,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.mining.MsgUpdateRewardPool": {
-    aminoType: "/stafihub.stafihub.mining.MsgUpdateRewardPool",
+    aminoType: "mining/UpdateRewardPool",
     toAmino: ({
       creator,
       stakePoolIndex,
@@ -588,7 +589,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.mining.MsgAddReward": {
-    aminoType: "/stafihub.stafihub.mining.MsgAddReward",
+    aminoType: "mining/AddReward",
     toAmino: ({
       creator,
       stakePoolIndex,
@@ -759,7 +760,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.mining.MsgWithdrawRewardToken": {
-    aminoType: "/stafihub.stafihub.mining.MsgWithdrawRewardToken",
+    aminoType: "mining/WithdrawRewardToken",
     toAmino: ({
       creator,
       stakePoolIndex,

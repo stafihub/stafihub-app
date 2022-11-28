@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType } from "./params";
 import { MintRewardAct, MintRewardActSDKType, Acts, ActsSDKType, UserClaimInfo, UserClaimInfoSDKType } from "./models";
 import * as _m0 from "protobufjs/minimal";

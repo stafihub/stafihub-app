@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _0 from "../bridge/genesis";
 import * as _1 from "../bridge/params";
 import * as _2 from "../bridge/proposal";

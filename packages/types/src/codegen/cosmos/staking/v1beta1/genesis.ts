@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType, Validator, ValidatorSDKType, Delegation, DelegationSDKType, UnbondingDelegation, UnbondingDelegationSDKType, Redelegation, RedelegationSDKType } from "./staking";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "../../../helpers";

@@ -6,6 +6,4 @@ export * from "./rdex";
 export * from "./mining";
 export * from "./claim";
 export * from "./bridge";
-export * from "./codegen/ledger/index";
-export * from "./codegen/stafihub/client";
-export * from "./codegen/stafihub/rpc.tx";
+export * from "./codegen";

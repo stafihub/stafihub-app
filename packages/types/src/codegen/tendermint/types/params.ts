@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Duration, DurationSDKType } from "../../google/protobuf/duration";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "../../helpers";

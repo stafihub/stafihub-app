@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Params, ParamsSDKType } from "./params";
 import { SwapPool, SwapPoolSDKType } from "./models";
 import * as _m0 from "protobufjs/minimal";

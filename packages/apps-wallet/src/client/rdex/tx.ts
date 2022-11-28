@@ -1,10 +1,5 @@
-import { Registry } from "@cosmjs/proto-signing";
-import {
-  defaultRegistryTypes as defaultStargateTypes,
-  DeliverTxResponse,
-  SigningStargateClient,
-} from "@cosmjs/stargate";
-import { MsgSwap, MsgAddLiquidity, MsgRemoveLiquidity } from "@stafihub/types";
+import { DeliverTxResponse } from "@cosmjs/stargate";
+import { getSigningStafihubClient } from "@stafihub/types";
 import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
 
@@ -29,23 +24,19 @@ export async function sendRDexSwapTx(
     return;
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register("/stafihub.stafihub.rdex.MsgSwap", MsgSwap);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   const message = {
     typeUrl: "/stafihub.stafihub.rdex.MsgSwap",
-    value: MsgSwap.fromPartial({
+    value: {
       creator: stafiHubAddress,
       swapPoolIndex,
       inputToken,
       minOutToken,
-    }),
+    },
   };
 
   const simulateResponse = await client.simulate(
@@ -89,26 +80,19 @@ export async function sendRDexAddLiquidityTx(
     return;
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register(
-    "/stafihub.stafihub.rdex.MsgAddLiquidity",
-    MsgAddLiquidity
-  );
-
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   const message = {
     typeUrl: "/stafihub.stafihub.rdex.MsgAddLiquidity",
-    value: MsgAddLiquidity.fromPartial({
+    value: {
       creator: stafiHubAddress,
       swapPoolIndex,
       token0,
       token1,
-    }),
+    },
   };
 
   const simulateResponse = await client.simulate(
@@ -155,21 +139,14 @@ export async function sendRDexRemoveLiquidityTx(
     return;
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register(
-    "/stafihub.stafihub.rdex.MsgRemoveLiquidity",
-    MsgRemoveLiquidity
-  );
-
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   const message = {
     typeUrl: "/stafihub.stafihub.rdex.MsgRemoveLiquidity",
-    value: MsgRemoveLiquidity.fromPartial({
+    value: {
       creator: stafiHubAddress,
       swapPoolIndex,
       rmUnit,
@@ -177,7 +154,7 @@ export async function sendRDexRemoveLiquidityTx(
       minOutToken0,
       minOutToken1,
       inputTokenDenom,
-    }),
+    },
   };
 
   const simulateResponse = await client.simulate(

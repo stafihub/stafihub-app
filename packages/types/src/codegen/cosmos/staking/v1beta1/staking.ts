@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Header, HeaderSDKType } from "../../../tendermint/types/types";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 import { Any, AnySDKType } from "../../../google/protobuf/any";

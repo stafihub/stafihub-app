@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _31 from "./app/v1alpha1/config";
 import * as _32 from "./app/v1alpha1/module";
 import * as _33 from "./app/v1alpha1/query";

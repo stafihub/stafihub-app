@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { CommitmentProof, CommitmentProofSDKType } from "../../../../confio/proofs";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../../../../helpers";

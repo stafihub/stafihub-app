@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { IdentifiedChannel, IdentifiedChannelSDKType, PacketState, PacketStateSDKType } from "./channel";
 import * as _m0 from "protobufjs/minimal";
 import { Long, DeepPartial } from "../../../../helpers";

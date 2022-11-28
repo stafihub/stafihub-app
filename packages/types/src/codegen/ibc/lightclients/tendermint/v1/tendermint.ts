@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Duration, DurationSDKType } from "../../../../google/protobuf/duration";
 import { Height, HeightSDKType } from "../../../core/client/v1/client";
 import { ProofSpec, ProofSpecSDKType } from "../../../../confio/proofs";

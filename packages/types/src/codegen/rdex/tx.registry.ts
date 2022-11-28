@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgCreatePool, MsgAddLiquidity, MsgSwap, MsgRemoveLiquidity, MsgToggleProviderSwitch, MsgAddProvider, MsgRmProvider, MsgAddPoolCreator, MsgRmPoolCreator } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/stafihub.stafihub.rdex.MsgCreatePool", MsgCreatePool], ["/stafihub.stafihub.rdex.MsgAddLiquidity", MsgAddLiquidity], ["/stafihub.stafihub.rdex.MsgSwap", MsgSwap], ["/stafihub.stafihub.rdex.MsgRemoveLiquidity", MsgRemoveLiquidity], ["/stafihub.stafihub.rdex.MsgToggleProviderSwitch", MsgToggleProviderSwitch], ["/stafihub.stafihub.rdex.MsgAddProvider", MsgAddProvider], ["/stafihub.stafihub.rdex.MsgRmProvider", MsgRmProvider], ["/stafihub.stafihub.rdex.MsgAddPoolCreator", MsgAddPoolCreator], ["/stafihub.stafihub.rdex.MsgRmPoolCreator", MsgRmPoolCreator]];

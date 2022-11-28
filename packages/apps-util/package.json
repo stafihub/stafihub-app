@@ -1,6 +1,6 @@
 {
   "name": "@stafihub/apps-util",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "main": "./src/index.ts",
   "repository": {
@@ -14,7 +14,7 @@
   "author": "joe",
   "license": "MIT",
   "dependencies": {
-    "@cosmjs/math": "0.29.0",
+    "@cosmjs/math": "0.29.4",
     "bignumber.js": "9.0.2"
   },
   "eslintConfig": {

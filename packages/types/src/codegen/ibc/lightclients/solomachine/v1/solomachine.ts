@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { ConnectionEnd, ConnectionEndSDKType } from "../../../core/connection/v1/connection";
 import { Channel, ChannelSDKType } from "../../../core/channel/v1/channel";

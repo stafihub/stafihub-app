@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
 import { MsgCreatePool, MsgAddLiquidity, MsgSwap, MsgRemoveLiquidity, MsgToggleProviderSwitch, MsgAddProvider, MsgRmProvider, MsgAddPoolCreator, MsgRmPoolCreator } from "./tx";
@@ -16,7 +17,7 @@ export interface AminoMsgCreatePool extends AminoMsg {
   };
 }
 export interface AminoMsgAddLiquidity extends AminoMsg {
-  type: "/stafihub.stafihub.rdex.MsgAddLiquidity";
+  type: "rdex/AddLiquidity";
   value: {
     creator: string;
     swapPoolIndex: number;
@@ -31,7 +32,7 @@ export interface AminoMsgAddLiquidity extends AminoMsg {
   };
 }
 export interface AminoMsgSwap extends AminoMsg {
-  type: "/stafihub.stafihub.rdex.MsgSwap";
+  type: "rdex/Swap";
   value: {
     creator: string;
     swapPoolIndex: number;
@@ -46,7 +47,7 @@ export interface AminoMsgSwap extends AminoMsg {
   };
 }
 export interface AminoMsgRemoveLiquidity extends AminoMsg {
-  type: "/stafihub.stafihub.rdex.MsgRemoveLiquidity";
+  type: "rdex/RemoveLiquidity";
   value: {
     creator: string;
     swapPoolIndex: number;
@@ -136,7 +137,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.rdex.MsgAddLiquidity": {
-    aminoType: "/stafihub.stafihub.rdex.MsgAddLiquidity",
+    aminoType: "rdex/AddLiquidity",
     toAmino: ({
       creator,
       swapPoolIndex,
@@ -177,7 +178,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.rdex.MsgSwap": {
-    aminoType: "/stafihub.stafihub.rdex.MsgSwap",
+    aminoType: "rdex/Swap",
     toAmino: ({
       creator,
       swapPoolIndex,
@@ -218,7 +219,7 @@ export const AminoConverter = {
     }
   },
   "/stafihub.stafihub.rdex.MsgRemoveLiquidity": {
-    aminoType: "/stafihub.stafihub.rdex.MsgRemoveLiquidity",
+    aminoType: "rdex/RemoveLiquidity",
     toAmino: ({
       creator,
       swapPoolIndex,

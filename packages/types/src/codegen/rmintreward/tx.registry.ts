@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgAddMintRewardAct, MsgUpdateMintRewardAct, MsgClaimMintReward, MsgProvideRewardToken } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/stafihub.stafihub.rmintreward.MsgAddMintRewardAct", MsgAddMintRewardAct], ["/stafihub.stafihub.rmintreward.MsgUpdateMintRewardAct", MsgUpdateMintRewardAct], ["/stafihub.stafihub.rmintreward.MsgClaimMintReward", MsgClaimMintReward], ["/stafihub.stafihub.rmintreward.MsgProvideRewardToken", MsgProvideRewardToken]];

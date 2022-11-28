@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { OriginalTxType, OriginalTxTypeSDKType, ExchangeRate, ExchangeRateSDKType, EraExchangeRate, EraExchangeRateSDKType, PoolDetail, PoolDetailSDKType, UnbondRelayFee, UnbondRelayFeeSDKType, BondPipeline, BondPipelineSDKType, BondSnapshot, BondSnapshotSDKType, BondRecord, BondRecordSDKType, Signature, SignatureSDKType, RParams, RParamsSDKType, TotalProtocolFee, TotalProtocolFeeSDKType, Unbonding, UnbondingSDKType, IcaPoolDetail, IcaPoolDetailSDKType, InterchainTxStatus, InterchainTxStatusSDKType } from "./ledger";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial } from "../helpers";

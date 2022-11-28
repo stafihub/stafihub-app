@@ -1,17 +1,8 @@
+//@ts-nocheck
 import { denomTypeFromJSON } from "./genesis";
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
-import {
-  MsgSetResourceidToDenom,
-  MsgDeposit,
-  MsgAddChainId,
-  MsgVoteProposal,
-  MsgRmChainId,
-  MsgSetRelayFeeReceiver,
-  MsgSetRelayFee,
-  MsgAddBannedDenom,
-  MsgRmBannedDenom,
-} from "./tx";
+import { MsgSetResourceidToDenom, MsgDeposit, MsgAddChainId, MsgVoteProposal, MsgRmChainId, MsgSetRelayFeeReceiver, MsgSetRelayFee, MsgAddBannedDenom, MsgRmBannedDenom } from "./tx";
 export interface AminoMsgSetResourceidToDenom extends AminoMsg {
   type: "/stafihub.stafihub.bridge.MsgSetResourceidToDenom";
   value: {
@@ -97,44 +88,44 @@ export const AminoConverter = {
       creator,
       resourceId,
       denom,
-      denomType,
+      denomType
     }: MsgSetResourceidToDenom): AminoMsgSetResourceidToDenom["value"] => {
       return {
         creator,
         resourceId,
         denom,
-        denomType,
+        denomType
       };
     },
     fromAmino: ({
       creator,
       resourceId,
       denom,
-      denomType,
+      denomType
     }: AminoMsgSetResourceidToDenom["value"]): MsgSetResourceidToDenom => {
       return {
         creator,
         resourceId,
         denom,
-        denomType: denomTypeFromJSON(denomType),
+        denomType: denomTypeFromJSON(denomType)
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgDeposit": {
-    aminoType: "bridge/Deposit",
+    aminoType: "/stafihub.stafihub.bridge.MsgDeposit",
     toAmino: ({
       creator,
       destChainId,
       denom,
       amount,
-      receiver,
+      receiver
     }: MsgDeposit): AminoMsgDeposit["value"] => {
       return {
         creator,
         destChainId,
         denom,
         amount,
-        receiver,
+        receiver
       };
     },
     fromAmino: ({
@@ -142,37 +133,37 @@ export const AminoConverter = {
       destChainId,
       denom,
       amount,
-      receiver,
+      receiver
     }: AminoMsgDeposit["value"]): MsgDeposit => {
       return {
         creator,
         destChainId,
         denom,
         amount,
-        receiver,
+        receiver
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgAddChainId": {
     aminoType: "/stafihub.stafihub.bridge.MsgAddChainId",
     toAmino: ({
       creator,
-      chainId,
+      chainId
     }: MsgAddChainId): AminoMsgAddChainId["value"] => {
       return {
         creator,
-        chainId,
+        chainId
       };
     },
     fromAmino: ({
       creator,
-      chainId,
+      chainId
     }: AminoMsgAddChainId["value"]): MsgAddChainId => {
       return {
         creator,
-        chainId,
+        chainId
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgVoteProposal": {
     aminoType: "/stafihub.stafihub.bridge.MsgVoteProposal",
@@ -182,7 +173,7 @@ export const AminoConverter = {
       depositNonce,
       resourceId,
       amount,
-      receiver,
+      receiver
     }: MsgVoteProposal): AminoMsgVoteProposal["value"] => {
       return {
         creator,
@@ -190,7 +181,7 @@ export const AminoConverter = {
         depositNonce: depositNonce.toString(),
         resourceId,
         amount,
-        receiver,
+        receiver
       };
     },
     fromAmino: ({
@@ -199,7 +190,7 @@ export const AminoConverter = {
       depositNonce,
       resourceId,
       amount,
-      receiver,
+      receiver
     }: AminoMsgVoteProposal["value"]): MsgVoteProposal => {
       return {
         creator,
@@ -207,131 +198,131 @@ export const AminoConverter = {
         depositNonce: Long.fromString(depositNonce),
         resourceId,
         amount,
-        receiver,
+        receiver
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgRmChainId": {
     aminoType: "/stafihub.stafihub.bridge.MsgRmChainId",
     toAmino: ({
       creator,
-      chainId,
+      chainId
     }: MsgRmChainId): AminoMsgRmChainId["value"] => {
       return {
         creator,
-        chainId,
+        chainId
       };
     },
     fromAmino: ({
       creator,
-      chainId,
+      chainId
     }: AminoMsgRmChainId["value"]): MsgRmChainId => {
       return {
         creator,
-        chainId,
+        chainId
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgSetRelayFeeReceiver": {
     aminoType: "/stafihub.stafihub.bridge.MsgSetRelayFeeReceiver",
     toAmino: ({
       creator,
-      address,
+      address
     }: MsgSetRelayFeeReceiver): AminoMsgSetRelayFeeReceiver["value"] => {
       return {
         creator,
-        address,
+        address
       };
     },
     fromAmino: ({
       creator,
-      address,
+      address
     }: AminoMsgSetRelayFeeReceiver["value"]): MsgSetRelayFeeReceiver => {
       return {
         creator,
-        address,
+        address
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgSetRelayFee": {
     aminoType: "/stafihub.stafihub.bridge.MsgSetRelayFee",
     toAmino: ({
       creator,
       chainId,
-      value,
+      value
     }: MsgSetRelayFee): AminoMsgSetRelayFee["value"] => {
       return {
         creator,
         chainId,
         value: {
           denom: value.denom,
-          amount: Long.fromValue(value.amount).toString(),
-        },
+          amount: Long.fromValue(value.amount).toString()
+        }
       };
     },
     fromAmino: ({
       creator,
       chainId,
-      value,
+      value
     }: AminoMsgSetRelayFee["value"]): MsgSetRelayFee => {
       return {
         creator,
         chainId,
         value: {
           denom: value.denom,
-          amount: value.amount,
-        },
+          amount: value.amount
+        }
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgAddBannedDenom": {
     aminoType: "/stafihub.stafihub.bridge.MsgAddBannedDenom",
     toAmino: ({
       creator,
       chainId,
-      denom,
+      denom
     }: MsgAddBannedDenom): AminoMsgAddBannedDenom["value"] => {
       return {
         creator,
         chainId,
-        denom,
+        denom
       };
     },
     fromAmino: ({
       creator,
       chainId,
-      denom,
+      denom
     }: AminoMsgAddBannedDenom["value"]): MsgAddBannedDenom => {
       return {
         creator,
         chainId,
-        denom,
+        denom
       };
-    },
+    }
   },
   "/stafihub.stafihub.bridge.MsgRmBannedDenom": {
     aminoType: "/stafihub.stafihub.bridge.MsgRmBannedDenom",
     toAmino: ({
       creator,
       chainId,
-      denom,
+      denom
     }: MsgRmBannedDenom): AminoMsgRmBannedDenom["value"] => {
       return {
         creator,
         chainId,
-        denom,
+        denom
       };
     },
     fromAmino: ({
       creator,
       chainId,
-      denom,
+      denom
     }: AminoMsgRmBannedDenom["value"]): MsgRmBannedDenom => {
       return {
         creator,
         chainId,
-        denom,
+        denom
       };
-    },
-  },
+    }
+  }
 };

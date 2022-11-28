@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Coin, CoinSDKType } from "../cosmos/base/v1beta1/coin";
 import { OriginalTxType, OriginalTxTypeSDKType, Unbonding, UnbondingSDKType } from "./ledger";
 import * as _m0 from "protobufjs/minimal";

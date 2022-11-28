@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import { Input, InputSDKType, Output, OutputSDKType } from "./bank";
 import * as _m0 from "protobufjs/minimal";

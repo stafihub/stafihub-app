@@ -9,7 +9,7 @@ export const RAssetTableHeader = () => {
 
       <div className="basis-4/12">rToken</div>
 
-      <div className="basis-3/12">APY</div>
+      <div className="basis-3/12">APR</div>
 
       <div className="basis-4/12">Operations</div>
     </div>

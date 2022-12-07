@@ -356,9 +356,7 @@ export const StakeV2 = () => {
           className="flex items-center"
           // onClick={() => setApyComparisonModalVisible(true)}
         >
-          <div className="ml-1 text-white font-bold text-[20px] ">
-            Stake APR
-          </div>
+          <div className="ml-1 text-white font-bold text-[20px]">APR</div>
 
           {/* <img
             src={tooltipIcon}

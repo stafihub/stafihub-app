@@ -8,7 +8,7 @@ export const MintProgramsTableHeader = () => {
       <div className="basis-[18%]">
         Reward
         <br />
-        Ratio
+        APR
       </div>
 
       <div className="basis-[20%]">

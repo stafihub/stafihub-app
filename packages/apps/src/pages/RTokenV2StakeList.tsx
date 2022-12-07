@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { StakeTokenCard } from "../components/stake/StakeTokenCard";
 import { chains } from "../config";
-import { useAccounts } from "../hooks/useAppSlice";
+import { useAccounts, useLatestBlock } from "../hooks/useAppSlice";
+import { useMintPrograms } from "../hooks/useMintPrograms";
 import { useRTokenList } from "../hooks/useRTokenList";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 
@@ -13,6 +14,7 @@ export const RTokenV2StakeList = () => {
   const navigate = useNavigate();
   const rTokenList = useRTokenList();
   const accounts = useAccounts();
+  const { actDetails } = useMintPrograms();
 
   const enterStakePage = (chainId: string) => {
     navigate(`/rToken/${getRTokenDisplayName(chainId, chains)}/stake`);
@@ -44,6 +46,9 @@ export const RTokenV2StakeList = () => {
               chainId={rToken.chainId}
               originTokenName={rToken.tokenName}
               derivativeTokenName={rToken.rTokenName}
+              actDetail={actDetails.find(
+                (item) => item.rTokenDisplayName === rToken.rTokenName
+              )}
               onClickStake={() => {
                 if (!accounts[rToken.chainId]) {
                   dispatch(

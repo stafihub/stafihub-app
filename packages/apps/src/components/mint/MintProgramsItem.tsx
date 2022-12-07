@@ -3,16 +3,19 @@ import {
   getRTokenDisplayName,
   getStafiHubChainId,
 } from "@stafihub/apps-config";
+import { formatNumberToFixed } from "@stafihub/apps-util";
 import {
   FormatterText,
   RTokenIcon,
   TokenName,
 } from "@stafihub/react-components";
 import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { chains } from "../../config";
 import { usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useInterval } from "../../hooks/useInterval";
+import { RootState } from "../../redux/store";
 import { FormatMintRewardAct } from "../../types/interface";
 import { formatDuration } from "../../utils/time";
 
@@ -25,6 +28,9 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
   const navigate = useNavigate();
   const tokenPrice = usePriceFromDenom(getDenom(data.chainId, chains));
   const [remainingDisplayTime, setRemainingDisplayTime] = useState("");
+  const priceList = useSelector((state: RootState) => {
+    return state.app.priceList;
+  });
 
   useInterval(() => {
     if (data) {
@@ -59,7 +65,9 @@ export const MintProgramsItem = (props: MintProgramsItemProps) => {
       <div className="basis-[18%] text-[14px]">
         {data.tokenRewardInfos.map((rewardInfo, index) => (
           <div key={index} className="my-1 flex items-end justify-start">
-            <div className="">1 : {rewardInfo.apy}</div>
+            <div className="">
+              {formatNumberToFixed(rewardInfo.calcApr, 2)}%
+            </div>
           </div>
         ))}
       </div>

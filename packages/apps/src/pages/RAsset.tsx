@@ -7,9 +7,11 @@ import { useRAssetList } from "../hooks/useRAssetList";
 import { RootState } from "../redux/store";
 import * as _ from "lodash";
 import { FormatterText } from "@stafihub/react-components";
+import { useMintPrograms } from "../hooks/useMintPrograms";
 
 export const RAsset = () => {
   const rAssetList = useRAssetList();
+  const { actDetails } = useMintPrograms();
 
   const stakeStatusMap = useSelector((state: RootState) => {
     return state.chain.chainStakeStatusMap;
@@ -52,6 +54,9 @@ export const RAsset = () => {
               chainId={rAsset.chainId}
               originTokenName={rAsset.tokenName}
               derivativeTokenName={rAsset.rTokenName}
+              actDetail={actDetails.find(
+                (item) => item.rTokenDisplayName === rAsset.rTokenName
+              )}
             />
           </div>
         ))}

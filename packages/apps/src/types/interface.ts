@@ -92,6 +92,7 @@ export interface FormatTokenRewardInfo {
   apy: string;
   totalRewardAmount: string;
   leftRewardAmount: string;
+  calcApr: string;
 }
 
 export interface FormatUserMintInfo {

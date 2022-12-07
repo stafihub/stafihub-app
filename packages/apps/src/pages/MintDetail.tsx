@@ -1,28 +1,31 @@
 import {
-  CardContainer,
-  RTokenIcon,
-  TokenIconV2,
-  Button,
-  FormatterText,
-  TokenName,
-} from "@stafihub/react-components";
-import {
   getChainIdFromRTokenDisplayName,
   getStafiHubChainId,
 } from "@stafihub/apps-config";
-import { useMemo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { atomicToHuman, formatNumberToFixed } from "@stafihub/apps-util";
+import {
+  Button,
+  CardContainer,
+  FormatterText,
+  RTokenIcon,
+  TokenIconV2,
+} from "@stafihub/react-components";
+import * as _ from "lodash";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import iconDown from "../assets/images/icon_down_white.png";
 import iconRewardToken from "../assets/images/icon_mint_reward_token.svg";
 import iconMintValue from "../assets/images/icon_mint_value.svg";
+import iconVesting from "../assets/images/icon_mint_vesting.svg";
 import iconMyMint from "../assets/images/icon_my_mint.svg";
 import iconMyReward from "../assets/images/icon_my_reward.svg";
-import iconVesting from "../assets/images/icon_mint_vesting.svg";
+import { chains } from "../config";
+import { useChainAccount, useLatestBlock } from "../hooks/useAppSlice";
 import { useMintProgram } from "../hooks/useMintPrograms";
 import { ClaimMintRewardModal } from "../modals/ClaimMintRewardModal";
-import { useChainAccount, useLatestBlock } from "../hooks/useAppSlice";
-import * as _ from "lodash";
-import { chains } from "../config";
+import { RootState } from "../redux/store";
+import { PriceItem } from "../types/interface";
 
 export const MintDetail = () => {
   const navigate = useNavigate();
@@ -36,6 +39,10 @@ export const MintDetail = () => {
       getChainIdFromRTokenDisplayName(rToken, chains),
       Number(cycle)
     );
+  const priceList = useSelector((state: RootState) => {
+    return state.app.priceList;
+  });
+  const [totalApr, setTotalApr] = useState("--");
 
   const isEnd = useMemo(() => {
     if (!latestBlock || !actDetail) {
@@ -60,6 +67,36 @@ export const MintDetail = () => {
     );
     return validList.length === 0;
   }, [actDetail]);
+
+  const getTokenPrice = useCallback(
+    (denom: string) => {
+      const matched = priceList.find(
+        (price: PriceItem) => price.denom === denom
+      );
+      if (matched) {
+        return atomicToHuman(matched.price, 6, 6);
+      } else {
+        return "--";
+      }
+    },
+    [priceList]
+  );
+
+  useEffect(() => {
+    (async () => {
+      if (!actDetail?.tokenRewardInfos) {
+        return;
+      }
+      let totalApr = 0;
+      actDetail.tokenRewardInfos.forEach((rewardInfo) => {
+        if (!isNaN(Number(rewardInfo.calcApr))) {
+          totalApr += Number(rewardInfo.calcApr);
+        }
+      });
+
+      setTotalApr(formatNumberToFixed(totalApr, 2) + "%");
+    })();
+  }, [actDetail, getTokenPrice, rToken]);
 
   if (!rToken) {
     return null;
@@ -91,10 +128,15 @@ export const MintDetail = () => {
 
             <div className="ml-[80px]">
               <div className="text-white text-[20px] font-bold">
-                Mint {rToken}
+                Mint {rToken} APR
               </div>
 
               <div className="mt-6 mb-2">
+                <div className="mb-2 text-primary text-[20px] font-bold">
+                  {totalApr}
+                </div>
+              </div>
+              {/* <div className="mt-6 mb-2">
                 {actDetail?.tokenRewardInfos.map(
                   (rewardInfo, index) =>
                     (Number(rewardInfo.leftRewardAmount) > 0 || isEnd) && (
@@ -103,7 +145,6 @@ export const MintDetail = () => {
                         className="mb-2 text-primary text-[20px] font-bold"
                       >
                         1 {rToken.slice(1)} : {rewardInfo.apy}{" "}
-                        {/* {rewardInfo.denom.slice(1).toUpperCase()} */}
                         <TokenName
                           stafiHubChainConfig={chains[getStafiHubChainId()]}
                           denom={rewardInfo.denom}
@@ -117,7 +158,7 @@ export const MintDetail = () => {
                     Reward Remaining 0
                   </div>
                 )}
-              </div>
+              </div> */}
 
               <div className="my-4 h-[1px] bg-divider w-[280px]" />
 

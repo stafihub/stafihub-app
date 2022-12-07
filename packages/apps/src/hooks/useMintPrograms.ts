@@ -24,7 +24,11 @@ import {
   updateSingleActDetailStore,
 } from "../redux/reducers/RPoolSlice";
 import { RootState } from "../redux/store";
-import { FormatMintRewardAct, FormatUserMintInfo } from "../types/interface";
+import {
+  FormatMintRewardAct,
+  FormatUserMintInfo,
+  PriceItem,
+} from "../types/interface";
 import {
   useChainAccount,
   useLatestBlock,
@@ -89,7 +93,7 @@ export function useMintPrograms() {
 
     const chainActDetailList = await Promise.all(
       restChainsArr.map((chain) => {
-        return getActDetailList(chain.chainId);
+        return getActDetailList(chain.chainId, priceList);
       })
     );
 
@@ -106,7 +110,7 @@ export function useMintPrograms() {
 
     dispatch(setActDetailStore(actDetailStore));
     setLoading(false);
-  }, [dispatch]);
+  }, [dispatch, priceList]);
 
   useEffect(() => {
     updateActDetails();
@@ -162,7 +166,7 @@ export function useMintProgram(chainId: string, cycle: number) {
   }, [actDetail]);
 
   const updateActDetail = useCallback(async () => {
-    const chainActDetailList = await getActDetailList(chainId);
+    const chainActDetailList = await getActDetailList(chainId, priceList);
 
     const newValue: FormatMintRewardAct[] = (chainActDetailList?.filter(
       (item) => item !== undefined
@@ -171,7 +175,7 @@ export function useMintProgram(chainId: string, cycle: number) {
     dispatch(
       updateSingleActDetailStore(getRTokenDenom(chainId, chains), newValue)
     );
-  }, [dispatch, chainId]);
+  }, [dispatch, chainId, priceList]);
 
   const updateUserActDetail = useCallback(async () => {
     if (!stafiHubAccount?.bech32Address || !actDetail || !latestBlock) {
@@ -354,7 +358,8 @@ export function useMintProgram(chainId: string, cycle: number) {
 }
 
 async function getActDetailList(
-  chainId: string
+  chainId: string,
+  priceList: PriceItem[]
 ): Promise<(FormatMintRewardAct | undefined)[] | undefined> {
   try {
     const rTokenDenom = getRTokenDenom(chainId, chains);
@@ -405,9 +410,56 @@ async function getActDetailList(
                   apy: atomicToHuman(info.rewardRate, 18),
                   totalRewardAmount: atomicToHuman(info.totalRewardAmount, 6),
                   leftRewardAmount: atomicToHuman(info.leftAmount, 6),
+                  calcApr: "--",
                 };
               }
             );
+
+            const reqList = formatTokenRewardInfos.map((rewardInfo) => {
+              return (async () => {
+                if (Number(rewardInfo.leftRewardAmount) <= 0) {
+                  return "0";
+                }
+                let finalDenom;
+                if (rewardInfo.denom.startsWith("ibc/")) {
+                  const denomTraceRes = await queryDenomTrace(
+                    chains[getStafiHubChainId()],
+                    rewardInfo.denom
+                  );
+
+                  if (denomTraceRes && denomTraceRes.denomTrace) {
+                    finalDenom = denomTraceRes.denomTrace.baseDenom;
+                  }
+                } else {
+                  finalDenom = rewardInfo.denom;
+                }
+
+                if (!finalDenom) {
+                  return "--";
+                }
+                const rewardTokenPrice = getTokenPrice(finalDenom, priceList);
+                const mintTokenPrice = getTokenPrice(
+                  getDenom(chainId, chains),
+                  priceList
+                );
+                if (
+                  isNaN(Number(rewardTokenPrice)) ||
+                  isNaN(Number(mintTokenPrice))
+                ) {
+                  return "--";
+                }
+                const rewardAPR =
+                  (Number(rewardInfo.apy) * Number(rewardTokenPrice) * 100) /
+                  Number(mintTokenPrice);
+                return rewardAPR + "";
+              })();
+            });
+
+            const aprList = await Promise.all(reqList);
+            formatTokenRewardInfos.forEach((rewardInfo, index) => {
+              rewardInfo.calcApr = aprList[index];
+            });
+
             return {
               chainId,
               rTokenDenom: rTokenDenom,
@@ -440,3 +492,12 @@ async function getActDetailList(
     return undefined;
   }
 }
+
+const getTokenPrice = (denom: string, priceList: PriceItem[]) => {
+  const matched = priceList.find((price: PriceItem) => price.denom === denom);
+  if (matched) {
+    return atomicToHuman(matched.price, 6, 6);
+  } else {
+    return "--";
+  }
+};

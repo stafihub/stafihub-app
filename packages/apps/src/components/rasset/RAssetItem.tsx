@@ -12,18 +12,20 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { chains } from "../../config";
 import { useAccountReward } from "../../hooks/useAccountReward";
-import { useChainAccount } from "../../hooks/useAppSlice";
+import { useChainAccount, useLatestBlock } from "../../hooks/useAppSlice";
 import { useApy } from "../../hooks/useApy";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 // import iconDown from "../../assets/images/icon_down_white.png";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { TradeModal } from "../../modals/TradeModal";
 import { updateRTokenReward } from "../../redux/reducers/ChainSlice";
+import { FormatMintRewardAct } from "../../types/interface";
 
 interface RAssetItemProps {
   chainId: string;
   originTokenName: string;
   derivativeTokenName: string;
+  actDetail: FormatMintRewardAct | undefined;
 }
 
 export const RAssetItem = (props: RAssetItemProps) => {
@@ -36,8 +38,9 @@ export const RAssetItem = (props: RAssetItemProps) => {
   );
   const apy = useApy(props.chainId);
   const { originLast24hReward } = useAccountReward(props.chainId);
-
   const [tradeModalVisible, setTradeModalVisible] = useState(false);
+  const [totalApr, setTotalApr] = useState("--");
+  const latestBlock = useLatestBlock();
 
   useEffect(() => {
     if (stafiHubAccount) {
@@ -83,6 +86,28 @@ export const RAssetItem = (props: RAssetItemProps) => {
     }
     return ["--", false, false, false];
   }, [originLast24hReward]);
+
+  useEffect(() => {
+    (async () => {
+      if (isNaN(Number(apy.replace("%", "")))) {
+        return;
+      }
+      let totalApr = Number(apy.replace("%", ""));
+      if (
+        latestBlock &&
+        props.actDetail &&
+        props.actDetail.end >= latestBlock
+      ) {
+        props.actDetail?.tokenRewardInfos.forEach((rewardInfo) => {
+          if (!isNaN(Number(rewardInfo.calcApr))) {
+            totalApr += Number(rewardInfo.calcApr);
+          }
+        });
+      }
+
+      setTotalApr(totalApr + "");
+    })();
+  }, [props.actDetail, apy, latestBlock]);
 
   return (
     <>
@@ -131,7 +156,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
         </div>
 
         <div className="basis-3/12 text-[16px]">
-          <FormatterText value={apy} decimals={2} />%
+          <FormatterText value={totalApr} decimals={2} />%
         </div>
 
         <div className="basis-4/12 text-[14px] flex items-center">

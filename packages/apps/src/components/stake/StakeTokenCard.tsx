@@ -5,18 +5,20 @@ import {
   TokenIconLarge,
 } from "@stafihub/react-components";
 import classNames from "classnames";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { chains } from "../../config";
-import { usePriceFromDenom } from "../../hooks/useAppSlice";
+import { useLatestBlock, usePriceFromDenom } from "../../hooks/useAppSlice";
 import { useApy } from "../../hooks/useApy";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { useTokenSupply } from "../../hooks/useTokenSupply";
+import { FormatMintRewardAct } from "../../types/interface";
 
 interface StakeTokenCardProps {
   chainId: string;
   originTokenName: string;
   derivativeTokenName: string;
   type: "middle" | "large";
+  actDetail: FormatMintRewardAct | undefined;
   onClickStake: () => void;
 }
 
@@ -24,6 +26,8 @@ export const StakeTokenCard = (props: StakeTokenCardProps) => {
   const apy = useApy(props.chainId);
   const supply = useTokenSupply(props.chainId);
   const tokenPrice = usePriceFromDenom(getDenom(props.chainId, chains));
+  const [totalApr, setTotalApr] = useState("--");
+  const latestBlock = useLatestBlock();
 
   const { exchangeRate } = useStakePoolInfo(
     getRTokenDenom(props.chainId, chains)
@@ -40,13 +44,35 @@ export const StakeTokenCard = (props: StakeTokenCardProps) => {
     return Number(supply) * Number(exchangeRate) * Number(tokenPrice);
   }, [exchangeRate, supply, tokenPrice]);
 
+  useEffect(() => {
+    (async () => {
+      if (isNaN(Number(apy.replace("%", "")))) {
+        return;
+      }
+      let totalApr = Number(apy.replace("%", ""));
+      if (
+        latestBlock &&
+        props.actDetail &&
+        props.actDetail.end >= latestBlock
+      ) {
+        props.actDetail?.tokenRewardInfos.forEach((rewardInfo) => {
+          if (!isNaN(Number(rewardInfo.calcApr))) {
+            totalApr += Number(rewardInfo.calcApr);
+          }
+        });
+      }
+
+      setTotalApr(totalApr + "");
+    })();
+  }, [props.actDetail, apy, latestBlock]);
+
   return (
     <div className="w-full bg-white rounded-[4px] flex flex-col items-start">
-      <div className="mt-5 ml-4 text-[#ADADAD] text-[12px]">Staked APY</div>
+      <div className="mt-5 ml-4 text-[#ADADAD] text-[12px]">APR</div>
 
       <div className="mt-3 ml-4 text-[#494949] text-[20px] font-bold uppercase">
-        <FormatterText value={apy} decimals={2} />
-        {!isNaN(Number(apy)) && "%"}
+        <FormatterText value={totalApr} decimals={2} />
+        {!isNaN(Number(totalApr)) && "%"}
       </div>
 
       <div className="mt-2 ml-4 text-[#646464] text-[12px] scale-[0.7] origin-top-left">

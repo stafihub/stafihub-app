@@ -63,36 +63,38 @@ export const StakeV2 = () => {
   const { height } = useWindowDimensions();
   const latestBlock = useLatestBlock();
   const { actDetails } = useMintPrograms();
+  const [totalApr, setTotalApr] = useState("--");
 
   useEffect(() => {
     const rTokenDenom = getRTokenDenom(chainId, chains);
     const abortController = new AbortController();
 
-    apyComparisonModalVisible && fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      signal: abortController.signal,
-    })
-      .then((response) => {
-        return response.json();
+    apyComparisonModalVisible &&
+      fetch(`${getApiHost()}/stakingElection/api/v1/annualRateList`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        signal: abortController.signal,
       })
-      .then((resJson) => {
-        if (resJson.status === "80000") {
-          const annualRateList = resJson.data.annualRateList;
-          const matched = annualRateList.find(
-            (item: any) => item.rTokenDenom === rTokenDenom
-          );
-          if (matched) {
-            setOtherApy(Number(matched.annualRate) * 100 + "");
+        .then((response) => {
+          return response.json();
+        })
+        .then((resJson) => {
+          if (resJson.status === "80000") {
+            const annualRateList = resJson.data.annualRateList;
+            const matched = annualRateList.find(
+              (item: any) => item.rTokenDenom === rTokenDenom
+            );
+            if (matched) {
+              setOtherApy(Number(matched.annualRate) * 100 + "");
+            }
           }
-        }
-      })
-      .catch((err: Error) => {
-        if (err.name === "AbortError") return;
-        throw err;
-      });
+        })
+        .catch((err: Error) => {
+          if (err.name === "AbortError") return;
+          throw err;
+        });
 
     return () => {
       abortController.abort();
@@ -128,10 +130,27 @@ export const StakeV2 = () => {
             Number(inputAmount) * Number(rewardInfo.apy),
             Number(rewardInfo.leftRewardAmount)
           ),
+          calcApr: rewardInfo.calcApr,
         };
       })
       .filter((item) => Number(item.rewardAmount) > 0);
   }, [mintRewardInfos, inputAmount]);
+
+  useEffect(() => {
+    (async () => {
+      if (isNaN(Number(apy.replace("%", "")))) {
+        return;
+      }
+      let totalApr = Number(apy.replace("%", ""));
+      mintRewardInfos.forEach((rewardInfo) => {
+        if (!isNaN(Number(rewardInfo.calcApr))) {
+          totalApr += Number(rewardInfo.calcApr);
+        }
+      });
+
+      setTotalApr(totalApr + "");
+    })();
+  }, [mintRewardInfos, apy]);
 
   const buttonDisabled = useMemo(() => {
     return Boolean(
@@ -338,7 +357,7 @@ export const StakeV2 = () => {
           // onClick={() => setApyComparisonModalVisible(true)}
         >
           <div className="ml-1 text-white font-bold text-[20px] ">
-            Stake APY
+            Stake APR
           </div>
 
           {/* <img
@@ -352,7 +371,7 @@ export const StakeV2 = () => {
       </div>
 
       <div className="self-center mt-6 font-bold text-primary text-[90px]">
-        <FormatterText value={apy} decimals={2} />%
+        <FormatterText value={totalApr} decimals={2} />%
       </div>
 
       <div className="mt-10 h-[0.5px] bg-divider" />
@@ -380,7 +399,7 @@ export const StakeV2 = () => {
             </div>
           </div>
 
-          {mintRewardArr.map((rewardInfo) => (
+          {mintRewardInfos.map((rewardInfo) => (
             <div key={rewardInfo.denom} className="flex items-end">
               <div className=" ml-[2px] mr-[20px] font-bold text-white text-[30px]">
                 +
@@ -389,7 +408,7 @@ export const StakeV2 = () => {
               <div className="">
                 <div className="flex items-end">
                   <div className="font-bold text-[14px] text-text-gray8">
-                    Mint Reward
+                    Mint APR
                   </div>
 
                   <div className="ml-1 mb-[1.5px] text-text-gray8 text-[12px] scale-[0.67] origin-bottom-left">
@@ -402,7 +421,7 @@ export const StakeV2 = () => {
                 </div>
 
                 <div className="mt-[2px] font-bold text-text-gray8 text-[24px]">
-                  <FormatterText value={rewardInfo.rewardAmount} />
+                  {formatNumberToFixed(rewardInfo.calcApr, 2)}%
                 </div>
               </div>
             </div>

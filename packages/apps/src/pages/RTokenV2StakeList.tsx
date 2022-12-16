@@ -15,6 +15,7 @@ export const RTokenV2StakeList = () => {
   const rTokenList = useRTokenList();
   const accounts = useAccounts();
   const { actDetails } = useMintPrograms();
+  const latestBlock = useLatestBlock();
 
   const enterStakePage = (chainId: string) => {
     navigate(`/rToken/${getRTokenDisplayName(chainId, chains)}/stake`);
@@ -47,7 +48,10 @@ export const RTokenV2StakeList = () => {
               originTokenName={rToken.tokenName}
               derivativeTokenName={rToken.rTokenName}
               actDetail={actDetails.find(
-                (item) => item.rTokenDisplayName === rToken.rTokenName
+                (item) =>
+                  item.rTokenDisplayName === rToken.rTokenName &&
+                  latestBlock &&
+                  item.end >= latestBlock
               )}
               onClickStake={() => {
                 if (!accounts[rToken.chainId]) {

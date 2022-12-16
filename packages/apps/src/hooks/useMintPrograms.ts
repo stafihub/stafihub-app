@@ -162,7 +162,7 @@ export function useMintProgram(chainId: string, cycle: number) {
     if (!actDetail) {
       return "--";
     }
-    return Math.ceil((actDetail.lockedBlocks * 6) / (60 * 60 * 24)) + "D";
+    return Math.floor((actDetail.lockedBlocks * 6) / (60 * 60 * 24)) + "D";
   }, [actDetail]);
 
   const updateActDetail = useCallback(async () => {

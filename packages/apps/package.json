@@ -51,6 +51,7 @@
   },
   "scripts": {
     "start": "REACT_APP_ENV=dev PORT=3025 craco start",
+    "start:prd": "REACT_APP_ENV=production PORT=3025 craco start",
     "start:win": "set REACT_APP_ENV=dev && set PORT=3025 && craco start",
     "build:dev": "REACT_APP_ENV=dev craco build",
     "build": "REACT_APP_ENV=production craco build",

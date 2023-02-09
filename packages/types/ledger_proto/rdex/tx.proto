@@ -1,0 +1,105 @@
+syntax = "proto3";
+package stafihub.stafihub.rdex;
+
+// this line is used by starport scaffolding # proto/tx/import
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/stafihub/stafihub/x/rdex/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc CreatePool(MsgCreatePool) returns (MsgCreatePoolResponse);
+  rpc AddLiquidity(MsgAddLiquidity) returns (MsgAddLiquidityResponse);
+  rpc Swap(MsgSwap) returns (MsgSwapResponse);
+  rpc RemoveLiquidity(MsgRemoveLiquidity) returns (MsgRemoveLiquidityResponse);
+  rpc ToggleProviderSwitch(MsgToggleProviderSwitch) returns (MsgToggleProviderSwitchResponse);
+  rpc AddProvider(MsgAddProvider) returns (MsgAddProviderResponse);
+  rpc RmProvider(MsgRmProvider) returns (MsgRmProviderResponse);
+  rpc AddPoolCreator(MsgAddPoolCreator) returns (MsgAddPoolCreatorResponse);
+  rpc RmPoolCreator(MsgRmPoolCreator) returns (MsgRmPoolCreatorResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgCreatePool {
+  string creator = 1;
+  cosmos.base.v1beta1.Coin token0 = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
+  cosmos.base.v1beta1.Coin token1 = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
+}
+
+message MsgCreatePoolResponse {
+}
+
+message MsgAddLiquidity {
+  string creator = 1;
+  uint32 swapPoolIndex = 2;
+  cosmos.base.v1beta1.Coin token0 = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
+  cosmos.base.v1beta1.Coin token1 = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
+}
+
+message MsgAddLiquidityResponse {
+}
+
+message MsgSwap {
+  string creator = 1;
+  uint32 swapPoolIndex = 2;
+  cosmos.base.v1beta1.Coin inputToken = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin minOutToken = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false];
+}
+
+message MsgSwapResponse {
+}
+
+message MsgRemoveLiquidity {
+  string creator = 1;
+  uint32 swapPoolIndex = 2;
+  string rmUnit = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  string swapUnit = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin minOutToken0 = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
+  cosmos.base.v1beta1.Coin minOutToken1 = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin", (gogoproto.nullable) = false]; 
+  string inputTokenDenom = 7;
+}
+
+message MsgRemoveLiquidityResponse {
+}
+
+message MsgToggleProviderSwitch {
+  string creator = 1;
+}
+
+message MsgToggleProviderSwitchResponse {
+}
+
+message MsgAddProvider {
+  string creator = 1;
+  string userAddress = 2;
+}
+
+message MsgAddProviderResponse {
+}
+
+message MsgRmProvider {
+  string creator = 1;
+  string userAddress = 2;
+}
+
+message MsgRmProviderResponse {
+}
+
+message MsgAddPoolCreator {
+  string creator = 1;
+  string userAddress = 2;
+}
+
+message MsgAddPoolCreatorResponse {
+}
+
+message MsgRmPoolCreator {
+  string creator = 1;
+  string userAddress = 2;
+}
+
+message MsgRmPoolCreatorResponse {
+}
+
+// this line is used by starport scaffolding # proto/tx/message

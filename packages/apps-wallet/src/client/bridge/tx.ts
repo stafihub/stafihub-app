@@ -1,13 +1,7 @@
-import { Registry } from "@cosmjs/proto-signing";
-import {
-  defaultRegistryTypes as defaultStargateTypes,
-  DeliverTxResponse,
-  SigningStargateClient,
-} from "@cosmjs/stargate";
-import { MsgBridgeDeposit } from "@stafihub/types";
+import { DeliverTxResponse } from "@cosmjs/stargate";
+import { getSigningStafihubClient } from "@stafihub/types";
+import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
-
-declare const window: any;
 
 export async function sendBridgeDepositTx(
   stafiHubChainConfig: KeplrChainParams | null | undefined,
@@ -17,34 +11,29 @@ export async function sendBridgeDepositTx(
   amount: string,
   receiver: string
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   if (!stafiHubChainConfig) {
     throw new Error("chainConfig can not be empty");
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register("/stafihub.stafihub.bridge.MsgDeposit", MsgBridgeDeposit);
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
 
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   const message = {
     typeUrl: "/stafihub.stafihub.bridge.MsgDeposit",
-    value: MsgBridgeDeposit.fromPartial({
+    value: {
       creator: stafiHubAddress,
       destChainId,
       denom,
       amount,
       receiver,
-    }),
+    },
   };
 
   const simulateResponse = await client.simulate(

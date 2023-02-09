@@ -1,22 +1,10 @@
-import { Registry } from "@cosmjs/proto-signing";
-import {
-  coins,
-  defaultRegistryTypes as defaultStargateTypes,
-  DeliverTxResponse,
-  SigningStargateClient,
-} from "@cosmjs/stargate";
+import { coins, DeliverTxResponse } from "@cosmjs/stargate";
 import { humanToAtomic } from "@stafihub/apps-util";
-import {
-  IBCMsgTransfer,
-  MsgLiquidityUnbond,
-  MsgClaimMintReward,
-} from "@stafihub/types";
-import { queryChannelClientState } from ".";
-import { createCosmosClient } from "./connection";
+import { getSigningStafihubClient, IBCMsgTransfer } from "@stafihub/types";
 import Long from "long";
+import { getOfflineSigner, queryChannelClientState, queryLatestBlock } from ".";
 import { KeplrChainParams } from "../interface";
-
-declare const window: any;
+import { createCosmosClient } from "./connection";
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -115,40 +103,82 @@ export async function sendLiquidityUnbondTx(
   stafiHubAddress: string,
   pools: { poolAddress: string; amount: string }[]
 ): Promise<DeliverTxResponse | undefined> {
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   if (!stafiHubChainConfig) {
     throw new Error("stafiHubChainConfig can not be empty");
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register(
-    "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-    MsgLiquidityUnbond
-  );
+  const offlineSigner = await getOfflineSigner(stafiHubChainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
 
-  const offlineSigner = window.getOfflineSigner(stafiHubChainConfig.chainId);
+  // const protoRegistry: ReadonlyArray<[string, GeneratedType]> = [
+  //   ...defaultStargateTypes,
+  //   ...LedgerProtoRegistry.registry,
+  // ];
+  // const registry = new Registry(protoRegistry);
+  // myRegistry.register(
+  //   "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+  //   MsgLiquidityUnbond
+  // );
+  // LedgerProtoRegistry.load(registry);
 
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  // const aminoConverters = { ...LedgerAnimoConverter };
+  // const aminoTypes = new AminoTypes({ ...aminoConverters });
 
-  const messages = pools.map((pool) => ({
-    typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
-    value: MsgLiquidityUnbond.fromPartial({
-      creator: stafiHubAddress,
-      pool: pool.poolAddress,
+  // const client = await SigningStargateClient.connectWithSigner(
+  //   stafiHubChainConfig.rpc,
+  //   offlineSigner,
+  //   { registry, aminoTypes }
+  // );
+
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
+
+  // const oldMessages = pools.map((pool) => ({
+  //   typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+  //   value: MsgLiquidityUnbond.fromPartial({
+  //     creator: stafiHubAddress,
+  //     pool: pool.poolAddress,
+  //     value: {
+  //       denom: rTokenDenom,
+  //       amount: pool.amount,
+  //     },
+  //     recipient: chainAddress,
+  //   }),
+  // }));
+
+  // const aminoMessages = pools.map((pool) => ({
+  //   typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
+  //   value: LedgerAnimoConverter[
+  //     "/stafihub.stafihub.ledger.MsgLiquidityUnbond"
+  //   ].toAmino({
+  //     creator: stafiHubAddress,
+  //     pool: pool.poolAddress,
+  //     value: {
+  //       denom: rTokenDenom,
+  //       amount: pool.amount,
+  //     },
+  //     recipient: chainAddress,
+  //   }),
+  // }));
+
+  const messages = pools.map((pool) => {
+    return {
+      typeUrl: "/stafihub.stafihub.ledger.MsgLiquidityUnbond",
       value: {
-        denom: rTokenDenom,
-        amount: pool.amount,
+        creator: stafiHubAddress,
+        pool: pool.poolAddress,
+        value: {
+          denom: rTokenDenom,
+          amount: pool.amount,
+        },
+        recipient: chainAddress,
       },
-      recipient: chainAddress,
-    }),
-  }));
+    };
+  });
 
   const simulateResponse = await client.simulate(stafiHubAddress, messages, "");
 
@@ -171,6 +201,57 @@ export async function sendLiquidityUnbondTx(
   return response;
 }
 
+export async function sendClaimMintRewardTx(
+  chainConfig: KeplrChainParams | null | undefined,
+  sender: string,
+  denom: string,
+  cycle: Long,
+  mintIndexes: Long[]
+): Promise<DeliverTxResponse | undefined> {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const offlineSigner = await getOfflineSigner(chainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
+
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: chainConfig.rpc,
+    signer: offlineSigner,
+  });
+
+  const messages = mintIndexes.map((mintIndex) => ({
+    typeUrl: "/stafihub.stafihub.rmintreward.MsgClaimMintReward",
+    value: {
+      creator: sender,
+      denom,
+      cycle,
+      mintIndex,
+    },
+  }));
+
+  const simulateResponse = await client.simulate(sender, messages, "");
+
+  const fee = {
+    amount: [
+      {
+        denom: chainConfig.denom,
+        amount: "1",
+      },
+    ],
+    gas: Math.ceil(simulateResponse * 1.3).toString(),
+    // gas: "500000",
+  };
+
+  const response = await client.signAndBroadcast(sender, messages, fee);
+
+  // console.log("sendClaimRewardTx message", messages);
+  // console.log("sendClaimRewardTx response", response);
+
+  return response;
+}
+
 export async function sendIBCTransferTx(
   srcChainConfig: KeplrChainParams | null | undefined,
   sender: string,
@@ -180,27 +261,18 @@ export async function sendIBCTransferTx(
   sourceChannel: string,
   denom: string
 ): Promise<DeliverTxResponse | undefined> {
-  // console.log("sendIBCTransferTx arguments:", arguments);
-
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
   if (!srcChainConfig) {
     throw new Error("srcChainConfig can not be empty");
   }
+  const offlineSigner = await getOfflineSigner(srcChainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  const msgTypeUrl = "/ibc.applications.transfer.v1.MsgTransfer";
-  myRegistry.register(msgTypeUrl, IBCMsgTransfer);
-
-  const offlineSigner = window.getOfflineSigner(srcChainConfig.chainId);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    srcChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: srcChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   // const currentHeight = await client.getHeight();
 
@@ -209,9 +281,14 @@ export async function sendIBCTransferTx(
     sourceChannel
   );
 
+  const latestBlockResult = await queryLatestBlock(srcChainConfig);
+  const latestBlockNanoSeconds = (
+    Number(latestBlockResult?.block?.header?.time?.getTime()) * 1000000
+  ).toFixed(0);
+
   const message = {
-    typeUrl: msgTypeUrl,
-    value: IBCMsgTransfer.fromPartial({
+    typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
+    value: {
       sourcePort,
       sourceChannel,
       token: {
@@ -224,7 +301,8 @@ export async function sendIBCTransferTx(
         revisionNumber: clientState?.latestHeight?.revisionNumber,
         revisionHeight: clientState?.latestHeight?.revisionHeight?.add(100000),
       },
-    }),
+      timeoutTimestamp: Number(latestBlockNanoSeconds) + 600000000000000 + "",
+    },
   };
 
   const simulateResponse = await client.simulate(sender, [message], "");
@@ -243,65 +321,6 @@ export async function sendIBCTransferTx(
 
   // console.log("message", message);
   // console.log("response", response);
-
-  return response;
-}
-
-export async function sendClaimMintRewardTx(
-  chainConfig: KeplrChainParams | null | undefined,
-  sender: string,
-  denom: string,
-  cycle: Long,
-  mintIndexes: Long[]
-): Promise<DeliverTxResponse | undefined> {
-  // console.log("sendClaimRewardTx arguments:", arguments);
-  if (!window.getOfflineSigner) {
-    return;
-  }
-
-  if (!chainConfig) {
-    throw new Error("chainConfig can not be empty");
-  }
-
-  const myRegistry = new Registry(defaultStargateTypes);
-  const msgTypeUrl = "/stafihub.stafihub.rmintreward.MsgClaimMintReward";
-  myRegistry.register(msgTypeUrl, MsgClaimMintReward);
-
-  const offlineSigner = window.getOfflineSigner(chainConfig.chainId);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    chainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
-
-  const messages = mintIndexes.map((mintIndex) => ({
-    typeUrl: msgTypeUrl,
-    value: MsgClaimMintReward.fromPartial({
-      creator: sender,
-      denom,
-      cycle,
-      mintIndex,
-    }),
-  }));
-
-  // const simulateResponse = await client.simulate(sender, messages, "");
-
-  const fee = {
-    amount: [
-      {
-        denom: chainConfig.denom,
-        amount: "1",
-      },
-    ],
-    // gas: Math.ceil(simulateResponse * 1.3).toString(),
-    gas: "500000",
-  };
-
-  const response = await client.signAndBroadcast(sender, messages, fee);
-
-  // console.log("sendClaimRewardTx message", messages);
-  // console.log("sendClaimRewardTx response", response);
 
   return response;
 }

@@ -14,4 +14,4 @@ export type {
   QueryGetUnbondRelayFeeResponse,
   QueryGetRParamsResponse,
 } from "./query";
-export { MsgLiquidityUnbond, MsgClientImpl } from "./tx";
+export { MsgClientImpl } from "./tx";

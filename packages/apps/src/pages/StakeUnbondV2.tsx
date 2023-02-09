@@ -19,7 +19,7 @@ export const StakeUnbondV2 = () => {
   const { unbondRecords, loading } = useAccountUnbond(
     getRTokenDenom(chainId, chains)
   );
-
+  
   return (
     <div className="">
       <div className="bg-[#111017] rounded-[10px] pt-5 px-7">

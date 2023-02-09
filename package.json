@@ -12,12 +12,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@cosmjs/encoding": "0.27.1",
+    "@cosmjs/encoding": "0.29.4",
     "@cosmjs/launchpad": "0.27.1",
-    "@cosmjs/math": "0.27.1",
-    "@cosmjs/proto-signing": "0.27.1",
-    "@cosmjs/stargate": "0.27.1",
-    "@cosmjs/tendermint-rpc": "0.27.1",
+    "@cosmjs/math": "0.29.4",
+    "@cosmjs/proto-signing": "0.29.4",
+    "@cosmjs/stargate": "0.29.4",
+    "@cosmjs/tendermint-rpc": "0.29.4",
     "notistack": "2.0.3",
     "@mui/material": "5.4.2",
     "path": "0.12.7",
@@ -30,12 +30,13 @@
   "devDependencies": {
     "@types/jest": "27.0.1",
     "@types/node": "16.7.13",
-    "@types/react": "17.0.20",
-    "@types/react-dom": "17.0.9",
     "@babel/cli": "7.20.7",
     "@babel/core": "7.17.3",
     "@babel/preset-env": "7.20.2",
-    "@babel/preset-typescript": "7.18.6"
+    "@babel/preset-typescript": "7.18.6",
+    "@types/react": "18.0.8",
+    "@types/react-dom": "18.0.3",
+    "typescript": "4.4.2"
   },
   "eslintConfig": {
     "extends": [

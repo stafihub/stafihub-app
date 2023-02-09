@@ -1,0 +1,17 @@
+{
+  "protoDirs": [
+    "./ledger_proto"
+  ],
+  "outPath": "./src/codegen1",
+  "options": {
+    "aminoEncoding": {
+      "enabled": true
+    },
+    "lcdClients": {
+      "enabled": true
+    },
+    "rpcClients": {
+      "enabled": true
+    }
+  }
+}

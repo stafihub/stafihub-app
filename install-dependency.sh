@@ -1,0 +1,1 @@
+rm -rf node_modules && rm -rf packages/app/node_modules && rm -rf packages/react-components/node_modules && pnpm i

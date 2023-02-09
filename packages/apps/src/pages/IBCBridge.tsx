@@ -263,6 +263,12 @@ export const IBCBridge = () => {
             chains[chainPair.src?.chainId || ""],
             channelName
           );
+          // console.log(
+          //   "channelRes?.channel",
+          //   chainPair.src?.chainId,
+          //   channelName
+          // );
+          // console.log("channelRes?.channel", channelRes?.channel);
           return channelRes?.channel?.state === State.STATE_OPEN;
         })();
       });

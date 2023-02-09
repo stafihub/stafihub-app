@@ -509,14 +509,16 @@ export const unbond =
         snackbarUtil.warning("Insufficient Balance for fee payment");
         return;
       }
-
       dispatch(setIsLoading(true));
 
-      const multisigPoolBalance = await queryBondPipeline(
-        chains[getStafiHubChainId()],
-        getRTokenDenom(chainId, chains),
-        multisigPoolAddress
-      );
+      let multisigPoolBalance = "0";
+      if (multisigPoolAddress) {
+        multisigPoolBalance = await queryBondPipeline(
+          chains[getStafiHubChainId()],
+          getRTokenDenom(chainId, chains),
+          multisigPoolAddress
+        );
+      }
 
       let pools = [];
       if (Number(multisigPoolBalance) >= Number(humanToAtomic(willGetAmount))) {

@@ -17,12 +17,12 @@
         "eject": "react-scripts eject"
       },
       "dependencies": {
-        "@cosmjs/encoding": "0.27.1",
-        "@cosmjs/launchpad": "0.27.1",
-        "@cosmjs/math": "0.27.1",
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/encoding": "0.29.0",
+        "@cosmjs/launchpad": "0.29.0",
+        "@cosmjs/math": "0.29.0",
+        "@cosmjs/proto-signing": "0.29.0",
+        "@cosmjs/stargate": "0.29.0",
+        "@cosmjs/tendermint-rpc": "0.29.0",
         "notistack": "^2.0.3",
         "path": "^0.12.7",
         "react": "^17.0.2",
@@ -97,7 +97,7 @@
       "type": "module",
       "main": "./src/index.ts",
       "dependencies": {
-        "@cosmjs/math": "0.27.1",
+        "@cosmjs/math": "0.29.0",
         "bignumber.js": "^9.0.2"
       },
       "eslintConfig": {
@@ -184,9 +184,9 @@
       "type": "module",
       "main": "./src/index.ts",
       "dependencies": {
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/proto-signing": "0.29.0",
+        "@cosmjs/stargate": "0.29.0",
+        "@cosmjs/tendermint-rpc": "0.29.0",
         "@stafihub/apps-config": "workspace:0.1.0",
         "long": "4.0.0",
         "protobufjs": "6.11.2",
@@ -224,12 +224,12 @@
       "type": "module",
       "main": "./src/index.ts",
       "dependencies": {
-        "@cosmjs/encoding": "0.27.1",
-        "@cosmjs/launchpad": "0.27.1",
-        "@cosmjs/math": "0.27.1",
-        "@cosmjs/proto-signing": "0.27.1",
-        "@cosmjs/stargate": "0.27.1",
-        "@cosmjs/tendermint-rpc": "0.27.1",
+        "@cosmjs/encoding": "0.29.0",
+        "@cosmjs/launchpad": "0.29.0",
+        "@cosmjs/math": "0.29.0",
+        "@cosmjs/proto-signing": "0.29.0",
+        "@cosmjs/stargate": "0.29.0",
+        "@cosmjs/tendermint-rpc": "0.29.0",
         "@stafihub/apps-config": "workspace:0.1.0",
         "@stafihub/types": "workspace:0.1.0",
         "bech32": "^2.0.0"
@@ -258,8 +258,8 @@
       "version": "0.1.0",
       "private": true,
       "dependencies": {
-        "@cosmjs/encoding": "^0.27.1",
-        "@cosmjs/launchpad": "^0.27.1",
+        "@cosmjs/encoding": "^0.29.0",
+        "@cosmjs/launchpad": "^0.29.0",
         "@emotion/react": "^11.8.1",
         "@emotion/styled": "^11.8.1",
         "@mui/material": "^5.4.2",
@@ -452,51 +452,51 @@
     }
   },
   "23 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/encoding",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "24 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.29.0",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/launchpad",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "25 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.0",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "26 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.29.0",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/proto-signing",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "27 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.29.0",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/stargate",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "28 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.0",
     "wanted": {
       "dependentId": ".",
       "name": "@cosmjs/tendermint-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "29 debug pnpm:_dependency_resolved": {
@@ -692,27 +692,27 @@
     }
   },
   "53 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.29.0",
     "wanted": {
       "dependentId": "packages/types",
       "name": "@cosmjs/proto-signing",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "54 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.29.0",
     "wanted": {
       "dependentId": "packages/types",
       "name": "@cosmjs/stargate",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "55 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.0",
     "wanted": {
       "dependentId": "packages/types",
       "name": "@cosmjs/tendermint-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "56 debug pnpm:_dependency_resolved": {
@@ -740,51 +740,51 @@
     }
   },
   "59 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/encoding",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "60 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.29.0",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/launchpad",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "61 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.0",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "62 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.29.0",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/proto-signing",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "63 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stargate/0.29.0",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/stargate",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "64 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.0",
     "wanted": {
       "dependentId": "packages/apps-wallet",
       "name": "@cosmjs/tendermint-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "65 debug pnpm:_dependency_resolved": {
@@ -852,19 +852,19 @@
     }
   },
   "73 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "wanted": {
       "dependentId": "packages/apps",
       "name": "@cosmjs/encoding",
-      "rawSpec": "^0.27.1"
+      "rawSpec": "^0.29.0"
     }
   },
   "74 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/launchpad/0.29.0",
     "wanted": {
       "dependentId": "packages/apps",
       "name": "@cosmjs/launchpad",
-      "rawSpec": "^0.27.1"
+      "rawSpec": "^0.29.0"
     }
   },
   "75 debug pnpm:_dependency_resolved": {
@@ -1099,12 +1099,12 @@
     "status": "resolved"
   },
   "108 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "109 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -1119,32 +1119,32 @@
     "status": "resolved"
   },
   "112 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/math/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "113 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/math/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
   "114 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/launchpad/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "115 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/launchpad/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/launchpad/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
   "116 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/stargate/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "117 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/stargate/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/stargate/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -1159,12 +1159,12 @@
     "status": "resolved"
   },
   "120 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/proto-signing/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "121 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/proto-signing/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -1179,12 +1179,12 @@
     "status": "resolved"
   },
   "124 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "125 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -1229,49 +1229,49 @@
     "status": "resolved"
   },
   "134 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/amino/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/amino/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/launchpad/0.27.1",
+      "dependentId": "/@cosmjs/launchpad/0.29.0",
       "name": "@cosmjs/amino",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "135 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/crypto/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/crypto/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/launchpad/0.27.1",
+      "dependentId": "/@cosmjs/launchpad/0.29.0",
       "name": "@cosmjs/crypto",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "136 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/launchpad/0.27.1",
+      "dependentId": "/@cosmjs/launchpad/0.29.0",
       "name": "@cosmjs/encoding",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "137 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/launchpad/0.27.1",
+      "dependentId": "/@cosmjs/launchpad/0.29.0",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "138 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/utils/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/utils/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/launchpad/0.27.1",
+      "dependentId": "/@cosmjs/launchpad/0.29.0",
       "name": "@cosmjs/utils",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "139 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/axios/0.21.4",
     "wanted": {
-      "dependentId": "/@cosmjs/launchpad/0.27.1",
+      "dependentId": "/@cosmjs/launchpad/0.29.0",
       "name": "axios",
       "rawSpec": "^0.21.2"
     }
@@ -1279,7 +1279,7 @@
   "140 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/fast-deep-equal/3.1.3",
     "wanted": {
-      "dependentId": "/@cosmjs/launchpad/0.27.1",
+      "dependentId": "/@cosmjs/launchpad/0.29.0",
       "name": "fast-deep-equal",
       "rawSpec": "^3.1.3"
     }
@@ -1287,71 +1287,71 @@
   "141 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/@confio/ics23/0.6.8",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@confio/ics23",
       "rawSpec": "^0.6.3"
     }
   },
   "142 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/amino/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/amino/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@cosmjs/amino",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "143 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@cosmjs/encoding",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "144 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "145 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/proto-signing/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@cosmjs/proto-signing",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "146 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stream/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stream/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@cosmjs/stream",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "147 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/tendermint-rpc/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@cosmjs/tendermint-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "148 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/utils/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/utils/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "@cosmjs/utils",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "149 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/cosmjs-types/0.4.1",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "cosmjs-types",
       "rawSpec": "^0.4.0"
     }
@@ -1359,7 +1359,7 @@
   "150 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/long/4.0.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "long",
       "rawSpec": "^4.0.0"
     }
@@ -1367,7 +1367,7 @@
   "151 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/protobufjs/6.10.2",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "protobufjs",
       "rawSpec": "~6.10.2"
     }
@@ -1375,7 +1375,7 @@
   "152 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/xstream/11.14.0",
     "wanted": {
-      "dependentId": "/@cosmjs/stargate/0.27.1",
+      "dependentId": "/@cosmjs/stargate/0.29.0",
       "name": "xstream",
       "rawSpec": "^11.14.0"
     }
@@ -1397,57 +1397,57 @@
     }
   },
   "155 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/crypto/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/crypto/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "@cosmjs/crypto",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "156 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/encoding/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "@cosmjs/encoding",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "157 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/math/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/math/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "@cosmjs/math",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "158 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/json-rpc/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/json-rpc/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "@cosmjs/json-rpc",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "159 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/socket/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/socket/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "@cosmjs/socket",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "160 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stream/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stream/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "@cosmjs/stream",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "161 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/axios/0.21.4",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "axios",
       "rawSpec": "^0.21.2"
     }
@@ -1455,7 +1455,7 @@
   "162 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/readonly-date/1.0.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "readonly-date",
       "rawSpec": "^1.0.0"
     }
@@ -1463,7 +1463,7 @@
   "163 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/xstream/11.14.0",
     "wanted": {
-      "dependentId": "/@cosmjs/tendermint-rpc/0.27.1",
+      "dependentId": "/@cosmjs/tendermint-rpc/0.29.0",
       "name": "xstream",
       "rawSpec": "^11.14.0"
     }
@@ -2713,12 +2713,12 @@
     "status": "found_in_store"
   },
   "346 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/amino/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/amino/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "347 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/amino/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/amino/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -2733,12 +2733,12 @@
     "status": "resolved"
   },
   "350 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/crypto/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/crypto/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "351 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/crypto/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/crypto/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -2753,12 +2753,12 @@
     "status": "resolved"
   },
   "354 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/utils/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/utils/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "355 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/utils/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/utils/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -2781,12 +2781,12 @@
     }
   },
   "359 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/stream/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/stream/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "360 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/stream/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/stream/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -2831,22 +2831,22 @@
     "status": "resolved"
   },
   "369 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/socket/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/socket/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "370 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/socket/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/socket/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
   "371 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/json-rpc/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/json-rpc/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "found_in_store"
   },
   "372 debug pnpm:progress": {
-    "packageId": "registry.npmjs.org/@cosmjs/json-rpc/0.27.1",
+    "packageId": "registry.npmjs.org/@cosmjs/json-rpc/0.29.0",
     "requester": "/Users/amigo/develop/stafi/hub/stafihub-app",
     "status": "resolved"
   },
@@ -2871,17 +2871,17 @@
     "status": "resolved"
   },
   "377 debug pnpm:_dependency_resolved": {
-    "resolution": "registry.npmjs.org/@cosmjs/stream/0.27.1",
+    "resolution": "registry.npmjs.org/@cosmjs/stream/0.29.0",
     "wanted": {
-      "dependentId": "/@cosmjs/socket/0.27.1",
+      "dependentId": "/@cosmjs/socket/0.29.0",
       "name": "@cosmjs/stream",
-      "rawSpec": "0.27.1"
+      "rawSpec": "0.29.0"
     }
   },
   "378 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/isomorphic-ws/4.0.1",
     "wanted": {
-      "dependentId": "/@cosmjs/socket/0.27.1",
+      "dependentId": "/@cosmjs/socket/0.29.0",
       "name": "isomorphic-ws",
       "rawSpec": "^4.0.1"
     }
@@ -2889,7 +2889,7 @@
   "379 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/ws/7.5.7",
     "wanted": {
-      "dependentId": "/@cosmjs/socket/0.27.1",
+      "dependentId": "/@cosmjs/socket/0.29.0",
       "name": "ws",
       "rawSpec": "^7"
     }
@@ -2897,7 +2897,7 @@
   "380 debug pnpm:_dependency_resolved": {
     "resolution": "registry.npmjs.org/xstream/11.14.0",
     "wanted": {
-      "dependentId": "/@cosmjs/socket/0.27.1",
+      "dependentId": "/@cosmjs/socket/0.29.0",
       "name": "xstream",
       "rawSpec": "^11.14.0"
     }

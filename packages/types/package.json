@@ -1,9 +1,8 @@
 {
   "name": "@stafihub/types",
-  "version": "0.8.2",
-  "type": "commonjs",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "version": "0.9.0",
+  "type": "module",
+  "main": "./src/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stafihub/stafihub-app.git"
@@ -20,9 +19,11 @@
     "build-proto": "./ts-proto.sh"
   },
   "dependencies": {
-    "@cosmjs/proto-signing": "0.27.1",
-    "@cosmjs/stargate": "0.27.1",
-    "@cosmjs/tendermint-rpc": "0.27.1",
+    "@cosmjs/amino": "0.29.4",
+    "@cosmjs/proto-signing": "0.29.4",
+    "@cosmjs/stargate": "0.29.4",
+    "@cosmjs/tendermint-rpc": "0.29.4",
+    "@osmonauts/lcd": "0.8.0",
     "long": "4.0.0",
     "protobufjs": "6.11.2",
     "ts-proto": "1.88.0",

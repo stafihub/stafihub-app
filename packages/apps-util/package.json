@@ -1,8 +1,8 @@
 {
   "name": "@stafihub/apps-util",
-  "version": "0.6.0",
-  "type": "commonjs",
-  "main": "./dist/index.js",
+  "version": "0.7.0",
+  "type": "module",
+  "main": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "build-proto": "./ts-proto.sh"
   },
   "dependencies": {
-    "@cosmjs/math": "0.27.1",
+    "@cosmjs/math": "0.29.4",
     "bignumber.js": "9.0.2",
     "typescript": "4.9.5"
   },

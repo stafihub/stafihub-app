@@ -1,3 +1,5 @@
+#!/bin/bash
+
 rm -rf node_modules && rm -rf packages/apps/node_modules \ 
 && rm -rf packages/react-components/node_modules \
 && rm -rf packages/apps-wallet/node_modules \

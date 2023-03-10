@@ -22,7 +22,7 @@
     "@cosmjs/amino": "0.29.4",
     "@cosmjs/encoding": "0.29.4",
     "@cosmjs/launchpad": "0.27.1",
-    "@stafihub/apps-util": "workspace:0.7.0",
+    "@stafihub/apps-util": "workspace:0.8.0",
     "@stafihub/types": "workspace:0.9.0",
     "@cosmjs/math": "0.29.4",
     "@cosmjs/proto-signing": "0.29.4",

@@ -115,7 +115,7 @@ export const Sidebar = () => {
           <div>or Use</div>
           <div
             className="ml-1 text-primary underline cursor-pointer"
-            onClick={() => openLink(`${getStafiAppHost()}/rAsset/swap/FIS`)}
+            onClick={() => openLink(`${getStafiAppHost()}/rbridge?srcTokenStandard=Native&dstTokenStandard=ICS20&tokenName=FIS`)}
           >
             rBridge
           </div>

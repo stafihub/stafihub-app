@@ -4,7 +4,11 @@ import {
   DeliverTxResponse,
   SigningStargateClient,
 } from "@cosmjs/stargate";
-import { Coin, MsgAirdropClaim } from "@stafihub/types";
+import {
+  Coin,
+  getSigningStafihubClient,
+  MsgAirdropClaim,
+} from "@stafihub/types";
 import { getOfflineSigner } from "..";
 import { KeplrChainParams } from "../../interface";
 
@@ -64,14 +68,10 @@ export async function sendAirdropClaimTx(
     return;
   }
 
-  const myRegistry = new Registry(defaultStargateTypes);
-  myRegistry.register("/stafihub.stafihub.claim.MsgClaim", MsgAirdropClaim);
-
-  const client = await SigningStargateClient.connectWithSigner(
-    stafiHubChainConfig.rpc,
-    offlineSigner,
-    { registry: myRegistry }
-  );
+  const client = await getSigningStafihubClient({
+    rpcEndpoint: stafiHubChainConfig.rpc,
+    signer: offlineSigner,
+  });
 
   const message = {
     typeUrl: "/stafihub.stafihub.claim.MsgClaim",

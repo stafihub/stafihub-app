@@ -1,7 +1,13 @@
 //@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../helpers";
-import { MsgSetMerkleRoot, MsgClaim, MsgToggleClaimSwitch, MsgProvideToken, MsgWithdrawToken } from "./tx";
+import {
+  MsgSetMerkleRoot,
+  MsgClaim,
+  MsgToggleClaimSwitch,
+  MsgProvideToken,
+  MsgWithdrawToken,
+} from "./tx";
 export interface AminoMsgSetMerkleRoot extends AminoMsg {
   type: "/stafihub.stafihub.claim.MsgSetMerkleRoot";
   value: {
@@ -58,35 +64,35 @@ export const AminoConverter = {
     toAmino: ({
       creator,
       round,
-      merkleRoot
+      merkleRoot,
     }: MsgSetMerkleRoot): AminoMsgSetMerkleRoot["value"] => {
       return {
         creator,
         round: round.toString(),
-        merkleRoot
+        merkleRoot,
       };
     },
     fromAmino: ({
       creator,
       round,
-      merkleRoot
+      merkleRoot,
     }: AminoMsgSetMerkleRoot["value"]): MsgSetMerkleRoot => {
       return {
         creator,
         round: Long.fromString(round),
-        merkleRoot
+        merkleRoot,
       };
-    }
+    },
   },
   "/stafihub.stafihub.claim.MsgClaim": {
-    aminoType: "/stafihub.stafihub.claim.MsgClaim",
+    aminoType: "claim/Claim",
     toAmino: ({
       creator,
       round,
       index,
       account,
       coin,
-      proof
+      proof,
     }: MsgClaim): AminoMsgClaim["value"] => {
       return {
         creator,
@@ -95,9 +101,9 @@ export const AminoConverter = {
         account,
         coin: {
           denom: coin.denom,
-          amount: Long.fromValue(coin.amount).toString()
+          amount: Long.fromValue(coin.amount).toString(),
         },
-        proof
+        proof,
       };
     },
     fromAmino: ({
@@ -106,7 +112,7 @@ export const AminoConverter = {
       index,
       account,
       coin,
-      proof
+      proof,
     }: AminoMsgClaim["value"]): MsgClaim => {
       return {
         creator,
@@ -115,89 +121,89 @@ export const AminoConverter = {
         account,
         coin: {
           denom: coin.denom,
-          amount: coin.amount
+          amount: coin.amount,
         },
-        proof
+        proof,
       };
-    }
+    },
   },
   "/stafihub.stafihub.claim.MsgToggleClaimSwitch": {
     aminoType: "/stafihub.stafihub.claim.MsgToggleClaimSwitch",
     toAmino: ({
       creator,
-      round
+      round,
     }: MsgToggleClaimSwitch): AminoMsgToggleClaimSwitch["value"] => {
       return {
         creator,
-        round: round.toString()
+        round: round.toString(),
       };
     },
     fromAmino: ({
       creator,
-      round
+      round,
     }: AminoMsgToggleClaimSwitch["value"]): MsgToggleClaimSwitch => {
       return {
         creator,
-        round: Long.fromString(round)
+        round: Long.fromString(round),
       };
-    }
+    },
   },
   "/stafihub.stafihub.claim.MsgProvideToken": {
     aminoType: "/stafihub.stafihub.claim.MsgProvideToken",
     toAmino: ({
       creator,
-      token
+      token,
     }: MsgProvideToken): AminoMsgProvideToken["value"] => {
       return {
         creator,
         token: {
           denom: token.denom,
-          amount: Long.fromValue(token.amount).toString()
-        }
+          amount: Long.fromValue(token.amount).toString(),
+        },
       };
     },
     fromAmino: ({
       creator,
-      token
+      token,
     }: AminoMsgProvideToken["value"]): MsgProvideToken => {
       return {
         creator,
         token: {
           denom: token.denom,
-          amount: token.amount
-        }
+          amount: token.amount,
+        },
       };
-    }
+    },
   },
   "/stafihub.stafihub.claim.MsgWithdrawToken": {
     aminoType: "/stafihub.stafihub.claim.MsgWithdrawToken",
     toAmino: ({
       creator,
       recipient,
-      token
+      token,
     }: MsgWithdrawToken): AminoMsgWithdrawToken["value"] => {
       return {
         creator,
         recipient,
         token: {
           denom: token.denom,
-          amount: Long.fromValue(token.amount).toString()
-        }
+          amount: Long.fromValue(token.amount).toString(),
+        },
       };
     },
     fromAmino: ({
       creator,
       recipient,
-      token
+      token,
     }: AminoMsgWithdrawToken["value"]): MsgWithdrawToken => {
       return {
         creator,
         recipient,
         token: {
           denom: token.denom,
-          amount: token.amount
-        }
+          amount: token.amount,
+        },
       };
-    }
-  }
+    },
+  },
 };

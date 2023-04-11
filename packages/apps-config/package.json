@@ -1,6 +1,7 @@
 {
   "name": "@stafihub/apps-config",
-  "version": "1.3.2",
+  "version": "1.7.2",
+  "type": "module",
   "main": "./src/index.ts",
   "repository": {
     "type": "git",

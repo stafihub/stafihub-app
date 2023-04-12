@@ -75,21 +75,21 @@ export async function sendAirdropClaimTx(
 
   const message = {
     typeUrl: "/stafihub.stafihub.claim.MsgClaim",
-    value: MsgAirdropClaim.fromPartial({
+    value: {
       creator: stafiHubAddress,
       round,
       index,
       account: stafiHubAddress,
       coin,
       proof,
-    }),
+    },
   };
 
-  const simulateResponse = await client.simulate(
-    stafiHubAddress,
-    [message],
-    ""
-  );
+  // const simulateResponse = await client.simulate(
+  //   stafiHubAddress,
+  //   [message],
+  //   ""
+  // );
 
   const fee = {
     amount: [
@@ -98,7 +98,8 @@ export async function sendAirdropClaimTx(
         amount: "1",
       },
     ],
-    gas: Math.ceil(simulateResponse * 1.3).toString(),
+    // gas: Math.ceil(simulateResponse * 1.3).toString(),
+    gas: "400000",
   };
 
   const response = await client.signAndBroadcast(

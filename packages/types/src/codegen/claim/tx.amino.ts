@@ -17,7 +17,7 @@ export interface AminoMsgSetMerkleRoot extends AminoMsg {
   };
 }
 export interface AminoMsgClaim extends AminoMsg {
-  type: "/stafihub.stafihub.claim.MsgClaim";
+  type: "claim/Claim";
   value: {
     creator: string;
     round: string;

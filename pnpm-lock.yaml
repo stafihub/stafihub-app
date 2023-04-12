@@ -185,11 +185,12 @@ importers:
       '@cosmjs/proto-signing': 0.29.4
       '@cosmjs/stargate': 0.29.4
       '@cosmjs/tendermint-rpc': 0.29.4
-      '@stafihub/apps-util': workspace:0.8.0
-      '@stafihub/types': workspace:0.9.2
+      '@stafihub/apps-util': workspace:1.0.2
+      '@stafihub/types': workspace:1.0.3
       '@types/long': 4.0.0
       bech32: 2.0.0
       long: 4.0.0
+      typescript: 4.9.5
     dependencies:
       '@cosmjs/amino': 0.29.4
       '@cosmjs/encoding': 0.29.4
@@ -202,6 +203,7 @@ importers:
       '@stafihub/types': link:../types
       bech32: 2.0.0
       long: 4.0.0
+      typescript: 4.9.5
     devDependencies:
       '@types/long': 4.0.0
 
@@ -210,7 +212,7 @@ importers:
       '@emotion/react': 11.8.1
       '@emotion/styled': 11.8.1
       '@mui/material': 5.4.2
-      '@stafihub/apps-wallet': workspace:1.7.1
+      '@stafihub/apps-wallet': workspace:2.0.3
       '@testing-library/jest-dom': 5.14.1
       '@testing-library/react': 12.0.0
       '@testing-library/user-event': 13.2.1

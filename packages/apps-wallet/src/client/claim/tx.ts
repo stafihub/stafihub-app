@@ -85,11 +85,11 @@ export async function sendAirdropClaimTx(
     },
   };
 
-  // const simulateResponse = await client.simulate(
-  //   stafiHubAddress,
-  //   [message],
-  //   ""
-  // );
+  const simulateResponse = await client.simulate(
+    stafiHubAddress,
+    [message],
+    ""
+  );
 
   const fee = {
     amount: [
@@ -98,8 +98,7 @@ export async function sendAirdropClaimTx(
         amount: "1",
       },
     ],
-    // gas: Math.ceil(simulateResponse * 1.3).toString(),
-    gas: "400000",
+    gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
   const response = await client.signAndBroadcast(

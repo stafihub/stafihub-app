@@ -2,6 +2,7 @@ import { coins, DeliverTxResponse } from "@cosmjs/stargate";
 import { humanToAtomic } from "@stafihub/apps-util";
 import { getSigningStafihubClient, IBCMsgTransfer } from "@stafihub/types";
 import Long from "long";
+import { getGasLimit, getRTokenDenom } from "packages/apps-config/src";
 import { getOfflineSigner, queryChannelClientState, queryLatestBlock } from ".";
 import { KeplrChainParams } from "../interface";
 import { createCosmosClient } from "./connection";
@@ -24,7 +25,7 @@ export async function sendStakeTx(
         amount: "5000",
       },
     ],
-    gas: "200000",
+    gas: chainConfig.gasLimit || "200000",
   };
   const sendTokens = await client?.sendTokens(
     accountAddress,
@@ -54,7 +55,7 @@ export async function sendRecoveryTx(
         amount: "5000",
       },
     ],
-    gas: "200000",
+    gas: chainConfig.gasLimit || "200000",
   };
   const sendTokens = await client?.sendTokens(
     accountAddress,
@@ -84,7 +85,7 @@ export async function sendChainTokens(
         amount: "5000",
       },
     ],
-    gas: "200000",
+    gas: chainConfig.gasLimit || "200000",
   };
   const response = await client?.sendTokens(
     sender,

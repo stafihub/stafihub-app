@@ -22,5 +22,6 @@
       "coinDecimals": 6
     }
   ],
-  "explorerUrl": "https://devnet-explorer.stafihub.io/stafi-hub-devnet"
+  "explorerUrl": "https://devnet-explorer.stafihub.io/stafi-hub-devnet",
+  "gasLimit": "200000"
 }

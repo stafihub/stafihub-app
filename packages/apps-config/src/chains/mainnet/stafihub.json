@@ -33,5 +33,6 @@
     }
   ],
   "explorerUrl": "https://www.mintscan.io/stafi",
-  "isNativeKeplrChain": false
+  "isNativeKeplrChain": false,
+  "gasLimit": "200000"
 }

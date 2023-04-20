@@ -21,6 +21,7 @@ export interface KeplrChainParams {
   sortIndex?: number;
   stakeDisabled?: boolean;
   stakeReserveAmount?: number;
+  gasLimit?: string;
 }
 
 export type IbcConfig = { [key: string]: IbcConfigParams };

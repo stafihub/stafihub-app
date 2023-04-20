@@ -18,5 +18,6 @@
   "explorerUrl": "https://testnet-explorer.stafihub.io/chihuahua-testnet",
   "defaultApy": "91",
   "sortIndex": 3,
-  "stakeReserveAmount": 1
+  "stakeReserveAmount": 1,
+  "gasLimit": "100000"
 }

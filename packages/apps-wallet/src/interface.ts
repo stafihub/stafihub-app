@@ -4,6 +4,7 @@ export interface KeplrChainParams {
   rpc: string;
   denom: string;
   decimals: number;
+  gasLimit?: string;
 }
 
 export interface DetailKeplrChainParams {
@@ -22,6 +23,7 @@ export interface DetailKeplrChainParams {
   rTokenEnabled?: boolean;
   currencies?: ChainCurrencyConfig[];
   gasPriceStep?: any;
+  gasLimit?: string;
 }
 
 export interface ChainCurrencyConfig {

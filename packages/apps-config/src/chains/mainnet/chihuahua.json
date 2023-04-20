@@ -19,5 +19,6 @@
   "defaultApy": "55.71",
   "sortIndex": 3,
   "isNativeKeplrChain": false,
-  "stakeReserveAmount": 1
+  "stakeReserveAmount": 1,
+  "gasLimit": "100000"
 }

@@ -215,3 +215,14 @@ export function getDisplayHubName(
   const chain = chains[chainId];
   return chain.displayHubName;
 }
+
+export function getGasLimit(
+  chainId: string | undefined,
+  chains: NetworkConfig
+) {
+  if (!chainId || !chains[chainId]) {
+    throw new Error(`Invalid chainId: ${chainId}`);
+  }
+  const chain = chains[chainId];
+  return chain.gasLimit || "200000";
+}

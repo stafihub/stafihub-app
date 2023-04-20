@@ -54,7 +54,7 @@ async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
       stakeCurrency: {
         coinDenom: chainConfig.coinDenom,
         coinMinimalDenom: chainConfig.denom,
-        coinDecimals: 6,
+        coinDecimals: chainConfig.decimals,
       },
       bip44: {
         coinType: 118,
@@ -64,7 +64,7 @@ async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
         {
           coinDenom: chainConfig.coinDenom,
           coinMinimalDenom: chainConfig.denom,
-          coinDecimals: 6,
+          coinDecimals: chainConfig.decimals,
         },
         ...(chainConfig.currencies || []),
       ],
@@ -72,7 +72,7 @@ async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
         {
           coinDenom: chainConfig.coinDenom,
           coinMinimalDenom: chainConfig.denom,
-          coinDecimals: 6,
+          coinDecimals: chainConfig.decimals,
           gasPriceStep: chainConfig.gasPriceStep || {
             low: 0.01,
             average: 0.025,

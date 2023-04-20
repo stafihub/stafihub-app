@@ -16,9 +16,9 @@
     "bech32PrefixConsPub": "tswthvalconspub"
   },
   "gasPriceStep": {
-    "low": 1000,
-    "average": 2000,
-    "high": 4000
+    "low": 800,
+    "average": 1000,
+    "high": 1200
   },
   "explorerUrl": "https://scan.carbon.network",
   "defaultApy": "6.4",

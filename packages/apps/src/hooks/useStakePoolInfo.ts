@@ -1,7 +1,12 @@
 import { queryStakePoolInfo } from "@stafihub/apps-wallet";
 import { useEffect, useState } from "react";
 import { atomicToHuman } from "@stafihub/apps-util";
-import { getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  getChainDecimals,
+  getChainIdFromDenom,
+  getChainIdFromRTokenDenom,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
 import { chains } from "../config";
 
 export function useStakePoolInfo(denom: string) {
@@ -24,7 +29,12 @@ export function useStakePoolInfo(denom: string) {
           setOriginExchangeRate(atomicToHuman(result.exchangeRate));
         }
         if (result.leastBond) {
-          setLeastBond(atomicToHuman(result.leastBond));
+          setLeastBond(
+            atomicToHuman(
+              result.leastBond,
+              getChainDecimals(getChainIdFromRTokenDenom(denom, chains), chains)
+            )
+          );
         }
         if (result.eraHours) {
           setEraHours(result.eraHours);

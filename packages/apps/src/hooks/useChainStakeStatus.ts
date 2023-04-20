@@ -1,4 +1,5 @@
 import {
+  getChainDecimals,
   getDenom,
   getRTokenDenom,
   getStafiHubChainId,
@@ -51,7 +52,11 @@ export function useChainStakeStatus(chainId: string | undefined) {
         stafiHubAccount.bech32Address,
         getRTokenDenom(chainId, chains)
       );
-      const rTokenBalance = atomicToHuman(result, 6, 6);
+      const rTokenBalance = atomicToHuman(
+        result,
+        getChainDecimals(chainId, chains),
+        6
+      );
 
       const matched = priceList.find(
         (price) => price.denom === getDenom(chainId, chains)
@@ -61,7 +66,7 @@ export function useChainStakeStatus(chainId: string | undefined) {
         tokenPrice = atomicToHuman(matched.price, 6, 6);
       }
       const stakedAmount =
-        (Number(result) / 1000000) *
+        (Number(result) / Math.pow(10, getChainDecimals(chainId, chains))) *
           (Number(poolInfoResult.exchangeRate) / 1000000) +
         "";
       const stakedValue = Number(stakedAmount) * Number(tokenPrice);

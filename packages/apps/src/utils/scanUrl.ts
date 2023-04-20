@@ -1,3 +1,5 @@
+import { isDev } from "../config";
+
 export function getScanFullUrl(
   host: string,
   type: "tx" | "account",
@@ -17,9 +19,13 @@ export function getScanFullUrl(
   if (type === "tx") {
     return explorerHost.startsWith("https://www.mintscan.io")
       ? `${explorerHost}/txs/${param}`
+      : explorerHost.startsWith("https://scan.carbon.network")
+      ? `${explorerHost}/transaction/${param}?net=${isDev() ? "test" : "main"}`
       : `${explorerHost}/tx/${param}`;
   } else if (type === "account") {
-    return `${explorerHost}/account/${param}`;
+    return explorerHost.startsWith("https://scan.carbon.network")
+      ? `${explorerHost}/account/${param}?net=${isDev() ? "test" : "main"}`
+      : `${explorerHost}/account/${param}`;
   }
 
   return explorerHost;

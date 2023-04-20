@@ -132,6 +132,20 @@ export function getChainIdFromDenom(
   return matchedChain.chainId;
 }
 
+export function getChainIdFromRTokenDenom(
+  rTokenDenom: string | undefined,
+  chains: NetworkConfig
+): string {
+  const chainArr = _.values(chains);
+  const matchedChain = chainArr.find((chain) => {
+    return getRTokenDenom(chain.chainId, chains) === rTokenDenom;
+  });
+  if (!matchedChain) {
+    throw new Error(`Chain with this rTokenDenom not found: ${rTokenDenom}`);
+  }
+  return matchedChain.chainId;
+}
+
 export function getDenom(
   chainId: string | undefined,
   chains: NetworkConfig
@@ -151,7 +165,11 @@ export function getRTokenDenom(
     throw new Error(`Invalid chainId: ${chainId}`);
   }
   const chain = chains[chainId];
-  return `ur${chain.denom.slice(1)}`;
+  if (chain.denom.startsWith("u")) {
+    return `ur${chain.denom.slice(1)}`;
+  } else {
+    return `ur${chain.denom}`;
+  }
 }
 
 export function getExplorerUrl(

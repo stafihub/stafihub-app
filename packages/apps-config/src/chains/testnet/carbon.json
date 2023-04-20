@@ -23,6 +23,6 @@
   "explorerUrl": "https://scan.carbon.network",
   "defaultApy": "6.4",
   "sortIndex": 4,
-  "stakeReserveAmount": 1,
+  "stakeReserveAmount": 5,
   "gasLimit": "130000"
 }

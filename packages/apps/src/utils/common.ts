@@ -1,4 +1,6 @@
 import { atomicToHuman } from "@stafihub/apps-util";
+import { getChainDecimals, getChainIdFromDenom } from "@stafihub/apps-config";
+import { chains } from "../config";
 import { Coin } from "../types/interface";
 
 export function timeout(ms: number) {
@@ -26,5 +28,11 @@ export function getHumanAccountBalance(
     return "--";
   }
   const target = balances.find((coin) => coin.denom === denom);
-  return target ? atomicToHuman(target.amount, 6, decimals) : "0";
+  return target
+    ? atomicToHuman(
+        target.amount,
+        getChainDecimals(getChainIdFromDenom(denom, chains), chains),
+        decimals
+      )
+    : "0";
 }

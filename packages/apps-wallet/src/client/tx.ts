@@ -1,8 +1,7 @@
 import { coins, DeliverTxResponse } from "@cosmjs/stargate";
 import { humanToAtomic } from "@stafihub/apps-util";
-import { getSigningStafihubClient, IBCMsgTransfer } from "@stafihub/types";
+import { getSigningStafihubClient } from "@stafihub/types";
 import Long from "long";
-import { getGasLimit, getRTokenDenom } from "packages/apps-config/src";
 import { getOfflineSigner, queryChannelClientState, queryLatestBlock } from ".";
 import { KeplrChainParams } from "../interface";
 import { createCosmosClient } from "./connection";

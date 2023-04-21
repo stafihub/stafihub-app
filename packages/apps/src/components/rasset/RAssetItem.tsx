@@ -21,6 +21,7 @@ import { TradeModal } from "../../modals/TradeModal";
 import { updateRTokenReward } from "../../redux/reducers/ChainSlice";
 import { FormatMintRewardAct } from "../../types/interface";
 import snackbarUtil from "../../utils/snackbarUtils";
+import { openLink } from "../../utils/common";
 
 interface RAssetItemProps {
   chainId: string;
@@ -179,11 +180,17 @@ export const RAssetItem = (props: RAssetItemProps) => {
             className="ml-2 w-[66px] h-[22px] text-white text-[12px] flex justify-center items-center border-white border-solid border-[0.5px] rounded-[3px] cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              navigate("/rBridge", {
-                state: {
-                  fromChainId: props.chainId,
-                },
-              });
+              if (props.originTokenName === "SWTH") {
+                openLink(
+                  "https://tfm.com/bridge?chainTo=carbon-1&chainFrom=stafihub-1"
+                );
+              } else {
+                navigate("/rBridge", {
+                  state: {
+                    fromChainId: props.chainId,
+                  },
+                });
+              }
             }}
           >
             Bridge

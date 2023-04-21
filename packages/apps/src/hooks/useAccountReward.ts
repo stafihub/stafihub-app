@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { EraRewardItem, RTokenRewardData } from "../types/interface";
 import * as _ from "lodash";
-import { getDenom, getRTokenDenom } from "@stafihub/apps-config";
+import {
+  getChainDecimals,
+  getDenom,
+  getRTokenDenom,
+} from "@stafihub/apps-config";
 import { usePriceFromDenom } from "./useAppSlice";
 import { chains } from "../config";
 
@@ -33,11 +37,12 @@ export function useAccountReward(chainId: string) {
       setChartXData([]);
       setChartYData([]);
     } else {
+      const decimals = getChainDecimals(chainId, chains);
       setLoading(false);
       setOriginLast24hReward(rTokenReward.last24hReward);
-      setLast24hReward(atomicToHuman(rTokenReward.last24hReward));
-      setLastEraReward(atomicToHuman(rTokenReward.lastEraReward));
-      setTotalReward(atomicToHuman(rTokenReward.totalReward));
+      setLast24hReward(atomicToHuman(rTokenReward.last24hReward, decimals));
+      setLastEraReward(atomicToHuman(rTokenReward.lastEraReward, decimals));
+      setTotalReward(atomicToHuman(rTokenReward.totalReward, decimals));
       setEraRewards(rTokenReward.eraRewardList);
       const xData = [...rTokenReward.chartXData.slice(0, 10)];
       _.reverse(xData);

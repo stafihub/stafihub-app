@@ -15,6 +15,7 @@ import { UserUnbondRecord } from "../../types/interface";
 interface UnbondRewardItemProps {
   item: UserUnbondRecord;
   unbondingDays: string;
+  unbondingHours: string;
 }
 
 export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
@@ -67,9 +68,14 @@ export const UnbondRewardItemV2 = (props: UnbondRewardItemProps) => {
       </div>
 
       <div className="basis-[14%] text-[14px] text-white">
-        {!isNaN(Number(props.unbondingDays)) && (
-          <div>≈{props.unbondingDays} D</div>
-        )}
+        {!isNaN(Number(props.unbondingDays)) &&
+          Number(props.unbondingDays) > 0 && (
+            <div>≈{props.unbondingDays} D</div>
+          )}
+        {!isNaN(Number(props.unbondingHours)) &&
+          Number(props.unbondingDays) === 0 && (
+            <div>≈{props.unbondingHours} H</div>
+          )}
       </div>
 
       <div className="basis-[14%] text-[14px] text-white">

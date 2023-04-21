@@ -31,6 +31,7 @@ import { useStakePoolInfo } from "../hooks/useStakePoolInfo";
 import { useUnbondCommission } from "../hooks/useUnbondCommission";
 import { TradeModal } from "../modals/TradeModal";
 import { updateRTokenReward } from "../redux/reducers/ChainSlice";
+import snackbarUtil from "../utils/snackbarUtils";
 
 export const RTokenDashboard = () => {
   const dispatch = useDispatch();
@@ -140,7 +141,15 @@ export const RTokenDashboard = () => {
                   bgPrimary
                   type="rectangle"
                   size="small"
-                  onClick={() => setTradeModalVisible(true)}
+                  onClick={() => {
+                    if (params.rToken === "rSWTH") {
+                      snackbarUtil.success(
+                        "rSwth hasn’t be listed yet, stay tuned."
+                      );
+                    } else {
+                      setTradeModalVisible(true);
+                    }
+                  }}
                 >
                   Trade {params.rToken}
                 </Button>

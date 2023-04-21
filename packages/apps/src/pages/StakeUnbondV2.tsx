@@ -14,12 +14,14 @@ import { useRParams } from "../hooks/useRParams";
 export const StakeUnbondV2 = () => {
   const params = useParams();
   const chainId = getChainIdFromRTokenDisplayName(params.rToken, chains);
-  const { bondingDays } = useRParams(getRTokenDenom(chainId, chains));
+  const { bondingDays, bondingHours } = useRParams(
+    getRTokenDenom(chainId, chains)
+  );
 
   const { unbondRecords, loading } = useAccountUnbond(
     getRTokenDenom(chainId, chains)
   );
-  
+
   return (
     <div className="">
       <div className="bg-[#111017] rounded-[10px] pt-5 px-7">
@@ -46,6 +48,7 @@ export const StakeUnbondV2 = () => {
                 key={index}
                 item={record}
                 unbondingDays={bondingDays}
+                unbondingHours={bondingHours}
               />
             ))}
           </div>

@@ -20,6 +20,7 @@ import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
 import { TradeModal } from "../../modals/TradeModal";
 import { updateRTokenReward } from "../../redux/reducers/ChainSlice";
 import { FormatMintRewardAct } from "../../types/interface";
+import snackbarUtil from "../../utils/snackbarUtils";
 
 interface RAssetItemProps {
   chainId: string;
@@ -164,7 +165,11 @@ export const RAssetItem = (props: RAssetItemProps) => {
             className="w-[66px] h-[22px] text-white text-[12px] flex justify-center items-center border-white border-solid border-[0.5px] rounded-[3px] cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              setTradeModalVisible(true);
+              if (props.originTokenName === "SWTH") {
+                snackbarUtil.success("rSwth hasn’t be listed yet, stay tuned.");
+              } else {
+                setTradeModalVisible(true);
+              }
             }}
           >
             Trade

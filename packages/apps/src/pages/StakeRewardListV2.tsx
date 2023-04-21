@@ -80,7 +80,11 @@ export const StakeRewardListV2 = () => {
             )}
 
             {eraRewards.map((eraReward) => (
-              <StakeRewardTableItem key={eraReward.era} eraReward={eraReward} />
+              <StakeRewardTableItem
+                key={eraReward.era}
+                eraReward={eraReward}
+                chainId={chainId}
+              />
             ))}
           </div>
         </div>

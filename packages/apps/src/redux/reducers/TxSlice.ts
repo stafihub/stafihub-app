@@ -521,10 +521,14 @@ export const unbond =
       }
 
       let pools = [];
-      if (Number(multisigPoolBalance) >= Number(humanToAtomic(willGetAmount))) {
+      const chainDecimals = getChainDecimals(chainId, chains);
+      if (
+        Number(multisigPoolBalance) >=
+        Number(humanToAtomic(willGetAmount, chainDecimals))
+      ) {
         pools.push({
           poolAddress: multisigPoolAddress,
-          amount: humanToAtomic(inputAmount),
+          amount: humanToAtomic(inputAmount, chainDecimals),
         });
       } else {
         const multisigUnbondAmount = Math.floor(
@@ -541,12 +545,14 @@ export const unbond =
           pools.push({
             poolAddress: icaPoolAddress,
             amount:
-              Number(humanToAtomic(inputAmount)) - multisigUnbondAmount + "",
+              Number(humanToAtomic(inputAmount, chainDecimals)) -
+              multisigUnbondAmount +
+              "",
           });
         } else {
           pools.push({
             poolAddress: icaPoolAddress,
-            amount: humanToAtomic(inputAmount),
+            amount: humanToAtomic(inputAmount, chainDecimals),
           });
         }
       }

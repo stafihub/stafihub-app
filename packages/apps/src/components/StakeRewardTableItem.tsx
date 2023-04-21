@@ -1,11 +1,14 @@
 import { atomicToHuman, formatNumberToFixed } from "@stafihub/apps-util";
 import { FormatterText } from "@stafihub/react-components";
 import classNames from "classnames";
+import { getChainDecimals } from "@stafihub/apps-config";
 import { useMemo } from "react";
+import { chains } from "../config";
 import { EraRewardItem } from "../types/interface";
 
 interface StakeRewardTableItemProps {
   eraReward: EraRewardItem;
+  chainId: string;
 }
 
 export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
@@ -15,7 +18,10 @@ export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
     if (isNaN(Number(eraReward.reward)) || !eraReward.reward) {
       return ["--", false];
     }
-    const humanReward = atomicToHuman(eraReward.reward, 6);
+    const humanReward = atomicToHuman(
+      eraReward.reward,
+      getChainDecimals(props.chainId, chains)
+    );
     if (Number(humanReward) === 0) {
       return ["0", false];
     }
@@ -23,14 +29,19 @@ export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
       return ["<0.0001", true];
     }
     return ["+" + formatNumberToFixed(humanReward), true];
-  }, [eraReward]);
+  }, [eraReward, props.chainId]);
 
   return (
     <div className="w-full h-[50px] py-[10px] flex items-center text-[14px] relative">
       <div className="basis-3/12 text-white">{eraReward.era}</div>
 
       <div className="basis-4/12 text-white">
-        <FormatterText value={atomicToHuman(eraReward.stakeValue, 6)} />
+        <FormatterText
+          value={atomicToHuman(
+            eraReward.stakeValue,
+            getChainDecimals(props.chainId, chains)
+          )}
+        />
       </div>
 
       <div className="basis-4/12 text-white">
@@ -38,7 +49,12 @@ export const StakeRewardTableItem = (props: StakeRewardTableItemProps) => {
       </div>
 
       <div className="basis-3/12 text-white">
-        <FormatterText value={atomicToHuman(eraReward.rTokenBalance, 6)} />
+        <FormatterText
+          value={atomicToHuman(
+            eraReward.rTokenBalance,
+            getChainDecimals(props.chainId, chains)
+          )}
+        />
       </div>
 
       <div

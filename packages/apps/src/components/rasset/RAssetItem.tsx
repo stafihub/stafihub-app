@@ -166,7 +166,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
             onClick={(e) => {
               e.stopPropagation();
               if (props.originTokenName === "SWTH") {
-                snackbarUtil.success("rSwth hasn’t be listed yet, stay tuned.");
+                snackbarUtil.success("rSWTH hasn’t be listed yet, stay tuned.");
               } else {
                 setTradeModalVisible(true);
               }

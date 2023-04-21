@@ -144,7 +144,7 @@ export const RTokenDashboard = () => {
                   onClick={() => {
                     if (params.rToken === "rSWTH") {
                       snackbarUtil.success(
-                        "rSwth hasn’t be listed yet, stay tuned."
+                        "rSWTH hasn’t be listed yet, stay tuned."
                       );
                     } else {
                       setTradeModalVisible(true);

@@ -2,6 +2,7 @@ export const STORAGE_KEPLR_WALLET_ALLOWED = "stafihub_keplr_network_allowed_";
 export const STORAGE_KEY_SLIPPAGE = "stafihub_slippage";
 export const STORAGE_KEY_NOTICE = "stafihub_notice";
 export const STORAGE_KEY_UNREAD_NOTICE = "stafihub_unread_notice";
+export const STORAGE_KEY_MEMO_NOTICE_MODAL = "stafihub_memo_notice_modal";
 
 export function saveNetworkAllowedFlag(network: string) {
   saveStorage(getNetworkAllowedKey(network), "1");

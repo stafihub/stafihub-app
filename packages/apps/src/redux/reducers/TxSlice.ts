@@ -200,7 +200,7 @@ export const stake =
           })
         );
 
-        const MAX_COUNT = 40;
+        const MAX_COUNT = 240;
         let timeCount = 0;
         while (true) {
           const bondRecordRes = await queryBondRecord(

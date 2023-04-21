@@ -41,6 +41,11 @@ import { FormatTokenRewardInfo } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 import { chains } from "../config";
+import {
+  STORAGE_KEY_MEMO_NOTICE_MODAL,
+  getStorage,
+  saveStorage,
+} from "../utils/storage";
 
 export const StakeV2 = () => {
   const dispatch = useDispatch();
@@ -456,7 +461,11 @@ export const StakeV2 = () => {
               );
               return;
             }
-            setMemoNoticeModalVisible(true);
+            if (getStorage(STORAGE_KEY_MEMO_NOTICE_MODAL)) {
+              clickStake();
+            } else {
+              setMemoNoticeModalVisible(true);
+            }
           }}
           disabled={
             stafiHubAccount &&
@@ -491,6 +500,7 @@ export const StakeV2 = () => {
         visible={memoNoticeModalVisible}
         onClose={() => setMemoNoticeModalVisible(false)}
         onConfirm={() => {
+          saveStorage(STORAGE_KEY_MEMO_NOTICE_MODAL, "1");
           setMemoNoticeModalVisible(false);
           clickStake();
         }}

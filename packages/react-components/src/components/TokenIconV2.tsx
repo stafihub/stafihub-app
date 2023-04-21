@@ -35,7 +35,7 @@ export const TokenIconV2 = (props: TokenIconV2Props) => {
         .then((image) => {
           setImage(image.default);
         })
-        .catch();
+        .catch((err) => {});
     }
   };
 

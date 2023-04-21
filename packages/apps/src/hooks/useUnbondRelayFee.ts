@@ -19,12 +19,7 @@ export function useUnbondRelayFee(chainId: string | undefined) {
         denom
       );
       if (result) {
-        setRelayFee(
-          atomicToHuman(
-            result.fee?.value?.amount,
-            getChainDecimals(chainId, chains)
-          ) || "--"
-        );
+        setRelayFee(atomicToHuman(result.fee?.value?.amount) || "--");
       }
     })();
   }, [chainId]);

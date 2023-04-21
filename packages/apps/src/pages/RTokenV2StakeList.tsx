@@ -38,7 +38,7 @@ export const RTokenV2StakeList = () => {
           <div
             key={rToken.chainId}
             className={classNames(
-              "mb-3",
+              "mb-8",
               rTokenList.length > 2 ? "px-[50px]" : "px-[30px]"
             )}
           >

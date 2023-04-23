@@ -181,9 +181,14 @@ export const RAssetItem = (props: RAssetItemProps) => {
             onClick={(e) => {
               e.stopPropagation();
               if (props.originTokenName === "SWTH") {
-                openLink(
-                  "https://tfm.com/bridge?chainTo=carbon-1&chainFrom=stafihub-1"
+                snackbarUtil.success(
+                  "You are going to a 3rd party bridge, use at you own risk."
                 );
+                setTimeout(() => {
+                  openLink(
+                    "https://tfm.com/bridge?chainTo=carbon-1&chainFrom=stafihub-1"
+                  );
+                }, 3000);
               } else {
                 navigate("/rBridge", {
                   state: {

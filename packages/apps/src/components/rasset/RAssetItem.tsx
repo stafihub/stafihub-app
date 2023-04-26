@@ -182,13 +182,13 @@ export const RAssetItem = (props: RAssetItemProps) => {
               e.stopPropagation();
               if (props.originTokenName === "SWTH") {
                 snackbarUtil.success(
-                  "You are going to a 3rd party bridge, use at you own risk."
+                  "You are going to a 3rd party bridge, use at your own risk."
                 );
                 setTimeout(() => {
                   openLink(
                     "https://tfm.com/bridge?chainTo=carbon-1&chainFrom=stafihub-1"
                   );
-                }, 3000);
+                }, 4000);
               } else {
                 navigate("/rBridge", {
                   state: {

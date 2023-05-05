@@ -20,6 +20,21 @@
       "coinDenom": "rATOM",
       "coinMinimalDenom": "uratom",
       "coinDecimals": 6
+    },
+    {
+      "coinDenom": "rIRIS",
+      "coinMinimalDenom": "uriris",
+      "coinDecimals": 6
+    },
+    {
+      "coinDenom": "rHUAHUA",
+      "coinMinimalDenom": "urhuahua",
+      "coinDecimals": 6
+    },
+    {
+      "coinDenom": "rSWTH",
+      "coinMinimalDenom": "urswth",
+      "coinDecimals": 8
     }
   ],
   "explorerUrl": "https://testnet-explorer.stafihub.io/stafi-hub-testnet",

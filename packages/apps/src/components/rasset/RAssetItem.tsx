@@ -181,14 +181,9 @@ export const RAssetItem = (props: RAssetItemProps) => {
             onClick={(e) => {
               e.stopPropagation();
               if (props.originTokenName === "SWTH") {
-                snackbarUtil.success(
-                  "You are going to a 3rd party bridge, use at your own risk."
+                openLink(
+                  "https://docs.stafihub.io/welcome-to-stafihub/user/user-guide/ibc-transfer-with-keplr-wallet"
                 );
-                setTimeout(() => {
-                  openLink(
-                    "https://tfm.com/bridge?chainTo=carbon-1&chainFrom=stafihub-1"
-                  );
-                }, 4000);
               } else {
                 navigate("/rBridge", {
                   state: {

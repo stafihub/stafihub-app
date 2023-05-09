@@ -9,6 +9,7 @@ import {
   setLatestBlock,
   updateAllTokenBalance,
   updatePriceList,
+  updateTokenStakeData,
 } from "../redux/reducers/AppSlice";
 import { updateChainEras } from "../redux/reducers/ChainSlice";
 import { updateChainIBCChannels } from "../redux/reducers/IBCSlice";
@@ -56,6 +57,10 @@ export function useInit() {
     dispatch(updatePriceList());
   }, [dispatch]);
 
+  const updateStakeValues = useCallback(() => {
+    dispatch(updateTokenStakeData());
+  }, [dispatch]);
+
   const updateLatestBlock = useCallback(async () => {
     const latestBlockResult = await queryLatestBlock(
       chains[getStafiHubChainId()]
@@ -66,9 +71,19 @@ export function useInit() {
 
   useEffect(() => {
     updateEras();
+  }, [updateEras]);
+
+  useEffect(() => {
     updatePrices();
+  }, [updatePrices]);
+
+  useEffect(() => {
+    updateStakeValues();
+  }, [updateStakeValues]);
+
+  useEffect(() => {
     updateLatestBlock();
-  }, [updateEras, updatePrices, updateLatestBlock]);
+  }, [updateLatestBlock]);
 
   // Update eras every 10min.
   useInterval(() => {
@@ -89,6 +104,11 @@ export function useInit() {
   useInterval(() => {
     updateLatestBlock();
   }, 6000);
+
+  // Update stakeData every 6s.
+  useInterval(() => {
+    updateStakeValues();
+  }, 30000);
 
   // Update IBC channels.
   useEffect(() => {

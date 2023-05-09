@@ -36,3 +36,19 @@ export function getHumanAccountBalance(
       )
     : "0";
 }
+
+export function getDenomFromServerTokenType(rTokenType: number) {
+  if (rTokenType === 81) {
+    return "uatom";
+  }
+  if (rTokenType === 82) {
+    return "uiris";
+  }
+  if (rTokenType === 83) {
+    return "uhuahua";
+  }
+  if (rTokenType === 84) {
+    return "swth";
+  }
+  return "";
+}

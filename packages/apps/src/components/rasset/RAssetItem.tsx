@@ -1,5 +1,6 @@
 import { Tooltip } from "@mui/material";
 import {
+  getDenom,
   getRTokenDenom,
   getStafiHubChainId,
   getTokenDisplayName,
@@ -12,16 +13,16 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { chains } from "../../config";
 import { useAccountReward } from "../../hooks/useAccountReward";
-import { useChainAccount, useLatestBlock } from "../../hooks/useAppSlice";
-import { useApy } from "../../hooks/useApy";
+import { useChainAccount } from "../../hooks/useAppSlice";
 import { useChainStakeStatus } from "../../hooks/useChainStakeStatus";
 // import iconDown from "../../assets/images/icon_down_white.png";
 import { useStakePoolInfo } from "../../hooks/useStakePoolInfo";
+import { useTokenStakeData } from "../../hooks/useTokenStakeData";
 import { TradeModal } from "../../modals/TradeModal";
 import { updateRTokenReward } from "../../redux/reducers/ChainSlice";
 import { FormatMintRewardAct } from "../../types/interface";
-import snackbarUtil from "../../utils/snackbarUtils";
 import { openLink } from "../../utils/common";
+import snackbarUtil from "../../utils/snackbarUtils";
 
 interface RAssetItemProps {
   chainId: string;
@@ -38,11 +39,9 @@ export const RAssetItem = (props: RAssetItemProps) => {
   const { exchangeRate } = useStakePoolInfo(
     getRTokenDenom(props.chainId, chains)
   );
-  const apy = useApy(props.chainId);
+  const { totalApy } = useTokenStakeData(getDenom(props.chainId, chains));
   const { originLast24hReward } = useAccountReward(props.chainId);
   const [tradeModalVisible, setTradeModalVisible] = useState(false);
-  const [totalApr, setTotalApr] = useState("--");
-  const latestBlock = useLatestBlock();
 
   useEffect(() => {
     if (stafiHubAccount) {
@@ -88,28 +87,6 @@ export const RAssetItem = (props: RAssetItemProps) => {
     }
     return ["--", false, false, false];
   }, [originLast24hReward]);
-
-  useEffect(() => {
-    (async () => {
-      if (isNaN(Number(apy.replace("%", "")))) {
-        return;
-      }
-      let totalApr = Number(apy.replace("%", ""));
-      if (
-        latestBlock &&
-        props.actDetail &&
-        props.actDetail.end >= latestBlock
-      ) {
-        props.actDetail?.tokenRewardInfos.forEach((rewardInfo) => {
-          if (!isNaN(Number(rewardInfo.calcApr))) {
-            totalApr += Number(rewardInfo.calcApr);
-          }
-        });
-      }
-
-      setTotalApr(totalApr + "");
-    })();
-  }, [props.actDetail, apy, latestBlock]);
 
   return (
     <>
@@ -158,7 +135,7 @@ export const RAssetItem = (props: RAssetItemProps) => {
         </div>
 
         <div className="basis-3/12 text-[16px]">
-          <FormatterText value={totalApr} decimals={2} />%
+          <FormatterText value={totalApy} decimals={2} />%
         </div>
 
         <div className="basis-4/12 text-[14px] flex items-center">

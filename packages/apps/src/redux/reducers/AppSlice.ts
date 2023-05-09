@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getApiHost, getStafiHubChainId } from "@stafihub/apps-config";
+import {
+  getApiHost,
+  getChainDecimals,
+  getChainIdFromDenom,
+  getRTokenApi2Host,
+  getStafiHubChainId,
+} from "@stafihub/apps-config";
+import { atomicToHuman } from "@stafihub/apps-util";
 import {
   connectAtomjs,
   getKeplrAccount,
@@ -14,6 +21,7 @@ import {
   NoticeTxDetail,
   NoticeType,
 } from "../../types/notice";
+import { getDenomFromServerTokenType } from "../../utils/common";
 import { addNoticeInternal, updateNoticeInternal } from "../../utils/notice";
 import snackbarUtil from "../../utils/snackbarUtils";
 import {
@@ -26,6 +34,19 @@ import { AppThunk } from "../store";
 
 type AccountMap = { [key: string]: KeplrAccount | undefined };
 
+interface StakeData {
+  stakeAmount: string;
+  stakeValue: string;
+  stakeApy: string;
+  mintApy: string;
+  rTokenType: number;
+  totalApy: string;
+}
+
+export type TokenStakeDataStore = {
+  [denom in string]?: StakeData;
+};
+
 export interface AppState {
   isFork: boolean;
   accounts: AccountMap;
@@ -34,6 +55,7 @@ export interface AppState {
   unreadNoticeFlag: boolean;
   priceList: PriceItem[];
   latestBlock: number | undefined;
+  tokenStakeData: TokenStakeDataStore;
 }
 
 const initialState: AppState = {
@@ -44,6 +66,7 @@ const initialState: AppState = {
   unreadNoticeFlag: false,
   priceList: [],
   latestBlock: undefined,
+  tokenStakeData: {},
 };
 
 export const appSlice = createSlice({
@@ -72,6 +95,12 @@ export const appSlice = createSlice({
     setLatestBlock: (state: AppState, action: PayloadAction<number>) => {
       state.latestBlock = action.payload;
     },
+    setTokenStakeData: (
+      state: AppState,
+      action: PayloadAction<TokenStakeDataStore>
+    ) => {
+      state.tokenStakeData = action.payload;
+    },
   },
 });
 
@@ -83,6 +112,7 @@ export const {
   setUnreadNoticeFlag,
   setPriceList,
   setLatestBlock,
+  setTokenStakeData,
 } = appSlice.actions;
 
 export const updateAccounts =
@@ -310,5 +340,52 @@ export const updatePriceList = (): AppThunk => async (dispatch, getState) => {
     })
     .catch((err: Error) => {});
 };
+
+export const updateTokenStakeData =
+  (): AppThunk => async (dispatch, getState) => {
+    try {
+      const response = await fetch(
+        `${getRTokenApi2Host()}/stafi/webapi/rtoken/allStakeValueList`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const resJson = await response.json();
+      if (resJson && resJson.status === "80000") {
+        const { stakeValueList, totalStakeValue } = resJson.data;
+        if (!Array.isArray(stakeValueList) || stakeValueList.length === 0)
+          return;
+
+        let stakeDataStore: TokenStakeDataStore = {};
+        stakeValueList.forEach((data: StakeData) => {
+          const denom = getDenomFromServerTokenType(data.rTokenType);
+          if (!denom) {
+            return;
+          }
+          const chainId = getChainIdFromDenom(denom, chains);
+          if (!chainId) {
+            return;
+          }
+          const decimals = getChainDecimals(chainId, chains);
+          const mintApy = new Number(data.mintApy)
+            .toLocaleString()
+            .replaceAll(",", "");
+          stakeDataStore[denom] = {
+            ...data,
+            mintApy,
+            stakeAmount: atomicToHuman(data.stakeAmount, decimals),
+          };
+        });
+
+        dispatch(setTokenStakeData(stakeDataStore));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
 export default appSlice.reducer;

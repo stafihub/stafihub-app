@@ -28,6 +28,14 @@ export function getApiHost(): string {
   }
 }
 
+export function getRTokenApi2Host(usePrd?: boolean) {
+  if (isDev() && !usePrd) {
+    return "https://test-rtoken-api2.stafi.io";
+  } else {
+    return "https://rtoken-api2.stafi.io";
+  }
+}
+
 export function getStafiHubChainId(): string {
   if (isDev()) {
     return "stafihub-testnet-2";

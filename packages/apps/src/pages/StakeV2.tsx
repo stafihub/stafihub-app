@@ -46,6 +46,7 @@ import {
   getStorage,
   saveStorage,
 } from "../utils/storage";
+import { useTokenStakeData } from "../hooks/useTokenStakeData";
 
 export const StakeV2 = () => {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ export const StakeV2 = () => {
   const stafiHubAccount = useChainAccount(getStafiHubChainId());
   const chainAccount = useChainAccount(chainId);
   const apy = useApy(chainId);
+  const { totalApy } = useTokenStakeData(getDenom(chainId, chains));
   const supply = useTokenSupply(chainId);
   const { multisigPoolAddress, icaPoolAddress, exchangeRate, leastBond } =
     useStakePoolInfo(getRTokenDenom(chainId, chains));
@@ -68,7 +70,6 @@ export const StakeV2 = () => {
   const { height } = useWindowDimensions();
   const latestBlock = useLatestBlock();
   const { actDetails } = useMintPrograms();
-  const [totalApr, setTotalApr] = useState("--");
 
   useEffect(() => {
     const rTokenDenom = getRTokenDenom(chainId, chains);
@@ -140,22 +141,6 @@ export const StakeV2 = () => {
       })
       .filter((item) => Number(item.rewardAmount) > 0);
   }, [mintRewardInfos, inputAmount]);
-
-  useEffect(() => {
-    (async () => {
-      if (isNaN(Number(apy.replace("%", "")))) {
-        return;
-      }
-      let totalApr = Number(apy.replace("%", ""));
-      mintRewardInfos.forEach((rewardInfo) => {
-        if (!isNaN(Number(rewardInfo.calcApr))) {
-          totalApr += Number(rewardInfo.calcApr);
-        }
-      });
-
-      setTotalApr(totalApr + "");
-    })();
-  }, [mintRewardInfos, apy]);
 
   const buttonDisabled = useMemo(() => {
     return Boolean(
@@ -374,7 +359,7 @@ export const StakeV2 = () => {
       </div>
 
       <div className="self-center mt-6 font-bold text-primary text-[90px]">
-        <FormatterText value={totalApr} decimals={2} />%
+        <FormatterText value={totalApy} decimals={2} />%
       </div>
 
       <div className="mt-10 h-[0.5px] bg-divider" />
@@ -510,7 +495,7 @@ export const StakeV2 = () => {
         visible={apyComparisonModalVisible}
         onClose={() => setApyComparisonModalVisible(false)}
         tokenName={getTokenDisplayName(chainId, chains)}
-        stafiHubApy={apy}
+        stafiHubApy={totalApy || ""}
         otherApy={otherApy}
       />
     </div>

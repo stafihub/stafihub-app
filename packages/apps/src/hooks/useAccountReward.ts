@@ -55,8 +55,9 @@ export function useAccountReward(chainId: string) {
             .map(
               (data) =>
                 Math.floor(
-                  ((Number(data) * Number(tokenPrice)) / 1000000) *
-                    Math.pow(10, 4)
+                  Number(
+                    atomicToHuman(Number(data) * Number(tokenPrice), decimals)
+                  ) * Math.pow(10, 4)
                 ) /
                   Math.pow(10, 4) +
                 ""
@@ -64,7 +65,7 @@ export function useAccountReward(chainId: string) {
         )
       );
     }
-  }, [rTokenReward, tokenPrice]);
+  }, [rTokenReward, tokenPrice, chainId]);
 
   return {
     eraRewards,

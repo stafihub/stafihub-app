@@ -68,7 +68,7 @@ export function useFeeStationPools() {
             accounts[chain.chainId]?.allBalances,
             getDenom(chain.chainId, chains)
           ),
-          formatSwapRate: atomicToHuman(pool.swapRate, pool.decimals),
+          formatSwapRate: atomicToHuman(pool.swapRate),
         } as FeeStationPool;
       }
       return undefined;

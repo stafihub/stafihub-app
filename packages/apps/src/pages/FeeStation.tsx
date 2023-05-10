@@ -284,8 +284,11 @@ export const FeeStation = (props: {}) => {
               invisible: !selectedPool,
             })}
           >
-            1 {selectedPool?.symbol.slice(1).toUpperCase()} ={" "}
-            <FormatterText value={selectedPool?.formatSwapRate} /> FIS
+            1{" "}
+            {selectedPool?.symbol?.startsWith("u")
+              ? selectedPool?.symbol.slice(1).toUpperCase()
+              : selectedPool?.symbol.toUpperCase()}{" "}
+            = <FormatterText value={selectedPool?.formatSwapRate} /> FIS
           </div>
         </Box>
 

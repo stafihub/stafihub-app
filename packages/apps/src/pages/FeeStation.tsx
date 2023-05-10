@@ -21,6 +21,7 @@ import { connectKeplr } from "../redux/reducers/AppSlice";
 import { feeStationSwap } from "../redux/reducers/TxSlice";
 import { FeeStationPool } from "../types/interface";
 import snackbarUtil from "../utils/snackbarUtils";
+import { chains } from "../config";
 
 const enum DisplayStatus {
   Main,
@@ -67,7 +68,14 @@ export const FeeStation = (props: {}) => {
     if (!selectedPool) {
       return "--";
     }
-    return Math.max(0, Number(selectedPool.formatBalance) - 0.01).toString();
+
+    const reserveAmount =
+      chains[selectedPool.chainId].stakeReserveAmount || 0.01;
+
+    return Math.max(
+      0,
+      Number(selectedPool.formatBalance) - reserveAmount
+    ).toString();
   }, [selectedPool]);
 
   const [buttonDisabled, buttonText]: [boolean, string] = useMemo(() => {

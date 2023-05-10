@@ -1,3 +1,4 @@
+import { humanToAtomic, humanToAtomicNew } from "@stafihub/apps-util";
 import { useMemo } from "react";
 
 interface FormatterTextProps {
@@ -23,7 +24,7 @@ export const FormatterText = (props: FormatterTextProps) => {
     const decimals = props.decimals === undefined ? 4 : props.decimals;
     const mathFunc = props.useRound ? Math.round : Math.floor;
     const newNum = (
-      mathFunc(Number(props.value) * Math.pow(10, decimals)) /
+      Number(humanToAtomicNew(props.value + "", decimals)) /
       Math.pow(10, decimals)
     ).toFixed(decimals);
 
@@ -61,7 +62,13 @@ export const FormatterText = (props: FormatterTextProps) => {
     }
 
     return finalNum;
-  }, [props.value, props.decimals, props.skipSplit, props.refineForBigNumber]);
+  }, [
+    props.value,
+    props.decimals,
+    props.skipSplit,
+    props.refineForBigNumber,
+    props.useRound,
+  ]);
 
   return <span>{formatNumber}</span>;
 };

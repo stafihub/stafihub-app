@@ -38,6 +38,23 @@ export function humanToAtomic(
   return decimal.toString();
 }
 
+export function humanToAtomicNew(
+  input: string | undefined | null,
+  fractionalDigits: number = 6
+): string {
+  if (input === undefined || input === null || isNaN(Number(input))) {
+    return "--";
+  }
+  if (Number(input) === 0) {
+    return "0";
+  }
+  const bn = new BigNumber(input)
+    .shiftedBy(fractionalDigits)
+    .dp(0, BigNumber.ROUND_FLOOR);
+
+  return bn.toString();
+}
+
 export function formatNumberToFixed(
   num: string | number | undefined,
   decimals: number = 4

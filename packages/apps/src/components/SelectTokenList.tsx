@@ -105,7 +105,9 @@ export const SelectTokenList = (props: SelectTokenListProps) => {
                   </Box>
 
                   <div className="text-[16px] text-white uppercase">
-                    {item.symbol?.slice(1)}
+                    {item.symbol?.startsWith("u")
+                      ? item.symbol?.slice(1)
+                      : item.symbol}
                   </div>
                 </Stack>
 

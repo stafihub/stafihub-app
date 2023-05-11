@@ -40,7 +40,8 @@ export function humanToAtomic(
 
 export function humanToAtomicNew(
   input: string | undefined | null,
-  fractionalDigits: number = 6
+  fractionalDigits: number = 6,
+  useFloor?: boolean
 ): string {
   if (input === undefined || input === null || isNaN(Number(input))) {
     return "--";
@@ -50,7 +51,7 @@ export function humanToAtomicNew(
   }
   const bn = new BigNumber(input)
     .shiftedBy(fractionalDigits)
-    .dp(0, BigNumber.ROUND_FLOOR);
+    .dp(0, useFloor ? BigNumber.ROUND_FLOOR : BigNumber.ROUND_HALF_EVEN);
 
   return bn.toString();
 }

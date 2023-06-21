@@ -144,7 +144,8 @@ export const RAssetItem = (props: RAssetItemProps) => {
             onClick={(e) => {
               e.stopPropagation();
               if (props.originTokenName === "SWTH") {
-                snackbarUtil.success("rSWTH hasn’t be listed yet, stay tuned.");
+                // snackbarUtil.success("rSWTH hasn’t be listed yet, stay tuned.");
+                openLink("https://app.dem.exchange/trade/rSWTH/SWTH");
               } else {
                 setTradeModalVisible(true);
               }

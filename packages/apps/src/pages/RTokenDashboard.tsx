@@ -32,6 +32,7 @@ import { useUnbondCommission } from "../hooks/useUnbondCommission";
 import { TradeModal } from "../modals/TradeModal";
 import { updateRTokenReward } from "../redux/reducers/ChainSlice";
 import snackbarUtil from "../utils/snackbarUtils";
+import { openLink } from "../utils/common";
 
 export const RTokenDashboard = () => {
   const dispatch = useDispatch();
@@ -143,9 +144,10 @@ export const RTokenDashboard = () => {
                   size="small"
                   onClick={() => {
                     if (params.rToken === "rSWTH") {
-                      snackbarUtil.success(
-                        "rSWTH hasn’t be listed yet, stay tuned."
-                      );
+                      // snackbarUtil.success(
+                      //   "rSWTH hasn’t be listed yet, stay tuned."
+                      // );
+                      openLink("https://app.dem.exchange/trade/rSWTH/SWTH");
                     } else {
                       setTradeModalVisible(true);
                     }

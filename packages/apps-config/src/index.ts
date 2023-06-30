@@ -20,6 +20,21 @@ export function getChains(network: "testnet" | "devnet" | "mainnet") {
   return chainsV2[network];
 }
 
+export function getIBCConfigs(network: "testnet" | "devnet" | "mainnet") {
+  return chainsV2[network];
+}
+
+export function getIBCConfig(
+  otherChainId: string | undefined,
+  chains: NetworkConfig
+) {
+  if (!otherChainId || !ibcConfigs[otherChainId]) {
+    throw new Error(`Invalid otherChainId: ${otherChainId}`);
+  }
+  const ibcConfig = ibcConfigs[otherChainId];
+  return ibcConfig;
+}
+
 export function getApiHost(): string {
   if (isDev()) {
     return "https://test-rtoken-api.stafihub.io";
@@ -189,17 +204,6 @@ export function getExplorerUrl(
   }
   const chain = chains[chainId];
   return chain.explorerUrl;
-}
-
-export function getIBCConfig(
-  otherChainId: string | undefined,
-  chains: NetworkConfig
-) {
-  if (!otherChainId || !ibcConfigs[otherChainId]) {
-    throw new Error(`Invalid otherChainId: ${otherChainId}`);
-  }
-  const ibcConfig = ibcConfigs[otherChainId];
-  return ibcConfig;
 }
 
 export function getDefaultApy(

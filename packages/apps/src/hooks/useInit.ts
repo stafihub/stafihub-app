@@ -23,7 +23,7 @@ export function useInit() {
   const accounts = useAccounts();
 
   useEffect(() => {
-    // console.log("chains", chains);
+    console.log("chains", chains);
 
     dispatch(setIsFork(isFork()));
   }, [dispatch]);

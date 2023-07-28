@@ -12,7 +12,7 @@ import {
   AirdropClaimQueryClientImpl,
   BridgeQueryClientImpl,
 } from "@stafihub/types";
-import { RDexQueryClientImpl } from "@stafihub/types/src/rdex";
+import { RDexQueryClientImpl } from "@stafihub/types";
 import { KeplrChainParams } from "../interface";
 
 export async function createQueryService(

@@ -1,4 +1,4 @@
-import { IbcConfig } from "../index";
+import { keys } from "lodash";
 import { mainnetConfig } from "./mainnet";
 import { testnetConfig } from "./testnet";
 
@@ -7,12 +7,14 @@ import { testnetConfig } from "./testnet";
 //   jsonConfigs = require.context("./testnet", false, /\.json$/);
 // }
 
-const isDev = process.env.REACT_APP_ENV !== "production";
+// const isDev = process.env.NEXT_PUBLIC_ENV !== "production";
+// const isDev = false;
 
-const configs = isDev ? testnetConfig : mainnetConfig;
-const stafihubChainId = isDev ? "stafihub-testnet-2" : "stafihub-1";
+// const configs = isDev ? testnetConfig : mainnetConfig;
+const testnetStafihubChainId = "stafihub-testnet-2";
+const mainnetStafihubChainId = "stafihub-1";
 
-const update: IbcConfig = {};
+// const update: IbcConfig = {};
 // configs.forEach((k: string) => {
 //   const list = jsonConfigs(k);
 //   list.forEach((config: any) => {
@@ -21,10 +23,38 @@ const update: IbcConfig = {};
 //   });
 // });
 
-configs.forEach((config: any) => {
-  config.srcChainId = stafihubChainId;
-  (update as any)[config.dstChainId] = config;
-});
+// configs.forEach((config: any) => {
+//   config.srcChainId = stafihubChainId;
+//   (update as any)[config.dstChainId] = config;
+// });
 
 // console.log("update", update);
-export const ibcConfigs = update;
+// export const ibcConfigs = update;
+
+const ibcConfigs: {
+  [key in "mainnet" | "testnet" | "devnet"]: any;
+} = {
+  mainnet: {},
+  testnet: {},
+  devnet: {},
+};
+
+let configs2 = {
+  mainnet: mainnetConfig,
+  testnet: testnetConfig,
+  devnet: testnetConfig,
+};
+
+keys(configs2).forEach((net: string) => {
+  const update: any = {};
+  configs2[net as "mainnet" | "testnet" | "devnet"]
+    // .keys()
+    .forEach((c: any) => {
+      c.srcChainId =
+        net === "mainnet" ? mainnetStafihubChainId : testnetStafihubChainId;
+      (update as any)[c.dstChainId] = c;
+    });
+  ibcConfigs[net as "mainnet" | "testnet" | "devnet"] = update;
+});
+
+export const ibcConfigsV2 = ibcConfigs;

@@ -12,12 +12,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@cosmjs/encoding": "0.29.4",
+    "@cosmjs/encoding": "0.31.0",
     "@cosmjs/launchpad": "0.27.1",
-    "@cosmjs/math": "0.29.4",
-    "@cosmjs/proto-signing": "0.29.4",
-    "@cosmjs/stargate": "0.29.4",
-    "@cosmjs/tendermint-rpc": "0.29.4",
+    "@cosmjs/math": "0.31.0",
+    "@cosmjs/proto-signing": "0.31.0",
+    "@cosmjs/stargate": "0.31.0",
+    "@cosmjs/tendermint-rpc": "0.31.0",
     "notistack": "2.0.3",
     "@mui/material": "5.4.2",
     "path": "0.12.7",

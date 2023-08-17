@@ -20,9 +20,9 @@
     "build-proto": "./ts-proto.sh"
   },
   "dependencies": {
-    "@cosmjs/proto-signing": "0.27.1",
-    "@cosmjs/stargate": "0.27.1",
-    "@cosmjs/tendermint-rpc": "0.27.1",
+    "@cosmjs/proto-signing": "0.31.0",
+    "@cosmjs/stargate": "0.31.0",
+    "@cosmjs/tendermint-rpc": "0.31.0",
     "@osmonauts/lcd": "^0.11.1",
     "long": "4.0.0",
     "protobufjs": "6.11.2",

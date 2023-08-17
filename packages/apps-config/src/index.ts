@@ -1,15 +1,17 @@
-import { chainsV2 } from "./chains";
-import { NetworkConfig } from ".";
-import { ibcConfigs } from "./ibc";
 import * as _ from "lodash";
+import { NetworkConfig } from ".";
+import { chainsV2 } from "./chains";
+import { ibcConfigsV2 } from "./ibc";
+import { IbcConfigParams } from "./types";
 
-export * from "./types";
 export * from "./chains";
 export * from "./ibc";
+export * from "./types";
 
 export function isDev(): boolean {
-  // console.log("REACT_APP_ENV", process.env.REACT_APP_ENV);
-  return process.env.REACT_APP_ENV !== "production";
+  // console.log("NEXT_PUBLIC_ENV", process.env.NEXT_PUBLIC_ENV);
+  // return process.env.NEXT_PUBLIC_ENV !== "production";
+  return false;
 }
 
 export function isFork(): boolean {
@@ -21,14 +23,17 @@ export function getChains(network: "testnet" | "devnet" | "mainnet") {
 }
 
 export function getIBCConfigs(network: "testnet" | "devnet" | "mainnet") {
-  return chainsV2[network];
+  return ibcConfigsV2[network];
 }
 
 export function getIBCConfig(
   otherChainId: string | undefined,
-  chains: NetworkConfig
+  ibcConfigs: any
 ) {
-  if (!otherChainId || !ibcConfigs[otherChainId]) {
+  if (!otherChainId) {
+    throw new Error(`Invalid otherChainId: ${otherChainId}`);
+  }
+  if (!ibcConfigs[otherChainId]) {
     throw new Error(`Invalid otherChainId: ${otherChainId}`);
   }
   const ibcConfig = ibcConfigs[otherChainId];

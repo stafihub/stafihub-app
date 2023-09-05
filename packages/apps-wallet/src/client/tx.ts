@@ -1,6 +1,13 @@
-import { coins, DeliverTxResponse } from "@cosmjs/stargate";
+import {
+  coins,
+  DeliverTxResponse,
+  MsgSendEncodeObject,
+} from "@cosmjs/stargate";
 import { humanToAtomic } from "@stafihub/apps-util";
-import { getSigningStafihubClient } from "@stafihub/types";
+import {
+  getSigningCosmosClient,
+  getSigningStafihubClient,
+} from "@stafihub/types";
 import Long from "long";
 import { getOfflineSigner, queryChannelClientState, queryLatestBlock } from ".";
 import { KeplrChainParams } from "../interface";
@@ -321,6 +328,42 @@ export async function sendIBCTransferTx(
 
   // console.log("message", message);
   // console.log("response", response);
+
+  return response;
+}
+
+export async function sendCosmosClientTx(
+  chainConfig: KeplrChainParams | null | undefined,
+  userAddress: string,
+  messages: { typeUrl: any; value: any }[]
+): Promise<DeliverTxResponse | undefined> {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+
+  const offlineSigner = await getOfflineSigner(chainConfig.chainId);
+  if (!offlineSigner) {
+    return;
+  }
+
+  const client = await getSigningCosmosClient({
+    rpcEndpoint: chainConfig.rpc,
+    signer: offlineSigner,
+  });
+
+  const simulateResponse = await client.simulate(userAddress, messages, "");
+
+  const fee = {
+    amount: [
+      {
+        denom: chainConfig.denom,
+        amount: "1",
+      },
+    ],
+    gas: Math.ceil(simulateResponse * 1.3).toString(),
+  };
+
+  const response = await client.signAndBroadcast(userAddress, messages, fee);
 
   return response;
 }

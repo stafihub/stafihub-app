@@ -11,6 +11,7 @@ import {
   RDexMiningQueryClientImpl,
   AirdropClaimQueryClientImpl,
   BridgeQueryClientImpl,
+  RValidatorQueryClientImpl,
 } from "@stafihub/types";
 import { RDexQueryClientImpl } from "@stafihub/types";
 import { KeplrChainParams } from "../interface";
@@ -197,6 +198,21 @@ export async function createBridgeQueryService(
   const queryClient = new QueryClient(tendermintClient);
   const rpcClient = createProtobufRpcClient(queryClient);
   const queryService = new BridgeQueryClientImpl(rpcClient);
+
+  return queryService;
+}
+
+export async function createRValidatorQueryService(
+  chainConfig: KeplrChainParams | null | undefined
+) {
+  if (!chainConfig) {
+    throw new Error("chainConfig can not be empty");
+  }
+  const tendermintClient = await Tendermint34Client.connect(chainConfig.rpc);
+
+  const queryClient = new QueryClient(tendermintClient);
+  const rpcClient = createProtobufRpcClient(queryClient);
+  const queryService = new RValidatorQueryClientImpl(rpcClient);
 
   return queryService;
 }

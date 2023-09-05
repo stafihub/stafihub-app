@@ -1,0 +1,68 @@
+syntax = "proto3";
+package stafihub.stafihub.rvalidator;
+import "gogoproto/gogo.proto";
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/stafihub/stafihub/x/rvalidator/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc InitRValidator(MsgInitRValidator) returns (MsgInitRValidatorResponse);
+  rpc SetCycleSeconds(MsgSetCycleSeconds) returns (MsgSetCycleSecondsResponse);
+  rpc SetShuffleSeconds(MsgSetShuffleSeconds) returns (MsgSetShuffleSecondsResponse);
+  rpc AddRValidator(MsgAddRValidator) returns (MsgAddRValidatorResponse);
+  rpc RmRValidator(MsgRmRValidator) returns (MsgRmRValidatorResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgInitRValidator {
+  string creator = 1;
+  string denom = 2;
+  string poolAddress = 3;
+  repeated string valAddressList = 4;
+}
+
+message MsgInitRValidatorResponse {
+}
+
+message MsgSetCycleSeconds {
+  string creator = 1;
+  string denom = 2;
+  uint64 seconds = 3 [(gogoproto.jsontag) = "seconds"];
+}
+
+message MsgSetCycleSecondsResponse {
+}
+
+message MsgSetShuffleSeconds {
+  string creator = 1;
+  string denom = 2;
+  uint64 seconds = 3 [(gogoproto.jsontag) = "seconds"];
+}
+
+message MsgSetShuffleSecondsResponse {
+}
+
+
+message MsgAddRValidator {
+  string creator = 1;
+  string denom = 2;
+  string poolAddress = 3;
+  string valAddress = 4;
+}
+
+message MsgAddRValidatorResponse {
+}
+
+message MsgRmRValidator {
+  string creator = 1;
+  string denom = 2;
+  string poolAddress = 3;
+  string oldAddress = 4;
+  string newAddress = 5;
+}
+
+message MsgRmRValidatorResponse {
+}
+
+// this line is used by starport scaffolding # proto/tx/message

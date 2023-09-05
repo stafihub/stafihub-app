@@ -2,7 +2,7 @@
   "protoDirs": [
     "./ledger_proto"
   ],
-  "outPath": "./src/codegen1",
+  "outPath": "./src/codegen2",
   "options": {
     "aminoEncoding": {
       "enabled": true

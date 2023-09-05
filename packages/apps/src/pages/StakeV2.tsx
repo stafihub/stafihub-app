@@ -1,5 +1,6 @@
 import {
   getApiHost,
+  getChainDecimals,
   getChainIdFromRTokenDisplayName,
   getDenom,
   getDisplayHubName,
@@ -8,7 +9,7 @@ import {
   getStafiHubChainId,
   getTokenDisplayName,
 } from "@stafihub/apps-config";
-import { formatNumberToFixed } from "@stafihub/apps-util";
+import { formatNumberToFixed, humanToAtomic } from "@stafihub/apps-util";
 import {
   Button,
   CustomInput,
@@ -37,7 +38,7 @@ import { ApyComparisonModal } from "../modals/ApyComparisonModal";
 import { MemoNoticeModal } from "../modals/MemoNoticeModal";
 import { connectKeplr } from "../redux/reducers/AppSlice";
 import { setStakeSidebarProps, stake } from "../redux/reducers/TxSlice";
-import { FormatTokenRewardInfo } from "../types/interface";
+import { Coin, FormatTokenRewardInfo } from "../types/interface";
 import { getHumanAccountBalance } from "../utils/common";
 import snackbarUtil from "../utils/snackbarUtils";
 import { chains } from "../config";
@@ -47,6 +48,17 @@ import {
   saveStorage,
 } from "../utils/storage";
 import { useTokenStakeData } from "../hooks/useTokenStakeData";
+import { useDelegateTokenAmount } from "../hooks/useDelegateTokenAmount";
+import {
+  queryAccountBalances,
+  queryRValidatorList,
+  queryTokenizeShareRecords,
+  sendCosmosClientTx,
+  sendTokenizeSharesTx,
+  sendTransferTokenizeSharesTx,
+} from "@stafihub/apps-wallet";
+import _ from "lodash";
+import { useStakingLimit } from "../hooks/useStakingLimit";
 
 export const StakeV2 = () => {
   const dispatch = useDispatch();
@@ -70,6 +82,11 @@ export const StakeV2 = () => {
   const { height } = useWindowDimensions();
   const latestBlock = useLatestBlock();
   const { actDetails } = useMintPrograms();
+
+  const { delegateTokenBalance, delegationList } =
+    useDelegateTokenAmount(chainId);
+  // console.log({ delegateTokenBalance });
+  useStakingLimit(chainId);
 
   useEffect(() => {
     const rTokenDenom = getRTokenDenom(chainId, chains);
@@ -184,6 +201,179 @@ export const StakeV2 = () => {
     return Number(inputAmount) / Number(exchangeRate);
   }, [inputAmount, exchangeRate]);
 
+  const delegate = async (delegateAmount: string) => {
+    const poolAddress = icaPoolAddress || multisigPoolAddress;
+    const userAddress = chainAccount?.bech32Address;
+
+    if (!userAddress || !poolAddress) {
+      return;
+    }
+
+    console.log({ poolAddress });
+    const queryRValidatorListResponse = await queryRValidatorList(
+      chains[getStafiHubChainId()],
+      poolAddress,
+      "uratom"
+    );
+
+    const sortDelegationList = _.cloneDeep(delegationList).sort(
+      (item1, item2) => {
+        return Number(item2.balance?.amount) - Number(item1.balance?.amount);
+      }
+    );
+
+    if (
+      !queryRValidatorListResponse?.rValidatorList ||
+      queryRValidatorListResponse.rValidatorList.length === 0
+    ) {
+      return;
+    }
+
+    const targetValidatorAddress =
+      queryRValidatorListResponse.rValidatorList[0];
+
+    let tokenizeShareCount = 0;
+    const prepareMessages: { typeUrl: any; value: any }[] = [];
+    let chainDelegateAmount = humanToAtomic(
+      delegateAmount,
+      getChainDecimals(chainId, chains)
+    );
+
+    for (let i = 0; i < sortDelegationList.length; i++) {
+      if (Number(chainDelegateAmount) <= 0) {
+        break;
+      }
+      const currentDelegation = sortDelegationList[i];
+      let currentAmount = "0";
+      if (
+        Number(currentDelegation.balance?.amount) >= Number(chainDelegateAmount)
+      ) {
+        currentAmount = chainDelegateAmount;
+        chainDelegateAmount = "0";
+      } else {
+        currentAmount = currentDelegation.balance?.amount || "0";
+        chainDelegateAmount =
+          Number(chainDelegateAmount) - Number(currentAmount) + "";
+      }
+
+      if (
+        queryRValidatorListResponse?.rValidatorList?.indexOf(
+          currentDelegation.delegation?.validatorAddress || ""
+        ) < 0
+      ) {
+        prepareMessages.push({
+          typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
+          value: {
+            delegatorAddress: userAddress,
+            validatorSrcAddress:
+              currentDelegation.delegation?.validatorAddress || "",
+            validatorDstAddress: targetValidatorAddress,
+            amount: {
+              denom: currentDelegation.balance?.denom,
+              amount: currentAmount,
+            },
+          },
+        });
+      }
+
+      tokenizeShareCount++;
+      prepareMessages.push({
+        typeUrl: "/cosmos.staking.v1beta1.MsgTokenizeShares",
+        value: {
+          delegatorAddress: userAddress,
+          validatorAddress: targetValidatorAddress,
+          tokenizedShareOwner: userAddress,
+          amount: {
+            denom: currentDelegation.balance?.denom,
+            amount: currentAmount,
+          },
+        },
+      });
+    }
+    console.log({ messages: prepareMessages });
+
+    const prepareTxResponse = await sendCosmosClientTx(
+      chains[chainId],
+      userAddress,
+      prepareMessages
+    );
+    console.log({ prepareTxResponse });
+
+    // const txResponse = await sendTokenizeSharesTx(
+    //   chains[chainId],
+    //   chainAccount?.bech32Address || "",
+    //   "cosmosvaloper1pcrsgnvy5z8uqe9sy6qwfanvd9fnc4gely74r6",
+    //   "uatom",
+    //   "3500000"
+    // );
+    // console.log({ txResponse });
+
+    const userBalances = await queryAccountBalances(
+      chains[chainId],
+      userAddress
+    );
+    const result = await queryTokenizeShareRecords(
+      chains[chainId],
+      chainAccount?.bech32Address || ""
+    );
+    const transferMessages: { typeUrl: any; value: any }[] = [];
+    const balanceTransferAmounts: Coin[] = [];
+    if (result?.records && result.records.length >= tokenizeShareCount) {
+      for (
+        let recordIndex = result.records.length - 1;
+        recordIndex > result.records.length - 1 - tokenizeShareCount;
+        recordIndex--
+      ) {
+        const tokenizeSharesRecord = result.records[recordIndex];
+        const tokenizeShareDenom = `${
+          tokenizeSharesRecord.validator
+        }/${tokenizeSharesRecord.id.toString()}`;
+        const tokenizeShareBalance = userBalances.find((item) => {
+          return item.denom === tokenizeShareDenom;
+        });
+        if (!tokenizeShareBalance) {
+          throw new Error("TokenizeShare Balance not found");
+        }
+        // const transferTxResponse = await sendTransferTokenizeSharesTx(
+        //   chains[chainId],
+        //   chainAccount?.bech32Address || "",
+        //   poolAddress,
+        //   tokenizeSharesRecord.id
+        // );
+        transferMessages.push({
+          typeUrl: "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord",
+          value: {
+            sender: userAddress,
+            newOwner: poolAddress,
+            tokenizeShareRecordId: tokenizeSharesRecord.id,
+          },
+        });
+        balanceTransferAmounts.push({
+          denom: tokenizeShareBalance.denom,
+          amount: tokenizeShareBalance.amount,
+        });
+      }
+
+      transferMessages.push({
+        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+        value: {
+          fromAddress: userAddress,
+          toAddress: poolAddress,
+          amount: balanceTransferAmounts,
+        },
+      });
+
+      const transferTxResponse = await sendCosmosClientTx(
+        chains[chainId],
+        userAddress,
+        transferMessages
+      );
+      console.log({ transferTxResponse });
+    } else {
+      throw new Error("TokenizeShares records not match");
+    }
+  };
+
   const clickStake = async () => {
     if ((!multisigPoolAddress && !icaPoolAddress) || !stafiHubAddress) {
       return;
@@ -197,6 +387,11 @@ export const StakeV2 = () => {
     // }
 
     const poolAddress = icaPoolAddress || multisigPoolAddress;
+
+    if (true) {
+      delegate("135");
+      return;
+    }
 
     dispatch(
       stake(

@@ -3,7 +3,6 @@ export * from "./cosmos";
 export * from "./ibc";
 export * from "./rmintreward";
 export * from "./rdex";
-export * from "./rvalidator";
 export * from "./mining";
 export * from "./claim";
 export * from "./bridge";

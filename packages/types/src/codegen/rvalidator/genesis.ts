@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Params, ParamsSDKType } from "./params";
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "../helpers";
@@ -86,12 +87,15 @@ function createBaseGenesisState(): GenesisState {
     latestDealedCycleList: [],
     cycleSecondsList: [],
     shuffleSecondsList: [],
-    dealingRValidatorList: []
+    dealingRValidatorList: [],
   };
 }
 
 export const GenesisState = {
-  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: GenesisState,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -137,27 +141,39 @@ export const GenesisState = {
           break;
 
         case 2:
-          message.selectedRValidatorList.push(RValidator.decode(reader, reader.uint32()));
+          message.selectedRValidatorList.push(
+            RValidator.decode(reader, reader.uint32())
+          );
           break;
 
         case 3:
-          message.latestVotedCycleList.push(Cycle.decode(reader, reader.uint32()));
+          message.latestVotedCycleList.push(
+            Cycle.decode(reader, reader.uint32())
+          );
           break;
 
         case 4:
-          message.latestDealedCycleList.push(Cycle.decode(reader, reader.uint32()));
+          message.latestDealedCycleList.push(
+            Cycle.decode(reader, reader.uint32())
+          );
           break;
 
         case 5:
-          message.cycleSecondsList.push(CycleSeconds.decode(reader, reader.uint32()));
+          message.cycleSecondsList.push(
+            CycleSeconds.decode(reader, reader.uint32())
+          );
           break;
 
         case 6:
-          message.shuffleSecondsList.push(ShuffleSeconds.decode(reader, reader.uint32()));
+          message.shuffleSecondsList.push(
+            ShuffleSeconds.decode(reader, reader.uint32())
+          );
           break;
 
         case 7:
-          message.dealingRValidatorList.push(DealingRValidator.decode(reader, reader.uint32()));
+          message.dealingRValidatorList.push(
+            DealingRValidator.decode(reader, reader.uint32())
+          );
           break;
 
         default:
@@ -171,28 +187,43 @@ export const GenesisState = {
 
   fromPartial(object: DeepPartial<GenesisState>): GenesisState {
     const message = createBaseGenesisState();
-    message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
-    message.selectedRValidatorList = object.selectedRValidatorList?.map(e => RValidator.fromPartial(e)) || [];
-    message.latestVotedCycleList = object.latestVotedCycleList?.map(e => Cycle.fromPartial(e)) || [];
-    message.latestDealedCycleList = object.latestDealedCycleList?.map(e => Cycle.fromPartial(e)) || [];
-    message.cycleSecondsList = object.cycleSecondsList?.map(e => CycleSeconds.fromPartial(e)) || [];
-    message.shuffleSecondsList = object.shuffleSecondsList?.map(e => ShuffleSeconds.fromPartial(e)) || [];
-    message.dealingRValidatorList = object.dealingRValidatorList?.map(e => DealingRValidator.fromPartial(e)) || [];
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? Params.fromPartial(object.params)
+        : undefined;
+    message.selectedRValidatorList =
+      object.selectedRValidatorList?.map((e) => RValidator.fromPartial(e)) ||
+      [];
+    message.latestVotedCycleList =
+      object.latestVotedCycleList?.map((e) => Cycle.fromPartial(e)) || [];
+    message.latestDealedCycleList =
+      object.latestDealedCycleList?.map((e) => Cycle.fromPartial(e)) || [];
+    message.cycleSecondsList =
+      object.cycleSecondsList?.map((e) => CycleSeconds.fromPartial(e)) || [];
+    message.shuffleSecondsList =
+      object.shuffleSecondsList?.map((e) => ShuffleSeconds.fromPartial(e)) ||
+      [];
+    message.dealingRValidatorList =
+      object.dealingRValidatorList?.map((e) =>
+        DealingRValidator.fromPartial(e)
+      ) || [];
     return message;
-  }
-
+  },
 };
 
 function createBaseRValidator(): RValidator {
   return {
     denom: "",
     poolAddress: "",
-    valAddress: ""
+    valAddress: "",
   };
 }
 
 export const RValidator = {
-  encode(message: RValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: RValidator,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -244,8 +275,7 @@ export const RValidator = {
     message.poolAddress = object.poolAddress ?? "";
     message.valAddress = object.valAddress ?? "";
     return message;
-  }
-
+  },
 };
 
 function createBaseDealingRValidator(): DealingRValidator {
@@ -253,12 +283,15 @@ function createBaseDealingRValidator(): DealingRValidator {
     denom: "",
     poolAddress: "",
     oldValAddress: "",
-    newValAddress: ""
+    newValAddress: "",
   };
 }
 
 export const DealingRValidator = {
-  encode(message: DealingRValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: DealingRValidator,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -319,8 +352,7 @@ export const DealingRValidator = {
     message.oldValAddress = object.oldValAddress ?? "";
     message.newValAddress = object.newValAddress ?? "";
     return message;
-  }
-
+  },
 };
 
 function createBaseCycle(): Cycle {
@@ -328,7 +360,7 @@ function createBaseCycle(): Cycle {
     denom: "",
     poolAddress: "",
     version: Long.UZERO,
-    number: Long.UZERO
+    number: Long.UZERO,
   };
 }
 
@@ -371,11 +403,11 @@ export const Cycle = {
           break;
 
         case 3:
-          message.version = (reader.uint64() as Long);
+          message.version = reader.uint64() as Long;
           break;
 
         case 4:
-          message.number = (reader.uint64() as Long);
+          message.number = reader.uint64() as Long;
           break;
 
         default:
@@ -391,23 +423,31 @@ export const Cycle = {
     const message = createBaseCycle();
     message.denom = object.denom ?? "";
     message.poolAddress = object.poolAddress ?? "";
-    message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.UZERO;
-    message.number = object.number !== undefined && object.number !== null ? Long.fromValue(object.number) : Long.UZERO;
+    message.version =
+      object.version !== undefined && object.version !== null
+        ? Long.fromValue(object.version)
+        : Long.UZERO;
+    message.number =
+      object.number !== undefined && object.number !== null
+        ? Long.fromValue(object.number)
+        : Long.UZERO;
     return message;
-  }
-
+  },
 };
 
 function createBaseCycleSeconds(): CycleSeconds {
   return {
     denom: "",
     version: Long.UZERO,
-    seconds: Long.UZERO
+    seconds: Long.UZERO,
   };
 }
 
 export const CycleSeconds = {
-  encode(message: CycleSeconds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: CycleSeconds,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -437,11 +477,11 @@ export const CycleSeconds = {
           break;
 
         case 2:
-          message.version = (reader.uint64() as Long);
+          message.version = reader.uint64() as Long;
           break;
 
         case 3:
-          message.seconds = (reader.uint64() as Long);
+          message.seconds = reader.uint64() as Long;
           break;
 
         default:
@@ -456,23 +496,31 @@ export const CycleSeconds = {
   fromPartial(object: DeepPartial<CycleSeconds>): CycleSeconds {
     const message = createBaseCycleSeconds();
     message.denom = object.denom ?? "";
-    message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.UZERO;
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? Long.fromValue(object.seconds) : Long.UZERO;
+    message.version =
+      object.version !== undefined && object.version !== null
+        ? Long.fromValue(object.version)
+        : Long.UZERO;
+    message.seconds =
+      object.seconds !== undefined && object.seconds !== null
+        ? Long.fromValue(object.seconds)
+        : Long.UZERO;
     return message;
-  }
-
+  },
 };
 
 function createBaseShuffleSeconds(): ShuffleSeconds {
   return {
     denom: "",
     version: Long.UZERO,
-    seconds: Long.UZERO
+    seconds: Long.UZERO,
   };
 }
 
 export const ShuffleSeconds = {
-  encode(message: ShuffleSeconds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: ShuffleSeconds,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
     }
@@ -502,11 +550,11 @@ export const ShuffleSeconds = {
           break;
 
         case 2:
-          message.version = (reader.uint64() as Long);
+          message.version = reader.uint64() as Long;
           break;
 
         case 3:
-          message.seconds = (reader.uint64() as Long);
+          message.seconds = reader.uint64() as Long;
           break;
 
         default:
@@ -521,9 +569,14 @@ export const ShuffleSeconds = {
   fromPartial(object: DeepPartial<ShuffleSeconds>): ShuffleSeconds {
     const message = createBaseShuffleSeconds();
     message.denom = object.denom ?? "";
-    message.version = object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.UZERO;
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? Long.fromValue(object.seconds) : Long.UZERO;
+    message.version =
+      object.version !== undefined && object.version !== null
+        ? Long.fromValue(object.version)
+        : Long.UZERO;
+    message.seconds =
+      object.seconds !== undefined && object.seconds !== null
+        ? Long.fromValue(object.seconds)
+        : Long.UZERO;
     return message;
-  }
-
+  },
 };

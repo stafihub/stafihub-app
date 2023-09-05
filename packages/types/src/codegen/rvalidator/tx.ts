@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as _m0 from "protobufjs/minimal";
 import { DeepPartial, Long } from "../helpers";
 export interface MsgInitRValidator {
@@ -74,12 +75,15 @@ function createBaseMsgInitRValidator(): MsgInitRValidator {
     creator: "",
     denom: "",
     poolAddress: "",
-    valAddressList: []
+    valAddressList: [],
   };
 }
 
 export const MsgInitRValidator = {
-  encode(message: MsgInitRValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: MsgInitRValidator,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -138,10 +142,9 @@ export const MsgInitRValidator = {
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
     message.poolAddress = object.poolAddress ?? "";
-    message.valAddressList = object.valAddressList?.map(e => e) || [];
+    message.valAddressList = object.valAddressList?.map((e) => e) || [];
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgInitRValidatorResponse(): MsgInitRValidatorResponse {
@@ -149,11 +152,17 @@ function createBaseMsgInitRValidatorResponse(): MsgInitRValidatorResponse {
 }
 
 export const MsgInitRValidatorResponse = {
-  encode(_: MsgInitRValidatorResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: MsgInitRValidatorResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgInitRValidatorResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgInitRValidatorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgInitRValidatorResponse();
@@ -171,23 +180,27 @@ export const MsgInitRValidatorResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgInitRValidatorResponse>): MsgInitRValidatorResponse {
+  fromPartial(
+    _: DeepPartial<MsgInitRValidatorResponse>
+  ): MsgInitRValidatorResponse {
     const message = createBaseMsgInitRValidatorResponse();
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgSetCycleSeconds(): MsgSetCycleSeconds {
   return {
     creator: "",
     denom: "",
-    seconds: Long.UZERO
+    seconds: Long.UZERO,
   };
 }
 
 export const MsgSetCycleSeconds = {
-  encode(message: MsgSetCycleSeconds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: MsgSetCycleSeconds,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -221,7 +234,7 @@ export const MsgSetCycleSeconds = {
           break;
 
         case 3:
-          message.seconds = (reader.uint64() as Long);
+          message.seconds = reader.uint64() as Long;
           break;
 
         default:
@@ -237,10 +250,12 @@ export const MsgSetCycleSeconds = {
     const message = createBaseMsgSetCycleSeconds();
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? Long.fromValue(object.seconds) : Long.UZERO;
+    message.seconds =
+      object.seconds !== undefined && object.seconds !== null
+        ? Long.fromValue(object.seconds)
+        : Long.UZERO;
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgSetCycleSecondsResponse(): MsgSetCycleSecondsResponse {
@@ -248,11 +263,17 @@ function createBaseMsgSetCycleSecondsResponse(): MsgSetCycleSecondsResponse {
 }
 
 export const MsgSetCycleSecondsResponse = {
-  encode(_: MsgSetCycleSecondsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: MsgSetCycleSecondsResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetCycleSecondsResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgSetCycleSecondsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetCycleSecondsResponse();
@@ -270,23 +291,27 @@ export const MsgSetCycleSecondsResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgSetCycleSecondsResponse>): MsgSetCycleSecondsResponse {
+  fromPartial(
+    _: DeepPartial<MsgSetCycleSecondsResponse>
+  ): MsgSetCycleSecondsResponse {
     const message = createBaseMsgSetCycleSecondsResponse();
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgSetShuffleSeconds(): MsgSetShuffleSeconds {
   return {
     creator: "",
     denom: "",
-    seconds: Long.UZERO
+    seconds: Long.UZERO,
   };
 }
 
 export const MsgSetShuffleSeconds = {
-  encode(message: MsgSetShuffleSeconds, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: MsgSetShuffleSeconds,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -302,7 +327,10 @@ export const MsgSetShuffleSeconds = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetShuffleSeconds {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgSetShuffleSeconds {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetShuffleSeconds();
@@ -320,7 +348,7 @@ export const MsgSetShuffleSeconds = {
           break;
 
         case 3:
-          message.seconds = (reader.uint64() as Long);
+          message.seconds = reader.uint64() as Long;
           break;
 
         default:
@@ -336,10 +364,12 @@ export const MsgSetShuffleSeconds = {
     const message = createBaseMsgSetShuffleSeconds();
     message.creator = object.creator ?? "";
     message.denom = object.denom ?? "";
-    message.seconds = object.seconds !== undefined && object.seconds !== null ? Long.fromValue(object.seconds) : Long.UZERO;
+    message.seconds =
+      object.seconds !== undefined && object.seconds !== null
+        ? Long.fromValue(object.seconds)
+        : Long.UZERO;
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgSetShuffleSecondsResponse(): MsgSetShuffleSecondsResponse {
@@ -347,11 +377,17 @@ function createBaseMsgSetShuffleSecondsResponse(): MsgSetShuffleSecondsResponse 
 }
 
 export const MsgSetShuffleSecondsResponse = {
-  encode(_: MsgSetShuffleSecondsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: MsgSetShuffleSecondsResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetShuffleSecondsResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgSetShuffleSecondsResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetShuffleSecondsResponse();
@@ -369,11 +405,12 @@ export const MsgSetShuffleSecondsResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgSetShuffleSecondsResponse>): MsgSetShuffleSecondsResponse {
+  fromPartial(
+    _: DeepPartial<MsgSetShuffleSecondsResponse>
+  ): MsgSetShuffleSecondsResponse {
     const message = createBaseMsgSetShuffleSecondsResponse();
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgAddRValidator(): MsgAddRValidator {
@@ -381,12 +418,15 @@ function createBaseMsgAddRValidator(): MsgAddRValidator {
     creator: "",
     denom: "",
     poolAddress: "",
-    valAddress: ""
+    valAddress: "",
   };
 }
 
 export const MsgAddRValidator = {
-  encode(message: MsgAddRValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: MsgAddRValidator,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -447,8 +487,7 @@ export const MsgAddRValidator = {
     message.poolAddress = object.poolAddress ?? "";
     message.valAddress = object.valAddress ?? "";
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgAddRValidatorResponse(): MsgAddRValidatorResponse {
@@ -456,11 +495,17 @@ function createBaseMsgAddRValidatorResponse(): MsgAddRValidatorResponse {
 }
 
 export const MsgAddRValidatorResponse = {
-  encode(_: MsgAddRValidatorResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: MsgAddRValidatorResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgAddRValidatorResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgAddRValidatorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAddRValidatorResponse();
@@ -478,11 +523,12 @@ export const MsgAddRValidatorResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgAddRValidatorResponse>): MsgAddRValidatorResponse {
+  fromPartial(
+    _: DeepPartial<MsgAddRValidatorResponse>
+  ): MsgAddRValidatorResponse {
     const message = createBaseMsgAddRValidatorResponse();
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgRmRValidator(): MsgRmRValidator {
@@ -491,12 +537,15 @@ function createBaseMsgRmRValidator(): MsgRmRValidator {
     denom: "",
     poolAddress: "",
     oldAddress: "",
-    newAddress: ""
+    newAddress: "",
   };
 }
 
 export const MsgRmRValidator = {
-  encode(message: MsgRmRValidator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: MsgRmRValidator,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -566,8 +615,7 @@ export const MsgRmRValidator = {
     message.oldAddress = object.oldAddress ?? "";
     message.newAddress = object.newAddress ?? "";
     return message;
-  }
-
+  },
 };
 
 function createBaseMsgRmRValidatorResponse(): MsgRmRValidatorResponse {
@@ -575,11 +623,17 @@ function createBaseMsgRmRValidatorResponse(): MsgRmRValidatorResponse {
 }
 
 export const MsgRmRValidatorResponse = {
-  encode(_: MsgRmRValidatorResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    _: MsgRmRValidatorResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgRmRValidatorResponse {
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgRmRValidatorResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRmRValidatorResponse();
@@ -597,9 +651,10 @@ export const MsgRmRValidatorResponse = {
     return message;
   },
 
-  fromPartial(_: DeepPartial<MsgRmRValidatorResponse>): MsgRmRValidatorResponse {
+  fromPartial(
+    _: DeepPartial<MsgRmRValidatorResponse>
+  ): MsgRmRValidatorResponse {
     const message = createBaseMsgRmRValidatorResponse();
     return message;
-  }
-
+  },
 };

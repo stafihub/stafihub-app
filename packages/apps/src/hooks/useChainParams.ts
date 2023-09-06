@@ -1,11 +1,11 @@
 import { queryChainParams } from "@stafihub/apps-wallet";
-import { QueryParamsResponse } from "@stafihub/types";
+import { QueryStakingParamsResponse } from "@stafihub/types";
 import { useEffect, useState } from "react";
 import { chains } from "../config";
 
 export function useChainParams(chainId: string | undefined) {
   const [chainParams, setChainParams] = useState<
-    QueryParamsResponse | undefined
+    QueryStakingParamsResponse | undefined
   >();
 
   useEffect(() => {

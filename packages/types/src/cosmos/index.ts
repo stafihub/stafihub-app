@@ -12,6 +12,7 @@ export {
   QueryTokenizeShareRecordsOwnedResponse,
   QueryTotalLiquidStakedResponse,
   QueryPoolResponse as QueryStakingPoolResponse,
+  QueryValidatorResponse as QueryStakingValidatorResponse,
 } from "./staking/v1beta1/query";
 
 export { DelegationResponse } from "./staking/v1beta1/staking";

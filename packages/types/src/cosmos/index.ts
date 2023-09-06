@@ -6,9 +6,15 @@ export {
 
 export {
   QueryClientImpl as CosmosStakingQueryClientImpl,
-  QueryParamsRequest,
-  QueryParamsResponse,
+  QueryParamsRequest as QueryStakingParamsRequest,
+  QueryParamsResponse as QueryStakingParamsResponse,
+  QueryDelegatorDelegationsResponse,
+  QueryTokenizeShareRecordsOwnedResponse,
+  QueryTotalLiquidStakedResponse,
+  QueryPoolResponse as QueryStakingPoolResponse,
 } from "./staking/v1beta1/query";
+
+export { DelegationResponse } from "./staking/v1beta1/staking";
 
 export {
   ServiceClientImpl as CosmosBaseServiceClientImpl,

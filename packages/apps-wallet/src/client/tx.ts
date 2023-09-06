@@ -335,7 +335,8 @@ export async function sendIBCTransferTx(
 export async function sendCosmosClientTx(
   chainConfig: KeplrChainParams | null | undefined,
   userAddress: string,
-  messages: { typeUrl: any; value: any }[]
+  messages: { typeUrl: any; value: any }[],
+  memo?: string
 ): Promise<DeliverTxResponse | undefined> {
   if (!chainConfig) {
     throw new Error("chainConfig can not be empty");
@@ -363,7 +364,12 @@ export async function sendCosmosClientTx(
     gas: Math.ceil(simulateResponse * 1.3).toString(),
   };
 
-  const response = await client.signAndBroadcast(userAddress, messages, fee);
+  const response = await client.signAndBroadcast(
+    userAddress,
+    messages,
+    fee,
+    memo
+  );
 
   return response;
 }

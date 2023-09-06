@@ -7,3 +7,4 @@ export * from "./mining";
 export * from "./claim";
 export * from "./bridge";
 export * from "./codegen";
+export * from "./rvalidator";

@@ -388,10 +388,10 @@ export const StakeV2 = () => {
 
     const poolAddress = icaPoolAddress || multisigPoolAddress;
 
-    if (true) {
-      delegate("135");
-      return;
-    }
+    // if (true) {
+    //   delegate("135");
+    //   return;
+    // }
 
     dispatch(
       stake(

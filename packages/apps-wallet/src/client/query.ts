@@ -12,7 +12,7 @@ import type {
   QueryGetRParamsResponse,
   QueryGetUnbondCommissionResponse,
   QueryGetUnbondRelayFeeResponse,
-  QueryParamsResponse,
+  QueryStakingParamsResponse,
   QuerySupplyOfResponse,
   UserClaimInfo,
 } from "@stafihub/types";
@@ -325,7 +325,7 @@ export async function queryUnbondRelayFee(
 
 export async function queryChainParams(
   chainConfig: KeplrChainParams | null | undefined
-): Promise<QueryParamsResponse | undefined> {
+): Promise<QueryStakingParamsResponse | undefined> {
   try {
     const queryService = await createCosmosStakingQueryService(chainConfig);
     const result = await queryService.Params({});

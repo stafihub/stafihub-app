@@ -1,12 +1,16 @@
 {
   "name": "@stafihub/apps-util",
-  "version": "1.0.7",
-  "type": "module",
-  "main": "./src/index.ts",
+  "version": "1.1.0",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stafihub/stafihub-app.git"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "stafihub",
     "cosmos"

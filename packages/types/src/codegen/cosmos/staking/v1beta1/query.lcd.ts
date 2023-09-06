@@ -1,7 +1,6 @@
-//@ts-nocheck
 import { setPaginationParams } from "../../../helpers";
 import { LCDClient } from "@osmonauts/lcd";
-import { QueryValidatorsRequest, QueryValidatorsResponseSDKType, QueryValidatorRequest, QueryValidatorResponseSDKType, QueryValidatorDelegationsRequest, QueryValidatorDelegationsResponseSDKType, QueryValidatorUnbondingDelegationsRequest, QueryValidatorUnbondingDelegationsResponseSDKType, QueryDelegationRequest, QueryDelegationResponseSDKType, QueryUnbondingDelegationRequest, QueryUnbondingDelegationResponseSDKType, QueryDelegatorDelegationsRequest, QueryDelegatorDelegationsResponseSDKType, QueryDelegatorUnbondingDelegationsRequest, QueryDelegatorUnbondingDelegationsResponseSDKType, QueryRedelegationsRequest, QueryRedelegationsResponseSDKType, QueryDelegatorValidatorsRequest, QueryDelegatorValidatorsResponseSDKType, QueryDelegatorValidatorRequest, QueryDelegatorValidatorResponseSDKType, QueryHistoricalInfoRequest, QueryHistoricalInfoResponseSDKType, QueryPoolRequest, QueryPoolResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType } from "./query";
+import { QueryValidatorsRequest, QueryValidatorsResponseSDKType, QueryValidatorRequest, QueryValidatorResponseSDKType, QueryValidatorDelegationsRequest, QueryValidatorDelegationsResponseSDKType, QueryValidatorUnbondingDelegationsRequest, QueryValidatorUnbondingDelegationsResponseSDKType, QueryDelegationRequest, QueryDelegationResponseSDKType, QueryUnbondingDelegationRequest, QueryUnbondingDelegationResponseSDKType, QueryDelegatorDelegationsRequest, QueryDelegatorDelegationsResponseSDKType, QueryDelegatorUnbondingDelegationsRequest, QueryDelegatorUnbondingDelegationsResponseSDKType, QueryRedelegationsRequest, QueryRedelegationsResponseSDKType, QueryDelegatorValidatorsRequest, QueryDelegatorValidatorsResponseSDKType, QueryDelegatorValidatorRequest, QueryDelegatorValidatorResponseSDKType, QueryHistoricalInfoRequest, QueryHistoricalInfoResponseSDKType, QueryPoolRequest, QueryPoolResponseSDKType, QueryParamsRequest, QueryParamsResponseSDKType, QueryTokenizeShareRecordByIdRequest, QueryTokenizeShareRecordByIdResponseSDKType, QueryTokenizeShareRecordByDenomRequest, QueryTokenizeShareRecordByDenomResponseSDKType, QueryTokenizeShareRecordsOwnedRequest, QueryTokenizeShareRecordsOwnedResponseSDKType, QueryAllTokenizeShareRecordsRequest, QueryAllTokenizeShareRecordsResponseSDKType, QueryLastTokenizeShareRecordIdRequest, QueryLastTokenizeShareRecordIdResponseSDKType, QueryTotalTokenizeSharedAssetsRequest, QueryTotalTokenizeSharedAssetsResponseSDKType, QueryTotalLiquidStaked, QueryTotalLiquidStakedResponseSDKType, QueryTokenizeShareLockInfo, QueryTokenizeShareLockInfoResponseSDKType } from "./query";
 export class LCDQueryClient {
   req: LCDClient;
 
@@ -25,6 +24,14 @@ export class LCDQueryClient {
     this.historicalInfo = this.historicalInfo.bind(this);
     this.pool = this.pool.bind(this);
     this.params = this.params.bind(this);
+    this.tokenizeShareRecordById = this.tokenizeShareRecordById.bind(this);
+    this.tokenizeShareRecordByDenom = this.tokenizeShareRecordByDenom.bind(this);
+    this.tokenizeShareRecordsOwned = this.tokenizeShareRecordsOwned.bind(this);
+    this.allTokenizeShareRecords = this.allTokenizeShareRecords.bind(this);
+    this.lastTokenizeShareRecordId = this.lastTokenizeShareRecordId.bind(this);
+    this.totalTokenizeSharedAssets = this.totalTokenizeSharedAssets.bind(this);
+    this.totalLiquidStaked = this.totalLiquidStaked.bind(this);
+    this.tokenizeShareLockInfo = this.tokenizeShareLockInfo.bind(this);
   }
   /* Validators queries all validators that match the given status. */
 
@@ -195,6 +202,72 @@ export class LCDQueryClient {
   async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
     const endpoint = `cosmos/staking/v1beta1/params`;
     return await this.req.get<QueryParamsResponseSDKType>(endpoint);
+  }
+  /* Query for individual tokenize share record information by share by id */
+
+
+  async tokenizeShareRecordById(params: QueryTokenizeShareRecordByIdRequest): Promise<QueryTokenizeShareRecordByIdResponseSDKType> {
+    const endpoint = `cosmos/staking/v1beta1/tokenize_share_record_by_id/${params.id}`;
+    return await this.req.get<QueryTokenizeShareRecordByIdResponseSDKType>(endpoint);
+  }
+  /* Query for individual tokenize share record information by share denom */
+
+
+  async tokenizeShareRecordByDenom(params: QueryTokenizeShareRecordByDenomRequest): Promise<QueryTokenizeShareRecordByDenomResponseSDKType> {
+    const endpoint = `cosmos/staking/v1beta1/tokenize_share_record_by_denom/${params.denom}`;
+    return await this.req.get<QueryTokenizeShareRecordByDenomResponseSDKType>(endpoint);
+  }
+  /* Query tokenize share records by address */
+
+
+  async tokenizeShareRecordsOwned(params: QueryTokenizeShareRecordsOwnedRequest): Promise<QueryTokenizeShareRecordsOwnedResponseSDKType> {
+    const endpoint = `cosmos/staking/v1beta1/tokenize_share_record_owned/${params.owner}`;
+    return await this.req.get<QueryTokenizeShareRecordsOwnedResponseSDKType>(endpoint);
+  }
+  /* Query for all tokenize share records */
+
+
+  async allTokenizeShareRecords(params: QueryAllTokenizeShareRecordsRequest = {
+    pagination: undefined
+  }): Promise<QueryAllTokenizeShareRecordsResponseSDKType> {
+    const options: any = {
+      params: {}
+    };
+
+    if (typeof params?.pagination !== "undefined") {
+      setPaginationParams(options, params.pagination);
+    }
+
+    const endpoint = `cosmos/staking/v1beta1/tokenize_share_records`;
+    return await this.req.get<QueryAllTokenizeShareRecordsResponseSDKType>(endpoint, options);
+  }
+  /* Query for last tokenize share record id */
+
+
+  async lastTokenizeShareRecordId(_params: QueryLastTokenizeShareRecordIdRequest = {}): Promise<QueryLastTokenizeShareRecordIdResponseSDKType> {
+    const endpoint = `cosmos/staking/v1beta1/last_tokenize_share_record_id`;
+    return await this.req.get<QueryLastTokenizeShareRecordIdResponseSDKType>(endpoint);
+  }
+  /* Query for total tokenized staked assets */
+
+
+  async totalTokenizeSharedAssets(_params: QueryTotalTokenizeSharedAssetsRequest = {}): Promise<QueryTotalTokenizeSharedAssetsResponseSDKType> {
+    const endpoint = `cosmos/staking/v1beta1/total_tokenize_shared_assets`;
+    return await this.req.get<QueryTotalTokenizeSharedAssetsResponseSDKType>(endpoint);
+  }
+  /* Query for total liquid staked (including tokenized shares or owned by an liquid staking provider) */
+
+
+  async totalLiquidStaked(_params: QueryTotalLiquidStaked = {}): Promise<QueryTotalLiquidStakedResponseSDKType> {
+    const endpoint = `cosmos/staking/v1beta1/total_liquid_staked`;
+    return await this.req.get<QueryTotalLiquidStakedResponseSDKType>(endpoint);
+  }
+  /* Query tokenize share locks */
+
+
+  async tokenizeShareLockInfo(params: QueryTokenizeShareLockInfo): Promise<QueryTokenizeShareLockInfoResponseSDKType> {
+    const endpoint = `cosmos/staking/v1beta1/tokenize_share_lock_info/${params.address}`;
+    return await this.req.get<QueryTokenizeShareLockInfoResponseSDKType>(endpoint);
   }
 
 }

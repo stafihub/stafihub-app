@@ -179,7 +179,7 @@ importers:
       '@cosmjs/stargate': 0.31.1
       '@cosmjs/tendermint-rpc': 0.31.1
       '@stafihub/apps-util': 1.1.0
-      '@stafihub/types': 2.5.8
+      '@stafihub/types': 2.5.9
       '@types/long': 4.0.0
       bech32: 2.0.0
       long: 4.0.0
@@ -192,7 +192,7 @@ importers:
       '@cosmjs/stargate': 0.31.1
       '@cosmjs/tendermint-rpc': 0.31.1
       '@stafihub/apps-util': link:../apps-util
-      '@stafihub/types': 2.5.8
+      '@stafihub/types': 2.5.9
       bech32: 2.0.0
       long: 4.0.0
       typescript: 4.9.5
@@ -4156,8 +4156,8 @@ packages:
     dependencies:
       '@sinonjs/commons': 1.8.3
 
-  /@stafihub/types/2.5.8:
-    resolution: {integrity: sha512-ae0HTyDKx3i4l40nAGw6L0Qt5mHmEcmyahF+aogsKaBkHBu+iN7Jjnt+TNLvVG1HamTQ7M5UPCK6hatLmrPpeg==}
+  /@stafihub/types/2.5.9:
+    resolution: {integrity: sha512-XI03yKPQkd+MvPR9MuPNj03FvXWo5p+JkHB1DgfVO1k8QZQBtlQuZEpSrBjxodWUtjQuOdgDUJvtcqDVr4K04Q==}
     dependencies:
       '@cosmjs/amino': 0.31.1
       '@cosmjs/proto-signing': 0.31.1

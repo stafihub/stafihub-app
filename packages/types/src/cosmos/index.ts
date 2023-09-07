@@ -13,6 +13,8 @@ export {
   QueryTotalLiquidStakedResponse,
   QueryPoolResponse as QueryStakingPoolResponse,
   QueryValidatorResponse as QueryStakingValidatorResponse,
+  QueryTokenizeShareLockInfoResponse,
+  QueryDelegationResponse as QueryStakingDelegationResponse,
 } from "./staking/v1beta1/query";
 
 export { DelegationResponse } from "./staking/v1beta1/staking";

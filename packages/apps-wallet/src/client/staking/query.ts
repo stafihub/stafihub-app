@@ -5,6 +5,8 @@ import {
   QueryTokenizeShareRecordsOwnedResponse,
   QueryTotalLiquidStakedResponse,
   QueryStakingValidatorResponse,
+  QueryTokenizeShareLockInfoResponse,
+  QueryStakingDelegationResponse,
 } from "@stafihub/types";
 import { createCosmosStakingQueryService } from "..";
 import { KeplrChainParams } from "../../interface";
@@ -49,7 +51,7 @@ export async function queryStakingTotalLiquidStaked(
   try {
     const queryService = await createCosmosStakingQueryService(chainConfig);
     const result = await queryService.TotalLiquidStaked({});
-    console.log("queryStakingTotalLiquidStaked result", result);
+    // console.log("queryStakingTotalLiquidStaked result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryStakingTotalLiquidStaked err", err);
@@ -63,7 +65,7 @@ export async function queryStakingPool(
   try {
     const queryService = await createCosmosStakingQueryService(chainConfig);
     const result = await queryService.Pool({});
-    console.log("queryStakingPool result", result);
+    // console.log("queryStakingPool result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryStakingPool err", err);
@@ -77,7 +79,7 @@ export async function queryStakingParams(
   try {
     const queryService = await createCosmosStakingQueryService(chainConfig);
     const result = await queryService.Params({});
-    console.log("queryStakingParams result", result);
+    // console.log("queryStakingParams result", result);
     return result;
   } catch (err: unknown) {
     console.log("queryStakingParams err", err);
@@ -96,6 +98,40 @@ export async function queryStakingValidator(
     return result;
   } catch (err: unknown) {
     console.log("queryStakingValidator err", err);
+  }
+  return null;
+}
+
+export async function queryTokenizeShareLockInfo(
+  chainConfig: KeplrChainParams | null | undefined,
+  address: string
+): Promise<QueryTokenizeShareLockInfoResponse | null> {
+  try {
+    const queryService = await createCosmosStakingQueryService(chainConfig);
+    const result = await queryService.TokenizeShareLockInfo({ address });
+    // console.log("queryTokenizeShareLockInfo result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryTokenizeShareLockInfo err", err);
+  }
+  return null;
+}
+
+export async function queryStakingDelegation(
+  chainConfig: KeplrChainParams | null | undefined,
+  delegatorAddr: string,
+  validatorAddr: string
+): Promise<QueryStakingDelegationResponse | null> {
+  try {
+    const queryService = await createCosmosStakingQueryService(chainConfig);
+    const result = await queryService.Delegation({
+      delegatorAddr,
+      validatorAddr,
+    });
+    // console.log("queryStakingDelegation result", result);
+    return result;
+  } catch (err: unknown) {
+    console.log("queryStakingDelegation err", err);
   }
   return null;
 }

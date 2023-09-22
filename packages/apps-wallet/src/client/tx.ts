@@ -336,7 +336,8 @@ export async function sendCosmosClientTx(
   chainConfig: KeplrChainParams | null | undefined,
   userAddress: string,
   messages: { typeUrl: any; value: any }[],
-  memo?: string
+  memo?: string,
+  gasRatio?: number
 ): Promise<DeliverTxResponse | undefined> {
   if (!chainConfig) {
     throw new Error("chainConfig can not be empty");
@@ -361,7 +362,7 @@ export async function sendCosmosClientTx(
         amount: "1",
       },
     ],
-    gas: Math.ceil(simulateResponse * 1.3).toString(),
+    gas: Math.ceil(simulateResponse * (gasRatio ? gasRatio : 1.3)).toString(),
   };
 
   const response = await client.signAndBroadcast(

@@ -42,48 +42,46 @@ export async function connectAtomjs(
 }
 
 async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
-  if (
-    window.keplr.experimentalSuggestChain &&
-    !chainConfig.isNativeKeplrChain
-  ) {
-    let parameter = {
-      chainId: chainConfig.chainId,
-      chainName: chainConfig.chainName,
-      rpc: chainConfig.rpc,
-      rest: chainConfig.restEndpoint,
-      stakeCurrency: {
-        coinDenom: chainConfig.coinDenom,
-        coinMinimalDenom: chainConfig.denom,
-        coinDecimals: chainConfig.decimals,
-      },
-      bip44: {
-        coinType: 118,
-      },
-      bech32Config: chainConfig.bech32Config,
-      currencies: [
-        {
+  if (window.keplr.experimentalSuggestChain) {
+    if (!chainConfig.isNativeKeplrChain) {
+      let parameter = {
+        chainId: chainConfig.chainId,
+        chainName: chainConfig.chainName,
+        rpc: chainConfig.rpc,
+        rest: chainConfig.restEndpoint,
+        stakeCurrency: {
           coinDenom: chainConfig.coinDenom,
           coinMinimalDenom: chainConfig.denom,
           coinDecimals: chainConfig.decimals,
         },
-        ...(chainConfig.currencies || []),
-      ],
-      feeCurrencies: [
-        {
-          coinDenom: chainConfig.coinDenom,
-          coinMinimalDenom: chainConfig.denom,
-          coinDecimals: chainConfig.decimals,
-          gasPriceStep: chainConfig.gasPriceStep || {
-            low: 0.01,
-            average: 0.025,
-            high: 0.04,
+        bip44: {
+          coinType: 118,
+        },
+        bech32Config: chainConfig.bech32Config,
+        currencies: [
+          {
+            coinDenom: chainConfig.coinDenom,
+            coinMinimalDenom: chainConfig.denom,
+            coinDecimals: chainConfig.decimals,
           },
-        },
-      ],
-    };
-    await window.keplr.experimentalSuggestChain(parameter);
+          ...(chainConfig.currencies || []),
+        ],
+        feeCurrencies: [
+          {
+            coinDenom: chainConfig.coinDenom,
+            coinMinimalDenom: chainConfig.denom,
+            coinDecimals: chainConfig.decimals,
+            gasPriceStep: chainConfig.gasPriceStep || {
+              low: 0.01,
+              average: 0.025,
+              high: 0.04,
+            },
+          },
+        ],
+      };
+      await window.keplr.experimentalSuggestChain(parameter);
+    }
   } else {
-    //   message.error("Please use the recent version of keplr extension");
     console.error("Please use the recent version of keplr extension");
   }
 

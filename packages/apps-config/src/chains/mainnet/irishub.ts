@@ -2,7 +2,7 @@ const config = {
   chainName: "IRISnet",
   chainId: "irishub-1",
   displayHubName: "IRISnetHub",
-  rpc: "https://rpc-irisnet-ia.cosmosia.notional.ventures",
+  rpc: "https://iris-public-rpc.stafihub.io",
   restEndpoint: "https://api-irisnet-ia.cosmosia.notional.ventures",
   denom: "uiris",
   coinDenom: "IRIS",

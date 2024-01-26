@@ -3,6 +3,7 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 import {
   Channel,
+  Params,
   IdentifiedChannel,
   PacketState,
 } from "../../../../ibc/core/channel/v1/channel";
@@ -15,6 +16,7 @@ import {
   PageResponse,
 } from "../../../../cosmos/base/query/v1beta1/pagination";
 import { Any } from "../../../../google/protobuf/any";
+import { ErrorReceipt, Upgrade } from "../../../../ibc/core/channel/v1/upgrade";
 
 export const protobufPackage = "ibc.core.channel.v1";
 
@@ -200,8 +202,8 @@ export interface QueryPacketReceiptRequest {
 }
 
 /**
- * QueryPacketReceiptResponse defines the client query response for a packet receipt
- * which also includes a proof, and the height from which the proof was
+ * QueryPacketReceiptResponse defines the client query response for a packet
+ * receipt which also includes a proof, and the height from which the proof was
  * retrieved
  */
 export interface QueryPacketReceiptResponse {
@@ -251,6 +253,8 @@ export interface QueryPacketAcknowledgementsRequest {
   channelId: string;
   /** pagination request */
   pagination?: PageRequest;
+  /** list of packet sequences */
+  packetCommitmentSequences: Long[];
 }
 
 /**
@@ -325,7 +329,7 @@ export interface QueryNextSequenceReceiveRequest {
 }
 
 /**
- * QuerySequenceResponse is the request type for the
+ * QuerySequenceResponse is the response type for the
  * Query/QueryNextSequenceReceiveResponse RPC method
  */
 export interface QueryNextSequenceReceiveResponse {
@@ -335,6 +339,69 @@ export interface QueryNextSequenceReceiveResponse {
   proof: Uint8Array;
   /** height at which the proof was retrieved */
   proofHeight?: Height;
+}
+
+/**
+ * QueryNextSequenceSendRequest is the request type for the
+ * Query/QueryNextSequenceSend RPC method
+ */
+export interface QueryNextSequenceSendRequest {
+  /** port unique identifier */
+  portId: string;
+  /** channel unique identifier */
+  channelId: string;
+}
+
+/**
+ * QueryNextSequenceSendResponse is the request type for the
+ * Query/QueryNextSequenceSend RPC method
+ */
+export interface QueryNextSequenceSendResponse {
+  /** next sequence send number */
+  nextSequenceSend: Long;
+  /** merkle proof of existence */
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+  proofHeight?: Height;
+}
+
+/** QueryUpgradeErrorRequest is the request type for the Query/QueryUpgradeError RPC method */
+export interface QueryUpgradeErrorRequest {
+  portId: string;
+  channelId: string;
+}
+
+/** QueryUpgradeErrorResponse is the response type for the Query/QueryUpgradeError RPC method */
+export interface QueryUpgradeErrorResponse {
+  errorReceipt?: ErrorReceipt;
+  /** merkle proof of existence */
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+  proofHeight?: Height;
+}
+
+/** QueryUpgradeRequest is the request type for the QueryUpgradeRequest RPC method */
+export interface QueryUpgradeRequest {
+  portId: string;
+  channelId: string;
+}
+
+/** QueryUpgradeResponse is the response type for the QueryUpgradeResponse RPC method */
+export interface QueryUpgradeResponse {
+  upgrade?: Upgrade;
+  /** merkle proof of existence */
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+  proofHeight?: Height;
+}
+
+/** QueryChannelParamsRequest is the request type for the Query/ChannelParams RPC method. */
+export interface QueryChannelParamsRequest {}
+
+/** QueryChannelParamsResponse is the response type for the Query/ChannelParams RPC method. */
+export interface QueryChannelParamsResponse {
+  /** params defines the parameters of the module. */
+  params?: Params;
 }
 
 const baseQueryChannelRequest: object = { portId: "", channelId: "" };
@@ -2076,6 +2143,7 @@ export const QueryPacketAcknowledgementResponse = {
 const baseQueryPacketAcknowledgementsRequest: object = {
   portId: "",
   channelId: "",
+  packetCommitmentSequences: Long.UZERO,
 };
 
 export const QueryPacketAcknowledgementsRequest = {
@@ -2092,6 +2160,11 @@ export const QueryPacketAcknowledgementsRequest = {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(26).fork()).ldelim();
     }
+    writer.uint32(34).fork();
+    for (const v of message.packetCommitmentSequences) {
+      writer.uint64(v);
+    }
+    writer.ldelim();
     return writer;
   },
 
@@ -2104,6 +2177,7 @@ export const QueryPacketAcknowledgementsRequest = {
     const message = {
       ...baseQueryPacketAcknowledgementsRequest,
     } as QueryPacketAcknowledgementsRequest;
+    message.packetCommitmentSequences = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2115,6 +2189,16 @@ export const QueryPacketAcknowledgementsRequest = {
           break;
         case 3:
           message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        case 4:
+          if ((tag & 7) === 2) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.packetCommitmentSequences.push(reader.uint64() as Long);
+            }
+          } else {
+            message.packetCommitmentSequences.push(reader.uint64() as Long);
+          }
           break;
         default:
           reader.skipType(tag & 7);
@@ -2140,6 +2224,9 @@ export const QueryPacketAcknowledgementsRequest = {
       object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
         : undefined;
+    message.packetCommitmentSequences = (
+      object.packetCommitmentSequences ?? []
+    ).map((e: any) => Long.fromString(e));
     return message;
   },
 
@@ -2151,6 +2238,13 @@ export const QueryPacketAcknowledgementsRequest = {
       (obj.pagination = message.pagination
         ? PageRequest.toJSON(message.pagination)
         : undefined);
+    if (message.packetCommitmentSequences) {
+      obj.packetCommitmentSequences = message.packetCommitmentSequences.map(
+        (e) => (e || Long.UZERO).toString()
+      );
+    } else {
+      obj.packetCommitmentSequences = [];
+    }
     return obj;
   },
 
@@ -2166,6 +2260,9 @@ export const QueryPacketAcknowledgementsRequest = {
       object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromPartial(object.pagination)
         : undefined;
+    message.packetCommitmentSequences = (
+      object.packetCommitmentSequences ?? []
+    ).map((e) => Long.fromValue(e));
     return message;
   },
 };
@@ -2876,6 +2973,652 @@ export const QueryNextSequenceReceiveResponse = {
   },
 };
 
+const baseQueryNextSequenceSendRequest: object = { portId: "", channelId: "" };
+
+export const QueryNextSequenceSendRequest = {
+  encode(
+    message: QueryNextSequenceSendRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.portId !== "") {
+      writer.uint32(10).string(message.portId);
+    }
+    if (message.channelId !== "") {
+      writer.uint32(18).string(message.channelId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryNextSequenceSendRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryNextSequenceSendRequest,
+    } as QueryNextSequenceSendRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.portId = reader.string();
+          break;
+        case 2:
+          message.channelId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryNextSequenceSendRequest {
+    const message = {
+      ...baseQueryNextSequenceSendRequest,
+    } as QueryNextSequenceSendRequest;
+    message.portId =
+      object.portId !== undefined && object.portId !== null
+        ? String(object.portId)
+        : "";
+    message.channelId =
+      object.channelId !== undefined && object.channelId !== null
+        ? String(object.channelId)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryNextSequenceSendRequest): unknown {
+    const obj: any = {};
+    message.portId !== undefined && (obj.portId = message.portId);
+    message.channelId !== undefined && (obj.channelId = message.channelId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryNextSequenceSendRequest>
+  ): QueryNextSequenceSendRequest {
+    const message = {
+      ...baseQueryNextSequenceSendRequest,
+    } as QueryNextSequenceSendRequest;
+    message.portId = object.portId ?? "";
+    message.channelId = object.channelId ?? "";
+    return message;
+  },
+};
+
+const baseQueryNextSequenceSendResponse: object = {
+  nextSequenceSend: Long.UZERO,
+};
+
+export const QueryNextSequenceSendResponse = {
+  encode(
+    message: QueryNextSequenceSendResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (!message.nextSequenceSend.isZero()) {
+      writer.uint32(8).uint64(message.nextSequenceSend);
+    }
+    if (message.proof.length !== 0) {
+      writer.uint32(18).bytes(message.proof);
+    }
+    if (message.proofHeight !== undefined) {
+      Height.encode(message.proofHeight, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryNextSequenceSendResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryNextSequenceSendResponse,
+    } as QueryNextSequenceSendResponse;
+    message.proof = new Uint8Array();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nextSequenceSend = reader.uint64() as Long;
+          break;
+        case 2:
+          message.proof = reader.bytes();
+          break;
+        case 3:
+          message.proofHeight = Height.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryNextSequenceSendResponse {
+    const message = {
+      ...baseQueryNextSequenceSendResponse,
+    } as QueryNextSequenceSendResponse;
+    message.nextSequenceSend =
+      object.nextSequenceSend !== undefined && object.nextSequenceSend !== null
+        ? Long.fromString(object.nextSequenceSend)
+        : Long.UZERO;
+    message.proof =
+      object.proof !== undefined && object.proof !== null
+        ? bytesFromBase64(object.proof)
+        : new Uint8Array();
+    message.proofHeight =
+      object.proofHeight !== undefined && object.proofHeight !== null
+        ? Height.fromJSON(object.proofHeight)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: QueryNextSequenceSendResponse): unknown {
+    const obj: any = {};
+    message.nextSequenceSend !== undefined &&
+      (obj.nextSequenceSend = (
+        message.nextSequenceSend || Long.UZERO
+      ).toString());
+    message.proof !== undefined &&
+      (obj.proof = base64FromBytes(
+        message.proof !== undefined ? message.proof : new Uint8Array()
+      ));
+    message.proofHeight !== undefined &&
+      (obj.proofHeight = message.proofHeight
+        ? Height.toJSON(message.proofHeight)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryNextSequenceSendResponse>
+  ): QueryNextSequenceSendResponse {
+    const message = {
+      ...baseQueryNextSequenceSendResponse,
+    } as QueryNextSequenceSendResponse;
+    message.nextSequenceSend =
+      object.nextSequenceSend !== undefined && object.nextSequenceSend !== null
+        ? Long.fromValue(object.nextSequenceSend)
+        : Long.UZERO;
+    message.proof = object.proof ?? new Uint8Array();
+    message.proofHeight =
+      object.proofHeight !== undefined && object.proofHeight !== null
+        ? Height.fromPartial(object.proofHeight)
+        : undefined;
+    return message;
+  },
+};
+
+const baseQueryUpgradeErrorRequest: object = { portId: "", channelId: "" };
+
+export const QueryUpgradeErrorRequest = {
+  encode(
+    message: QueryUpgradeErrorRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.portId !== "") {
+      writer.uint32(10).string(message.portId);
+    }
+    if (message.channelId !== "") {
+      writer.uint32(18).string(message.channelId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryUpgradeErrorRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryUpgradeErrorRequest,
+    } as QueryUpgradeErrorRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.portId = reader.string();
+          break;
+        case 2:
+          message.channelId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryUpgradeErrorRequest {
+    const message = {
+      ...baseQueryUpgradeErrorRequest,
+    } as QueryUpgradeErrorRequest;
+    message.portId =
+      object.portId !== undefined && object.portId !== null
+        ? String(object.portId)
+        : "";
+    message.channelId =
+      object.channelId !== undefined && object.channelId !== null
+        ? String(object.channelId)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryUpgradeErrorRequest): unknown {
+    const obj: any = {};
+    message.portId !== undefined && (obj.portId = message.portId);
+    message.channelId !== undefined && (obj.channelId = message.channelId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryUpgradeErrorRequest>
+  ): QueryUpgradeErrorRequest {
+    const message = {
+      ...baseQueryUpgradeErrorRequest,
+    } as QueryUpgradeErrorRequest;
+    message.portId = object.portId ?? "";
+    message.channelId = object.channelId ?? "";
+    return message;
+  },
+};
+
+const baseQueryUpgradeErrorResponse: object = {};
+
+export const QueryUpgradeErrorResponse = {
+  encode(
+    message: QueryUpgradeErrorResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.errorReceipt !== undefined) {
+      ErrorReceipt.encode(
+        message.errorReceipt,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.proof.length !== 0) {
+      writer.uint32(18).bytes(message.proof);
+    }
+    if (message.proofHeight !== undefined) {
+      Height.encode(message.proofHeight, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryUpgradeErrorResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryUpgradeErrorResponse,
+    } as QueryUpgradeErrorResponse;
+    message.proof = new Uint8Array();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.errorReceipt = ErrorReceipt.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.proof = reader.bytes();
+          break;
+        case 3:
+          message.proofHeight = Height.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryUpgradeErrorResponse {
+    const message = {
+      ...baseQueryUpgradeErrorResponse,
+    } as QueryUpgradeErrorResponse;
+    message.errorReceipt =
+      object.errorReceipt !== undefined && object.errorReceipt !== null
+        ? ErrorReceipt.fromJSON(object.errorReceipt)
+        : undefined;
+    message.proof =
+      object.proof !== undefined && object.proof !== null
+        ? bytesFromBase64(object.proof)
+        : new Uint8Array();
+    message.proofHeight =
+      object.proofHeight !== undefined && object.proofHeight !== null
+        ? Height.fromJSON(object.proofHeight)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: QueryUpgradeErrorResponse): unknown {
+    const obj: any = {};
+    message.errorReceipt !== undefined &&
+      (obj.errorReceipt = message.errorReceipt
+        ? ErrorReceipt.toJSON(message.errorReceipt)
+        : undefined);
+    message.proof !== undefined &&
+      (obj.proof = base64FromBytes(
+        message.proof !== undefined ? message.proof : new Uint8Array()
+      ));
+    message.proofHeight !== undefined &&
+      (obj.proofHeight = message.proofHeight
+        ? Height.toJSON(message.proofHeight)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryUpgradeErrorResponse>
+  ): QueryUpgradeErrorResponse {
+    const message = {
+      ...baseQueryUpgradeErrorResponse,
+    } as QueryUpgradeErrorResponse;
+    message.errorReceipt =
+      object.errorReceipt !== undefined && object.errorReceipt !== null
+        ? ErrorReceipt.fromPartial(object.errorReceipt)
+        : undefined;
+    message.proof = object.proof ?? new Uint8Array();
+    message.proofHeight =
+      object.proofHeight !== undefined && object.proofHeight !== null
+        ? Height.fromPartial(object.proofHeight)
+        : undefined;
+    return message;
+  },
+};
+
+const baseQueryUpgradeRequest: object = { portId: "", channelId: "" };
+
+export const QueryUpgradeRequest = {
+  encode(
+    message: QueryUpgradeRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.portId !== "") {
+      writer.uint32(10).string(message.portId);
+    }
+    if (message.channelId !== "") {
+      writer.uint32(18).string(message.channelId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryUpgradeRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryUpgradeRequest } as QueryUpgradeRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.portId = reader.string();
+          break;
+        case 2:
+          message.channelId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryUpgradeRequest {
+    const message = { ...baseQueryUpgradeRequest } as QueryUpgradeRequest;
+    message.portId =
+      object.portId !== undefined && object.portId !== null
+        ? String(object.portId)
+        : "";
+    message.channelId =
+      object.channelId !== undefined && object.channelId !== null
+        ? String(object.channelId)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryUpgradeRequest): unknown {
+    const obj: any = {};
+    message.portId !== undefined && (obj.portId = message.portId);
+    message.channelId !== undefined && (obj.channelId = message.channelId);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryUpgradeRequest>): QueryUpgradeRequest {
+    const message = { ...baseQueryUpgradeRequest } as QueryUpgradeRequest;
+    message.portId = object.portId ?? "";
+    message.channelId = object.channelId ?? "";
+    return message;
+  },
+};
+
+const baseQueryUpgradeResponse: object = {};
+
+export const QueryUpgradeResponse = {
+  encode(
+    message: QueryUpgradeResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.upgrade !== undefined) {
+      Upgrade.encode(message.upgrade, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.proof.length !== 0) {
+      writer.uint32(18).bytes(message.proof);
+    }
+    if (message.proofHeight !== undefined) {
+      Height.encode(message.proofHeight, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryUpgradeResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryUpgradeResponse } as QueryUpgradeResponse;
+    message.proof = new Uint8Array();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.upgrade = Upgrade.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.proof = reader.bytes();
+          break;
+        case 3:
+          message.proofHeight = Height.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryUpgradeResponse {
+    const message = { ...baseQueryUpgradeResponse } as QueryUpgradeResponse;
+    message.upgrade =
+      object.upgrade !== undefined && object.upgrade !== null
+        ? Upgrade.fromJSON(object.upgrade)
+        : undefined;
+    message.proof =
+      object.proof !== undefined && object.proof !== null
+        ? bytesFromBase64(object.proof)
+        : new Uint8Array();
+    message.proofHeight =
+      object.proofHeight !== undefined && object.proofHeight !== null
+        ? Height.fromJSON(object.proofHeight)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: QueryUpgradeResponse): unknown {
+    const obj: any = {};
+    message.upgrade !== undefined &&
+      (obj.upgrade = message.upgrade
+        ? Upgrade.toJSON(message.upgrade)
+        : undefined);
+    message.proof !== undefined &&
+      (obj.proof = base64FromBytes(
+        message.proof !== undefined ? message.proof : new Uint8Array()
+      ));
+    message.proofHeight !== undefined &&
+      (obj.proofHeight = message.proofHeight
+        ? Height.toJSON(message.proofHeight)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<QueryUpgradeResponse>): QueryUpgradeResponse {
+    const message = { ...baseQueryUpgradeResponse } as QueryUpgradeResponse;
+    message.upgrade =
+      object.upgrade !== undefined && object.upgrade !== null
+        ? Upgrade.fromPartial(object.upgrade)
+        : undefined;
+    message.proof = object.proof ?? new Uint8Array();
+    message.proofHeight =
+      object.proofHeight !== undefined && object.proofHeight !== null
+        ? Height.fromPartial(object.proofHeight)
+        : undefined;
+    return message;
+  },
+};
+
+const baseQueryChannelParamsRequest: object = {};
+
+export const QueryChannelParamsRequest = {
+  encode(
+    _: QueryChannelParamsRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryChannelParamsRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryChannelParamsRequest,
+    } as QueryChannelParamsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryChannelParamsRequest {
+    const message = {
+      ...baseQueryChannelParamsRequest,
+    } as QueryChannelParamsRequest;
+    return message;
+  },
+
+  toJSON(_: QueryChannelParamsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryChannelParamsRequest>
+  ): QueryChannelParamsRequest {
+    const message = {
+      ...baseQueryChannelParamsRequest,
+    } as QueryChannelParamsRequest;
+    return message;
+  },
+};
+
+const baseQueryChannelParamsResponse: object = {};
+
+export const QueryChannelParamsResponse = {
+  encode(
+    message: QueryChannelParamsResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.params !== undefined) {
+      Params.encode(message.params, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryChannelParamsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryChannelParamsResponse,
+    } as QueryChannelParamsResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.params = Params.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryChannelParamsResponse {
+    const message = {
+      ...baseQueryChannelParamsResponse,
+    } as QueryChannelParamsResponse;
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? Params.fromJSON(object.params)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: QueryChannelParamsResponse): unknown {
+    const obj: any = {};
+    message.params !== undefined &&
+      (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryChannelParamsResponse>
+  ): QueryChannelParamsResponse {
+    const message = {
+      ...baseQueryChannelParamsResponse,
+    } as QueryChannelParamsResponse;
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? Params.fromPartial(object.params)
+        : undefined;
+    return message;
+  },
+};
+
 /** Query provides defines the gRPC querier service */
 export interface Query {
   /** Channel queries an IBC Channel. */
@@ -2914,7 +3657,10 @@ export interface Query {
   PacketCommitments(
     request: QueryPacketCommitmentsRequest
   ): Promise<QueryPacketCommitmentsResponse>;
-  /** PacketReceipt queries if a given packet sequence has been received on the queried chain */
+  /**
+   * PacketReceipt queries if a given packet sequence has been received on the
+   * queried chain
+   */
   PacketReceipt(
     request: QueryPacketReceiptRequest
   ): Promise<QueryPacketReceiptResponse>;
@@ -2937,8 +3683,8 @@ export interface Query {
     request: QueryUnreceivedPacketsRequest
   ): Promise<QueryUnreceivedPacketsResponse>;
   /**
-   * UnreceivedAcks returns all the unreceived IBC acknowledgements associated with a
-   * channel and sequences.
+   * UnreceivedAcks returns all the unreceived IBC acknowledgements associated
+   * with a channel and sequences.
    */
   UnreceivedAcks(
     request: QueryUnreceivedAcksRequest
@@ -2947,6 +3693,20 @@ export interface Query {
   NextSequenceReceive(
     request: QueryNextSequenceReceiveRequest
   ): Promise<QueryNextSequenceReceiveResponse>;
+  /** NextSequenceSend returns the next send sequence for a given channel. */
+  NextSequenceSend(
+    request: QueryNextSequenceSendRequest
+  ): Promise<QueryNextSequenceSendResponse>;
+  /** UpgradeError returns the error receipt if the upgrade handshake failed. */
+  UpgradeError(
+    request: QueryUpgradeErrorRequest
+  ): Promise<QueryUpgradeErrorResponse>;
+  /** Upgrade returns the upgrade for a given port and channel id. */
+  Upgrade(request: QueryUpgradeRequest): Promise<QueryUpgradeResponse>;
+  /** ChannelParams queries all parameters of the ibc channel submodule. */
+  ChannelParams(
+    request: QueryChannelParamsRequest
+  ): Promise<QueryChannelParamsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -2966,6 +3726,10 @@ export class QueryClientImpl implements Query {
     this.UnreceivedPackets = this.UnreceivedPackets.bind(this);
     this.UnreceivedAcks = this.UnreceivedAcks.bind(this);
     this.NextSequenceReceive = this.NextSequenceReceive.bind(this);
+    this.NextSequenceSend = this.NextSequenceSend.bind(this);
+    this.UpgradeError = this.UpgradeError.bind(this);
+    this.Upgrade = this.Upgrade.bind(this);
+    this.ChannelParams = this.ChannelParams.bind(this);
   }
   Channel(request: QueryChannelRequest): Promise<QueryChannelResponse> {
     const data = QueryChannelRequest.encode(request).finish();
@@ -3142,6 +3906,60 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryNextSequenceReceiveResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  NextSequenceSend(
+    request: QueryNextSequenceSendRequest
+  ): Promise<QueryNextSequenceSendResponse> {
+    const data = QueryNextSequenceSendRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.core.channel.v1.Query",
+      "NextSequenceSend",
+      data
+    );
+    return promise.then((data) =>
+      QueryNextSequenceSendResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  UpgradeError(
+    request: QueryUpgradeErrorRequest
+  ): Promise<QueryUpgradeErrorResponse> {
+    const data = QueryUpgradeErrorRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.core.channel.v1.Query",
+      "UpgradeError",
+      data
+    );
+    return promise.then((data) =>
+      QueryUpgradeErrorResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  Upgrade(request: QueryUpgradeRequest): Promise<QueryUpgradeResponse> {
+    const data = QueryUpgradeRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.core.channel.v1.Query",
+      "Upgrade",
+      data
+    );
+    return promise.then((data) =>
+      QueryUpgradeResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  ChannelParams(
+    request: QueryChannelParamsRequest
+  ): Promise<QueryChannelParamsResponse> {
+    const data = QueryChannelParamsRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.core.channel.v1.Query",
+      "ChannelParams",
+      data
+    );
+    return promise.then((data) =>
+      QueryChannelParamsResponse.decode(new _m0.Reader(data))
     );
   }
 }

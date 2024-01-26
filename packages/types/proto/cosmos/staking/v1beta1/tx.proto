@@ -8,11 +8,15 @@ import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/staking/v1beta1/staking.proto";
+import "cosmos/msg/v1/msg.proto";
+import "amino/amino.proto";
 
-option go_package = "github.com/cosmos/cosmos-sdk/x/staking/types";
+option go_package = "cosmossdk.io/x/staking/types";
 
 // Msg defines the staking Msg service.
 service Msg {
+  option (cosmos.msg.v1.service) = true;
+
   // CreateValidator defines a method for creating a new validator.
   rpc CreateValidator(MsgCreateValidator) returns (MsgCreateValidatorResponse);
 
@@ -29,63 +33,48 @@ service Msg {
 
   // Undelegate defines a method for performing an undelegation from a
   // delegate and a validator.
-  // This allows a validator to stop their services and jail themselves without
-  // experiencing a slash
   rpc Undelegate(MsgUndelegate) returns (MsgUndelegateResponse);
-
-  // UnbondValidator defines a method for performing the status transition for a validator
-  // from bonded to unbonding
-  rpc UnbondValidator(MsgUnbondValidator) returns (MsgUnbondValidatorResponse);
 
   // CancelUnbondingDelegation defines a method for performing canceling the unbonding delegation
   // and delegate back to previous validator.
   //
-  // This has been backported from SDK 46 as a desirable safety feature for LSM.
-  // If a liquid staking provider is exploited and the exploiter initiates an undelegation,
-  // having access to CancelUnbondingDelegation allows the liquid staking provider to cancel
-  // the undelegation with a software upgrade and thus avoid loss of user funds
+  // Since: cosmos-sdk 0.46
   rpc CancelUnbondingDelegation(MsgCancelUnbondingDelegation) returns (MsgCancelUnbondingDelegationResponse);
 
-  // TokenizeShares defines a method for tokenizing shares from a validator.
-  rpc TokenizeShares(MsgTokenizeShares) returns (MsgTokenizeSharesResponse);
+  // UpdateParams defines an operation for updating the x/staking module
+  // parameters.
+  // Since: cosmos-sdk 0.47
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
 
-  // RedeemTokensForShares defines a method for redeeming tokens from a validator for
-  // shares.
-  rpc RedeemTokensForShares(MsgRedeemTokensForShares) returns (MsgRedeemTokensForSharesResponse);
-
-  // TransferTokenizeShareRecord defines a method to transfer ownership of
-  // TokenizeShareRecord
-  rpc TransferTokenizeShareRecord(MsgTransferTokenizeShareRecord) returns (MsgTransferTokenizeShareRecordResponse);
-
-  // DisableTokenizeShares defines a method to prevent the tokenization of an addresses stake
-  rpc DisableTokenizeShares(MsgDisableTokenizeShares) returns (MsgDisableTokenizeSharesResponse);
-
-  // EnableTokenizeShares defines a method to re-enable the tokenization of an addresseses stake
-  // after it has been disabled
-  rpc EnableTokenizeShares(MsgEnableTokenizeShares) returns (MsgEnableTokenizeSharesResponse);
-
-  // ValidatorBond defines a method for performing a validator self-bond
-  rpc ValidatorBond(MsgValidatorBond) returns (MsgValidatorBondResponse);
+  // RotateConsPubKey defines an operation for rotating the consensus keys
+  // of a validator.
+  // Since: cosmos-sdk 0.51
+  rpc RotateConsPubKey(MsgRotateConsPubKey) returns (MsgRotateConsPubKeyResponse);
 }
 
 // MsgCreateValidator defines a SDK message for creating a new validator.
 message MsgCreateValidator {
+  option (cosmos.msg.v1.signer) = "validator_address";
+  option (amino.name)           = "cosmos-sdk/MsgCreateValidator";
+
   option (gogoproto.equal)           = false;
   option (gogoproto.goproto_getters) = false;
 
-  Description     description = 1 [(gogoproto.nullable) = false];
-  CommissionRates commission  = 2 [(gogoproto.nullable) = false];
-  // Deprecated: This field has been deprecated with LSM in favor of the validator bond
-  string min_self_delegation = 3 [
-    deprecated             = true,
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
-    (gogoproto.moretags)   = "yaml:\"min_self_delegation\"",
-    (gogoproto.nullable)   = false
+  Description     description         = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  CommissionRates commission          = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  string          min_self_delegation = 3 [
+    (cosmos_proto.scalar)  = "cosmos.Int",
+    (gogoproto.customtype) = "cosmossdk.io/math.Int",
+    (gogoproto.nullable)   = false,
+    (amino.dont_omitempty) = true
   ];
-  string                   delegator_address = 4 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  string                   validator_address = 5 [(gogoproto.moretags) = "yaml:\"validator_address\""];
+  // Deprecated: Use of Delegator Address in MsgCreateValidator is deprecated.
+  // The validator address bytes and delegator address bytes refer to the same account while creating validator (defer
+  // only in bech32 notation).
+  string                   delegator_address = 4 [(cosmos_proto.scalar) = "cosmos.AddressString", deprecated = true];
+  string                   validator_address = 5 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
   google.protobuf.Any      pubkey            = 6 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
-  cosmos.base.v1beta1.Coin value             = 7 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin value             = 7 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // MsgCreateValidatorResponse defines the Msg/CreateValidator response type.
@@ -93,26 +82,23 @@ message MsgCreateValidatorResponse {}
 
 // MsgEditValidator defines a SDK message for editing an existing validator.
 message MsgEditValidator {
+  option (cosmos.msg.v1.signer) = "validator_address";
+  option (amino.name)           = "cosmos-sdk/MsgEditValidator";
+
   option (gogoproto.equal)           = false;
   option (gogoproto.goproto_getters) = false;
 
-  Description description       = 1 [(gogoproto.nullable) = false];
-  string      validator_address = 2 [(gogoproto.moretags) = "yaml:\"address\""];
+  Description description       = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  string      validator_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
 
   // We pass a reference to the new commission rate and min self delegation as
   // it's not mandatory to update. If not updated, the deserialized rate will be
   // zero with no way to distinguish if an update was intended.
   // REF: #2373
-  string commission_rate = 3 [
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
-    (gogoproto.moretags)   = "yaml:\"commission_rate\""
-  ];
-  string min_self_delegation = 4 [
-    deprecated             = true,
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
-    (gogoproto.moretags)   = "yaml:\"min_self_delegation\"",
-    (gogoproto.nullable)   = false
-  ];
+  string commission_rate = 3
+      [(cosmos_proto.scalar) = "cosmos.Dec", (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec"];
+  string min_self_delegation = 4
+      [(cosmos_proto.scalar) = "cosmos.Int", (gogoproto.customtype) = "cosmossdk.io/math.Int"];
 }
 
 // MsgEditValidatorResponse defines the Msg/EditValidator response type.
@@ -121,11 +107,15 @@ message MsgEditValidatorResponse {}
 // MsgDelegate defines a SDK message for performing a delegation of coins
 // from a delegator to a validator.
 message MsgDelegate {
-  option (gogoproto.equal) = false;
+  option (cosmos.msg.v1.signer) = "delegator_address";
+  option (amino.name)           = "cosmos-sdk/MsgDelegate";
 
-  string                   delegator_address = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  string                   validator_address = 2 [(gogoproto.moretags) = "yaml:\"validator_address\""];
-  cosmos.base.v1beta1.Coin amount            = 3 [(gogoproto.nullable) = false];
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string                   delegator_address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string                   validator_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  cosmos.base.v1beta1.Coin amount            = 3 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // MsgDelegateResponse defines the Msg/Delegate response type.
@@ -134,50 +124,62 @@ message MsgDelegateResponse {}
 // MsgBeginRedelegate defines a SDK message for performing a redelegation
 // of coins from a delegator and source validator to a destination validator.
 message MsgBeginRedelegate {
-  option (gogoproto.equal) = false;
+  option (cosmos.msg.v1.signer) = "delegator_address";
+  option (amino.name)           = "cosmos-sdk/MsgBeginRedelegate";
 
-  string                   delegator_address     = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  string                   validator_src_address = 2 [(gogoproto.moretags) = "yaml:\"validator_src_address\""];
-  string                   validator_dst_address = 3 [(gogoproto.moretags) = "yaml:\"validator_dst_address\""];
-  cosmos.base.v1beta1.Coin amount                = 4 [(gogoproto.nullable) = false];
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string                   delegator_address     = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string                   validator_src_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  string                   validator_dst_address = 3 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  cosmos.base.v1beta1.Coin amount                = 4 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // MsgBeginRedelegateResponse defines the Msg/BeginRedelegate response type.
 message MsgBeginRedelegateResponse {
-  google.protobuf.Timestamp completion_time = 1 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp completion_time = 1
+      [(gogoproto.nullable) = false, (amino.dont_omitempty) = true, (gogoproto.stdtime) = true];
 }
 
 // MsgUndelegate defines a SDK message for performing an undelegation from a
 // delegate and a validator.
 message MsgUndelegate {
-  option (gogoproto.equal) = false;
+  option (cosmos.msg.v1.signer) = "delegator_address";
+  option (amino.name)           = "cosmos-sdk/MsgUndelegate";
 
-  string                   delegator_address = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  string                   validator_address = 2 [(gogoproto.moretags) = "yaml:\"validator_address\""];
-  cosmos.base.v1beta1.Coin amount            = 3 [(gogoproto.nullable) = false];
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string                   delegator_address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string                   validator_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  cosmos.base.v1beta1.Coin amount            = 3 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // MsgUndelegateResponse defines the Msg/Undelegate response type.
 message MsgUndelegateResponse {
-  google.protobuf.Timestamp completion_time = 1 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
-}
+  google.protobuf.Timestamp completion_time = 1
+      [(gogoproto.nullable) = false, (amino.dont_omitempty) = true, (gogoproto.stdtime) = true];
 
-// MsgUnbondValidator defines a method for performing the status transition for
-// a validator from bonded to unbonded
-message MsgUnbondValidator {
-  string validator_address = 1 [(gogoproto.moretags) = "yaml:\"address\""];
+  // amount returns the amount of undelegated coins
+  //
+  // Since: cosmos-sdk 0.50
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
-// MsgUnbondValidatorResponse defines the Msg/UnbondValidator response type.
-message MsgUnbondValidatorResponse {}
 
 // MsgCancelUnbondingDelegation defines the SDK message for performing a cancel unbonding delegation for delegator
 //
 // Since: cosmos-sdk 0.46
 message MsgCancelUnbondingDelegation {
-  string delegator_address = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  string validator_address = 2 [(gogoproto.moretags) = "yaml:\"validator_address\""];
+  option (cosmos.msg.v1.signer)      = "delegator_address";
+  option (amino.name)                = "cosmos-sdk/MsgCancelUnbondingDelegation";
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string delegator_address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string validator_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
   // amount is always less than or equal to unbonding delegation entry balance
-  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
   // creation_height is the height which the unbonding took place.
   int64 creation_height = 4;
 }
@@ -187,82 +189,44 @@ message MsgCancelUnbondingDelegation {
 // Since: cosmos-sdk 0.46
 message MsgCancelUnbondingDelegationResponse {}
 
-// MsgTokenizeShares tokenizes a delegation
-message MsgTokenizeShares {
-  option (gogoproto.equal)           = false;
+// MsgUpdateParams is the Msg/UpdateParams request type.
+//
+// Since: cosmos-sdk 0.47
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name)           = "cosmos-sdk/x/staking/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  // params defines the x/staking parameters to update.
+  //
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+};
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+//
+// Since: cosmos-sdk 0.47
+message MsgUpdateParamsResponse {};
+
+// MsgRotateConsPubKey is the Msg/RotateConsPubKey request type.
+//
+// Since: cosmos-sdk 0.51
+message MsgRotateConsPubKey {
+  option (cosmos.msg.v1.signer) = "validator_address";
+  option (amino.name)           = "cosmos-sdk/MsgRotateConsPubKey";
+
   option (gogoproto.goproto_getters) = false;
-
-  string                   delegator_address     = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  string                   validator_address     = 2 [(gogoproto.moretags) = "yaml:\"validator_address\""];
-  cosmos.base.v1beta1.Coin amount                = 3 [(gogoproto.nullable) = false];
-  string                   tokenized_share_owner = 4;
-}
-
-// MsgTokenizeSharesResponse defines the Msg/MsgTokenizeShares response type.
-message MsgTokenizeSharesResponse {
-  cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
-}
-
-// MsgRedeemTokensForShares redeems a tokenized share back into a native delegation
-message MsgRedeemTokensForShares {
   option (gogoproto.equal)           = false;
-  option (gogoproto.goproto_getters) = false;
 
-  string                   delegator_address = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  cosmos.base.v1beta1.Coin amount            = 2 [(gogoproto.nullable) = false];
+  string              validator_address = 1 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  google.protobuf.Any new_pubkey        = 2
+      [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey", (cosmos_proto.scalar) = "cosmos.PubKey"];
 }
 
-// MsgRedeemTokensForSharesResponse defines the Msg/MsgRedeemTokensForShares response type.
-message MsgRedeemTokensForSharesResponse {
-  cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
-}
-
-// MsgTransferTokenizeShareRecord transfer a tokenize share record
-message MsgTransferTokenizeShareRecord {
-  option (gogoproto.equal)           = false;
-  option (gogoproto.goproto_getters) = false;
-
-  uint64 tokenize_share_record_id = 1;
-  string sender                   = 2;
-  string new_owner                = 3;
-}
-
-// MsgTransferTokenizeShareRecordResponse defines the Msg/MsgTransferTokenizeShareRecord response type.
-message MsgTransferTokenizeShareRecordResponse {}
-
-// MsgDisableTokenizeShares prevents the tokenization of shares for a given address
-message MsgDisableTokenizeShares {
-  option (gogoproto.equal)           = false;
-  option (gogoproto.goproto_getters) = false;
-
-  string delegator_address = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-}
-
-// MsgDisableTokenizeSharesResponse defines the Msg/DisableTokenizeShares response type.
-message MsgDisableTokenizeSharesResponse {}
-
-// MsgEnableTokenizeShares re-enables tokenization of shares for a given address
-message MsgEnableTokenizeShares {
-  option (gogoproto.equal)           = false;
-  option (gogoproto.goproto_getters) = false;
-
-  string delegator_address = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-}
-
-// MsgEnableTokenizeSharesResponse defines the Msg/EnableTokenizeShares response type.
-message MsgEnableTokenizeSharesResponse {
-  google.protobuf.Timestamp completion_time = 1 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
-}
-
-// MsgValidatorBond defines a SDK message for performing validator self-bond of delegated coins
-// from a delegator to a validator.
-message MsgValidatorBond {
-  option (gogoproto.equal)           = false;
-  option (gogoproto.goproto_getters) = false;
-
-  string delegator_address = 1 [(gogoproto.moretags) = "yaml:\"delegator_address\""];
-  string validator_address = 2 [(gogoproto.moretags) = "yaml:\"validator_address\""];
-}
-
-// MsgValidatorBondResponse defines the Msg/ValidatorBond response type.
-message MsgValidatorBondResponse {}
+// MsgRotateConsPubKeyResponse defines the response structure for executing a
+// MsgRotateConsPubKey message.
+//
+// Since: cosmos-sdk 0.51
+message MsgRotateConsPubKeyResponse {}

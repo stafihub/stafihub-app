@@ -6,12 +6,14 @@ import {
 import { humanToAtomic } from "@stafihub/apps-util";
 import {
   getSigningCosmosClient,
+  getSigningIbcClient,
   getSigningStafihubClient,
 } from "@stafihub/types";
 import Long from "long";
 import { getOfflineSigner, queryChannelClientState, queryLatestBlock } from ".";
 import { KeplrChainParams } from "../interface";
 import { createCosmosClient } from "./connection";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
 export async function sendStakeTx(
   chainConfig: KeplrChainParams | null | undefined,
@@ -266,7 +268,9 @@ export async function sendIBCTransferTx(
   amount: string,
   sourcePort: string,
   sourceChannel: string,
-  denom: string
+  denom: string,
+  memo?: string,
+  useWasm?: boolean
 ): Promise<DeliverTxResponse | undefined> {
   if (!srcChainConfig) {
     throw new Error("srcChainConfig can not be empty");
@@ -276,10 +280,19 @@ export async function sendIBCTransferTx(
     return;
   }
 
-  const client = await getSigningStafihubClient({
-    rpcEndpoint: srcChainConfig.rpc,
-    signer: offlineSigner,
-  });
+  const client = useWasm
+    ? await SigningCosmWasmClient.connectWithSigner(
+        srcChainConfig.rpc,
+        offlineSigner
+      )
+    : await getSigningIbcClient({
+        rpcEndpoint: srcChainConfig.rpc,
+        signer: offlineSigner,
+      });
+  // : await getSigningStafihubClient({
+  //     rpcEndpoint: srcChainConfig.rpc,
+  //     signer: offlineSigner,
+  //   });
 
   // const currentHeight = await client.getHeight();
 
@@ -293,6 +306,10 @@ export async function sendIBCTransferTx(
     Number(latestBlockResult?.block?.header?.time?.getTime()) * 1000000
   ).toFixed(0);
 
+  // console.log({ clientState });
+  // console.log({ latestBlockResult });
+  // console.log({ latestBlockNanoSeconds });
+
   const message = {
     typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
     value: {
@@ -305,10 +322,13 @@ export async function sendIBCTransferTx(
       sender,
       receiver,
       timeoutHeight: {
-        revisionNumber: clientState?.latestHeight?.revisionNumber,
-        revisionHeight: clientState?.latestHeight?.revisionHeight?.add(100000),
+        revisionNumber: clientState?.latestHeight?.revisionNumber.toNumber(),
+        revisionHeight: clientState?.latestHeight?.revisionHeight
+          ?.add(100000)
+          .toNumber(),
       },
       timeoutTimestamp: Number(latestBlockNanoSeconds) + 600000000000000 + "",
+      memo,
     },
   };
 
@@ -324,9 +344,8 @@ export async function sendIBCTransferTx(
     gas: Math.ceil(simulateResponse * 1.5).toString(),
   };
 
+  console.log({ message });
   const response = await client.signAndBroadcast(sender, [message], fee);
-
-  // console.log("message", message);
   // console.log("response", response);
 
   return response;
@@ -337,7 +356,8 @@ export async function sendCosmosClientTx(
   userAddress: string,
   messages: { typeUrl: any; value: any }[],
   memo?: string,
-  gasRatio?: number
+  gasRatio?: number,
+  useWasm?: boolean
 ): Promise<DeliverTxResponse | undefined> {
   if (!chainConfig) {
     throw new Error("chainConfig can not be empty");
@@ -348,10 +368,15 @@ export async function sendCosmosClientTx(
     return;
   }
 
-  const client = await getSigningCosmosClient({
-    rpcEndpoint: chainConfig.rpc,
-    signer: offlineSigner,
-  });
+  const client = useWasm
+    ? await SigningCosmWasmClient.connectWithSigner(
+        chainConfig.rpc,
+        offlineSigner
+      )
+    : await getSigningCosmosClient({
+        rpcEndpoint: chainConfig.rpc,
+        signer: offlineSigner,
+      });
 
   const simulateResponse = await client.simulate(userAddress, messages, "");
 

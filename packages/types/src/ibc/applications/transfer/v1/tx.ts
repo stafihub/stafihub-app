@@ -3,13 +3,14 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Coin } from "../../../../cosmos/base/v1beta1/coin";
 import { Height } from "../../../../ibc/core/client/v1/client";
+import { Params } from "../../../../ibc/applications/transfer/v1/transfer";
 
 export const protobufPackage = "ibc.applications.transfer.v1";
 
 /**
  * MsgTransfer defines a msg to transfer fungible tokens (i.e Coins) between
  * ICS20 enabled chains. See ICS Spec here:
- * https://github.com/cosmos/ics/tree/master/spec/ics-020-fungible-token-transfer#data-structures
+ * https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer#data-structures
  */
 export interface MsgTransfer {
   /** the port on which the packet will be sent */
@@ -28,14 +29,37 @@ export interface MsgTransfer {
    */
   timeoutHeight?: Height;
   /**
-   * Timeout timestamp (in nanoseconds) relative to the current block timestamp.
+   * Timeout timestamp in absolute nanoseconds since unix epoch.
    * The timeout is disabled when set to 0.
    */
   timeoutTimestamp: Long;
+  /** optional memo */
+  memo: string;
 }
 
 /** MsgTransferResponse defines the Msg/Transfer response type. */
-export interface MsgTransferResponse {}
+export interface MsgTransferResponse {
+  /** sequence number of the transfer packet sent */
+  sequence: Long;
+}
+
+/** MsgUpdateParams is the Msg/UpdateParams request type. */
+export interface MsgUpdateParams {
+  /** signer address */
+  signer: string;
+  /**
+   * params defines the transfer parameters to update.
+   *
+   * NOTE: All parameters must be supplied.
+   */
+  params?: Params;
+}
+
+/**
+ * MsgUpdateParamsResponse defines the response structure for executing a
+ * MsgUpdateParams message.
+ */
+export interface MsgUpdateParamsResponse {}
 
 const baseMsgTransfer: object = {
   sourcePort: "",
@@ -43,6 +67,7 @@ const baseMsgTransfer: object = {
   sender: "",
   receiver: "",
   timeoutTimestamp: Long.UZERO,
+  memo: "",
 };
 
 export const MsgTransfer = {
@@ -70,6 +95,9 @@ export const MsgTransfer = {
     }
     if (!message.timeoutTimestamp.isZero()) {
       writer.uint32(56).uint64(message.timeoutTimestamp);
+    }
+    if (message.memo !== "") {
+      writer.uint32(66).string(message.memo);
     }
     return writer;
   },
@@ -101,6 +129,9 @@ export const MsgTransfer = {
           break;
         case 7:
           message.timeoutTimestamp = reader.uint64() as Long;
+          break;
+        case 8:
+          message.memo = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -140,6 +171,10 @@ export const MsgTransfer = {
       object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null
         ? Long.fromString(object.timeoutTimestamp)
         : Long.UZERO;
+    message.memo =
+      object.memo !== undefined && object.memo !== null
+        ? String(object.memo)
+        : "";
     return message;
   },
 
@@ -160,6 +195,7 @@ export const MsgTransfer = {
       (obj.timeoutTimestamp = (
         message.timeoutTimestamp || Long.UZERO
       ).toString());
+    message.memo !== undefined && (obj.memo = message.memo);
     return obj;
   },
 
@@ -181,17 +217,21 @@ export const MsgTransfer = {
       object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null
         ? Long.fromValue(object.timeoutTimestamp)
         : Long.UZERO;
+    message.memo = object.memo ?? "";
     return message;
   },
 };
 
-const baseMsgTransferResponse: object = {};
+const baseMsgTransferResponse: object = { sequence: Long.UZERO };
 
 export const MsgTransferResponse = {
   encode(
-    _: MsgTransferResponse,
+    message: MsgTransferResponse,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
+    if (!message.sequence.isZero()) {
+      writer.uint32(8).uint64(message.sequence);
+    }
     return writer;
   },
 
@@ -199,6 +239,134 @@ export const MsgTransferResponse = {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMsgTransferResponse } as MsgTransferResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.sequence = reader.uint64() as Long;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgTransferResponse {
+    const message = { ...baseMsgTransferResponse } as MsgTransferResponse;
+    message.sequence =
+      object.sequence !== undefined && object.sequence !== null
+        ? Long.fromString(object.sequence)
+        : Long.UZERO;
+    return message;
+  },
+
+  toJSON(message: MsgTransferResponse): unknown {
+    const obj: any = {};
+    message.sequence !== undefined &&
+      (obj.sequence = (message.sequence || Long.UZERO).toString());
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgTransferResponse>): MsgTransferResponse {
+    const message = { ...baseMsgTransferResponse } as MsgTransferResponse;
+    message.sequence =
+      object.sequence !== undefined && object.sequence !== null
+        ? Long.fromValue(object.sequence)
+        : Long.UZERO;
+    return message;
+  },
+};
+
+const baseMsgUpdateParams: object = { signer: "" };
+
+export const MsgUpdateParams = {
+  encode(
+    message: MsgUpdateParams,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.signer !== "") {
+      writer.uint32(10).string(message.signer);
+    }
+    if (message.params !== undefined) {
+      Params.encode(message.params, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateParams {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdateParams } as MsgUpdateParams;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.signer = reader.string();
+          break;
+        case 2:
+          message.params = Params.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateParams {
+    const message = { ...baseMsgUpdateParams } as MsgUpdateParams;
+    message.signer =
+      object.signer !== undefined && object.signer !== null
+        ? String(object.signer)
+        : "";
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? Params.fromJSON(object.params)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: MsgUpdateParams): unknown {
+    const obj: any = {};
+    message.signer !== undefined && (obj.signer = message.signer);
+    message.params !== undefined &&
+      (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdateParams>): MsgUpdateParams {
+    const message = { ...baseMsgUpdateParams } as MsgUpdateParams;
+    message.signer = object.signer ?? "";
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? Params.fromPartial(object.params)
+        : undefined;
+    return message;
+  },
+};
+
+const baseMsgUpdateParamsResponse: object = {};
+
+export const MsgUpdateParamsResponse = {
+  encode(
+    _: MsgUpdateParamsResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateParamsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateParamsResponse,
+    } as MsgUpdateParamsResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -210,18 +378,24 @@ export const MsgTransferResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgTransferResponse {
-    const message = { ...baseMsgTransferResponse } as MsgTransferResponse;
+  fromJSON(_: any): MsgUpdateParamsResponse {
+    const message = {
+      ...baseMsgUpdateParamsResponse,
+    } as MsgUpdateParamsResponse;
     return message;
   },
 
-  toJSON(_: MsgTransferResponse): unknown {
+  toJSON(_: MsgUpdateParamsResponse): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial(_: DeepPartial<MsgTransferResponse>): MsgTransferResponse {
-    const message = { ...baseMsgTransferResponse } as MsgTransferResponse;
+  fromPartial(
+    _: DeepPartial<MsgUpdateParamsResponse>
+  ): MsgUpdateParamsResponse {
+    const message = {
+      ...baseMsgUpdateParamsResponse,
+    } as MsgUpdateParamsResponse;
     return message;
   },
 };
@@ -230,6 +404,8 @@ export const MsgTransferResponse = {
 export interface Msg {
   /** Transfer defines a rpc handler method for MsgTransfer. */
   Transfer(request: MsgTransfer): Promise<MsgTransferResponse>;
+  /** UpdateParams defines a rpc handler for MsgUpdateParams. */
+  UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -237,6 +413,7 @@ export class MsgClientImpl implements Msg {
   constructor(rpc: Rpc) {
     this.rpc = rpc;
     this.Transfer = this.Transfer.bind(this);
+    this.UpdateParams = this.UpdateParams.bind(this);
   }
   Transfer(request: MsgTransfer): Promise<MsgTransferResponse> {
     const data = MsgTransfer.encode(request).finish();
@@ -247,6 +424,18 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgTransferResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse> {
+    const data = MsgUpdateParams.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.applications.transfer.v1.Msg",
+      "UpdateParams",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateParamsResponse.decode(new _m0.Reader(data))
     );
   }
 }

@@ -205,7 +205,7 @@ const _connectkeplr = async (dispatch: any, chainId: string) => {
       snackbarUtil.error("Cancelled");
       clearNetworkAllowedFlag(chainId);
     }
-    // console.log(`connect ${chainId} error`, err);
+    console.log(`connect ${chainId} error`, err);
     return null;
   }
 };

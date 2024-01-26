@@ -12,7 +12,7 @@ import {
   bindTrigger,
   usePopupState,
 } from "material-ui-popup-state/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import iconMore from "../assets/images/icon_more.svg";
 import iconNotice from "../assets/images/icon_notice.svg";
@@ -21,6 +21,8 @@ import { useAccounts, useUnreadNoticeFlag } from "../hooks/useAppSlice";
 import { AccountModal } from "../modals/AccountModal";
 import { getHumanAccountBalance } from "../utils/common";
 import { NoticeList } from "./notice/NoticeList";
+import { testStake, testUnstake } from "../neutron/wrapper/tx";
+import { queryWithdrawInfo } from "../neutron/wrapper/query";
 
 const STAFIHUB_CHAIN_ID = getStafiHubChainId();
 
@@ -39,6 +41,10 @@ export const Header = () => {
     variant: "popover",
     popupId: "menu",
   });
+
+  useEffect(() => {
+    queryWithdrawInfo();
+  }, []);
 
   const renderAccount = () => {
     if (_.isEmpty(accounts) || _.isEmpty(accounts[STAFIHUB_CHAIN_ID])) {
@@ -98,6 +104,24 @@ export const Header = () => {
       </div>
 
       {renderAccount()}
+
+      <div
+        className="text-white mx-2 cursor-pointer"
+        onClick={() => {
+          testStake();
+        }}
+      >
+        Test Stake
+      </div>
+
+      <div
+        className="text-white mx-2 cursor-pointer"
+        onClick={() => {
+          testUnstake(0.0012);
+        }}
+      >
+        Test Unstake
+      </div>
 
       {/* <img
         src={iconStatis}

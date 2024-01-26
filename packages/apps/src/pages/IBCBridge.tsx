@@ -1,7 +1,6 @@
 import {
   getIBCConfig,
   getStafiHubChainId,
-  ibcConfigs,
   KeplrChainParams,
 } from "@stafihub/apps-config";
 import { queryChannel } from "@stafihub/apps-wallet";
@@ -17,7 +16,7 @@ import { BridgeChainSelector } from "../components/bridge/BridgeChainSelector";
 import { BridgeTokenSelector } from "../components/bridge/BridgeTokenSelector";
 import { SwapAddressInput } from "../components/bridge/SwapAddressInput";
 import { SwapAmountInput } from "../components/bridge/SwapAmountInput";
-import { chains } from "../config";
+import { chains, ibcConfigs } from "../config";
 import { useAccounts, useIsLoading } from "../hooks/useAppSlice";
 import { useChainStakeStatus } from "../hooks/useChainStakeStatus";
 import {
@@ -243,7 +242,7 @@ export const IBCBridge = () => {
           ? chainPair.dst.chainId
           : chainPair.src.chainId;
 
-      const ibcConfig = getIBCConfig(otherChainId, chains);
+      const ibcConfig = getIBCConfig(otherChainId, ibcConfigs);
 
       if (!ibcConfig) {
         setTokenChannelList([]);

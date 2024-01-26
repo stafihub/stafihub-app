@@ -9,6 +9,7 @@ import {
   PageRequest,
   PageResponse,
 } from "../../../../cosmos/base/query/v1beta1/pagination";
+import { Coin } from "../../../../cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "ibc.applications.transfer.v1";
 
@@ -17,7 +18,7 @@ export const protobufPackage = "ibc.applications.transfer.v1";
  * method
  */
 export interface QueryDenomTraceRequest {
-  /** hash (in hex format) of the denomination trace information. */
+  /** hash (in hex format) or denom (full denom with ibc prefix) of the denomination trace information. */
   hash: string;
 }
 
@@ -57,6 +58,48 @@ export interface QueryParamsRequest {}
 export interface QueryParamsResponse {
   /** params defines the parameters of the module. */
   params?: Params;
+}
+
+/**
+ * QueryDenomHashRequest is the request type for the Query/DenomHash RPC
+ * method
+ */
+export interface QueryDenomHashRequest {
+  /** The denomination trace ([port_id]/[channel_id])+/[denom] */
+  trace: string;
+}
+
+/**
+ * QueryDenomHashResponse is the response type for the Query/DenomHash RPC
+ * method.
+ */
+export interface QueryDenomHashResponse {
+  /** hash (in hex format) of the denomination trace information. */
+  hash: string;
+}
+
+/** QueryEscrowAddressRequest is the request type for the EscrowAddress RPC method. */
+export interface QueryEscrowAddressRequest {
+  /** unique port identifier */
+  portId: string;
+  /** unique channel identifier */
+  channelId: string;
+}
+
+/** QueryEscrowAddressResponse is the response type of the EscrowAddress RPC method. */
+export interface QueryEscrowAddressResponse {
+  /** the escrow account address */
+  escrowAddress: string;
+}
+
+/** QueryTotalEscrowForDenomRequest is the request type for TotalEscrowForDenom RPC method. */
+export interface QueryTotalEscrowForDenomRequest {
+  denom: string;
+}
+
+/** QueryTotalEscrowForDenomResponse is the response type for TotalEscrowForDenom RPC method. */
+export interface QueryTotalEscrowForDenomResponse {
+  amount?: Coin;
 }
 
 const baseQueryDenomTraceRequest: object = { hash: "" };
@@ -448,40 +491,428 @@ export const QueryParamsResponse = {
   },
 };
 
+const baseQueryDenomHashRequest: object = { trace: "" };
+
+export const QueryDenomHashRequest = {
+  encode(
+    message: QueryDenomHashRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.trace !== "") {
+      writer.uint32(10).string(message.trace);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryDenomHashRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryDenomHashRequest } as QueryDenomHashRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.trace = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomHashRequest {
+    const message = { ...baseQueryDenomHashRequest } as QueryDenomHashRequest;
+    message.trace =
+      object.trace !== undefined && object.trace !== null
+        ? String(object.trace)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryDenomHashRequest): unknown {
+    const obj: any = {};
+    message.trace !== undefined && (obj.trace = message.trace);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryDenomHashRequest>
+  ): QueryDenomHashRequest {
+    const message = { ...baseQueryDenomHashRequest } as QueryDenomHashRequest;
+    message.trace = object.trace ?? "";
+    return message;
+  },
+};
+
+const baseQueryDenomHashResponse: object = { hash: "" };
+
+export const QueryDenomHashResponse = {
+  encode(
+    message: QueryDenomHashResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.hash !== "") {
+      writer.uint32(10).string(message.hash);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryDenomHashResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryDenomHashResponse } as QueryDenomHashResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.hash = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomHashResponse {
+    const message = { ...baseQueryDenomHashResponse } as QueryDenomHashResponse;
+    message.hash =
+      object.hash !== undefined && object.hash !== null
+        ? String(object.hash)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryDenomHashResponse): unknown {
+    const obj: any = {};
+    message.hash !== undefined && (obj.hash = message.hash);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryDenomHashResponse>
+  ): QueryDenomHashResponse {
+    const message = { ...baseQueryDenomHashResponse } as QueryDenomHashResponse;
+    message.hash = object.hash ?? "";
+    return message;
+  },
+};
+
+const baseQueryEscrowAddressRequest: object = { portId: "", channelId: "" };
+
+export const QueryEscrowAddressRequest = {
+  encode(
+    message: QueryEscrowAddressRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.portId !== "") {
+      writer.uint32(10).string(message.portId);
+    }
+    if (message.channelId !== "") {
+      writer.uint32(18).string(message.channelId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryEscrowAddressRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryEscrowAddressRequest,
+    } as QueryEscrowAddressRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.portId = reader.string();
+          break;
+        case 2:
+          message.channelId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryEscrowAddressRequest {
+    const message = {
+      ...baseQueryEscrowAddressRequest,
+    } as QueryEscrowAddressRequest;
+    message.portId =
+      object.portId !== undefined && object.portId !== null
+        ? String(object.portId)
+        : "";
+    message.channelId =
+      object.channelId !== undefined && object.channelId !== null
+        ? String(object.channelId)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryEscrowAddressRequest): unknown {
+    const obj: any = {};
+    message.portId !== undefined && (obj.portId = message.portId);
+    message.channelId !== undefined && (obj.channelId = message.channelId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryEscrowAddressRequest>
+  ): QueryEscrowAddressRequest {
+    const message = {
+      ...baseQueryEscrowAddressRequest,
+    } as QueryEscrowAddressRequest;
+    message.portId = object.portId ?? "";
+    message.channelId = object.channelId ?? "";
+    return message;
+  },
+};
+
+const baseQueryEscrowAddressResponse: object = { escrowAddress: "" };
+
+export const QueryEscrowAddressResponse = {
+  encode(
+    message: QueryEscrowAddressResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.escrowAddress !== "") {
+      writer.uint32(10).string(message.escrowAddress);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryEscrowAddressResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryEscrowAddressResponse,
+    } as QueryEscrowAddressResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.escrowAddress = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryEscrowAddressResponse {
+    const message = {
+      ...baseQueryEscrowAddressResponse,
+    } as QueryEscrowAddressResponse;
+    message.escrowAddress =
+      object.escrowAddress !== undefined && object.escrowAddress !== null
+        ? String(object.escrowAddress)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryEscrowAddressResponse): unknown {
+    const obj: any = {};
+    message.escrowAddress !== undefined &&
+      (obj.escrowAddress = message.escrowAddress);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryEscrowAddressResponse>
+  ): QueryEscrowAddressResponse {
+    const message = {
+      ...baseQueryEscrowAddressResponse,
+    } as QueryEscrowAddressResponse;
+    message.escrowAddress = object.escrowAddress ?? "";
+    return message;
+  },
+};
+
+const baseQueryTotalEscrowForDenomRequest: object = { denom: "" };
+
+export const QueryTotalEscrowForDenomRequest = {
+  encode(
+    message: QueryTotalEscrowForDenomRequest,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.denom !== "") {
+      writer.uint32(10).string(message.denom);
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryTotalEscrowForDenomRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryTotalEscrowForDenomRequest,
+    } as QueryTotalEscrowForDenomRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryTotalEscrowForDenomRequest {
+    const message = {
+      ...baseQueryTotalEscrowForDenomRequest,
+    } as QueryTotalEscrowForDenomRequest;
+    message.denom =
+      object.denom !== undefined && object.denom !== null
+        ? String(object.denom)
+        : "";
+    return message;
+  },
+
+  toJSON(message: QueryTotalEscrowForDenomRequest): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryTotalEscrowForDenomRequest>
+  ): QueryTotalEscrowForDenomRequest {
+    const message = {
+      ...baseQueryTotalEscrowForDenomRequest,
+    } as QueryTotalEscrowForDenomRequest;
+    message.denom = object.denom ?? "";
+    return message;
+  },
+};
+
+const baseQueryTotalEscrowForDenomResponse: object = {};
+
+export const QueryTotalEscrowForDenomResponse = {
+  encode(
+    message: QueryTotalEscrowForDenomResponse,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): QueryTotalEscrowForDenomResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryTotalEscrowForDenomResponse,
+    } as QueryTotalEscrowForDenomResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.amount = Coin.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryTotalEscrowForDenomResponse {
+    const message = {
+      ...baseQueryTotalEscrowForDenomResponse,
+    } as QueryTotalEscrowForDenomResponse;
+    message.amount =
+      object.amount !== undefined && object.amount !== null
+        ? Coin.fromJSON(object.amount)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: QueryTotalEscrowForDenomResponse): unknown {
+    const obj: any = {};
+    message.amount !== undefined &&
+      (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryTotalEscrowForDenomResponse>
+  ): QueryTotalEscrowForDenomResponse {
+    const message = {
+      ...baseQueryTotalEscrowForDenomResponse,
+    } as QueryTotalEscrowForDenomResponse;
+    message.amount =
+      object.amount !== undefined && object.amount !== null
+        ? Coin.fromPartial(object.amount)
+        : undefined;
+    return message;
+  },
+};
+
 /** Query provides defines the gRPC querier service. */
 export interface Query {
-  /** DenomTrace queries a denomination trace information. */
-  DenomTrace(request: QueryDenomTraceRequest): Promise<QueryDenomTraceResponse>;
   /** DenomTraces queries all denomination traces. */
   DenomTraces(
     request: QueryDenomTracesRequest
   ): Promise<QueryDenomTracesResponse>;
+  /** DenomTrace queries a denomination trace information. */
+  DenomTrace(request: QueryDenomTraceRequest): Promise<QueryDenomTraceResponse>;
   /** Params queries all parameters of the ibc-transfer module. */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
+  /** DenomHash queries a denomination hash information. */
+  DenomHash(request: QueryDenomHashRequest): Promise<QueryDenomHashResponse>;
+  /** EscrowAddress returns the escrow address for a particular port and channel id. */
+  EscrowAddress(
+    request: QueryEscrowAddressRequest
+  ): Promise<QueryEscrowAddressResponse>;
+  /** TotalEscrowForDenom returns the total amount of tokens in escrow based on the denom. */
+  TotalEscrowForDenom(
+    request: QueryTotalEscrowForDenomRequest
+  ): Promise<QueryTotalEscrowForDenomResponse>;
 }
 
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
   constructor(rpc: Rpc) {
     this.rpc = rpc;
-    this.DenomTrace = this.DenomTrace.bind(this);
     this.DenomTraces = this.DenomTraces.bind(this);
+    this.DenomTrace = this.DenomTrace.bind(this);
     this.Params = this.Params.bind(this);
+    this.DenomHash = this.DenomHash.bind(this);
+    this.EscrowAddress = this.EscrowAddress.bind(this);
+    this.TotalEscrowForDenom = this.TotalEscrowForDenom.bind(this);
   }
-  DenomTrace(
-    request: QueryDenomTraceRequest
-  ): Promise<QueryDenomTraceResponse> {
-    const data = QueryDenomTraceRequest.encode(request).finish();
-    const promise = this.rpc.request(
-      "ibc.applications.transfer.v1.Query",
-      "DenomTrace",
-      data
-    );
-    return promise.then((data) =>
-      QueryDenomTraceResponse.decode(new _m0.Reader(data))
-    );
-  }
-
   DenomTraces(
     request: QueryDenomTracesRequest
   ): Promise<QueryDenomTracesResponse> {
@@ -496,6 +927,20 @@ export class QueryClientImpl implements Query {
     );
   }
 
+  DenomTrace(
+    request: QueryDenomTraceRequest
+  ): Promise<QueryDenomTraceResponse> {
+    const data = QueryDenomTraceRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.applications.transfer.v1.Query",
+      "DenomTrace",
+      data
+    );
+    return promise.then((data) =>
+      QueryDenomTraceResponse.decode(new _m0.Reader(data))
+    );
+  }
+
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request(
@@ -505,6 +950,46 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryParamsResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  DenomHash(request: QueryDenomHashRequest): Promise<QueryDenomHashResponse> {
+    const data = QueryDenomHashRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.applications.transfer.v1.Query",
+      "DenomHash",
+      data
+    );
+    return promise.then((data) =>
+      QueryDenomHashResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  EscrowAddress(
+    request: QueryEscrowAddressRequest
+  ): Promise<QueryEscrowAddressResponse> {
+    const data = QueryEscrowAddressRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.applications.transfer.v1.Query",
+      "EscrowAddress",
+      data
+    );
+    return promise.then((data) =>
+      QueryEscrowAddressResponse.decode(new _m0.Reader(data))
+    );
+  }
+
+  TotalEscrowForDenom(
+    request: QueryTotalEscrowForDenomRequest
+  ): Promise<QueryTotalEscrowForDenomResponse> {
+    const data = QueryTotalEscrowForDenomRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "ibc.applications.transfer.v1.Query",
+      "TotalEscrowForDenom",
+      data
+    );
+    return promise.then((data) =>
+      QueryTotalEscrowForDenomResponse.decode(new _m0.Reader(data))
     );
   }
 }

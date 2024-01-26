@@ -56,6 +56,7 @@ export const AccountItem = (props: AccountItemProps) => {
           <div
             className="ml-1 text-primary text-[16px] font-bold cursor-pointer"
             onClick={() => {
+              console.log(props.chain);
               dispatch(connectKeplr(props.chain.chainId));
             }}
           >

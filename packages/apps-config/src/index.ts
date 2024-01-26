@@ -2,7 +2,6 @@ import * as _ from "lodash";
 import { NetworkConfig } from ".";
 import { chainsV2 } from "./chains";
 import { ibcConfigsV2 } from "./ibc";
-import { IbcConfigParams } from "./types";
 
 export * from "./chains";
 export * from "./ibc";
@@ -10,8 +9,8 @@ export * from "./types";
 
 export function isDev(): boolean {
   // console.log("NEXT_PUBLIC_ENV", process.env.NEXT_PUBLIC_ENV);
-  // return process.env.NEXT_PUBLIC_ENV !== "production";
-  return false;
+  return process.env.NEXT_PUBLIC_ENV !== "production";
+  // return false;
 }
 
 export function isFork(): boolean {

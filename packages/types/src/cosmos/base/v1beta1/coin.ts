@@ -26,16 +26,6 @@ export interface DecCoin {
   amount: string;
 }
 
-/** IntProto defines a Protobuf wrapper around an Int object. */
-export interface IntProto {
-  int: string;
-}
-
-/** DecProto defines a Protobuf wrapper around a Dec object. */
-export interface DecProto {
-  dec: string;
-}
-
 const baseCoin: object = { denom: "", amount: "" };
 
 export const Coin = {
@@ -159,108 +149,6 @@ export const DecCoin = {
     const message = { ...baseDecCoin } as DecCoin;
     message.denom = object.denom ?? "";
     message.amount = object.amount ?? "";
-    return message;
-  },
-};
-
-const baseIntProto: object = { int: "" };
-
-export const IntProto = {
-  encode(
-    message: IntProto,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.int !== "") {
-      writer.uint32(10).string(message.int);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): IntProto {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseIntProto } as IntProto;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.int = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): IntProto {
-    const message = { ...baseIntProto } as IntProto;
-    message.int =
-      object.int !== undefined && object.int !== null ? String(object.int) : "";
-    return message;
-  },
-
-  toJSON(message: IntProto): unknown {
-    const obj: any = {};
-    message.int !== undefined && (obj.int = message.int);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<IntProto>): IntProto {
-    const message = { ...baseIntProto } as IntProto;
-    message.int = object.int ?? "";
-    return message;
-  },
-};
-
-const baseDecProto: object = { dec: "" };
-
-export const DecProto = {
-  encode(
-    message: DecProto,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.dec !== "") {
-      writer.uint32(10).string(message.dec);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): DecProto {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDecProto } as DecProto;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.dec = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): DecProto {
-    const message = { ...baseDecProto } as DecProto;
-    message.dec =
-      object.dec !== undefined && object.dec !== null ? String(object.dec) : "";
-    return message;
-  },
-
-  toJSON(message: DecProto): unknown {
-    const obj: any = {};
-    message.dec !== undefined && (obj.dec = message.dec);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<DecProto>): DecProto {
-    const message = { ...baseDecProto } as DecProto;
-    message.dec = object.dec ?? "";
     return message;
   },
 };

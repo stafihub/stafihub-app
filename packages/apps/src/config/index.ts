@@ -1,6 +1,9 @@
-import { getChains } from "@stafihub/apps-config";
+import { getChains, getIBCConfigs } from "@stafihub/apps-config";
 
 export const chains = getChains(isDev() ? "testnet" : "mainnet");
+
+export const ibcConfigs = getIBCConfigs(isDev() ? "testnet" : "mainnet");
+// console.log({ ibcConfigs });
 
 export function isDev(): boolean {
   // console.log("REACT_APP_ENV", process.env.REACT_APP_ENV);

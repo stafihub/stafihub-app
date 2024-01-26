@@ -1,6 +1,6 @@
 {
   "name": "@stafihub/types",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,10 +23,10 @@
     "build-proto": "./ts-proto.sh"
   },
   "dependencies": {
-    "@cosmjs/proto-signing": "0.31.1",
-    "@cosmjs/stargate": "0.31.1",
-    "@cosmjs/tendermint-rpc": "0.31.1",
-    "@cosmjs/amino": "0.31.1",
+    "@cosmjs/proto-signing": "0.32.2",
+    "@cosmjs/stargate": "0.32.2",
+    "@cosmjs/tendermint-rpc": "0.32.2",
+    "@cosmjs/amino": "0.32.2",
     "@osmonauts/lcd": "^0.11.1",
     "long": "4.0.0",
     "protobufjs": "6.11.2",

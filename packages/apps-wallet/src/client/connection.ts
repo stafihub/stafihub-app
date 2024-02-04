@@ -1,6 +1,10 @@
 import { OfflineSigner } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
-import { DetailKeplrChainParams, KeplrChainParams } from "../interface";
+import {
+  ConnectKeplrOptions,
+  DetailKeplrChainParams,
+  KeplrChainParams,
+} from "../interface";
 
 declare const window: any;
 
@@ -25,7 +29,7 @@ export async function getOfflineSigner(
 }
 
 export async function connectAtomjs(
-  chainConfig: DetailKeplrChainParams | null | undefined
+  chainConfig: ConnectKeplrOptions | null | undefined
 ) {
   await timeout(500);
   if (!window.getOfflineSignerAuto || !window.keplr) {
@@ -41,7 +45,7 @@ export async function connectAtomjs(
   return enableResult;
 }
 
-async function innerConnectKeplr(chainConfig: DetailKeplrChainParams) {
+async function innerConnectKeplr(chainConfig: ConnectKeplrOptions) {
   if (window.keplr.experimentalSuggestChain) {
     if (!chainConfig.isNativeKeplrChain) {
       let parameter = {

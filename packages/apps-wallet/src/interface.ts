@@ -26,6 +26,21 @@ export interface DetailKeplrChainParams {
   gasLimit?: string;
 }
 
+export interface ConnectKeplrOptions {
+  chainId: string;
+  chainName: string;
+  displayHubName: string;
+  rpc: string;
+  restEndpoint: string;
+  denom: string;
+  coinDenom: string;
+  decimals: number;
+  bech32Config: any;
+  isNativeKeplrChain?: boolean;
+  currencies?: ChainCurrencyConfig[];
+  gasPriceStep?: any;
+}
+
 export interface ChainCurrencyConfig {
   coinDenom: string;
   coinMinimalDenom: string;

@@ -32,8 +32,8 @@ const config = [
   {
     srcChainId: "cosmos-stafi-1",
     dstChainId: "pion-1",
-    srcChannel: "channel-3",
-    dstChannel: "channel-369",
+    srcChannel: "channel-46",
+    dstChannel: "channel-1010",
     assets: [{ denom: "uatom", displayName: "ATOM" }],
   },
 ];

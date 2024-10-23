@@ -1,6 +1,6 @@
-import { keys } from "lodash";
-import { mainnetConfig } from "./mainnet";
-import { testnetConfig } from "./testnet";
+import { keys } from 'lodash';
+import { mainnetConfig } from './mainnet';
+import { testnetConfig } from './testnet';
 
 // let jsonConfigs = require.context("./mainnet", false, /\.json$/);
 // if (isDev()) {
@@ -11,8 +11,8 @@ import { testnetConfig } from "./testnet";
 // const isDev = false;
 
 // const configs = isDev ? testnetConfig : mainnetConfig;
-const testnetStafihubChainId = "stafihub-testnet-2";
-const mainnetStafihubChainId = "stafihub-1";
+const testnetStafihubChainId = 'stafihub-testnet-1';
+const mainnetStafihubChainId = 'stafihub-1';
 
 // const update: IbcConfig = {};
 // configs.forEach((k: string) => {
@@ -32,29 +32,29 @@ const mainnetStafihubChainId = "stafihub-1";
 // export const ibcConfigs = update;
 
 const ibcConfigs: {
-  [key in "mainnet" | "testnet" | "devnet"]: any;
+	[key in 'mainnet' | 'testnet' | 'devnet']: any;
 } = {
-  mainnet: {},
-  testnet: {},
-  devnet: {},
+	mainnet: {},
+	testnet: {},
+	devnet: {},
 };
 
 let configs2 = {
-  mainnet: mainnetConfig,
-  testnet: testnetConfig,
-  devnet: testnetConfig,
+	mainnet: mainnetConfig,
+	testnet: testnetConfig,
+	devnet: testnetConfig,
 };
 
 keys(configs2).forEach((net: string) => {
-  const update: any = {};
-  configs2[net as "mainnet" | "testnet" | "devnet"]
-    // .keys()
-    .forEach((c: any) => {
-      c.srcChainId =
-        net === "mainnet" ? mainnetStafihubChainId : testnetStafihubChainId;
-      (update as any)[c.dstChainId] = c;
-    });
-  ibcConfigs[net as "mainnet" | "testnet" | "devnet"] = update;
+	const update: any = {};
+	configs2[net as 'mainnet' | 'testnet' | 'devnet']
+		// .keys()
+		.forEach((c: any) => {
+			c.srcChainId =
+				net === 'mainnet' ? mainnetStafihubChainId : testnetStafihubChainId;
+			(update as any)[c.dstChainId] = c;
+		});
+	ibcConfigs[net as 'mainnet' | 'testnet' | 'devnet'] = update;
 });
 
 export const ibcConfigsV2 = ibcConfigs;

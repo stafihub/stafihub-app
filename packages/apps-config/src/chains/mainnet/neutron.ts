@@ -1,9 +1,9 @@
 const config = {
   chainName: "Neutron Testnet",
-  chainId: "pion-1",
+  chainId: "neutron-1",
   displayHubName: "Neutron Testnet",
-  rpc: "https://rpc-falcron.pion-1.ntrn.tech",
-  restEndpoint: "https://rpc-falcron.pion-1.ntrn.tech",
+  rpc: "https://rpc-voidara.neutron-1.neutron.org:443",
+  restEndpoint: "https://neutron-rest.publicnode.com",
   denom: "untrn",
   coinDenom: "NTRN",
   decimals: 6,

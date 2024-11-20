@@ -29,6 +29,13 @@ const config = [
       { denom: "uhuahua", displayName: "HUAHUA" },
     ],
   },
+  {
+    srcChainId: "cosmoshub-4",
+    dstChainId: "neutron-1",
+    srcChannel: "channel-569",
+    dstChannel: "channel-1",
+    assets: [{ denom: "uatom", displayName: "ATOM" }],
+  },
 ];
 
 export default config;

@@ -1,7 +1,7 @@
 const config = {
-  chainName: "Neutron Testnet",
+  chainName: "Neutron",
   chainId: "neutron-1",
-  displayHubName: "Neutron Testnet",
+  displayHubName: "Neutron",
   rpc: "https://rpc-voidara.neutron-1.neutron.org:443",
   restEndpoint: "https://neutron-rest.publicnode.com",
   denom: "untrn",
